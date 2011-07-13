@@ -1,0 +1,14 @@
+*.pyc
+*~
+localsettings.py
+\#*\#
+.\#*
+
+/develop.sh
+/django
+/docs/
+/mediagenerator
+/south
+_generated_media/
+_generated_media_names.py
+!/_generated_media_names.py

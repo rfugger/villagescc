@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+<h2>Posts</h2>
+<ul>
+{% for post in posts %}
+	<li><strong><a href="{{ post.get_absolute_url }}">{{ post }}</strong></a>
+		{% if post.has_price %}- {{ post.price }}{% endif %}
+		<br/>
+		{{ post.location }} | {{ post.user }} | {{ post.date_posted|date }}
+	</li>
+{% empty %}
+	<li><em>No posts.</em></li>
+{% endfor %}
+</ul>
+{% endblock %}

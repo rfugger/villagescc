@@ -1,0 +1,11 @@
+/* Declare HTML5 elements for browsers that don't recognize them. */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+/* Minimal partial reset. */
+ul { padding:0; }
+ul > li { list-style:none; }
+table { border-collapse:collapse; border-spacing:0; }
+th { text-align:left; }
+
+/* OOCSS/YUI default fonts setting. */
+body { font:13px/1.231 arial,helvetica,clean,sans-serif; *font-size:small; *font:x-small; } select,input,button,textarea { font:99% arial,helvetica,clean,sans-serif; } table {font-size:inherit; font:100%; } pre,code,kbd,samp,tt {font-family:monospace; *font-size:108%; line-height:100%; }

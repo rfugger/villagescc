@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile }}{% endblock %}
+
+{% block content %}
+<h2>{{ profile }}</h2>
+
+<p>
+{% ifequal user profile.user %}
+	<a href="{% url edit_profile %}">Edit my profile</a>
+{% else %}
+	{% if my_endorsement %}
+		You have endorsed this user ({{ my_endorsement.weight }}).
+		<a href="{% url endorse_user profile.user_id %}">Edit endorsement</a>
+	{% else %}
+		<a href="{% url endorse_user profile.user_id %}">Endorse this user</a>
+	{% endif %}
+{% endifequal %}
+</p>
+
+{% if profile.photo %}
+	<img src="{{ profile.photo.url }}" height="200"/>  {# TODO: Resize properly. #}
+{% else %}
+	<p>[ no photo ]</p>
+{% endif %}
+
+<table>
+	<tr>
+		<th>Username</th>
+		<td>{{ profile.user.username }}</td>
+	</tr><tr>
+		<th>Name</th>
+		<td>{{ profile.name }}</td>
+	</tr><tr>
+		<th>Home Location</th>
+		<td>{{ profile.location.full_name }}
+			{% ifequal user profile.user %}
+				| <a href="{% url locator %}?home=1&next={{ request.path }}">Change</a> 
+				| Make Current Location
+			{% endifequal %}
+		</td>
+	</tr><tr>
+		<th>User Since</th>
+		<td>{{ profile.user.date_joined|date }}</td>
+	</tr><tr>
+		<th>Last Online</th>
+		<td>{{ profile.user.last_login|date }}</td>
+	</tr>
+</table>
+
+{{ profile.description|linebreaks }}
+	
+{% if profile.allow_contact %}
+	<p>[ contact user form ]</p>
+{% endif %}
+
+<h3>Endorsements</h3>
+
+<ul>
+{% for endorsement in endorsements %}
+	<li><h4>{{ endorsement }}</h4>
+		{{ endorsement.text|linebreaks }}
+	</li>
+{% empty %}
+	<li><em>No endorsements yet.</em></li>
+{% endfor %}
+</ul>
+{% endblock %}

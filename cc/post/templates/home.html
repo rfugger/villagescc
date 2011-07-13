@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}A Barter Network for Everyone{% endblock %}
+
+{% block content %}
+<ul>
+{% for post in posts %}
+	<li>{{ post }}</li>
+{% empty %}
+	<li><em>No posts.</em></li>
+{% endfor %}
+</ul>
+{% endblock %}
