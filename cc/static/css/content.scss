@@ -1,1 +1,30 @@
 /* Site-specific CSS. */
+
+.logo {
+	display: inline;
+}
+
+.nav li {
+	display: inline;
+	margin-right: 2em;
+}
+
+.site_nav {
+	margin-left: 2em;
+	font-size: 125%;
+}
+
+.location {
+	float: right;
+}
+
+.user_nav {
+	float: right;
+	clear: right;
+}
+
+.user_nav li {
+	margin-right: 0;
+	margin-left: 2em;
+}
+

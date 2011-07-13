@@ -6,6 +6,7 @@ ul { padding:0; }
 ul > li { list-style:none; }
 table { border-collapse:collapse; border-spacing:0; }
 th { text-align:left; }
+a { text-decoration:none; }
 
 /* OOCSS/YUI default fonts setting. */
 body { font:13px/1.231 arial,helvetica,clean,sans-serif; *font-size:small; *font:x-small; } select,input,button,textarea { font:99% arial,helvetica,clean,sans-serif; } table {font-size:inherit; font:100%; } pre,code,kbd,samp,tt {font-family:monospace; *font-size:108%; line-height:100%; }
