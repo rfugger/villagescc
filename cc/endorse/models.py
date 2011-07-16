@@ -16,3 +16,20 @@ class Endorsement(models.Model):
     def __unicode__(self):
         return u'%s endorses %s (%d)' % (
             self.endorser, self.recipient, self.weight)
+
+    @property
+    def date(self):
+        """
+        For FeedItem source interface, returns last updated date as the
+        feed item date.
+        """
+        return self.updated
+
+    @property
+    def location(self):
+        "For FeedItem source interface.  Endorsements have no location."
+        return None
+
+    def get_feed_users(self):
+        "Endorsement should show up in endorser's and recipient's feeds."
+        return (self.endorser, self.recipient)

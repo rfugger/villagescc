@@ -5,7 +5,7 @@ from cc.post.models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ('user', 'date_posted', 'deleted', 'location')
+        exclude = ('user', 'date', 'deleted', 'location')
 
     def save(self, user_profile=None):
         post = super(PostForm, self).save(commit=False)

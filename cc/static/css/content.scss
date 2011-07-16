@@ -1,5 +1,23 @@
 /* Site-specific CSS. */
 
+a {
+	color: brown;
+}
+
+.extend {
+	padding: 10px 2000px;
+	margin: 0 -2000px;
+}
+
+.logo_nav_line {
+	background-color: #ccc;
+	border-bottom: 1px solid #aaa
+}
+
+.subnav_line {
+	background-color: #eee;
+}
+
 .logo {
 	display: inline;
 }
@@ -18,12 +36,12 @@
 	float: right;
 }
 
-.user_nav {
+.right_nav {
 	float: right;
 	clear: right;
 }
 
-.user_nav li {
+.right_nav li {
 	margin-right: 0;
 	margin-left: 2em;
 }

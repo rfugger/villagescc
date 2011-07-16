@@ -31,7 +31,7 @@ def edit_post(request, post_id=None):
 
 @render()
 def posts(request):
-    posts = Post.objects.all().order_by('-date_posted')
+    posts = Post.objects.all().order_by('-date')
     return locals()    
 
 @render('post.html')

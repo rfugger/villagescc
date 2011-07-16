@@ -47,8 +47,9 @@ def profiles(request):
 @render()
 def profile(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    endorsements = request.profile.endorsements_made.all()
-    my_endorsement = request.profile.endorsement_for(profile)
+    endorsements = profile.endorsements_made.all()
+    if request.profile:
+        my_endorsement = request.profile.endorsement_for(profile)
     return locals()
         
     

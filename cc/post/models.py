@@ -15,7 +15,7 @@ class UndeletedPostManager(models.Manager):
     
 class Post(models.Model):
     user = models.ForeignKey(Profile)
-    date_posted = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
     
     title = VarCharField()
@@ -38,3 +38,7 @@ class Post(models.Model):
 
     def can_edit(self, user):
         return user.is_staff or user == self.user
+
+    def get_feed_users(self):
+        "Make post available in poster's feed, and publicly."
+        return (self.user, None)

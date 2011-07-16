@@ -28,5 +28,5 @@ RegistrationForm.base_fields.keyOrder = [
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'location')
+        exclude = ('user', 'location', 'endorsements_remaining')
         

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block subnav %}
+<div class="subnav_line extend nav line">
+	<li><a href="{% url home %}">Feed</a></li>
+	<li><a href="{% url profiles %}">People</a></li>
+	<li><a href="{% url posts %}">Posts</a></li>
+	{% if user.is_authenticated %}
+		<li>Promises</li>
+	
+		<span class="right_nav">
+			<li>Customize Feed</li>
+		</span>
+	{% endif %}
+</div>
+{% endblock %}

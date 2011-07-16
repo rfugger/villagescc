@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block subnav %}
+<div class="subnav_line extend nav line">
+	<li><a href="{{ request.profile.get_absolute_url }}">About</a></li>
+	<li>Posts</li>
+	<li>Endorsements</li>
+	
+	<span class="right_nav">
+		<li><a href="{% url edit_profile %}">Edit Profile</a></li>
+	</span>
+</div>
+{% endblock %}

@@ -12,30 +12,35 @@
 	{% block extrahead %}{% endblock %}
 </head>
 <body class="page">
-<div class="head line">
-	<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
+<div class="head">
+	<div class="logo_nav_line extend line">
+		<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
 
-	<span class="site_nav nav">
-		<li><a href="{% url home %}">Feed</a></li>
-		{% if user.is_authenticated %}
-			<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
-		{% endif %}
-		<li><input name="q" type="text" value="Search"></li>
-	</span>
+		<span class="site_nav nav">
+			<li><a href="{% url home %}">Feed</a></li>
+			{% if user.is_authenticated %}
+				<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
+			{% endif %}
+			<li><input name="q" type="text" value="Search"></li>
+		</span>
 
-	<div class="location">
-		<a href="{% url locator %}?next={{ request.path }}"
-		   >{{ request.location|default:"Set Location" }}</a>
+		<div class="right_nav">
+			<a href="{% url locator %}?next={{ request.path }}"
+			   >{{ request.location|default:"Set Location" }}</a>
+		</div>
+		<div class="right_nav nav">
+			{% if user.is_authenticated %}
+				<li><a href="{{ request.profile.get_absolute_url }}"
+					   >{{ request.profile }}</a></li>
+				<li><a href="{% url logout %}">Logout</a></li>
+			{% else %}
+				<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
+				<li><a href="{% url register %}">Register</a></li>
+			{% endif %}
+		</div>
 	</div>
-	<div class="user_nav nav">
-		{% if user.is_authenticated %}
-			<li>{{ user }}</li>
-			<li><a href="{% url logout %}">Logout</a></li>
-		{% else %}
-			<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
-			<li><a href="{% url register %}">Register</a></li>
-		{% endif %}
-	</div>
+
+	{% block subnav %}{% endblock %}
 </div>
 
 <div class="main">

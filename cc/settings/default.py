@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'cc.profile',
     'cc.endorse',
     'cc.post',
+    'cc.feed',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

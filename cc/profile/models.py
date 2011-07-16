@@ -33,6 +33,18 @@ class Profile(models.Model):
             return self.endorsements_made.get(recipient=recipient)
         except ObjectDoesNotExist:
             return None
+
+    @property
+    def date(self):
+        """
+        For FeedItem source interface, returns last updated date as the
+        feed item date.
+        """
+        return self.updated
+
+    def get_feed_users(self):
+        "Make profile updates available in poster's feed, and publicly."
+        return (self.user, None)
     
     @classmethod
     def create_profile(cls, sender, instance, created, **kwargs):
