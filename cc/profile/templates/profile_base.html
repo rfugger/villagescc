@@ -1,13 +1,21 @@
 {% extends "subnav_base.html" %}
 
+{% block subnav_title %}{{ profile }}{% endblock %}
+
 {% block subnav %}
-	<li><a href="{{ request.profile.get_absolute_url }}">About</a></li>
+	<li><a href="{{ profile.get_absolute_url }}">Info</a></li>
 	<li>Posts</li>
-	<li>Endorsements</li>
+	{% if user.is_authenticated %}
+		<li>Relationships</li>
+	{% endif %}
 {% endblock %}
 
-{% block right_subnav %}		
-	<span class="right_nav">
-		<li><a href="{% url edit_profile %}">Edit Profile</a></li>
-	</span>
+{% block right_subnav %}
+	{% if user.is_authenticated %}
+		{% ifequal request.profile profile %}
+			<li><a href="{% url edit_profile %}">Edit Profile</a></li>
+		{% else %}
+			<li><a href="{% url endorse_user profile.id %}">Endorse This User</a></li>
+		{% endifequal %}
+	{% endif %}
 {% endblock %}
