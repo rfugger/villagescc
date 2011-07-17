@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block subnav_box %}
+<div class="subnav_line extend nav line">
+	<h2 class="subnav_title"
+		>{% block subnav_title %}{% block title %}{% endblock %}{% endblock %}</h2>
+	<span class="subnav nav">
+		{% block subnav %}{% endblock %}
+	</span>
+	<span class="right_nav nav">
+		{% block right_subnav %}{% endblock %}
+	</span>
+</div>
+{% endblock %}

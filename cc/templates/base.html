@@ -14,10 +14,10 @@
 <body class="page">
 <div class="head">
 	<div class="logo_nav_line extend line">
-		<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
+		<h1 class="logo"><a href="{% url feed %}">Villages.cc</a></h1>
 
 		<span class="site_nav nav">
-			<li><a href="{% url home %}">Feed</a></li>
+			<li><a href="{% url feed %}">Feed</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
 			{% endif %}
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 
-	{% block subnav %}{% endblock %}
+	{% block subnav_box %}{% endblock %}
 </div>
 
 <div class="main">

@@ -33,7 +33,7 @@ class FeedItem(models.Model):
     
     Feed items may have a location used for filtering feeds by proximity.
     """
-    date = models.DateTimeField()
+    date = models.DateTimeField(db_index=True)
     item_type = models.CharField(max_length=16, choices=(
             ('post', 'Post'),
             ('profile', 'Profile Update'),
@@ -49,18 +49,25 @@ class FeedItem(models.Model):
     class Meta:
         unique_together = ('item_type', 'item_id', 'user')
 
+    def __unicode__(self):
+        s = u"Feed %s %d %s" % (self.item_type, self.item_id, self.date)
+        if self.user:
+            s = u"%s for %s" % (s, self.user)
+        return s
+        
     @classmethod
     def create_feed_item(cls, sender, instance, created, **kwargs):
         """
         Signal receiver to create or update a feed item automatically when
         a model object is created.  The original model must have properties
-        'date', and 'location', and method get_feed_users(), which returns
+        'date' and 'location', and method get_feed_users(), which returns
         a list of all users who should definitely see the feed item, as well
         as None if the item should potentially be available to anyone.
         """
         # Only create feed items for acceptable model types.
         if sender not in ITEM_TYPES:
             return
+        item_type=ITEM_TYPES[sender]
         if not created:
             # Delete existing feed items.
             cls.objects.filter(
@@ -68,7 +75,7 @@ class FeedItem(models.Model):
         for user in instance.get_feed_users():
             cls.objects.create(
                 date=instance.date,
-                item_type=ITEM_TYPES[sender],
+                item_type=item_type,
                 item_id=instance.id,
                 user=user,
                 location=instance.location)

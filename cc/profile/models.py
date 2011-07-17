@@ -44,7 +44,7 @@ class Profile(models.Model):
 
     def get_feed_users(self):
         "Make profile updates available in poster's feed, and publicly."
-        return (self.user, None)
+        return (self, None)
     
     @classmethod
     def create_profile(cls, sender, instance, created, **kwargs):

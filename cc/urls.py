@@ -8,9 +8,10 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    (r'', include('cc.feed.urls')),
     (r'', include('cc.geo.urls')),
     (r'', include('cc.profile.urls')),
-    (r'', include('cc.post.urls')),
+    (r'^posts/', include('cc.post.urls')),
     (r'^endorse/', include('cc.endorse.urls')),
     (r'^admin/', include(admin.site.urls)),
 )

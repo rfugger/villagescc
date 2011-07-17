@@ -8,10 +8,6 @@ from cc.post.forms import PostForm
 from cc.geo.util import location_required
 from cc.profile.util import profile_location_required
 
-@render()
-def home(request):
-    return posts(request)
-    
 @login_required
 @profile_location_required
 @render('post_form.html')

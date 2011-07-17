@@ -1,0 +1,15 @@
+{% extends "feed_base.html" %}
+
+{% block title %}Feed{% endblock %}
+
+{% block content %}
+[New post form]
+
+<ul>
+{% for feed_item in feed_items %}
+	<li>{{ feed_item }}</li>
+{% empty %}
+	<li><em>No activity.</em></li>
+{% endfor %}
+</ul>
+{% endblock %}

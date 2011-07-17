@@ -3,8 +3,6 @@
 {% block title %}{{ profile }}{% endblock %}
 
 {% block content %}
-<h2>{{ profile }}</h2>
-
 <p>
 {% ifequal user profile.user %}
 	<a href="{% url edit_profile %}">Edit my profile</a>
