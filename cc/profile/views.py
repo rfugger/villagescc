@@ -34,7 +34,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.info(request, MESSAGES['profile_saved'])
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect(profile.get_absolute_url())
     else:
         form = ProfileForm(instance=profile)
     return locals()

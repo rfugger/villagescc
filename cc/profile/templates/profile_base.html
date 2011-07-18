@@ -13,7 +13,7 @@
 {% block right_subnav %}
 	{% if user.is_authenticated %}
 		{% ifequal request.profile profile %}
-			<li><a href="{% url edit_profile %}">Edit Profile</a></li>
+			<li><a href="{% url edit_profile %}">Edit My Profile</a></li>
 		{% else %}
 			<li><a href="{% url endorse_user profile.id %}">Endorse This User</a></li>
 		{% endifequal %}

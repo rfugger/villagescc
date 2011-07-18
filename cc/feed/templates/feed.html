@@ -3,7 +3,7 @@
 {% block title %}Feed{% endblock %}
 
 {% block content %}
-[New post form]
+<p><a href="{% url new_post %}">New Post</a></p>
 
 <ul>
 {% for feed_item in feed_items %}

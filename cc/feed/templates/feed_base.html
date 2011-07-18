@@ -1,6 +1,6 @@
 {% extends "subnav_base.html" %}
 
-{% block subnav_title %}Feed{% endblock %}
+{% block subnav_title %}Activity{% endblock %}
 
 {% block subnav %}
 	<li><a href="{% url feed %}">All</a></li>
@@ -14,6 +14,6 @@
 
 {% block right_subnav %}	
 	{% if user.is_authenticated %}
-		<li>Customize Feed</li>
+		<li><a href="{% url new_post %}">New Post</a></li>
 	{% endif %}
 {% endblock %}

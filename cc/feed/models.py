@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 
 from cc.profile.models import Profile
 from cc.geo.models import Location
@@ -12,6 +12,9 @@ ITEM_TYPES = {
     Endorsement: 'endorsement',
     #Payment: 'payment',  -- TODO: Doesn't exist yet.
 }
+
+MODEL_TYPES = dict(((item_type, model)
+                    for model, item_type in ITEM_TYPES.items()))
 
 class FeedManager(models.Manager):
     def get_feed(self, profile, radius):
@@ -56,7 +59,7 @@ class FeedItem(models.Model):
         return s
         
     @classmethod
-    def create_feed_item(cls, sender, instance, created, **kwargs):
+    def create_feed_items(cls, sender, instance, created, **kwargs):
         """
         Signal receiver to create or update a feed item automatically when
         a model object is created.  The original model must have properties
@@ -65,9 +68,9 @@ class FeedItem(models.Model):
         as None if the item should potentially be available to anyone.
         """
         # Only create feed items for acceptable model types.
-        if sender not in ITEM_TYPES:
+        item_type = ITEM_TYPES.get(sender)
+        if not item_type:
             return
-        item_type=ITEM_TYPES[sender]
         if not created:
             # Delete existing feed items.
             cls.objects.filter(
@@ -79,6 +82,17 @@ class FeedItem(models.Model):
                 item_id=instance.id,
                 user=user,
                 location=instance.location)
+
+    @classmethod
+    def delete_feed_items(cls, sender, instance, **kwargs):
+        "Signal receiver to clean up feed items when an object is deleted."
+        item_type = ITEM_TYPES.get(sender)
+        if not item_type:
+            return
+        cls.objects.filter(item_type=item_type, item_id=instance.id).delete()
         
 # Check for creating a new feed item whenever anything is saved.
-post_save.connect(FeedItem.create_feed_item, dispatch_uid='feed.models')
+post_save.connect(FeedItem.create_feed_items, dispatch_uid='feed.models')
+
+# Delete associated feed items whenever anything is deleted.
+post_delete.connect(FeedItem.delete_feed_items, dispatch_uid='feed.models')

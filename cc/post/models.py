@@ -17,20 +17,16 @@ class Post(models.Model):
     user = models.ForeignKey(Profile)
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
-    
-    title = VarCharField()
+    text = models.TextField()
     want = models.BooleanField(
         default=False, help_text="Leave unchecked if your post is an offer.")
-    text = models.TextField()
-    image = models.ImageField(
-        upload_to='post_images/%Y/%m', max_length=256, blank=True)
     location = models.ForeignKey(Location)
 
     objects = UndeletedPostManager()
     all_objects = models.Manager()
     
     def __unicode__(self):
-        return self.title
+        return u"Post by %s at %s" % (self.user, self.date)
 
     @models.permalink
     def get_absolute_url(self):

@@ -1,9 +1,8 @@
-{% extends "base.html" %}
+{% extends "profile_base.html" %}
 
-{% block title %}My Profile{% endblock %}
+{% block title %}Edit My Profile{% endblock %}
 
 {% block content %}
-<h2>My Profile</h2>
 <p><a href="{{ form.instance.get_absolute_url }}">View my profile</a></p>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
