@@ -1,15 +1,14 @@
 {% extends "feed_base.html" %}
+{% load feed %}
 
 {% block title %}Feed{% endblock %}
 
 {% block content %}
 <p><a href="{% url new_post %}">New Post</a></p>
 
-<ul>
 {% for feed_item in feed_items %}
-	<li>{{ feed_item }}</li>
+	<div class="feed_item line">{% render_in_feed feed_item %}</div>
 {% empty %}
-	<li><em>No activity.</em></li>
+	<p><em>No activity.</em></p>
 {% endfor %}
-</ul>
 {% endblock %}

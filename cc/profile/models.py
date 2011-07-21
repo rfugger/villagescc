@@ -19,6 +19,8 @@ class Profile(models.Model):
         default=settings.INITIAL_ENDORSEMENTS)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    FEED_TEMPLATE = 'profile_feed_item.html'
     
     def __unicode__(self):
         return self.name or self.user.username

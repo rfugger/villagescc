@@ -24,6 +24,8 @@ class Post(models.Model):
 
     objects = UndeletedPostManager()
     all_objects = models.Manager()
+
+    FEED_TEMPLATE = 'post_feed_item.html'
     
     def __unicode__(self):
         return u"Post by %s at %s" % (self.user, self.date)

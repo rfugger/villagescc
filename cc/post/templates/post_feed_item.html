@@ -1,0 +1,9 @@
+{% extends "feed_item.html" %}
+
+{% block user_photo_url %}{{ item.user.photo.url }}{% endblock %}
+
+{% block content %}
+<a href="{{ item.user.get_absolute_url }}">{{ item.user }}</a> -
+{{ item.date }}
+{{ item.text|linebreaks }}
+{% endblock %}

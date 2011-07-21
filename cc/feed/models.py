@@ -65,7 +65,9 @@ class FeedItem(models.Model):
         a model object is created.  The original model must have properties
         'date' and 'location', and method get_feed_users(), which returns
         a list of all users who should definitely see the feed item, as well
-        as None if the item should potentially be available to anyone.
+        as None if the item should potentially be available to anyone.  It
+        should also have a render_in_feed() method that returns html to
+        be inserted in the feed.
         """
         # Only create feed items for acceptable model types.
         item_type = ITEM_TYPES.get(sender)
