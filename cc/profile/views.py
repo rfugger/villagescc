@@ -6,6 +6,7 @@ from django.contrib import messages
 from cc.general.util import render
 from cc.profile.forms import RegistrationForm, ProfileForm
 from cc.profile.models import Profile
+from cc.feed.models import FeedItem
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
@@ -41,7 +42,8 @@ def edit_profile(request):
 
 @render()
 def profiles(request):
-    profiles = Profile.objects.all()
+    profiles = FeedItem.objects.get_feed(
+        request.profile, radius=None, item_type_filter=Profile)
     return locals()
 
 @render()

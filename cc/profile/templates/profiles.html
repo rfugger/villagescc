@@ -1,13 +1,9 @@
-{% extends "base.html" %}
+{% extends "feed_base.html" %}
 
 {% block title %}People{% endblock %}
 
 {% block content %}
-<h2>People</h2>
-
-<ul>
-{% for profile in profiles %}
-	<li><a href="{{ profile.get_absolute_url }}">{{ profile }}</a></li>
-{% endfor %}
-</ul>
+{% with profiles as feed_items %}
+	{% include "feed_item_list.html" %}
+{% endwith %}
 {% endblock %}

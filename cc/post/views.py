@@ -7,6 +7,7 @@ from cc.post.models import Post
 from cc.post.forms import PostForm
 from cc.geo.util import location_required
 from cc.profile.util import profile_location_required
+from cc.feed.models import FeedItem
 
 @login_required
 @profile_location_required
@@ -27,7 +28,8 @@ def edit_post(request, post_id=None):
 
 @render()
 def posts(request):
-    posts = Post.objects.all().order_by('-date')
+    posts = FeedItem.objects.get_feed(
+        request.profile, radius=None, item_type_filter=Post)
     return locals()    
 
 @render('post.html')

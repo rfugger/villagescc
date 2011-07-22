@@ -1,9 +1,9 @@
 {% extends "feed_base.html" %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}Endorsements{% endblock %}
 
 {% block content %}
-{% with posts as feed_items %}
+{% with endorsements as feed_items %}
 	{% include "feed_item_list.html" %}
 {% endwith %}
 {% endblock %}

@@ -1,4 +1,4 @@
-/* Site-specific CSS. */
+/********* Global *********/
 
 a {
 	color: brown;
@@ -55,3 +55,17 @@ a {
 	margin-left: 2em;
 }
 
+.main {
+	display: block;  /* OOCSS templates.css has this as table-cell - why? */
+	margin-top: 1.5em;
+}
+
+/********** Feed ***********/
+
+.feed_item {
+	margin-bottom: 1em;
+}
+
+.feed_item_user {
+	margin-right: 1em;
+}

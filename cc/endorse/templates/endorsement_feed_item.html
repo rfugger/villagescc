@@ -1,0 +1,11 @@
+{% extends "feed_item.html" %}
+
+{% block user_photo_url %}{{ item.endorser.photo.url }}{% endblock %}
+
+{% block content %}
+<a href="{{ item.endorser.get_absolute_url }}">{{ item.endorser }}</a> -
+{{ item.date }}
+<p><a href="{{ item.endorser.get_absolute_url }}">{{ item.endorser }}</a> endorsed 
+	<a href="{{ item.recipient.get_absolute_url }}">{{ item.recipient }}</a>
+	with {{ item.weight }} heart{{ item.weight|pluralize:"s" }}.</p>
+{% endblock %}

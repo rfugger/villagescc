@@ -5,5 +5,5 @@
 {% block content %}
 <a href="{{ item.get_absolute_url }}">{{ item }}</a> -
 {{ item.date }}
-<p>{{ item }} updated their profile.</p>
+<p><a href="{{ item.get_absolute_url }}">{{ item }}</a> updated their profile.</p>
 {% endblock %}

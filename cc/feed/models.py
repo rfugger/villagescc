@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save, post_delete
+from django.db.models import Q
+from django.conf import settings
 
 from cc.profile.models import Profile
 from cc.geo.models import Location
@@ -13,16 +15,50 @@ ITEM_TYPES = {
     #Payment: 'payment',  -- TODO: Doesn't exist yet.
 }
 
+# Reverse keys and values in ITEM_TYPES.
 MODEL_TYPES = dict(((item_type, model)
                     for model, item_type in ITEM_TYPES.items()))
 
 class FeedManager(models.Manager):
-    def get_feed(self, profile, radius):
+    def get_feed(self, profile, radius,
+                 limit=settings.FEED_ITEMS_PER_PAGE, offset=0,
+                 item_type_filter=None):
         """
-        Get list of dereferenced feed items (actually load the posts, profiles,
+        Get list of dereferenced feed items (actually load the Posts, Profiles,
         etc.) for the given user profile within a certain radius.
+        
+        Pass a model class to 'item_type_filter' to only return those types of
+        feed items.
         """
-        pass
+        query = self.get_query_set().order_by('-date')
+        if profile:
+            query = query.filter(Q(user=profile) | Q(user=None))
+        else:
+            query = query.filter(user=None)
+        if item_type_filter:
+            query = query.filter(item_type=ITEM_TYPES[item_type_filter])
+        item_ids = query.values_list('item_type', 'item_id').distinct()
+        if limit is not None:
+            item_ids = item_ids[offset:offset + limit]
+        return self._load_feed_items(item_ids)
+        
+    def _load_feed_items(self, item_ids):
+        """
+        Returns a list of actual model objects from a list of tuples
+        (item_type, item_id).
+        """
+        feed_items = []
+        for item_type, item_id in item_ids:
+            model = MODEL_TYPES[item_type]
+            try:
+                obj = model.objects.get(pk=item_id)
+            except model.DoesNotExist:
+                # Feed items have no referential integrity in the db,
+                # so catch cases where model record with item_id is gone.
+                pass
+            else:
+                feed_items.append(obj)
+        return feed_items
 
 class FeedItem(models.Model):
     """

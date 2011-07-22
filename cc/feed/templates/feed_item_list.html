@@ -1,0 +1,6 @@
+{% load feed %}
+{% for feed_item in feed_items %}
+	<div class="feed_item line">{% render_in_feed feed_item %}</div>
+{% empty %}
+	<p><em>No activity.</em></p>
+{% endfor %}

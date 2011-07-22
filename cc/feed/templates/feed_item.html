@@ -1,5 +1,6 @@
 <div class="feed_item_user unit">
-	{% block user %}<img src="{% block user_photo_url %}{% endblock %}" height="50">{% endblock %}
+	{# TODO: Proper image resize here. #}
+	{% block user %}<img src="{% block user_photo_url %}{% endblock %}" height="80">{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
 	{% block content %}{% endblock %}

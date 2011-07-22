@@ -6,6 +6,7 @@ from cc.general.util import render
 from cc.endorse.forms import EndorseForm
 from cc.endorse.models import Endorsement
 from cc.profile.models import Profile
+from cc.feed.models import FeedItem
 
 @login_required
 @render()
@@ -24,3 +25,10 @@ def endorse_user(request, recipient_id):
     else:
         form = EndorseForm(instance=endorsement)
     return locals()
+
+@render()
+def endorsements(request):
+    endorsements = FeedItem.objects.get_feed(
+        request.profile, radius=None, item_type_filter=Endorsement)
+    return locals()
+    

@@ -9,10 +9,12 @@ class Endorsement(models.Model):
     weight = models.PositiveIntegerField()
     text = models.TextField(blank=True)
     updated = models.DateTimeField(auto_now=True)
-
+    
     class Meta:
         unique_together = ('endorser', 'recipient')
-    
+
+    FEED_TEMPLATE = 'endorsement_feed_item.html'
+        
     def __unicode__(self):
         return u'%s endorses %s (%d)' % (
             self.endorser, self.recipient, self.weight)
