@@ -3,7 +3,12 @@
 {% block user_photo_url %}{{ item.user.photo.url }}{% endblock %}
 
 {% block content %}
-<a href="{{ item.user.get_absolute_url }}">{{ item.user }}</a> -
-{{ item.date }}
 {{ item.text|linebreaks }}
+
+<ul class="nav">
+	<li><a href="{{ item.get_absolute_url }}">Link</a></li>
+	{% if can_edit %}
+		<li><a href="{% url edit_post item.id %}">Edit</a></li>
+	{% endif %}
+</ul>
 {% endblock %}

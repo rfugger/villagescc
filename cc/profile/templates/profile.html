@@ -9,9 +9,9 @@
 {% else %}
 	{% if my_endorsement %}
 		You have endorsed this user ({{ my_endorsement.weight }}).
-		<a href="{% url endorse_user profile.user_id %}">Edit endorsement</a>
+		<a href="{% url endorse_user profile.user.username %}">Edit endorsement</a>
 	{% else %}
-		<a href="{% url endorse_user profile.user_id %}">Endorse this user</a>
+		<a href="{% url endorse_user profile.user.username %}">Endorse this user</a>
 	{% endif %}
 {% endifequal %}
 </p>

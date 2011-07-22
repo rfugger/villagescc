@@ -48,6 +48,10 @@ class Profile(models.Model):
         "Make profile updates available in poster's feed, and publicly."
         return (self, None)
     
+    @property
+    def feed_poster(self):
+        return self
+
     @classmethod
     def create_profile(cls, sender, instance, created, **kwargs):
         if created:

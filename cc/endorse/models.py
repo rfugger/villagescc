@@ -35,3 +35,10 @@ class Endorsement(models.Model):
     def get_feed_users(self):
         "Endorsement should show up in endorser's and recipient's feeds."
         return (self.endorser, self.recipient)
+
+    @property
+    def feed_poster(self):
+        return self.endorser
+
+    def can_edit(self, profile):
+        return self.endorser == profile or profile.user.is_staff

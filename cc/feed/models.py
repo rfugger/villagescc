@@ -1,3 +1,22 @@
+"""
+Models for storing feed items.  This is a denormalized merged list of all
+feed items sorted by date.
+
+Classes that are referenced by feed items must implement the following
+interface:
+
+Properties:
+* date
+* location
+* feed_poster - Profile that created this feed item.
+
+Methods:
+* get_feed_users - All users who can have this feed item in their feed,
+    including None if feed item is public.
+* TODO: get object by ID. (implemented as model.objects.get, but won't work
+    for payment backend?)
+"""
+
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.db.models import Q
@@ -8,6 +27,7 @@ from cc.geo.models import Location
 from cc.post.models import Post
 from cc.endorse.models import Endorsement
 
+# Classes that can be stored as feed items.
 ITEM_TYPES = {
     Post: 'post',
     Profile: 'profile',
@@ -98,12 +118,7 @@ class FeedItem(models.Model):
     def create_feed_items(cls, sender, instance, created, **kwargs):
         """
         Signal receiver to create or update a feed item automatically when
-        a model object is created.  The original model must have properties
-        'date' and 'location', and method get_feed_users(), which returns
-        a list of all users who should definitely see the feed item, as well
-        as None if the item should potentially be available to anyone.  It
-        should also have a render_in_feed() method that returns html to
-        be inserted in the feed.
+        a model object is created.
         """
         # Only create feed items for acceptable model types.
         item_type = ITEM_TYPES.get(sender)

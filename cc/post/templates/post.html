@@ -1,29 +1,9 @@
-{% extends "base.html" %}
+{% extends "feed_base.html" %}
+{% load feed %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}Post by {{ post.user }}{% endblock %}
 
 {% block content %}
-<h2>{{ post.title }}{% if post.has_price %} - {{ post.price }}{% endif %}</h2>
-
-<table>
-	<tr>
-		<th>Location</th>
-		<td>{{ post.location }}</td>
-	</tr><tr>
-		<th>Date</th>
-		<td>{{ post.date }}</td>
-	</tr><tr>
-		<th>Posted by</th>
-		<td><a href="{{ post.user.get_absolute_url }}">{{ post.user }}</a>
-			{% if can_edit %}| <a href="{% url edit_post post.id %}">Edit post</a>{% endif %}
-		</td>
-	</tr>
-</table>
-
-{% if post.image %}
-	<img src="{{ post.image.url }}" alt="Image for posting">
-{% endif %}
-
-{{ post.text|linebreaks }}
-
+<div class="feed_item line">{% render_in_feed post %}</div>
 {% endblock %}
+

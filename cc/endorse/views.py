@@ -10,8 +10,8 @@ from cc.feed.models import FeedItem
 
 @login_required
 @render()
-def endorse_user(request, recipient_id):
-    recipient = get_object_or_404(Profile, pk=recipient_id)
+def endorse_user(request, recipient_username):
+    recipient = get_object_or_404(Profile, user__username=recipient_username)
     try:
         endorsement = Endorsement.objects.get(
             endorser=request.profile, recipient=recipient)

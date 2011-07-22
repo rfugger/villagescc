@@ -34,9 +34,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         return ('cc.post.views.view_post', (self.id,))
 
-    def can_edit(self, user):
-        return user.is_staff or user == self.user
+    def can_edit(self, profile):
+        return self.user == profile or profile.user.is_staff
 
     def get_feed_users(self):
         "Make post available in poster's feed, and publicly."
         return (self.user, None)
+
+    @property
+    def feed_poster(self):
+        return self.user
