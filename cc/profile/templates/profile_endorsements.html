@@ -1,0 +1,9 @@
+{% extends "profile_base.html" %}
+
+{% block title %}Endorsements for {{ profile }}{% endblock %}
+
+{% block content %}
+{% with endorsements as feed_items %}
+	{% include "feed_item_list.html" %}
+{% endwith %}
+{% endblock %}

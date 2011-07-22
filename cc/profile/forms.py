@@ -30,3 +30,9 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         exclude = ('user', 'location', 'endorsements_remaining')
         
+class ContactForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+
+    def send(self, sender, recipient):
+        # TODO: Send email.
+        pass

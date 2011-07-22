@@ -14,7 +14,7 @@ class UndeletedPostManager(models.Manager):
             deleted=False)
     
 class Post(models.Model):
-    user = models.ForeignKey(Profile)
+    user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
     text = models.TextField()

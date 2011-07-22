@@ -10,4 +10,8 @@ urlpatterns = patterns(
     url(r'^profiles/edit/$', 'edit_profile', name='edit_profile'),
     url(r'^profiles/$', 'profiles', name='profiles'),
     url(r'^profiles/([^/]+)/$', 'profile', name='profile'),
+    url(r'^profiles/([^/]+)/posts/$', 'profile_posts', name='profile_posts'),
+    url(r'^profiles/([^/]+)/endorsements/$', 'profile_endorsements',
+        name='profile_endorsements'),
+    url(r'^profiles/([^/]+)/contact/$', 'contact', name='contact'),
 )

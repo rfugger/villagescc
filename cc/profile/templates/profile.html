@@ -46,21 +46,5 @@
 	</tr>
 </table>
 
-{{ profile.description|linebreaks }}
-	
-{% if profile.allow_contact %}
-	<p>[ contact user form ]</p>
-{% endif %}
-
-<h3>Endorsements</h3>
-
-<ul>
-{% for endorsement in endorsements %}
-	<li><h4>{{ endorsement }}</h4>
-		{{ endorsement.text|linebreaks }}
-	</li>
-{% empty %}
-	<li><em>No endorsements yet.</em></li>
-{% endfor %}
-</ul>
+{{ profile.description|linebreaks }}	
 {% endblock %}

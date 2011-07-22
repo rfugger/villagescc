@@ -1,0 +1,16 @@
+{% extends "profile_base.html" %}
+
+{% block title %}Contact {{ profile }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+	<table>
+		{{ form }}
+		<tr>
+			<th></th>
+			<td><input type="submit" value="Send"></td>
+		</tr>
+	</table>
+</form>
+{% endblock %}
