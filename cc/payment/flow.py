@@ -34,12 +34,12 @@ class FlowLinkSet(object):
         
         Raises NoRoutesError if there is no route from payer to recipient.
         """
-        self.src_creditlines = self.payment.payer.outgoing_creditlines()
-        self.dest_creditlines = self.payment.recipient.incoming_creditlines()
+        self.src_creditlines = self.payment.payer.out_creditlines()
         graph = self._flow_graph()
         self._set_endpoint_demand(graph)
         if graph.degree(self.payment.recipient_id) == 0:
             raise NoRoutesError()
+        #import pdb; pdb.set_trace()
         try:
             cost, self.flow_dict = nx.network_simplex(graph)
         except nx.NetworkXUnfeasible:
@@ -91,7 +91,7 @@ class FlowLinkSet(object):
             # Add partner's unvisited outgoing credit lines to pending
             # list for eventual visitation.
             partner = curr_creditline.partner
-            next_creditlines = partner.outgoing_creditlines().exclude(
+            next_creditlines = partner.out_creditlines().exclude(
                 pk__in=visited_creditline_ids.get(partner.id, []))
             pending_creditlines += list(next_creditlines)
         return graph
@@ -101,7 +101,7 @@ class FlowLinkSet(object):
         dest = creditline.partner.id
         chunks = creditline.payment_cost()
         # Add first edge normally.
-        weight, capacity = chunks[0]
+        capacity, weight = chunks[0]
         graph.add_edge(src, dest, weight=weight, capacity=capacity,
                        creditline=creditline)
         for i, chunk in enumerate(chunks[1:]):

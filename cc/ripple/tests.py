@@ -10,8 +10,8 @@ class BasicTest(TestCase):
     One unit, two users, one account, no limits.
     """
     def setUp(self):
-        self.node1 = Node.objects.create()
-        self.node2 = Node.objects.create()
+        self.node1 = Node.objects.create(name='node1')
+        self.node2 = Node.objects.create(name='node2')
         self.account = Account.objects.create_account(self.node1, self.node2)
         self.node1_creditline = CreditLine.objects.get(
             account=self.account, node=self.node1)

@@ -4,6 +4,7 @@ from django.db import models
 
 from south.modelsinspector import add_introspection_rules
 
+from cc.general.models import VarCharField
 
 class AmountField(models.DecimalField):
     "Field for value amounts."
@@ -20,14 +21,15 @@ add_introspection_rules([], ["^cc\.general"])
 
 
 class Node(models.Model):
-    """
-    A node in the Ripple graph.  This table exists only for referential
-    integrity.  It doesn't store anything other than an ID.
-    """
-
+    "A node in the Ripple graph."
+    name = VarCharField()
+    
     def __unicode__(self):
         return u"Node %d" % self.id
-    
+
+    def out_creditlines(self):
+        return self.creditlines.all()
+
 class AccountManager(models.Manager):
     def create_account(self, node1, node2):
         """
@@ -57,6 +59,22 @@ class Account(models.Model):
     def __unicode__(self):
         return u"Account %s" % self.id
 
+    @property
+    def positive_creditline(self):
+        return self.creditlines.get(balance_multiplier=1)
+    
+    @property
+    def negative_creditline(self):
+        return self.creditlines.get(balance_multiplier=-1)
+
+    @property
+    def positive_node(self):
+        return self.positive_creditline.node
+    
+    @property
+    def negative_node(self):
+        return self.negative_creditline.node
+    
     def create_entry(self, amount, date, memo=''):
         "Create an account entry and update this account's balance."
         new_balance = self.balance + amount
