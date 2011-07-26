@@ -1,0 +1,27 @@
+{% extends "profile_base.html" %}
+
+{% block title %}Relationships{% endblock %}
+
+{% block content %}
+
+{% if accounts %}
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Their Endorsement Of You</th>
+		<th>Promise Balance</th>
+		<th>Your Endorsement of Them</th>
+	</tr>
+	{% for account in accounts %}
+		<tr>
+			<td>{{ account.partner }}</td>
+			<td>{{ account.out_limit }}</td>
+			<td>{{ account.balance }}</td>
+			<td>{{ account.in_limit }}</td>
+		</tr>
+	{% endfor %}
+</table>
+{% endif %}
+
+<p><em>No relationships yet.</em></p>
+{% endblock %}

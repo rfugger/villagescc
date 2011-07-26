@@ -4,8 +4,6 @@ from django.db import models
 
 from south.modelsinspector import add_introspection_rules
 
-from cc.general.models import VarCharField
-
 class AmountField(models.DecimalField):
     "Field for value amounts."
     PRECISION = 16  # Digits to store.
@@ -22,10 +20,10 @@ add_introspection_rules([], ["^cc\.general"])
 
 class Node(models.Model):
     "A node in the Ripple graph."
-    name = VarCharField()
+    alias = models.PositiveIntegerField(unique=True)  # Profile ID.
     
     def __unicode__(self):
-        return u"Node %d" % self.id
+        return u"Node %d" % self.alias
 
     def out_creditlines(self):
         return self.creditlines.all()
@@ -42,7 +40,23 @@ class AccountManager(models.Manager):
         CreditLine.objects.create(
             account=acct, node=node2, bal_mult=-1)
         return acct
-        
+
+    def get_or_create_account(self, node1, node2):
+        # TODO: Test this thoroughly.
+        acct_list = list(self.raw(
+            "select a.* from account_account a "
+            "join account_creditline c1 on c1.account_id = a.id "
+            "join account_creditline c2 on c2.account_id = a.id "
+            "where c1.node_id = %s "
+            "and c2.node_id = %s" % (node1.id, node2.id)))
+        if len(acct_list) == 0:
+            acct = self.create_account(node1, node2)
+        elif len(acct_list) == 1:
+            acct = acct_list[0]
+        else:
+            raise Account.MultipleObjectsReturned()
+        return acct
+    
 class Account(models.Model):
     """
     A mutual credit account that tracks IOUs between two nodes.
@@ -94,7 +108,7 @@ class CreditLine(models.Model):
         choices=((1, '+1'), (-1, '-1')))
     # Max obligations node can emit to partner.
     limit = AmountField(null=True, blank=True)
-    
+
     def __unicode__(self):
         return u"%s's credit line for account %s" % (self.node, self.account_id)
 

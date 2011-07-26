@@ -7,7 +7,7 @@
 	<li><a href="{% url profile_posts profile.user.username %}">Posts</a></li>
 	{% if user.is_authenticated %}
 		{% ifequal request.profile profile %}
-			<li>Relationships</li>
+			<li><a href="{% url relationships %}">Relationships</a></li>
 		{% else %}
 			<li><a href="{% url profile_endorsements profile.user.username %}"
 				   >Endorsements</a></li>

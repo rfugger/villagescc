@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
 
 from cc.profile.models import Profile
+import cc.ripple.api as ripple
 
 class Endorsement(models.Model):
     endorser = models.ForeignKey(Profile, related_name='endorsements_made')
@@ -42,3 +44,12 @@ class Endorsement(models.Model):
 
     def can_edit(self, profile):
         return self.endorser == profile or profile.user.is_staff
+
+    @classmethod
+    def update_credit_limit(cls, sender, instance, created, **kwargs):
+        ripple.update_credit_limit(instance)
+
+# Create new empty profile when a new user is created.
+post_save.connect(Endorsement.update_credit_limit, sender=Endorsement,
+                  dispatch_uid='endorse.models')
+# TODO: Propagate Endorsement delete through to ripple backend using post_delete.

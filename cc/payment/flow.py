@@ -39,7 +39,6 @@ class FlowLinkSet(object):
         self._set_endpoint_demand(graph)
         if graph.degree(self.payment.recipient_id) == 0:
             raise NoRoutesError()
-        #import pdb; pdb.set_trace()
         try:
             cost, self.flow_dict = nx.network_simplex(graph)
         except nx.NetworkXUnfeasible:

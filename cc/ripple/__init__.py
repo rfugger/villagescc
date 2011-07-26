@@ -6,4 +6,9 @@ These should be kept isolated as much as possible from the rest of the
 project, so they are easier to replace by an external Ripple server.
 
 All access to Ripple functionality should be through this module.
+
+Notes:
+
+* Node aliases are profile IDs.
+
 """
