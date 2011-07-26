@@ -29,8 +29,8 @@ class OneHopPaymentTest(BasicTest):
         entries = self.account.entries.all()
         self.assertEquals(len(entries), 1)
         entry = entries[0]
-        self.assertEquals(entry.amount,
-                          D('1.0') * self.node2_creditline.balance_multiplier)
+        self.assertEquals(
+            entry.amount, D('1.0') * self.node2_creditline.bal_mult)
         self.assertEquals(entry.date, payment.last_attempted_at)
         links = payment.links.all()
         self.assertEquals(len(links), 1)

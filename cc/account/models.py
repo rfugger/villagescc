@@ -38,9 +38,9 @@ class AccountManager(models.Manager):
         """
         acct = self.create()
         CreditLine.objects.create(
-            account=acct, node=node1, balance_multiplier=1)
+            account=acct, node=node1, bal_mult=1)
         CreditLine.objects.create(
-            account=acct, node=node2, balance_multiplier=-1)
+            account=acct, node=node2, bal_mult=-1)
         return acct
         
 class Account(models.Model):
@@ -60,20 +60,20 @@ class Account(models.Model):
         return u"Account %s" % self.id
 
     @property
-    def positive_creditline(self):
-        return self.creditlines.get(balance_multiplier=1)
+    def pos_creditline(self):
+        return self.creditlines.get(bal_mult=1)
     
     @property
-    def negative_creditline(self):
-        return self.creditlines.get(balance_multiplier=-1)
+    def neg_creditline(self):
+        return self.creditlines.get(bal_mult=-1)
 
     @property
-    def positive_node(self):
-        return self.positive_creditline.node
+    def pos_node(self):
+        return self.pos_creditline.node
     
     @property
-    def negative_node(self):
-        return self.negative_creditline.node
+    def neg_node(self):
+        return self.neg_creditline.node
     
     def create_entry(self, amount, date, memo=''):
         "Create an account entry and update this account's balance."
@@ -90,7 +90,7 @@ class CreditLine(models.Model):
     """
     account = models.ForeignKey(Account, related_name='creditlines')
     node = models.ForeignKey(Node, related_name='creditlines')
-    balance_multiplier = models.SmallIntegerField(
+    bal_mult = models.SmallIntegerField(
         choices=((1, '+1'), (-1, '-1')))
     # Max obligations node can emit to partner.
     limit = AmountField(null=True, blank=True)
@@ -101,7 +101,7 @@ class CreditLine(models.Model):
     @property
     def balance(self):
         "Node's balance."
-        return self.account.balance * self.balance_multiplier
+        return self.account.balance * self.bal_mult
 
     @property
     def partner_creditline(self):

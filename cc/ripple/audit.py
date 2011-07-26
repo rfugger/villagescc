@@ -50,9 +50,9 @@ def payment_check(payment):
     # Assign each payment link to the two account partners.
     amounts_by_node = {}
     for link in payment.links.all().select_related(depth=2):
-        pos_node = link.entry.account.positive_node
+        pos_node = link.entry.account.pos_node
         amounts_by_node.setdefault(pos_node, []).append(link.entry.amount)
-        neg_node = link.entry.account.negative_node
+        neg_node = link.entry.account.neg_node
         amounts_by_node.setdefault(neg_node, []).append(-link.entry.amount)
     # Sum link contributions for each node.
     for node, amounts in amounts_by_node.items():

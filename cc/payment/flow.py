@@ -144,7 +144,7 @@ class FlowLink(object):
         amount = float_to_decimal(amount)
         # Owner of this account is sending the flow => he should see negative
         # balance change.
-        self.amount = -amount * creditline.balance_multiplier
+        self.amount = -amount * creditline.bal_mult
         
     @property
     def account(self):
