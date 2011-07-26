@@ -3,7 +3,7 @@
 {% block subnav_title %}{{ profile }}{% endblock %}
 
 {% block subnav %}
-	<li><a href="{{ profile.get_absolute_url }}">Info</a></li>
+	<li><a href="{{ profile.get_absolute_url }}">About</a></li>
 	<li><a href="{% url profile_posts profile.user.username %}">Posts</a></li>
 	{% if user.is_authenticated %}
 		{% ifequal request.profile profile %}

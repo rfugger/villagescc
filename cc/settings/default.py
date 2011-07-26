@@ -108,6 +108,10 @@ INSTALLED_APPS = (
     'cc.endorse',
     'cc.post',
     'cc.feed',
+
+    # Ripple
+    'cc.account',
+    'cc.payment',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -169,12 +173,16 @@ SESSION_COOKIE_SECURE = True
 LOCATION_COOKIE_NAME = 'location_id'
 LOCATION_COOKIE_AGE = timedelta(days=365)
 
-# GeoIP.
 GEOIP_PATH = '/usr/share/GeoIP'
 
-# Geo stuff.
 LOCATION_SESSION_KEY = 'location_id'
 DEFAULT_LOCATION = ('49.248523', '-123.108')  # Vancouver.
 
 INITIAL_ENDORSEMENTS = 5
 FEED_ITEMS_PER_PAGE = 20
+
+DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)
+
+# Testing.
+TEST_RUNNER = 'cc.general.tests.AdvancedTestSuiteRunner'
+TEST_PACKAGES = ['cc']
