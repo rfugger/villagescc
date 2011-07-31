@@ -9,6 +9,10 @@ class BasicTest(TestCase):
     """
     One unit, two users, one account, no limits.
     """
+    # Tell test framework to rollback all databases after every test,
+    # not just default.
+    multi_db = True
+    
     def setUp(self):
         self.node1 = Node.objects.create(alias=1)
         self.node2 = Node.objects.create(alias=2)
@@ -17,10 +21,6 @@ class BasicTest(TestCase):
             account=self.account, node=self.node1)
         self.node2_creditline = CreditLine.objects.get(
             account=self.account, node=self.node2)
-
-    def tearDown(self):
-        self.account.delete()  # Deletes accounts, entries, etc.
-        Node.objects.all().delete()
 
     def reload(self):
         """

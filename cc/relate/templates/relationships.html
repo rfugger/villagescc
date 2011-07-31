@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if accounts %}
-<table>
+<table class="relationship_table">
 	<tr>
 		<th>Name</th>
 		<th>Their Endorsement Of You</th>
@@ -14,14 +14,16 @@
 	</tr>
 	{% for account in accounts %}
 		<tr>
-			<td>{{ account.partner }}</td>
+			<td><a href="{% url relationship account.partner.username %}"
+				   >{{ account.partner }}</a></td>
 			<td>{{ account.out_limit }}</td>
 			<td>{{ account.balance }}</td>
 			<td>{{ account.in_limit }}</td>
 		</tr>
 	{% endfor %}
 </table>
+{% else %}
+	<p><em>No relationships yet.</em></p>
 {% endif %}
 
-<p><em>No relationships yet.</em></p>
 {% endblock %}

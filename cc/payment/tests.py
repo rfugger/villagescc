@@ -21,7 +21,7 @@ class OneHopPaymentTest(BasicTest):
         self.failUnless(audit.all_payments_check())
         
         # Fine-grained checks.
-        # TODO: Decide which of these are no longer necessary.  WORKING ON...
+        # TODO: Decide which of these are no longer necessary.
         self.assertEquals(payment.status, 'completed')
         self.failUnless(payment.last_attempted_at >= payment.submitted_at)
         self.assertEquals(self.node1_creditline.balance, D('-1.0'))

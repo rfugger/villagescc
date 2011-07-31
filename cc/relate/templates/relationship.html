@@ -1,0 +1,25 @@
+{% extends "profile_base.html" %}
+
+{% block title %}Relationship with {{ partner }}{% endblock %}
+
+{% block content %}
+<h2>Promise History with {{ partner }}</h2>
+{% if entries %}
+<table>
+	<tr>
+		<th>Date</th>
+		<th>Amount</th>
+		<th>Balance</th>
+	</tr>
+	{% for entry in entries %}
+		<tr>
+			<td>{{ entry.date }}</td>
+			<td>{{ entry.amount }}</td>
+			<td>{{ entry.new_balance }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p><em>No entries.</em></p>
+{% endif %}
+{% endblock %}

@@ -5,8 +5,8 @@ from decimal import Decimal as D
 
 from django.conf import settings
 
-from cc.account.models import CreditLine, AmountField
-
+from cc.account.models import CreditLine
+from cc.ripple import SCALE
 
 class PaymentError(Exception):
     "Base class for all payment exceptions."
@@ -21,35 +21,41 @@ class InsufficientCreditError(PaymentError):
     def __init__(self, amount_found):
         self.amount_found = amount_found
 
-        
-class FlowLinkSet(object):
-    "A set of paths found for performing a payment."
-    def __init__(self, payment):
-        self.payment = payment
-        self._compute()
 
-    def _compute(self):
+class FlowGraph(object):
+    def __init__(self, payer, recipient):
+        "Takes payer and recipient nodes."
+        self.payer = payer
+        self.recipient = recipient
+        self.graph = self._build_graph(seed_node=self.payer)
+
+    def min_cost_flow(self, amount):
         """
-        Compute min cost flow between payer and recipient.
+        Determine minimum cost route for given amount between payer and
+        recipient.
         
         Raises NoRoutesError if there is no route from payer to recipient.
+        Raises InsufficientCreditError if the network cannot support the
+        specified flow amount.
         """
-        self.src_creditlines = self.payment.payer.out_creditlines()
-        graph = self._flow_graph()
-        self._set_endpoint_demand(graph)
-        if graph.degree(self.payment.recipient_id) == 0:
+        self._set_endpoint_demand(amount)
+        if self.graph.degree(self.recipient.id) == 0:
             raise NoRoutesError()
         try:
-            cost, self.flow_dict = nx.network_simplex(graph)
-        except nx.NetworkXUnfeasible:
-            available = nx.max_flow(
-                graph, self.payment.payer_id, self.payment.recipient_id)
-            raise InsufficientCreditError(amount_found=available)
-        self.graph = graph
+            _, flow_dict = nx.network_simplex(self.graph)
             
-    def _flow_graph(self):
+        except nx.NetworkXUnfeasible:
+            raise InsufficientCreditError(amount_found=self.max_flow())
+        else:
+            return FlowLinkSet(self.graph, flow_dict)
+
+    def max_flow(self):
+        return nx.max_flow(
+            self.graph, self.payer.id, self.recipient.id)
+
+    def _build_graph(self, seed_node):
         """
-        Get flow graph for performing payment computations for this payment.
+        Get flow graph for performing payment computations.
         
         A flow graph is a connected directed networkx DiGraph where the edges
         represent account-halves and exchanges between them performed by various
@@ -57,7 +63,7 @@ class FlowLinkSet(object):
         partner.
 
         A flow graph contains all credit lines that could possibly be used to
-        transfer value from payer to recipient.  It may also contain other
+        transfer value from seed_node to anyone else.  It may also contain other
         account-halves so it can be cached and used for other payments.  For
         example, the flow graph might contain the set of all nodes that could
         pay or be paid by the payer.
@@ -68,6 +74,8 @@ class FlowLinkSet(object):
         To use this graph in the min cost demand flow algorithm, assign the payer
         a supply (negative demand) and the recipient a demand equal to the payment
         amount.
+
+        Flow graph nodes are account.models.Node database IDs, not Node.aliases!
         """
         # TODO: Generate complete connected flow graph such that for every
         # vertex in graph, it includes every possible incoming and outgoing
@@ -78,7 +86,7 @@ class FlowLinkSet(object):
 
         graph = nx.DiGraph()
         visited_creditline_ids = {}  # Indexed by user profile id.
-        pending_creditlines = list(self.src_creditlines)
+        pending_creditlines = list(seed_node.out_creditlines())
         while pending_creditlines:
             curr_creditline = pending_creditlines.pop(0)
 
@@ -94,7 +102,7 @@ class FlowLinkSet(object):
                 pk__in=visited_creditline_ids.get(partner.id, []))
             pending_creditlines += list(next_creditlines)
         return graph
-
+    
     def _add_creditline_to_graph(self, graph, creditline):
         src = creditline.node_id
         dest = creditline.partner.id
@@ -115,14 +123,19 @@ class FlowLinkSet(object):
             graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
             # Dummy edge has no creditline, so can be ignored later.
             
-    def _set_endpoint_demand(self, graph):
+    def _set_endpoint_demand(self, amount):
         "Add payer and recipient nodes with corresponding demands values."
         # XXX Convert decimal amounts to float for networkx.
-        graph.node[self.payment.payer_id]['demand'] = (
-            float(-self.payment.amount))
-        graph.node[self.payment.recipient_id]['demand'] = (
-            float(self.payment.amount))
+        self.graph.node[self.payer.id]['demand'] = float(-amount)
+        self.graph.node[self.recipient.id]['demand'] = float(amount)
 
+        
+class FlowLinkSet(object):
+    "A set of paths found for performing a payment."
+    def __init__(self, graph, flow_dict):
+        self.graph = graph
+        self.flow_dict = flow_dict
+        
     def __iter__(self):
         "Iterate through credit line links used for this payment."
         for src_node, node_flow_dict in self.flow_dict.iteritems():
@@ -132,12 +145,11 @@ class FlowLinkSet(object):
                         'creditline')
                     if not creditline:  # Dummy edge.
                         continue
-                    yield FlowLink(self.payment, creditline, amount)
+                    yield FlowLink(creditline, amount)
 
 class FlowLink(object):
     "A credit line link used for payment."
-    def __init__(self, payment, creditline, amount):
-        self.payment = payment
+    def __init__(self, creditline, amount):
         self.creditline = creditline
         # Note: Amount is float here, so convert to Decimal.
         amount = float_to_decimal(amount)
@@ -150,8 +162,8 @@ class FlowLink(object):
         return self.creditline.account
 
 def float_to_decimal(amount):
-    "Convert float to decimal in order to retain as much precision as possible."
+    "Convert float to decimal."
     # Convert float to string with number of decimal places stored in db.
-    float_interp_str = '%%.%df' % AmountField.SCALE  # '%.2f'
+    float_interp_str = '%%.%df' % SCALE  # '%.2f'
     amount_str = float_interp_str % amount
     return D(amount_str)

@@ -12,3 +12,6 @@ Notes:
 * Node aliases are profile IDs.
 
 """
+
+PRECISION = 12  # Digits to store.
+SCALE = 2  # Decimal places to reserve.

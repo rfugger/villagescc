@@ -4,14 +4,13 @@ from django.db import models
 
 from south.modelsinspector import add_introspection_rules
 
+from cc.ripple import PRECISION, SCALE
+
 class AmountField(models.DecimalField):
-    "Field for value amounts."
-    PRECISION = 16  # Digits to store.
-    SCALE = 6  # Decimal places to reserve.
-    
+    "Field for value amounts."    
     def __init__(self, *args, **kwargs):
-        kwargs['max_digits'] = self.PRECISION
-        kwargs['decimal_places'] = self.SCALE
+        kwargs['max_digits'] = PRECISION
+        kwargs['decimal_places'] = SCALE
         super(AmountField, self).__init__(*args, **kwargs)
 
 # Enable south migrations for custom fields.
@@ -41,7 +40,7 @@ class AccountManager(models.Manager):
             account=acct, node=node2, bal_mult=-1)
         return acct
 
-    def get_or_create_account(self, node1, node2):
+    def get_account(self, node1, node2):
         # TODO: Test this thoroughly.
         acct_list = list(self.raw(
             "select a.* from account_account a "
@@ -50,12 +49,19 @@ class AccountManager(models.Manager):
             "where c1.node_id = %s "
             "and c2.node_id = %s" % (node1.id, node2.id)))
         if len(acct_list) == 0:
-            acct = self.create_account(node1, node2)
+            return None
         elif len(acct_list) == 1:
             acct = acct_list[0]
         else:
             raise Account.MultipleObjectsReturned()
         return acct
+        
+    def get_or_create_account(self, node1, node2):
+        acct = self.get_account(node1, node2)
+        if acct is None:
+            acct = self.create_account(node1, node2)
+        return acct
+
     
 class Account(models.Model):
     """

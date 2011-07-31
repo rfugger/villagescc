@@ -23,12 +23,17 @@ class Profile(models.Model):
     FEED_TEMPLATE = 'profile_feed_item.html'
     
     def __unicode__(self):
-        return self.name or self.user.username
+        return self.name or self.username
 
     @models.permalink
     def get_absolute_url(self):
-        return ('profile', (self.user.username,))
+        return ('profile', (self.username,))
 
+    @property
+    def username(self):
+        # Username is stored in django User model.
+        return self.user.username
+    
     def endorsement_for(self, recipient):
         "Returns this profile's endorsement of recipient, or None."
         try:

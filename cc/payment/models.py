@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 
 from cc.account.models import AmountField, Node, CreditLine, AccountEntry
-from cc.payment.flow import FlowLinkSet, PaymentError
+from cc.payment.flow import FlowGraph, PaymentError
 
 
 STATUS_CHOICES = (
@@ -39,13 +39,15 @@ class Payment(models.Model):
         self.last_attempted_at = datetime.now()
         self.save()
         try:
-            flow_links = FlowLinkSet(self)
-            for flow_link in flow_links:
-                PaymentLink.objects.create_link(flow_link, self)
+            flow_graph = FlowGraph(self.payer, self.recipient)
+            flow_links = flow_graph.min_cost_flow(self.amount)
         except PaymentError:
             self.status = 'failed'
             self.save()
             raise
+        # Commit to database.
+        for flow_link in flow_links:
+            PaymentLink.objects.create_link(flow_link, self)
         self.status = 'completed'
         self.save()
         
