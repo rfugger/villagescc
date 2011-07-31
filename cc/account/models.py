@@ -1,4 +1,5 @@
 from decimal import Decimal as D
+from datetime import datetime
 
 from django.db import models
 
@@ -95,8 +96,10 @@ class Account(models.Model):
     def neg_node(self):
         return self.neg_creditline.node
     
-    def create_entry(self, amount, date, memo=''):
+    def create_entry(self, amount, date=None, memo=''):
         "Create an account entry and update this account's balance."
+        if date is None:
+            date = datetime.now()
         new_balance = self.balance + amount
         entry = self.entries.create(
             amount=amount, new_balance=new_balance, date=date, memo=memo)

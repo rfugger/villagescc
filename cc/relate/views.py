@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from cc.general.util import render
 import cc.ripple.api as ripple
 from cc.profile.models import Profile
-from cc.relate.forms import AcknowledgeForm
+from cc.relate.forms import PromiseForm
 
 @login_required
 @render()
@@ -28,16 +28,17 @@ def relationship(request, partner_username):
 
 @login_required
 @render()
-def acknowledge_user(request, recipient_username):
+def promise_user(request, recipient_username):
     recipient = get_object_or_404(Profile, user__username=recipient_username)
+    # TODO: Don't recompute max_amount on form submit?
     max_amount = ripple.max_payment(request.profile, recipient)
     if request.method == 'POST':
-        form = AcknowledgeForm(request.POST, max_ripple=max_amount)
+        form = PromiseForm(request.POST, max_ripple=max_amount)
         if form.is_valid():
-            promise = form.send_acknowledgement()
+            promise = form.send_promise(request.profile, recipient)
             return HttpResponseRedirect(promise.get_absolute_url())
     else:
-        form = AcknowledgeForm(max_ripple=max_amount)
+        form = PromiseForm(max_ripple=max_amount)
     can_ripple = max_amount > 0
     return locals()
         

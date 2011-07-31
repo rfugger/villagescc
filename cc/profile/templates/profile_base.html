@@ -21,7 +21,7 @@
 			<li><a href="{% url edit_profile %}">Edit My Profile</a></li>
 		{% else %}
 			<li><a href="{% url endorse_user profile.username %}">Endorse</a></li>
-			<li><a href="{% url acknowledge_user profile.username %}">Acknowledge</a></li>
+			<li><a href="{% url promise_user profile.username %}">Promise</a></li>
 			<li><a href="{% url contact profile.username %}">Contact</a></li>
 		{% endifequal %}
 	{% endif %}

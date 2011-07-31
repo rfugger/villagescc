@@ -1,9 +1,9 @@
 {% extends "feed_base.html" %}
 
-{% block title %}Acknowledge {{ recipient }}{% endblock %}
+{% block title %}Promise {{ recipient }}{% endblock %}
 
 {% block content %}
-<h2>Acknowledge {{ recipient }}</h2>
+<h2>Promise {{ recipient }}</h2>
 
 {% if can_ripple %}
 	<p>You can route a trusted promise of up to {{ max_amount }}, or send

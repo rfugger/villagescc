@@ -18,8 +18,7 @@ class NoRoutesError(PaymentError):
 
 class InsufficientCreditError(PaymentError):
     "Not enough max flow between payer and recipient to make payment."
-    def __init__(self, amount_found):
-        self.amount_found = amount_found
+    pass
 
 
 class FlowGraph(object):
@@ -39,17 +38,18 @@ class FlowGraph(object):
         specified flow amount.
         """
         self._set_endpoint_demand(amount)
-        if self.graph.degree(self.recipient.id) == 0:
+        if self.recipient.id not in self.graph.nodes():
             raise NoRoutesError()
         try:
             _, flow_dict = nx.network_simplex(self.graph)
-            
         except nx.NetworkXUnfeasible:
-            raise InsufficientCreditError(amount_found=self.max_flow())
+            raise InsufficientCreditError()
         else:
             return FlowLinkSet(self.graph, flow_dict)
 
     def max_flow(self):
+        if self.recipient.id not in self.graph.nodes():
+            return 0
         return nx.max_flow(
             self.graph, self.payer.id, self.recipient.id)
 
