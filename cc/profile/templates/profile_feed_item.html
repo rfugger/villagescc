@@ -1,7 +1,5 @@
 {% extends "feed_item.html" %}
 
-{% block user_photo_url %}{{ item.photo.url }}{% endblock %}
-
 {% block content %}
 <p><a href="{{ item.get_absolute_url }}">{{ item }}</a> updated their profile.</p>
 {% endblock %}

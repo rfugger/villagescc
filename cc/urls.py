@@ -13,6 +13,7 @@ urlpatterns = patterns(
     (r'', include('cc.profile.urls')),
     (r'^posts/', include('cc.post.urls')),
     (r'^endorsements/', include('cc.endorse.urls')),
+    (r'^promises/', include('cc.promise.urls')),
     (r'^', include('cc.relate.urls')),
 
     (r'^admin/', include(admin.site.urls)),

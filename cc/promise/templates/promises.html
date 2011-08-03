@@ -1,0 +1,9 @@
+{% extends "feed_base.html" %}
+
+{% block title %}Promises{% endblock %}
+
+{% block content %}
+{% with promises as feed_items %}
+	{% include "feed_item_list.html" %}
+{% endwith %}
+{% endblock %}

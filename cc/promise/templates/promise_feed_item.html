@@ -1,0 +1,10 @@
+{% extends "feed_item.html" %}
+
+{% block content %}
+<p><a href="{{ item.payer.get_absolute_url }}">{{ item.payer }}</a>
+	promised {{ item.amount }} to 
+	<a href="{{ item.recipient.get_absolute_url }}">{{ item.recipient }}.</p>
+{% if item.memo %}
+	<p><em>{{ memo }}</em></p>
+{% endif %}
+{% endblock %}

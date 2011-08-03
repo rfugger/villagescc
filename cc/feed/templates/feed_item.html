@@ -1,11 +1,15 @@
 <div class="feed_item_user unit">
+	{% block user %}
 	{# TODO: Proper image resize here. #}
-	{% block user %}<img src="{% block user_photo_url %}{% endblock %}" height="80">{% endblock %}
+	{# TODO: Generic profile image for users with no photo. #}
+	<img src="{% if item.feed_poster.photo %}{{ item.feed_poster.photo.url }}{% endif %}" 
+		 height="80">
+	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
 	<a href="{{ item.feed_poster.get_absolute_url }}"
-	   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a> -
-	{{ item.date }}
+	   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a>
+	- {{ item.date }}
 	{% if item.location %}- {{ item.location }}{% endif %}
 	{% block content %}{% endblock %}
 </div>

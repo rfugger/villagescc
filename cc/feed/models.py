@@ -10,6 +10,7 @@ Properties:
 * date
 * location
 * feed_poster - Profile that created this feed item.
+* FEED_TEMPLATE - template for rendering this item in a feed.
 
 Methods:
 * get_feed_users - All users who can have this feed item in their feed,
@@ -17,6 +18,9 @@ Methods:
 
 Class Methods:
 * get_by_id - Model instance with given ID.
+
+Exceptions:
+* DoesNotExist
 
 """
 
@@ -36,7 +40,7 @@ ITEM_TYPES = {
     Post: 'post',
     Profile: 'profile',
     Endorsement: 'endorsement',
-    RipplePayment: 'payment',
+    RipplePayment: 'promise',
 }
 
 # Reverse keys and values in ITEM_TYPES.

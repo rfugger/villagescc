@@ -8,7 +8,7 @@
 	<li><a href="{% url posts %}">Posts</a></li>
 	{% if user.is_authenticated %}
 		<li><a href="{% url endorsements %}">Endorsements</a></li>
-		<li>Promises</li>
+		<li><a href="{% url promises %}">Promises</a></li>
 	{% endif %}
 {% endblock %}
 

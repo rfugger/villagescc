@@ -6,6 +6,7 @@ from cc.ripple import PRECISION, SCALE
 import cc.ripple.api as ripple
 from cc.feed.models import FeedItem
 
+# TODO: Move to cc.promise app?
 class PromiseForm(forms.Form):
     ripple = forms.ChoiceField(
         choices=((True, 'Routed Promise'), (False, 'Personal Promise')),

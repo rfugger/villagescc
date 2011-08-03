@@ -2,6 +2,8 @@
 
 # TODO: Test this module.
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from cc.profile.models import Profile
 from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
@@ -28,12 +30,18 @@ class UserAccount(object):
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."
 
+    FEED_TEMPLATE = 'promise_feed_item.html'
+
+    DoesNotExist = ObjectDoesNotExist
+    
     def __init__(self, payment):
         self.payment = payment
 
-    @property
-    def id(self):
-        return self.payment.id
+    def __getattr__(self, name):
+        "Proxy attribute lookups to self.payment."
+        if hasattr(self.payment, name):
+            return getattr(self.payment, name)
+        return super(RipplePayment, self).__getattr__(name)
         
     @property
     def date(self):
@@ -45,20 +53,23 @@ class RipplePayment(object):
 
     @property
     def feed_poster(self):
-        return self.payer_profile()
+        return self.payer()
     
     def get_feed_users(self):
-        return (self.payer_profile(), self.recipient_profile())
+        return (self.payer(), self.recipient_profile())
 
-    def payer_profile(self):
+    def payer(self):
         return Profile.objects.get(pk=self.payment.payer.alias)
         
-    def recipient_profile(self):
+    def recipient(self):
         return Profile.objects.get(pk=self.payment.recipient.alias)
-
+    
     @classmethod
     def get_by_id(cls, payment_id):
-        return ripple.get_payment(payment_id)
+        try:
+            return get_payment(payment_id)
+        except Payment.DoesNotExist:
+            raise self.DoesNotExist
 
 
 def accept_profiles(func):
