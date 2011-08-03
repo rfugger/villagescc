@@ -5,16 +5,18 @@
 {% block content %}
 <h2>Promise History with {{ partner }}</h2>
 {% if entries %}
-<table>
+<table class="data">
 	<tr>
 		<th>Date</th>
-		<th>Amount</th>
+		<th>Received</th>
+		<th>Sent</th>
 		<th>Balance</th>
 	</tr>
 	{% for entry in entries %}
 		<tr>
 			<td>{{ entry.date }}</td>
-			<td>{{ entry.amount }}</td>
+			<td>{{ entry.received|default:"" }}</td>
+			<td>{{ entry.sent|default:"" }}</td>
 			<td>{{ entry.new_balance }}</td>
 		</tr>
 	{% endfor %}

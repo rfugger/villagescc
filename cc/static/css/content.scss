@@ -60,6 +60,10 @@ a {
 	margin-top: 1.5em;
 }
 
+.data th, .data td {
+	padding: 3px 5px;
+}
+
 /********** Feed ***********/
 
 .feed_item {
@@ -74,8 +78,3 @@ a {
 	display: inline;
 }
 
-/********* Relationships **********/
-
-.relationship_table th, .relationship_table td {
-	padding: 3px 5px;
-}

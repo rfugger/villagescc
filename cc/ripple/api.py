@@ -27,6 +27,41 @@ class UserAccount(object):
     def in_limit(self):
         return self.creditline.in_limit
 
+class UserAccountEntry(object):
+    """
+    Wrapper around AccountEntry, with amounts from point of view of one partner.
+    """
+    def __init__(self, entry, user):
+        self.entry = entry
+        creditline = entry.account.creditlines.get(node__alias=user.id)
+        self.bal_mult = creditline.bal_mult
+
+    @property
+    def date(self):
+        return self.entry.date
+
+    @property
+    def amount(self):
+        return self.entry.amount * self.bal_mult
+
+    @property
+    def received(self):
+        if self.amount > 0:
+            return self.amount
+        else:
+            return None
+
+    @property
+    def sent(self):
+        if self.amount < 0:
+            return -1 * self.amount
+        else:
+            return None
+
+    @property
+    def new_balance(self):
+        return self.entry.new_balance * self.bal_mult
+    
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."
 
@@ -39,7 +74,9 @@ class RipplePayment(object):
 
     def __getattr__(self, name):
         "Proxy attribute lookups to self.payment."
-        if hasattr(self.payment, name):
+        # TODO: Make more explicit the attributes accessible here, so
+        # interface is better-defined.
+        if name in ('id', 'amount', 'memo'):
             return getattr(self.payment, name)
         return super(RipplePayment, self).__getattr__(name)
         
@@ -102,12 +139,12 @@ def get_or_create_account_from_profiles(node1, node2):
     return Account.objects.get_or_create_account(node1, node2)
 
 @accept_profiles
-def get_entries_between(x, y):
+def get_entries_between(node, partner):
     "Give entries between two nodes from POV of the first."
-    account = Account.objects.get_account(x, y)
+    account = Account.objects.get_account(node, partner)
     if account is None:
         return []
-    return account.entries.all()
+    return [UserAccountEntry(entry, node) for entry in account.entries.all()]
 
 @accept_profiles
 def max_payment(payer, recipient):
