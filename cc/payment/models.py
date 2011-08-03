@@ -36,6 +36,12 @@ class Payment(models.Model):
         serial fashion.  No checks are performed to account for the possibility
         of parallel payments.
         """
+        # TODO: Some kind of transaction management here.
+        # Django's transaction middleware only handles the default db,
+        # and this will probably eventually be done as an asynchronous task
+        # in a separate process anyway...
+        # Maybe transaction should be controlled at a higher level?
+        
         self.last_attempted_at = datetime.now()
         # Write attempted date now so if something happens we can see this
         # payment was interrupted.
@@ -43,15 +49,16 @@ class Payment(models.Model):
         try:
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
-        except PaymentError:
-            self.status = 'failed'
-        else:
-            # Commit to database.
             for flow_link in flow_links:
                 PaymentLink.objects.create_link(
                     self, flow_link.account, flow_link.amount)
             self.status = 'completed'
-        self.save()
+            self.save()
+        except BaseException as exc:
+            self.status = 'failed'
+            self.save()
+            if not isinstance(exc, PaymentError):
+                raise
 
     def as_entry(self):
         """
@@ -73,6 +80,7 @@ class PaymentLinkManager(models.Manager):
             memo='Payment %s' % payment.id)
         self.create(payment=payment, entry=entry)
 
+# TODO: Remove this class entirely.  Just put payment_id field on AccountEntry.
 class PaymentLink(models.Model):
     payment = models.ForeignKey(Payment, related_name='links')
     entry = models.ForeignKey(AccountEntry, unique=True, related_name='links')

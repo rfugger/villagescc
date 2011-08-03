@@ -78,7 +78,8 @@ class RipplePayment(object):
         # interface is better-defined.
         if name in ('id', 'amount', 'memo'):
             return getattr(self.payment, name)
-        return super(RipplePayment, self).__getattr__(name)
+        raise AttributeError("%s does not have attribute '%s'." % (
+                self.__class__, name))
         
     @property
     def date(self):
@@ -93,7 +94,7 @@ class RipplePayment(object):
         return self.payer()
     
     def get_feed_users(self):
-        return (self.payer(), self.recipient_profile())
+        return (self.payer(), self.recipient())
 
     def payer(self):
         return Profile.objects.get(pk=self.payment.payer.alias)

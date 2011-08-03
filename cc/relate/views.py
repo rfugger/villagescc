@@ -37,7 +37,8 @@ def promise_user(request, recipient_username):
         form = PromiseForm(request.POST, max_ripple=max_amount)
         if form.is_valid():
             promise = form.send_promise(request.profile, recipient)
-            return HttpResponseRedirect(promise.get_absolute_url())
+            #return HttpResponseRedirect(promise.get_absolute_url())  # TODO.
+            return HttpResponseRedirect('/')
     else:
         form = PromiseForm(max_ripple=max_amount)
     can_ripple = max_amount > 0

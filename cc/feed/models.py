@@ -121,7 +121,7 @@ class FeedItem(models.Model):
         if self.user:
             s = u"%s for %s" % (s, self.user)
         return s
-        
+
     @classmethod
     def create_feed_items(cls, sender, instance, created, **kwargs):
         """

@@ -170,15 +170,21 @@ class CreditLine(models.Model):
         """
         if self.limit is None:
             # No cost if no limit -- treat as if balance is always 0.
-            return ((float('inf'), 0.0),)  # Capacity is infinite.
-        capacity = self.balance + self.limit
-        cost = 1.0 - (float(capacity / self.limit))
-        if self.balance <= 0:
-            # No positive balance to cash in.
-            return ((capacity, cost),)
-        else:
+            return ((float('inf'), 0),)  # Capacity is infinite.
+        if self.balance > 0:
+
+            # XXX TODO: Negative-cost chunks causes simplex algorithm to
+            # use loops to reduce cost -- not wanted!
+            
+            # Return two chunks: one to get to zero balance, one for remainder.
             # Give negative cost only to cashing in existing IOUs.
+            cost = float(-self.balance / self.in_limit)
             return ((self.balance, cost), (self.limit, 0))
+        else:
+            # No positive balance to cash in.
+            capacity = self.balance + self.limit
+            cost = 1.0 - (float(capacity / self.limit))
+            return ((capacity, cost),)
 
 class AccountEntry(models.Model):
     account = models.ForeignKey(Account, related_name='entries')

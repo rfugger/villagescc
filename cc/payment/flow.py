@@ -109,8 +109,8 @@ class FlowGraph(object):
         chunks = creditline.payment_cost()
         # Add first edge normally.
         capacity, weight = chunks[0]
-        graph.add_edge(src, dest, weight=weight, capacity=capacity,
-                       creditline=creditline)
+        graph.add_edge(src, dest, weight=weight,
+                       capacity=float(capacity), creditline=creditline)
         for i, chunk in enumerate(chunks[1:]):
             # For multiple edges between src and dest, network_simplex
             # doesn't handle multigraph (as of 1.5), so insert dummy nodes
@@ -118,8 +118,8 @@ class FlowGraph(object):
             # https://networkx.lanl.gov/trac/ticket/607.
             capacity, weight = chunk
             dummy_node = u'%s__%s__%s' % (src, dest, i)
-            graph.add_edge(src, dummy_node, weight=weight, capacity=capacity,
-                           creditline=creditline)
+            graph.add_edge(src, dummy_node, weight=weight,
+                           capacity=float(capacity), creditline=creditline)
             graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
             # Dummy edge has no creditline, so can be ignored later.
             
@@ -138,6 +138,9 @@ class FlowLinkSet(object):
         
     def __iter__(self):
         "Iterate through credit line links used for this payment."
+
+        # TODO: Merge multiple chunks on same account into single entry.
+        
         for src_node, node_flow_dict in self.flow_dict.iteritems():
             for dest_node, amount in node_flow_dict.iteritems():
                 if amount > 0:

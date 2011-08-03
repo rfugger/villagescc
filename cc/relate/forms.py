@@ -9,7 +9,7 @@ from cc.feed.models import FeedItem
 # TODO: Move to cc.promise app?
 class PromiseForm(forms.Form):
     ripple = forms.ChoiceField(
-        choices=((True, 'Routed Promise'), (False, 'Personal Promise')),
+        choices=(('routed', 'Routed Promise'), ('direct', 'Personal Promise')),
         widget=forms.RadioSelect)
     amount = forms.DecimalField(
         max_digits=PRECISION, decimal_places=SCALE,
@@ -38,10 +38,10 @@ class PromiseForm(forms.Form):
 
     def send_promise(self, payer, recipient):
         data = self.cleaned_data
-        routed = data.get('ripple', False)
+        routed = data.get('ripple') == 'routed'
         obj = ripple.pay(
             payer, recipient, data['amount'], data['memo'], routed=routed)
         # Create feed item
         FeedItem.create_feed_items(
-            sender=RipplePayment, instance=obj, created=True)
+            sender=ripple.RipplePayment, instance=obj, created=True)
         
