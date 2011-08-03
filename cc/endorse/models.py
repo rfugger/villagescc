@@ -46,6 +46,10 @@ class Endorsement(models.Model):
         return self.endorser == profile or profile.user.is_staff
 
     @classmethod
+    def get_by_id(cls, id):
+        return cls.objects.get(pk=id)
+    
+    @classmethod
     def update_credit_limit(cls, sender, instance, created, **kwargs):
         ripple.update_credit_limit(instance)
 

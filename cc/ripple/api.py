@@ -5,6 +5,7 @@
 from cc.profile.models import Profile
 from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
+from cc.payment.models import Payment
 
 class UserAccount(object):
     "Wrapper around CreditLine."
@@ -23,6 +24,42 @@ class UserAccount(object):
 
     def in_limit(self):
         return self.creditline.in_limit
+
+class RipplePayment(object):
+    "Wrapper around Payment.  Implements feed item model interface."
+
+    def __init__(self, payment):
+        self.payment = payment
+
+    @property
+    def id(self):
+        return self.payment.id
+        
+    @property
+    def date(self):
+        return self.payment.last_attempted_at or self.payment.submitted_at
+
+    @property
+    def location(self):
+        return None
+
+    @property
+    def feed_poster(self):
+        return self.payer_profile()
+    
+    def get_feed_users(self):
+        return (self.payer_profile(), self.recipient_profile())
+
+    def payer_profile(self):
+        return Profile.objects.get(pk=self.payment.payer.alias)
+        
+    def recipient_profile(self):
+        return Profile.objects.get(pk=self.payment.recipient.alias)
+
+    @classmethod
+    def get_by_id(cls, payment_id):
+        return ripple.get_payment(payment_id)
+
 
 def accept_profiles(func):
     """
@@ -67,19 +104,21 @@ def max_payment(payer, recipient):
     return flow_graph.max_flow()
 
 @accept_profiles
-def pay(payer, recipient, amount, memo):
+def pay(payer, recipient, amount, memo, routed):
+    """
+    Performs payment.  Routed=False just creates an entry on account between
+    payer and recipient, and creates the account with limits=0 if it does not
+    already exist.
+    """
     payment = Payment.objects.create(
         payer=payer, recipient=recipient, amount=amount, memo=memo)
-    try:
+    if routed:
         payment.attempt()
-    except PaymentError:
-        return None
-    return payment
+    else:
+        payment.as_entry()
+    return RipplePayment(payment)
 
-@accept_profiles
-def record_entry(payer, recipient, amount, memo):
-    account = Account.objects.get_or_create_account(payer, recipient)
-    entry = account.create_entry(-amount, memo=memo)
-    return entry
-
+def get_payment(payment_id):
+    payment = Payment.objects.get(pk=payment_id)
+    return RipplePayment(payment)
 

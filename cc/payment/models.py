@@ -37,25 +37,38 @@ class Payment(models.Model):
         of parallel payments.
         """
         self.last_attempted_at = datetime.now()
+        # Write attempted date now so if something happens we can see this
+        # payment was interrupted.
         self.save()
         try:
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
         except PaymentError:
             self.status = 'failed'
-            self.save()
-            raise
-        # Commit to database.
-        for flow_link in flow_links:
-            PaymentLink.objects.create_link(flow_link, self)
+        else:
+            # Commit to database.
+            for flow_link in flow_links:
+                PaymentLink.objects.create_link(
+                    self, flow_link.account, flow_link.amount)
+            self.status = 'completed'
+        self.save()
+
+    def as_entry(self):
+        """
+        Performs this payment as a direct entry between payer and recipient.
+        Creates account between them if one does not exist.
+        """
+        account = Account.objects.get_or_create_account(payer, recipient)
+        self.last_attempted_at = datetime.now()
+        PaymentLink.objects.create_link(self, account, -self.amount)
         self.status = 'completed'
         self.save()
         
 class PaymentLinkManager(models.Manager):
-    def create_link(self, flow_link, payment):
+    def create_link(self, payment, account, amount):
         # TODO: Make sure we're staying within account limits?
-        entry = flow_link.account.create_entry(
-            amount=flow_link.amount,
+        entry = account.create_entry(
+            amount=amount,
             date=payment.last_attempted_at,
             memo='Payment %s' % payment.id)
         self.create(payment=payment, entry=entry)

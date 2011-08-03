@@ -30,7 +30,8 @@ def relationship(request, partner_username):
 @render()
 def promise_user(request, recipient_username):
     recipient = get_object_or_404(Profile, user__username=recipient_username)
-    # TODO: Don't recompute max_amount on form submit?
+    # TODO: Don't recompute max_amount on form submit?  Cache, or put in form
+    # as hidden field?
     max_amount = ripple.max_payment(request.profile, recipient)
     if request.method == 'POST':
         form = PromiseForm(request.POST, max_ripple=max_amount)

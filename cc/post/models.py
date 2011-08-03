@@ -44,3 +44,8 @@ class Post(models.Model):
     @property
     def feed_poster(self):
         return self.user
+
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.objects.get(pk=id)
+    

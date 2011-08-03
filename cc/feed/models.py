@@ -6,6 +6,7 @@ Classes that are referenced by feed items must implement the following
 interface:
 
 Properties:
+* id
 * date
 * location
 * feed_poster - Profile that created this feed item.
@@ -13,8 +14,10 @@ Properties:
 Methods:
 * get_feed_users - All users who can have this feed item in their feed,
     including None if feed item is public.
-* TODO: get object by ID. (implemented as model.objects.get, but won't work
-    for payment backend?)
+
+Class Methods:
+* get_by_id - Model instance with given ID.
+
 """
 
 from django.db import models
@@ -26,13 +29,14 @@ from cc.profile.models import Profile
 from cc.geo.models import Location
 from cc.post.models import Post
 from cc.endorse.models import Endorsement
+from cc.ripple.api import RipplePayment
 
 # Classes that can be stored as feed items.
 ITEM_TYPES = {
     Post: 'post',
     Profile: 'profile',
     Endorsement: 'endorsement',
-    #Payment: 'payment',  -- TODO: Doesn't exist yet.
+    RipplePayment: 'payment',
 }
 
 # Reverse keys and values in ITEM_TYPES.
@@ -71,7 +75,7 @@ class FeedManager(models.Manager):
         for item_type, item_id in item_ids:
             model = MODEL_TYPES[item_type]
             try:
-                obj = model.objects.get(pk=item_id)
+                obj = model.get_by_id(item_id)
             except model.DoesNotExist:
                 # Feed items have no referential integrity in the db,
                 # so catch cases where model record with item_id is gone.

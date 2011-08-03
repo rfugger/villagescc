@@ -4,6 +4,7 @@ from django import forms
 
 from cc.ripple import PRECISION, SCALE
 import cc.ripple.api as ripple
+from cc.feed.models import FeedItem
 
 class PromiseForm(forms.Form):
     ripple = forms.ChoiceField(
@@ -36,12 +37,10 @@ class PromiseForm(forms.Form):
 
     def send_promise(self, payer, recipient):
         data = self.cleaned_data
-        if data.get('ripple'):
-            # Routed promise.
-            # TODO: Handle errors.
-            ripple.pay(payer, recipient, data['amount'], data['memo'])
-        else:
-            # Direct promise.
-            ripple.record_entry(payer, recipient, data['amount'], data['memo'])
+        routed = data.get('ripple', False)
+        obj = ripple.pay(
+            payer, recipient, data['amount'], data['memo'], routed=routed)
         # Create feed item
-        # WORKING ON...
+        FeedItem.create_feed_items(
+            sender=RipplePayment, instance=obj, created=True)
+        
