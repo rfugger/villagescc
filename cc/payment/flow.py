@@ -45,7 +45,8 @@ class FlowGraph(object):
         except nx.NetworkXUnfeasible:
             raise InsufficientCreditError()
         else:
-            return FlowLinkSet(self.graph, flow_dict)
+            amounts = creditline_amounts(flow_dict, self.graph)
+            return amounts
 
     def max_flow(self):
         if self.recipient.id not in self.graph.nodes():
@@ -106,7 +107,7 @@ class FlowGraph(object):
     def _add_creditline_to_graph(self, graph, creditline):
         src = creditline.node_id
         dest = creditline.partner.id
-        chunks = creditline.payment_cost()
+        chunks = edge_weight(creditline)
         # Add first edge normally.
         capacity, weight = chunks[0]
         graph.add_edge(src, dest, weight=weight,
@@ -117,7 +118,7 @@ class FlowGraph(object):
             # in the middle of each extra edge as a workaround. (See
             # https://networkx.lanl.gov/trac/ticket/607.
             capacity, weight = chunk
-            dummy_node = u'%s__%s__%s' % (src, dest, i)
+            dummy_node = u'%s__%s' % (dest, i)
             graph.add_edge(src, dummy_node, weight=weight,
                            capacity=float(capacity), creditline=creditline)
             graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
@@ -129,44 +130,57 @@ class FlowGraph(object):
         self.graph.node[self.payer.id]['demand'] = float(-amount)
         self.graph.node[self.recipient.id]['demand'] = float(amount)
 
-        
-class FlowLinkSet(object):
-    "A set of paths found for performing a payment."
-    def __init__(self, graph, flow_dict):
-        self.graph = graph
-        self.flow_dict = flow_dict
-        
-    def __iter__(self):
-        "Iterate through credit line links used for this payment."
 
-        # TODO: Merge multiple chunks on same account into single entry.
-        
-        for src_node, node_flow_dict in self.flow_dict.iteritems():
-            for dest_node, amount in node_flow_dict.iteritems():
-                if amount > 0:
-                    creditline = self.graph[src_node][dest_node].get(
-                        'creditline')
-                    if not creditline:  # Dummy edge.
-                        continue
-                    yield FlowLink(creditline, amount)
+def edge_weight(creditline):
+    """
+    Assigns a cost to using this creditline in a payment.  Cashing in existing
+    IOUs has zero cost.  Issuing existing IOUs has a cost of 1 + distance of
+    current balance from zero relative to the limit.
 
-class FlowLink(object):
-    "A credit line link used for payment."
-    def __init__(self, creditline, amount):
-        self.creditline = creditline
-        # Note: Amount is float here, so convert to Decimal.
-        amount = float_to_decimal(amount)
-        # Owner of this account is sending the flow => he should see negative
-        # balance change.
-        self.amount = -amount * creditline.bal_mult
-        
-    @property
-    def account(self):
-        return self.creditline.account
+    Returns a tuple of (capacity, weight) tuples representing chunks of usable
+    credit capacity, since when there is a positive balance, using up that
+    balance will carry different weight than anything beyond.
 
+    (TODO: Ideally, costs would be in proportion to the amount of credit
+    remaining *after* the payment, but that is not known yet, and the naive min
+    cost demand flow algorithm used can't factor that in.)
+    """
+    if creditline.limit is None:
+        # No cost if no limit -- treat as if balance is always 0.
+        return ((float('inf'), 0),)  # Capacity is infinite.
+    if creditline.balance > 0:
+        # Return two chunks: one to get to zero balance, one for remainder.
+        # Give positive cost only to issuing in new IOUs.
+        return ((creditline.balance, 0), (creditline.limit, 1))
+    else:
+        # No positive balance to cash in.
+        capacity = creditline.balance + creditline.limit
+        cost = 1.0 + (float(creditline.balance / creditline.limit))
+        return ((capacity, cost),)
+
+def creditline_amounts(flow_dict, graph):
+    """
+    Returns a list of (creditline, amount) tuples that represent the
+    flow of a payment. Takes a flow_dict from network_simplex.
+    """
+    amount_dict = {}  # Index by creditline.
+    for src_node, node_flow_dict in flow_dict.items():
+        for dest_node, amount in node_flow_dict.items():
+            amount = float_to_decimal(amount)
+            if amount == 0:  # Ignore zero amounts.
+                continue
+            creditline = graph[src_node][dest_node].get('creditline')
+            if not creditline:  # Dummy edge.
+                continue
+            amount_dict.setdefault(creditline, 0)
+            amount_dict[creditline] += float_to_decimal(amount)
+    return amount_dict.items()
+            
 def float_to_decimal(amount):
     "Convert float to decimal."
     # Convert float to string with number of decimal places stored in db.
     float_interp_str = '%%.%df' % SCALE  # '%.2f'
     amount_str = float_interp_str % amount
     return D(amount_str)
+
+            

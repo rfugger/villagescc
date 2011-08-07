@@ -49,9 +49,9 @@ class Payment(models.Model):
         try:
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
-            for flow_link in flow_links:
+            for creditline, amount in flow_links:
                 PaymentLink.objects.create_link(
-                    self, flow_link.account, flow_link.amount)
+                    self, creditline.account, -amount * creditline.bal_mult)
             self.status = 'completed'
             self.save()
         except BaseException as exc:

@@ -143,49 +143,6 @@ class CreditLine(models.Model):
         "Max obligations node will accept from partner."
         return self.partner_creditline.limit
     
-    def payment_cost(self):
-        """
-        Assigns a cost to using this account in a payment in proportion to
-        how little credit is available on the destination credit line vertex of
-        that edge, relative to the credit limit in that direction.  So if the
-        credit limit was 100 and available credit was 30, the cost would be
-        1 - (30/100) = 0.7.  If the credit limit was 100 and available credit
-        was 120, the cost would be 1 - (120/100) = -0.2, implying that this
-        direction should be preferred (reduces obligations).
-
-        (Ideally, costs would be in proportion to the amount of credit remaining
-        *after* the payment, but that is not known yet, and the naive min cost
-        demand flow algorithm used can't factor that in.)
-
-        Returns a list of (capacity, cost) pairs referring to separate chunks of
-        credit, to allow assigning different costs to each of them.  (Cashing in
-        IOUs is preferred to emitting new IOUs.)
-
-        TODO: Factor in:
-          - payment amount
-          - interest
-          - is it better to add 10 obligations to 80/100 or 0/20?
-          - it's better to use stale accounts than fresh ones (how recent was
-          the last transaction?).
-        """
-        if self.limit is None:
-            # No cost if no limit -- treat as if balance is always 0.
-            return ((float('inf'), 0),)  # Capacity is infinite.
-        if self.balance > 0:
-
-            # XXX TODO: Negative-cost chunks causes simplex algorithm to
-            # use loops to reduce cost -- not wanted!
-            
-            # Return two chunks: one to get to zero balance, one for remainder.
-            # Give negative cost only to cashing in existing IOUs.
-            cost = float(-self.balance / self.in_limit)
-            return ((self.balance, cost), (self.limit, 0))
-        else:
-            # No positive balance to cash in.
-            capacity = self.balance + self.limit
-            cost = 1.0 - (float(capacity / self.limit))
-            return ((capacity, cost),)
-
 class AccountEntry(models.Model):
     account = models.ForeignKey(Account, related_name='entries')
     date = models.DateTimeField()
