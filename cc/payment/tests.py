@@ -5,6 +5,22 @@ from cc.payment.models import Payment
 from cc.ripple import audit
 
 class OneHopPaymentTest(BasicTest):
+    def test_entry(self):
+        payment = Payment.objects.create(
+            payer=self.node2, recipient=self.node1, amount=D('5.00'))
+
+        self.assertEqual(self.account.balance, D('0'))
+        payment.as_entry()
+        self.reload()
+        self.assertEqual(self.account.balance, D('5'))
+        entries = self.account.entries.all()
+        self.assertEqual(len(entries), 1)
+        entry = entries[0]
+        self.assertEqual(entry.new_balance, D('5'))
+        self.assertEqual(self.node1_creditline.balance, D('5'))
+        self.assertEqual(self.node2_creditline.balance, D('-5'))
+        unicode(entry)
+
     def test_payment(self):
         payment = Payment.objects.create(
             payer=self.node1, recipient=self.node2, amount=D('1.00'))
@@ -17,7 +33,6 @@ class OneHopPaymentTest(BasicTest):
 
         # High-level checks.
         self.failUnless(audit.all_accounts_check())
-        self.failUnless(audit.all_links_check())
         self.failUnless(audit.all_payments_check())
         
         # Fine-grained checks.
@@ -32,9 +47,6 @@ class OneHopPaymentTest(BasicTest):
         self.assertEquals(
             entry.amount, D('1.0') * self.node2_creditline.bal_mult)
         self.assertEquals(entry.date, payment.last_attempted_at)
-        links = payment.links.all()
-        self.assertEquals(len(links), 1)
-        link = links[0]
-        unicode(link)
-        self.assertEquals(link.entry, entry)
+        entries = payment.entries.all()
+        self.assertEquals(len(entries), 1)
         

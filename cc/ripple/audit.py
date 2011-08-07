@@ -6,7 +6,7 @@ from decimal import Decimal as D
 from django.db.models import Sum
 
 from cc.account.models import Account
-from cc.payment.models import Payment, PaymentLink
+from cc.payment.models import Payment, Entry
 
 class AuditError(Exception):
     pass
@@ -29,32 +29,19 @@ def all_accounts_check():
         account_check(account)
     return True
 
-def link_check(link):
-    """
-    Verify that payment link matches entry.
-    """
-    if link.payment.last_attempted_at != link.entry.date:
-        raise AuditError("%s: entry has incorrect date." % link)
-    return True
-    
-def all_links_check():
-    for link in PaymentLink.objects.all().select_related(depth=3):
-        link_check(link)
-    return True
-
 def payment_check(payment):
     """
-    Verify that payer and recipient payment links sum to payment amount,
-    and intermediaries' payment links sum to zero.
+    Verify that payer and recipient payment entries sum to payment amount,
+    and intermediaries' payment entries sum to zero.
     """
-    # Assign each payment link to the two account partners.
+    # Assign each payment entry to the two account partners.
     amounts_by_node = {}
-    for link in payment.links.all().select_related(depth=2):
-        pos_node = link.entry.account.pos_node
-        amounts_by_node.setdefault(pos_node, []).append(link.entry.amount)
-        neg_node = link.entry.account.neg_node
-        amounts_by_node.setdefault(neg_node, []).append(-link.entry.amount)
-    # Sum link contributions for each node.
+    for entry in payment.entries.all().select_related(depth=1):
+        pos_node = entry.account.pos_node
+        amounts_by_node.setdefault(pos_node, []).append(entry.amount)
+        neg_node = entry.account.neg_node
+        amounts_by_node.setdefault(neg_node, []).append(-entry.amount)
+    # Sum entries for each node.
     for node, amounts in amounts_by_node.items():
         if node == payment.payer:
             if sum(amounts) != -payment.amount:
@@ -67,7 +54,7 @@ def payment_check(payment):
         else:  # Intermediary.
             if sum(amounts) != D('0.0'):
                 raise AuditError(
-                    "%s: intermediary's link amounts do not sum to zero." %
+                    "%s: intermediary's entry amounts do not sum to zero." %
                     payment)
     return True
 

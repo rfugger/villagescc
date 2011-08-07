@@ -96,17 +96,6 @@ class Account(models.Model):
     def neg_node(self):
         return self.neg_creditline.node
     
-    def create_entry(self, amount, date=None, memo=''):
-        "Create an account entry and update this account's balance."
-        if date is None:
-            date = datetime.now()
-        new_balance = self.balance + amount
-        entry = self.entries.create(
-            amount=amount, new_balance=new_balance, date=date, memo=memo)
-        self.balance = new_balance
-        self.save()
-        return entry
-        
 class CreditLine(models.Model):
     """
     One node's data for and view on a mutual credit account.
@@ -143,13 +132,3 @@ class CreditLine(models.Model):
         "Max obligations node will accept from partner."
         return self.partner_creditline.limit
     
-class AccountEntry(models.Model):
-    account = models.ForeignKey(Account, related_name='entries')
-    date = models.DateTimeField()
-    amount = AmountField()
-    new_balance= AmountField()
-    memo = models.TextField(blank=True)
-
-    def __unicode__(self):
-        return u"%s entry on %s" % (self.amount, self.account)
-

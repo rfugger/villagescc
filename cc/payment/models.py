@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 
-from cc.account.models import AmountField, Node, CreditLine, AccountEntry
+from cc.account.models import AmountField, Node, CreditLine, Account
 from cc.payment.flow import FlowGraph, PaymentError
 
 
@@ -50,7 +50,7 @@ class Payment(models.Model):
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
             for creditline, amount in flow_links:
-                PaymentLink.objects.create_link(
+                Entry.objects.create_entry(
                     self, creditline.account, -amount * creditline.bal_mult)
             self.status = 'completed'
             self.save()
@@ -65,28 +65,37 @@ class Payment(models.Model):
         Performs this payment as a direct entry between payer and recipient.
         Creates account between them if one does not exist.
         """
-        account = Account.objects.get_or_create_account(payer, recipient)
+        account = Account.objects.get_or_create_account(
+            self.payer, self.recipient)
         self.last_attempted_at = datetime.now()
-        PaymentLink.objects.create_link(self, account, -self.amount)
+        payer_creditline = account.creditlines.get(node=self.payer)
+        Entry.objects.create_entry(
+            self, account, -self.amount * payer_creditline.bal_mult)
         self.status = 'completed'
         self.save()
-        
-class PaymentLinkManager(models.Manager):
-    def create_link(self, payment, account, amount):
-        # TODO: Make sure we're staying within account limits?
-        entry = account.create_entry(
-            amount=amount,
-            date=payment.last_attempted_at,
-            memo='Payment %s' % payment.id)
-        self.create(payment=payment, entry=entry)
 
-# TODO: Remove this class entirely.  Just put payment_id field on AccountEntry.
-class PaymentLink(models.Model):
-    payment = models.ForeignKey(Payment, related_name='links')
-    entry = models.ForeignKey(AccountEntry, unique=True, related_name='links')
-    
-    objects = PaymentLinkManager()
+class EntryManager(models.Manager):
+    def create_entry(self, payment, account, amount):
+        "Creates entry, updates account balance, and sets entry.new_balance."
+        new_balance = account.balance + amount
+        account.balance = new_balance
+        account.save()
+        self.create(payment=payment, account=account, amount=amount,
+                    new_balance=new_balance)
+
+class Entry(models.Model):
+    "An entry on an account for a payment."
+    payment = models.ForeignKey(Payment, related_name='entries')
+    account = models.ForeignKey(Account, related_name='entries')
+    amount = AmountField()
+    new_balance = AmountField()
+
+    objects = EntryManager()
     
     def __unicode__(self):
-        return u"Link for %s: %s" % (self.payment, self.entry)
+        return u"%s entry on %s" % (self.amount, self.account)
+
+    @property
+    def date(self):
+        return self.payment.last_attempted_at
 
