@@ -43,7 +43,7 @@ class Endorsement(models.Model):
         return self.endorser
 
     def can_edit(self, profile):
-        return self.endorser == profile or profile.user.is_staff
+        return self.endorser == profile
 
     @classmethod
     def get_by_id(cls, id):

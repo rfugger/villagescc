@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
 from cc.general.util import render
 from cc.endorse.forms import EndorseForm
@@ -12,6 +12,8 @@ from cc.feed.models import FeedItem
 @render()
 def endorse_user(request, recipient_username):
     recipient = get_object_or_404(Profile, user__username=recipient_username)
+    if recipient == request.profile:
+        raise Http404()
     try:
         endorsement = Endorsement.objects.get(
             endorser=request.profile, recipient=recipient)

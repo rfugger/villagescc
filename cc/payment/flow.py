@@ -51,8 +51,13 @@ class FlowGraph(object):
     def max_flow(self):
         if self.recipient.id not in self.graph.nodes():
             return 0
-        return nx.max_flow(
-            self.graph, self.payer.id, self.recipient.id)
+        try:
+            amount = nx.max_flow(
+                self.graph, self.payer.id, self.recipient.id)
+        except nx.NetworkXUnbounded:
+            return D('Infinity')
+        else:
+            return float_to_decimal(amount)
 
     def _build_graph(self, seed_node):
         """
@@ -110,8 +115,9 @@ class FlowGraph(object):
         chunks = edge_weight(creditline)
         # Add first edge normally.
         capacity, weight = chunks[0]
-        graph.add_edge(src, dest, weight=weight,
-                       capacity=float(capacity), creditline=creditline)
+        graph.add_edge(src, dest, weight=weight, creditline=creditline)
+        if capacity != float('inf'):
+            graph[src][dest]['capacity'] = float(capacity)
         for i, chunk in enumerate(chunks[1:]):
             # For multiple edges between src and dest, network_simplex
             # doesn't handle multigraph (as of 1.5), so insert dummy nodes

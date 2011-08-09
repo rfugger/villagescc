@@ -4,6 +4,9 @@
 
 {% block content %}
 <h2>Promise History with {{ partner }}</h2>
+
+<p><a href="{{ partner.get_absolute_url }}">{{ partner }}'s Profile</a></p>
+
 {% if entries %}
 <table class="data">
 	<tr>

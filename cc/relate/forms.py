@@ -6,10 +6,13 @@ from cc.ripple import PRECISION, SCALE
 import cc.ripple.api as ripple
 from cc.feed.models import FeedItem
 
+ROUTED = 'routed'
+DIRECT = 'direct'
+
 # TODO: Move to cc.promise app?
 class PromiseForm(forms.Form):
     ripple = forms.ChoiceField(
-        choices=(('routed', 'Routed Promise'), ('direct', 'Personal Promise')),
+        choices=((ROUTED, 'Routed Promise'), (DIRECT, 'Personal Promise')),
         widget=forms.RadioSelect)
     amount = forms.DecimalField(
         max_digits=PRECISION, decimal_places=SCALE,
@@ -30,7 +33,7 @@ class PromiseForm(forms.Form):
     def clean(self):
         data = self.cleaned_data
         # Enforce max_ripple amount.
-        if data.get('ripple'):
+        if data.get('ripple') == ROUTED:
             if data['amount'] > self.max_ripple:
                 self._errors['amount'] = self.error_class(
                     [self.ERRORS['max_ripple']])
@@ -38,7 +41,7 @@ class PromiseForm(forms.Form):
 
     def send_promise(self, payer, recipient):
         data = self.cleaned_data
-        routed = data.get('ripple') == 'routed'
+        routed = data.get('ripple') == ROUTED
         obj = ripple.pay(
             payer, recipient, data['amount'], data['memo'], routed=routed)
         # Create feed item
