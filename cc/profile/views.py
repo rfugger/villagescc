@@ -8,6 +8,7 @@ from cc.profile.forms import RegistrationForm, ProfileForm, ContactForm
 from cc.profile.models import Profile
 from cc.feed.models import FeedItem
 from cc.post.models import Post
+import cc.ripple.api as ripple
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
@@ -65,6 +66,7 @@ def profile_posts(request, username):
 def profile_endorsements(request, username):
     profile = get_object_or_404(Profile, user__username=username)
     endorsements = profile.endorsements_received.order_by('-updated')
+    trusted_endorsement_sum = profile.trusted_endorsement_sum(request.profile)
     return locals()
 
 @render()

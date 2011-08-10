@@ -57,6 +57,20 @@ class Profile(models.Model):
     def feed_poster(self):
         return self
 
+    # TODO: Cache this as a field on this model?
+    @property
+    def endorsement_sum(self):
+        return self.endorsements_received.all().aggregate(
+            models.Sum('weight'))['weight__sum'] or 0
+
+    def trusted_endorsement_sum(self, asker):
+        """"
+        Returns max flow of endorsements from asker to self across endorsement
+        network.
+        """
+        import cc.ripple.api as ripple
+        return ripple.credit_reputation(self, asker)
+    
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)

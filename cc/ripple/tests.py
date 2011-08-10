@@ -19,8 +19,12 @@ class BasicTest(TestCase):
         self.account = Account.objects.create_account(self.node1, self.node2)
         self.node1_creditline = CreditLine.objects.get(
             account=self.account, node=self.node1)
+        self.node1_creditline.limit = None
+        self.node1_creditline.save()
         self.node2_creditline = CreditLine.objects.get(
             account=self.account, node=self.node2)
+        self.node2_creditline.limit = None
+        self.node2_creditline.save()
 
     def reload(self):
         """

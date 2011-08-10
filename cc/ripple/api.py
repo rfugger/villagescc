@@ -171,3 +171,7 @@ def get_payment(payment_id):
     payment = Payment.objects.get(pk=payment_id)
     return RipplePayment(payment)
 
+@accept_profiles
+def credit_reputation(target, asker):
+    flow_graph = FlowGraph(target, asker, ignore_balances=True)
+    return flow_graph.max_flow()

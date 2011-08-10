@@ -50,3 +50,4 @@ class OneHopPaymentTest(BasicTest):
         entries = payment.entries.all()
         self.assertEquals(len(entries), 1)
         
+# TODO: Test zero limits.  Might be problems with non-terminating simplex...
