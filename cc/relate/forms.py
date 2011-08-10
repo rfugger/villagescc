@@ -2,6 +2,7 @@ from decimal import Decimal as D
 
 from django import forms
 
+from cc.relate.models import Endorsement
 from cc.ripple import PRECISION, SCALE
 import cc.ripple.api as ripple
 from cc.feed.models import FeedItem
@@ -9,7 +10,21 @@ from cc.feed.models import FeedItem
 ROUTED = 'routed'
 DIRECT = 'direct'
 
-# TODO: Move to cc.promise app?
+class EndorseForm(forms.ModelForm):
+    class Meta:
+        model = Endorsement
+        exclude = ('endorser', 'recipient', 'updated')
+
+    # TODO: Limit weight to endorser.endorsements_remaining.
+        
+    def save(self, endorser=None, recipient=None):
+        endorsement = super(EndorseForm, self).save(commit=False)
+        if not self.instance.id:
+            endorsement.endorser = endorser
+            endorsement.recipient = recipient
+        endorsement.save()
+        return endorsement
+
 class PromiseForm(forms.Form):
     ripple = forms.ChoiceField(
         choices=((ROUTED, 'Routed Promise'), (DIRECT, 'Personal Promise')),

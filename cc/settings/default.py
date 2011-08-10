@@ -105,7 +105,6 @@ INSTALLED_APPS = (
 
     'cc.geo',
     'cc.profile',
-    'cc.endorse',
     'cc.post',
     'cc.feed',
     'cc.relate',

@@ -55,5 +55,5 @@ class Endorsement(models.Model):
 
 # Create new empty profile when a new user is created.
 post_save.connect(Endorsement.update_credit_limit, sender=Endorsement,
-                  dispatch_uid='endorse.models')
+                  dispatch_uid='relate.models')
 # TODO: Propagate Endorsement delete through to ripple backend using post_delete.

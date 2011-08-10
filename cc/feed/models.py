@@ -32,7 +32,7 @@ from django.conf import settings
 from cc.profile.models import Profile
 from cc.geo.models import Location
 from cc.post.models import Post
-from cc.endorse.models import Endorsement
+from cc.relate.models import Endorsement
 from cc.ripple.api import RipplePayment
 
 # Classes that can be stored as feed items.

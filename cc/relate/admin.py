@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from cc.endorse.models import Endorsement
+from cc.relate.models import Endorsement
 
 admin.site.register(Endorsement)
