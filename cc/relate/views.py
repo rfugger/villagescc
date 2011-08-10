@@ -8,6 +8,7 @@ from cc.profile.models import Profile
 from cc.relate.forms import EndorseForm, PromiseForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
+from cc.ripple.api import RipplePayment
 
 
 @login_required
@@ -71,5 +72,11 @@ def promise_user(request, recipient_username):
         form = PromiseForm(max_ripple=max_amount)
     can_ripple = max_amount > 0
     return locals()
-        
-        
+
+@login_required
+@render()
+def promises(request):
+    promises = FeedItem.objects.get_feed(
+        request.profile, radius=None, item_type_filter=RipplePayment)
+    return locals()    
+

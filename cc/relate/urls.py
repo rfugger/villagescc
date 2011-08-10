@@ -7,4 +7,5 @@ urlpatterns = patterns(
     url(r'^relationships/$', 'relationships', name='relationships'),
     url(r'^relationships/([^/]+)/$', 'relationship', name='relationship'),
     url(r'^promise/([^/]+)/$', 'promise_user', name='promise_user'),
+    url(r'^promises/$', 'promises', name='promises'),
 )

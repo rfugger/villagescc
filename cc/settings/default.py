@@ -108,7 +108,6 @@ INSTALLED_APPS = (
     'cc.post',
     'cc.feed',
     'cc.relate',
-    'cc.promise',
     
     # Ripple
     'cc.account',
