@@ -102,10 +102,10 @@ class FeedItem(models.Model):
     """
     date = models.DateTimeField(db_index=True)
     item_type = models.CharField(max_length=16, choices=(
-            ('post', 'Post'),
-            ('profile', 'Profile Update'),
-            ('payment', 'Promise'),
-            ('endorsement', 'Endorsement'),
+            (ITEM_TYPES[Post], 'Post'),
+            (ITEM_TYPES[Profile], 'Profile Update'),
+            (ITEM_TYPES[RipplePayment], 'Promise'),
+            (ITEM_TYPES[Endorsement], 'Endorsement'),
         ))
     item_id = models.PositiveIntegerField()
     user = models.ForeignKey(Profile, null=True, blank=True)

@@ -19,11 +19,8 @@ def relationships(request):
 @login_required
 @render()
 def relationship(request, partner_username):
-    # TODO: 'profile' is a required template variable for profile_base.html...
-    # Take care of this somewhere else?  Decorator?
-    profile = request.profile
-    partner = get_object_or_404(Profile, user__username=partner_username)
-    entries = ripple.get_entries_between(profile, partner)
+    profile = get_object_or_404(Profile, user__username=partner_username)
+    entries = ripple.get_entries_between(request.profile, profile)
     return locals()
 
 @login_required

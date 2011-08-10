@@ -107,7 +107,7 @@ class RipplePayment(object):
         try:
             return get_payment(payment_id)
         except Payment.DoesNotExist:
-            raise self.DoesNotExist
+            raise cls.DoesNotExist
 
 
 def accept_profiles(func):

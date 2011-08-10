@@ -91,6 +91,9 @@ class Entry(models.Model):
     new_balance = AmountField()
 
     objects = EntryManager()
+
+    class Meta:
+        verbose_name_plural = 'Entries'
     
     def __unicode__(self):
         return u"%s entry on %s" % (self.amount, self.account)

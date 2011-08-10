@@ -105,7 +105,7 @@ class CreditLine(models.Model):
     bal_mult = models.SmallIntegerField(
         choices=((1, '+1'), (-1, '-1')))
     # Max obligations node can emit to partner.
-    limit = AmountField(null=True, blank=True)
+    limit = AmountField(default=D('0'), null=True, blank=True)
 
     def __unicode__(self):
         return u"%s's credit line for account %s" % (self.node, self.account_id)

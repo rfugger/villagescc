@@ -1,11 +1,11 @@
 {% extends "profile_base.html" %}
 
-{% block title %}Relationship with {{ partner }}{% endblock %}
+{% block title %}Relationship with {{ profile }}{% endblock %}
 
 {% block content %}
-<h2>Promise History with {{ partner }}</h2>
+<h2>Promise History with {{ profile }}</h2>
 
-<p><a href="{{ partner.get_absolute_url }}">{{ partner }}'s Profile</a></p>
+<p><a href="{{ profile.get_absolute_url }}">{{ profile }}'s Profile</a></p>
 
 {% if entries %}
 <table class="data">

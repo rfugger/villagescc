@@ -11,6 +11,7 @@
 		{% else %}
 			<li><a href="{% url profile_endorsements profile.username %}"
 				   >Endorsements</a></li>
+			<li><a href="{% url relationship profile.username %}">Relationship</a></li>
 		{% endifequal %}
 	{% endif %}
 {% endblock %}
