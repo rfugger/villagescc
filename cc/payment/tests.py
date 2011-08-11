@@ -3,6 +3,7 @@ from decimal import Decimal as D
 from cc.ripple.tests import BasicTest
 from cc.payment.models import Payment
 from cc.ripple import audit
+from cc.account.models import CreditLine
 
 class OneHopPaymentTest(BasicTest):
     def test_entry(self):
@@ -36,7 +37,6 @@ class OneHopPaymentTest(BasicTest):
         self.failUnless(audit.all_payments_check())
         
         # Fine-grained checks.
-        # TODO: Decide which of these are no longer necessary.
         self.assertEquals(payment.status, 'completed')
         self.failUnless(payment.last_attempted_at >= payment.submitted_at)
         self.assertEquals(self.node1_creditline.balance, D('-1.0'))
@@ -49,5 +49,54 @@ class OneHopPaymentTest(BasicTest):
         self.assertEquals(entry.date, payment.last_attempted_at)
         entries = payment.entries.all()
         self.assertEquals(len(entries), 1)
+
+    def _set_limit(self, creditline, limit):
+        creditline.limit = limit
+        creditline.save()
+        self.reload()        
         
-# TODO: Test zero limits.  Might be problems with non-terminating simplex...
+    def _payment(self, creditline, amount, succeed=True):
+        initial_balance = creditline.balance
+
+        payment = Payment.objects.create(
+            payer=creditline.node, recipient=creditline.partner, amount=amount)
+        payment.attempt()
+        self.reload()
+        creditline = CreditLine.objects.get(pk=creditline.id)
+        
+        self.failUnless(audit.all_accounts_check())
+        self.failUnless(audit.all_payments_check())
+
+        if succeed:
+            correct_status = 'completed'
+            correct_balance = initial_balance - amount
+        else:
+            correct_status = 'failed'
+            correct_balance = initial_balance
+        self.assertEquals(payment.status, correct_status)
+        self.assertEquals(creditline.balance, correct_balance)
+        
+    def test_limit(self):
+        self._set_limit(self.node1_creditline, 5)
+        self._payment(self.node1_creditline, 1)
+
+    def test_over_limit(self):
+        self._set_limit(self.node1_creditline, 5)
+        self._payment(self.node1_creditline, 10, succeed=False)
+
+    def test_zero_limit(self):
+        self._set_limit(self.node1_creditline, 0)
+        self._payment(self.node1_creditline, 1, succeed=False)
+
+    def test_exact_limit(self):
+        self._set_limit(self.node1_creditline, 5)
+        self._payment(self.node1_creditline, 5)
+        
+    def test_multi_payment(self):
+        self._set_limit(self.node1_creditline, 10)
+        self._set_limit(self.node2_creditline, 0)
+        self._payment(self.node1_creditline, D('6.4'))
+        self._payment(self.node1_creditline, D('1.3'))
+        self._payment(self.node2_creditline, D('10'), succeed=False)
+        self._payment(self.node2_creditline, D('4'))
+        self.assertEquals(self.node1_creditline.balance, D('-3.7'))

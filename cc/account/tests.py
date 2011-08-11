@@ -1,7 +1,7 @@
 from decimal import Decimal as D
 from datetime import datetime
 
-from cc.ripple.tests import BasicTest, LimitsTest
+from cc.ripple.tests import BasicTest
 
 class BasicAccountTest(BasicTest):
     def test_display(self):

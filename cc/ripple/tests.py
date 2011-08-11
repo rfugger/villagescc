@@ -36,11 +36,3 @@ class BasicTest(TestCase):
             if isinstance(obj, models.Model):
                 setattr(self, obj_name, obj.__class__.objects.get(pk=obj.id))
         
-class LimitsTest(BasicTest):
-    """
-    Add limits to account.
-    """
-    def setUp(self):
-        super(LimitsTest, self).setUp()
-        self.node1_creditline.limit = D('5')
-        self.node1_creditline.save()

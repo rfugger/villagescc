@@ -129,20 +129,23 @@ def add_creditline_to_graph(graph, creditline, ignore_balances):
         chunks = edge_weight(creditline)
     # Add first edge normally.
     capacity, weight = chunks[0]
-    graph.add_edge(src, dest, weight=weight, creditline=creditline)
-    if capacity != float('inf'):
-        graph[src][dest]['capacity'] = float(capacity)
+    if capacity > 0:
+        graph.add_edge(src, dest, weight=weight, creditline=creditline)
+        # Infinite capacity is indicated by not adding a capacity.
+        if capacity != float('inf'):
+            graph[src][dest]['capacity'] = float(capacity)
     for i, chunk in enumerate(chunks[1:]):
         # For multiple edges between src and dest, network_simplex
         # doesn't handle multigraph (as of 1.5), so insert dummy nodes
         # in the middle of each extra edge as a workaround. (See
         # https://networkx.lanl.gov/trac/ticket/607.
         capacity, weight = chunk
-        dummy_node = u'%s__%s' % (dest, i)
-        graph.add_edge(src, dummy_node, weight=weight,
-                       capacity=float(capacity), creditline=creditline)
-        graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
-        # Dummy edge has no creditline, so can be ignored later.
+        if capacity > 0:
+            dummy_node = u'%s__%s' % (dest, i)
+            graph.add_edge(src, dummy_node, weight=weight,
+                           capacity=float(capacity), creditline=creditline)
+            graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
+            # Dummy edge has no creditline, so can be ignored later.
 
 def edge_weight(creditline):
     """
