@@ -7,6 +7,7 @@ from django.conf import settings
 
 from cc.account.models import CreditLine
 from cc.ripple import SCALE
+from cc.payment.mincost import min_cost_flow
 
 class PaymentError(Exception):
     "Base class for all payment exceptions."
@@ -41,7 +42,7 @@ class FlowGraph(object):
         if self.recipient.id not in self.graph.nodes():
             raise NoRoutesError()
         try:
-            _, flow_dict = nx.network_simplex(self.graph)
+            _, flow_dict = min_cost_flow(self.graph)
         except nx.NetworkXUnfeasible:
             raise InsufficientCreditError()
         else:
@@ -192,19 +193,20 @@ def edge_weight(creditline):
 def creditline_amounts(flow_dict, graph):
     """
     Returns a list of (creditline, amount) tuples that represent the
-    flow of a payment. Takes a flow_dict from network_simplex.
+    flow of a payment. Takes a flow_dict from min_cost_flow.
     """
     amount_dict = {}  # Index by creditline.
     for src_node, node_flow_dict in flow_dict.items():
-        for dest_node, amount in node_flow_dict.items():
-            amount = float_to_decimal(amount)
-            if amount == 0:  # Ignore zero amounts.
-                continue
-            creditline = graph[src_node][dest_node].get('creditline')
-            if not creditline:  # Dummy edge.
-                continue
-            amount_dict.setdefault(creditline, 0)
-            amount_dict[creditline] += float_to_decimal(amount)
+        for dest_node, edge_dict in node_flow_dict.items():
+            for amount in edge_dict.values():
+                amount = float_to_decimal(amount)
+                if amount == 0:  # Ignore zero amounts.
+                    continue
+                creditline = graph[src_node][dest_node].get('creditline')
+                if not creditline:  # Dummy edge.
+                    continue
+                amount_dict.setdefault(creditline, 0)
+                amount_dict[creditline] += amount
     return amount_dict.items()
             
 def float_to_decimal(amount):

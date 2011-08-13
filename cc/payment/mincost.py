@@ -47,7 +47,7 @@ def min_cost_flow(G, demand='demand', capacity='capacity', weight='weight'):
             for node, edge_dict in H[source].items():
                 # Only one edge to each supply node from source.
                 data = edge_dict[0]
-                if data['capacity'] != data['flow']:
+                if data['capacity'] != data.get('flow', 0):
                     raise nx.NetworkXUnfeasible(
                         "No flow satisfying all demands.")
             break

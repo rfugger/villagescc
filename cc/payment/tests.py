@@ -120,7 +120,6 @@ class SimpleMultiHopPaymentTest(RippleTest):
     def test_multi_payment(self):
         self._payment(self.n1, self.n3, 3)
         self._payment(self.n3, self.n1, 1)
-        import pdb; pdb.set_trace()
         self._payment(self.n2, self.n3, 4)
         self._payment(self.n1, self.n3, 10, succeed=False)
         self._payment(self.n2, self.n1, 5)
