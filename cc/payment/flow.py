@@ -147,6 +147,18 @@ def add_creditline_to_graph(graph, creditline, ignore_balances):
             graph.add_edge(dummy_node, dest)  # Zero weight, infinite capacity.
             # Dummy edge has no creditline, so can be ignored later.
 
+def scale_weights_to_int(edge_weight_func):
+    """
+    Decorator for edge_weight function.
+    Due to networkx bug (https://networkx.lanl.gov/trac/ticket/618),
+    edge weights must be integers, so floats are scaled up to suitable ints.
+    """
+    def decorated_func(creditline):
+        return [(capacity, int(weight * 1000000))
+                for capacity, weight in edge_weight_func(creditline)]
+    return decorated_func
+            
+@scale_weights_to_int
 def edge_weight(creditline):
     """
     Assigns a cost to using this creditline in a payment.  Cashing in existing
