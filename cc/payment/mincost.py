@@ -54,7 +54,7 @@ def min_cost_flow(G, demand='demand', capacity='capacity', weight='weight'):
 
         new_flow, path_edges = _max_path_flow(
             R, path, capacity=capacity, weight=weight)
-        new_cost =  _augment_flow(H, path_edges, new_flow)
+        new_cost =  _augment_flow(H, path_edges, new_flow, R)
         flow_cost += new_cost
 
     H.remove_node(source)
@@ -69,10 +69,17 @@ def _residual_graph(G, capacity, weight):
     For each edge e of G,
 
     1) if flow is less than capacity, then the residual has an edge in the same
-    direction as e, with capacity equal to remaining capacity on e.
+    direction as e, with capacity equal to remaining capacity on e, and weight
+    equal to e.
 
     2) if flow is greater than zero, then the residual has an edge in the
-    opposite direction as e, with capacity equal to flow on e.
+    opposite direction as e, with capacity equal to flow on e, and weight
+    the negative of e's.
+
+    Each edge of the residual graph stores the key of the corresponding edge in
+    the original flow graph in the orig_key attribute, and edges that represent
+    potentially reversed flows have an 'is_reversed' attribute set to True.
+    
     """
     R = nx.MultiDiGraph()
     for u, v, key, data in G.edges_iter(keys=True, data=True):
@@ -86,11 +93,16 @@ def _residual_graph(G, capacity, weight):
         else:
             new_capacity = edge_capacity - flow
         if new_capacity is None or new_capacity > 0:
-            edge_attrs = {capacity: new_capacity, weight: edge_weight}
-            R.add_edge(u, v, key=key, **edge_attrs)
+            edge_attrs = {capacity: new_capacity,
+                          weight: edge_weight,
+                          'orig_key': key}
+            R.add_edge(u, v, **edge_attrs)
         if flow > 0:
-            edge_attrs = {capacity: flow, weight: -edge_weight}
-            R.add_edge(v, u, key='%d__rev' % key, **edge_attrs)
+            edge_attrs = {capacity: flow,
+                          weight: -edge_weight,
+                          'orig_key': key,
+                          'is_reversed': True}
+            R.add_edge(v, u, **edge_attrs)
     return R
     
 
@@ -112,7 +124,10 @@ def _bellman_ford_path(G, source, target, weight):
     return path
             
 def _max_path_flow(G, path, capacity, weight):
-    "Returns max flow on path, as well as list of edges with keys for path."
+    """
+    Returns max flow on path, as well as list of edges with keys for path,
+    and whether each edge represents a reversal of present flow.
+    """
     min_edge_capacity = float('inf')
     flow_edges = []
     for index, u in enumerate(path[:-1]):
@@ -127,7 +142,7 @@ def _max_path_flow(G, path, capacity, weight):
         edge_capacity = data.get(capacity)
         if edge_capacity is None: edge_capacity = float('inf')
         min_edge_capacity = min(edge_capacity, min_edge_capacity)
-        flow_edges.append((u, v, key))
+        flow_edges.append((u, v, key, data.get('is_reversed', False)))
     return min_edge_capacity, flow_edges
 
 def _min_weight_edge(edge_dict, weight):
@@ -141,29 +156,20 @@ def _min_weight_edge(edge_dict, weight):
             min_weight_edge = (key, data)
     return min_weight_edge
         
-def _augment_flow(G, flow_edges, flow):
+def _augment_flow(G, flow_edges, flow, R):
     "Add flow across flow_edges to G."
     cost = 0
-    for u, v, residual_key in flow_edges:
-        data, is_reversed = _edge_data(G, u, v, residual_key)
-        if is_reversed:
-            edge_flow = -flow
-        else:
+    for u, v, residual_key, is_reversed in flow_edges:
+        key = R[u][v][residual_key]['orig_key']
+        if not is_reversed:
+            data = G[u][v][key]
             edge_flow = flow
+        else:
+            data = G[v][u][key]
+            edge_flow = -flow
         data['flow'] = data.get('flow', 0) + edge_flow
         cost += edge_flow * data.get('weight', 0)
     return cost
-
-def _edge_data(G, u, v, residual_key):
-    """
-    Returns edge data dict and whether edge represents reduction of flow in
-    opposite direction, given nodes u, v, and residual edge key.
-    """
-    if isinstance(residual_key, basestring) and residual_key.endswith('__rev'):
-        key = int(residual_key[:-5])
-        return G[v][u][key], True
-    else:
-        return G[u][v][residual_key], False
 
 def _create_flow_dict(G):
     "Creates the flow dict of dicts of dicts for graph G."
@@ -174,3 +180,4 @@ def _create_flow_dict(G):
     for u, v, key, data in H.edges_iter(keys=True, data=True):
         flowDict[u][v][key] = data.get('flow', 0)
     return flowDict
+
