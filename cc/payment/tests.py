@@ -296,7 +296,7 @@ class MinCostFlowTest(TestCase):
         
     def test_random(self):
         random.seed(0)
-        for i in xrange(100):
+        for i in range(10):
             self.run_random_trial()
     
     def run_random_trial(self):
