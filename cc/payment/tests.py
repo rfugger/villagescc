@@ -1,4 +1,5 @@
 from decimal import Decimal as D
+import random
 
 from django.test import TestCase
 import networkx as nx
@@ -8,6 +9,7 @@ from cc.payment.models import Payment
 from cc.ripple import audit
 from cc.account.models import Node, Account, CreditLine
 from cc.payment.mincost import min_cost_flow
+from cc.payment.testutil import generate_edges, unmulti
 
 class OneHopPaymentTest(BasicTest):
     def test_entry(self):
@@ -291,4 +293,39 @@ class MinCostFlowTest(TestCase):
                 2: {}}
         self.assertEquals(flow_dict, soln)
         self.assertEquals(flow_cost, 1)
+        
+    def test_random(self):
+        random.seed(0)
+        for i in xrange(100):
+            self.run_random_trial()
+    
+    def run_random_trial(self):
+        G = nx.MultiDiGraph()
+        nodes = range(1, 10)
+        edges = generate_edges(nodes, 50)
+        G.add_edges_from(edges)
+        source = random.choice(G.nodes())
+        while True:
+            target = random.choice(G.nodes())
+            if target != source:
+                break
+        amount = random.randint(1, 10)
+        G.node[source]['demand'] = -amount
+        G.node[target]['demand'] = amount
+
+        cost, flow_dict, exception = None, None, None
+        try:
+            cost, flow_dict = min_cost_flow(G)
+        except nx.NetworkXException as e:
+            exception = e
+
+        H = unmulti(G)
+        try:
+            cost2, flow_dict2 = nx.network_simplex(H)
+        except nx.NetworkXException as e:
+            self.assertEquals(type(e) != type(exception))
+            self.assertEquals(cost, None)
+        else:
+            self.assertEquals(cost, cost2)
+            self.assertEquals(exception, None)
         

@@ -37,7 +37,8 @@ def min_cost_flow(G, demand='demand', capacity='capacity', weight='weight'):
     # for each node.  Then can use dijskstra_path instead of bellman_ford.
 
     flow_cost = 0
-    while True:
+    search = source in H.nodes()  # No source => no demand => no flow.
+    while search:
         R = _residual_graph(H, capacity=capacity, weight=weight)
         try:
             #path = nx.dijkstra_path(R, source, sink, weight=weight)
@@ -57,8 +58,9 @@ def min_cost_flow(G, demand='demand', capacity='capacity', weight='weight'):
         new_cost =  _augment_flow(H, path_edges, new_flow, R)
         flow_cost += new_cost
 
-    H.remove_node(source)
-    H.remove_node(sink)
+    if search:
+        H.remove_node(source)
+        H.remove_node(sink)
     flow_dict = _create_flow_dict(H)
     return flow_cost, flow_dict
         
