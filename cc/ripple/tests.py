@@ -27,14 +27,15 @@ class RippleTest(TestCase):
         creditline.save()
         self.reload()        
         
-    def _payment(self, payer, recipient, amount, succeed=True):
+    def _payment(self, payer, recipient, amount, succeed=None):
         payment = Payment.objects.create(
             payer=payer, recipient=recipient, amount=amount)
         payment.attempt()
         self.reload()
-        
-        correct_status = succeed and 'completed' or 'failed'
-        self.assertEquals(payment.status, correct_status)
+
+        if succeed is not None:
+            correct_status = succeed and 'completed' or 'failed'
+            self.assertEquals(payment.status, correct_status)
         self.failUnless(audit.all_accounts_check())
         self.failUnless(audit.all_payments_check())
         

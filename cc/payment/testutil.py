@@ -6,15 +6,12 @@ def generate_edges(nodes, n_edges, max_cap=10, min_weight=0, max_weight=10,
                    p_reverse=0.5):
     edges = []
     edge_set = set()
-    multi = 0
     for i in xrange(n_edges):
         u = random.choice(nodes)
         while True:
             v = random.choice(nodes)
             if v != u:
                 break
-        if (u, v) in edge_set:
-            multi += 1
         else:
             edge_set.add((u, v))
         edges.append(

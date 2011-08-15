@@ -56,7 +56,7 @@ class OneHopPaymentTest(BasicTest):
         entries = payment.entries.all()
         self.assertEquals(len(entries), 1)
 
-    def _creditline_payment(self, creditline, amount, succeed=True):
+    def _creditline_payment(self, creditline, amount, succeed):
         initial_balance = creditline.balance
         self._payment(creditline.node, creditline.partner, amount, succeed)
         creditline = CreditLine.objects.get(pk=creditline.id)  # Reload.
@@ -69,7 +69,7 @@ class OneHopPaymentTest(BasicTest):
         
     def test_limit(self):
         self._set_limit(self.node1_creditline, 5)
-        self._creditline_payment(self.node1_creditline, 1)
+        self._creditline_payment(self.node1_creditline, 1, succeed=True)
 
     def test_over_limit(self):
         self._set_limit(self.node1_creditline, 5)
@@ -81,15 +81,15 @@ class OneHopPaymentTest(BasicTest):
 
     def test_exact_limit(self):
         self._set_limit(self.node1_creditline, 5)
-        self._creditline_payment(self.node1_creditline, 5)
+        self._creditline_payment(self.node1_creditline, 5, succeed=True)
         
     def test_multi_payment(self):
         self._set_limit(self.node1_creditline, 10)
         self._set_limit(self.node2_creditline, 0)
-        self._creditline_payment(self.node1_creditline, D('6.4'))
-        self._creditline_payment(self.node1_creditline, D('1.3'))
+        self._creditline_payment(self.node1_creditline, D('6.4'), succeed=True)
+        self._creditline_payment(self.node1_creditline, D('1.3'), succeed=True)
         self._creditline_payment(self.node2_creditline, D('10'), succeed=False)
-        self._creditline_payment(self.node2_creditline, D('4'))
+        self._creditline_payment(self.node2_creditline, D('4'), succeed=True)
         self.assertEquals(self.node1_creditline.balance, D('-3.7'))
 
 class SimpleMultiHopPaymentTest(RippleTest):
@@ -111,7 +111,7 @@ class SimpleMultiHopPaymentTest(RippleTest):
         self._set_limit(self.cl23, D('7'))
         
     def test_payment(self):
-        self._payment(self.n1, self.n3, 1)
+        self._payment(self.n1, self.n3, 1, succeed=True)
 
     def test_over_limit(self):
         self._payment(self.n1, self.n3, 6, succeed=False)
@@ -120,11 +120,45 @@ class SimpleMultiHopPaymentTest(RippleTest):
         self._payment(self.n3, self.n1, 1, succeed=False)
 
     def test_multi_payment(self):
-        self._payment(self.n1, self.n3, 3)
-        self._payment(self.n3, self.n1, 1)
-        self._payment(self.n2, self.n3, 4)
+        self._payment(self.n1, self.n3, 3, succeed=True)
+        self._payment(self.n3, self.n1, 1, succeed=True)
+        self._payment(self.n2, self.n3, 4, succeed=True)
         self._payment(self.n1, self.n3, 10, succeed=False)
-        self._payment(self.n2, self.n1, 5)
+        self._payment(self.n2, self.n1, 5, succeed=True)
+
+class RandomMultiHopPaymentTest(RippleTest):
+    multi_db = True
+
+    def setUp(self):
+        self.node_names = range(10)
+        for i in self.node_names:
+            Node.objects.create(alias=i)
+
+        random.seed(14)
+        edges = generate_edges(self.node_names, 50, p_reverse=0.7)
+        for u, v, data in edges:
+            node = Node.objects.get(alias=u)
+            account = Account.objects.get_or_create_account(
+                node, Node.objects.get(alias=v))
+            cl = CreditLine.objects.get(account=account, node=node)
+            cl.limit = data['capacity']
+            cl.save()
+
+    def _pay_between_aliases(self, payer_alias, recipient_alias, amount):
+        self._payment(Node.objects.get(alias=payer_alias),
+                      Node.objects.get(alias=recipient_alias),
+                      amount, succeed=None)
+                                       
+    def test_payments(self):
+        for i in range(10):
+            payer_alias = random.choice(self.node_names)
+            while True:
+                recipient_alias = random.choice(self.node_names)
+                if recipient_alias != payer_alias:
+                    break
+            amount = D(random.randint(1, 1000)) / 100
+            self._pay_between_aliases(payer_alias, recipient_alias, amount)
+    
         
 class MinCostFlowTest(TestCase):
     def test_one_edge(self):
