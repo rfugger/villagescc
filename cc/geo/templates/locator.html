@@ -29,6 +29,12 @@
 			<th></th>
 			<td><input type="submit" value="Set Location" /></td>
 		</tr>
+		{% if profile and request.location and request.location != profile.location %}
+			<tr>
+				<th></th>
+				<td><input type="submit" name="clear" value="Reset to Home" /></td>
+			</tr>
+		{% endif %}
 	</table>
 </form>
 {% endblock %}

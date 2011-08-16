@@ -50,8 +50,8 @@ class Profile(models.Model):
         return self.updated
 
     def get_feed_users(self):
-        "Make profile updates available in poster's feed, and publicly."
-        return (self, None)
+        "Make profile updates available publicly."
+        return (None,)
 
     @property
     def feed_poster(self):

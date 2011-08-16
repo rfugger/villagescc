@@ -26,10 +26,11 @@ def edit_post(request, post_id=None):
         form = PostForm(instance=post)
     return locals()
 
+@login_required
 @render()
 def posts(request):
     posts = FeedItem.objects.get_feed(
-        request.profile, radius=None, item_type_filter=Post)
+        request.profile, request.location, item_type_filter=Post)
     return locals()    
 
 @render('post.html')

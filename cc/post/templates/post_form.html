@@ -15,7 +15,7 @@
 		<tr>
 			<th>Location</th>
 			<td>{{ user.get_profile.location }}
-				| <a href="{% url locator %}?home=1&next={{ request.path }}">Change Home Location</a>
+				| <a href="{% url locator %}?next={{ request.path }}">Change Home Location</a>
 			</td>
 		</tr>
 		{{ form }}

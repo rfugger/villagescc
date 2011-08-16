@@ -6,6 +6,7 @@ MESSAGES = {
     'set_home': "Please set your home location.",
 }
 
+# TODO: Is this necessary?
 def profile_location_required(view_func):
     """
     Decorator that requires logged-in user to have a location set in their
@@ -17,7 +18,7 @@ def profile_location_required(view_func):
     def decorated_func(request, *args, **kwargs):
         if not request.profile.location:
             messages.info(request, MESSAGES['set_home'])
-            return HttpResponseRedirect('%s?home=1&next=%s' % (
+            return HttpResponseRedirect('%s?next=%s' % (
                     reverse('locator'), request.path))
         return view_func(request, *args, **kwargs)
     return decorated_func

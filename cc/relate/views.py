@@ -34,7 +34,7 @@ def endorse_user(request, recipient_username):
 @render()
 def endorsements(request):
     endorsements = FeedItem.objects.get_feed(
-        request.profile, radius=None, item_type_filter=Endorsement)
+        request.profile, location=None, item_type_filter=Endorsement)
     return locals()
 
 @login_required
@@ -77,6 +77,6 @@ def promise_user(request, recipient_username):
 @render()
 def promises(request):
     promises = FeedItem.objects.get_feed(
-        request.profile, radius=None, item_type_filter=RipplePayment)
+        request.profile, location=None, item_type_filter=RipplePayment)
     return locals()    
 

@@ -28,6 +28,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.db.models import Q
 from django.conf import settings
+from django.contrib.gis.db.models import GeoManager
 
 from cc.profile.models import Profile
 from cc.geo.models import Location
@@ -47,8 +48,8 @@ ITEM_TYPES = {
 MODEL_TYPES = dict(((item_type, model)
                     for model, item_type in ITEM_TYPES.items()))
 
-class FeedManager(models.Manager):
-    def get_feed(self, profile, location, same_city=True,
+class FeedManager(GeoManager):
+    def get_feed(self, profile, location, radius=settings.DEFAULT_FEED_RADIUS,
                  page=1, limit=settings.FEED_ITEMS_PER_PAGE,
                  item_type_filter=None):
         """
@@ -65,36 +66,20 @@ class FeedManager(models.Manager):
             query = query.filter(user=None)
         if item_type_filter:
             query = query.filter(item_type=ITEM_TYPES[item_type_filter])
-        if same_city and location:
+        if radius and location and radius:
             query = query.filter(
-                Q(location__country=location.country,
-                  location__state=location.state,
-                  location__city=location.city) |
+                Q(location__point__dwithin=(location.point, radius)) |
                 Q(location__isnull=True))
-        item_ids = query.values_list('item_type', 'item_id').distinct()
         if limit is not None:
             offset = limit * (page - 1)
-            item_ids = item_ids[offset:offset + limit]
-        return self._load_feed_items(item_ids)
+            query = query[offset:offset + limit]
+        items = []
+        for feed_item in query:
+            item = feed_item.item
+            if item:
+                items.append(item)
+        return items
         
-    def _load_feed_items(self, item_ids):
-        """
-        Returns a list of actual model objects from a list of tuples
-        (item_type, item_id).
-        """
-        feed_items = []
-        for item_type, item_id in item_ids:
-            model = MODEL_TYPES[item_type]
-            try:
-                obj = model.get_by_id(item_id)
-            except model.DoesNotExist:
-                # Feed items have no referential integrity in the db,
-                # so catch cases where model record with item_id is gone.
-                pass
-            else:
-                feed_items.append(obj)
-        return feed_items
-
 class FeedItem(models.Model):
     """
     A denormalized record of feed data, merged for ease of ordering by date
@@ -129,6 +114,17 @@ class FeedItem(models.Model):
             s = u"%s for %s" % (s, self.user)
         return s
 
+    @property
+    def item(self):
+        model = MODEL_TYPES[self.item_type]
+        try:
+            item = model.get_by_id(self.item_id)
+        except model.DoesNotExist:
+            # Feed items have no referential integrity in the db,
+            # so catch cases where model record with item_id is gone.
+            item = None
+        return item
+        
     @classmethod
     def create_feed_items(cls, sender, instance, created, **kwargs):
         """

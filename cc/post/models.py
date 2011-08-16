@@ -38,8 +38,8 @@ class Post(models.Model):
         return self.user == profile or profile.user.is_staff
 
     def get_feed_users(self):
-        "Make post available in poster's feed, and publicly."
-        return (self.user, None)
+        "Make post available publicly."
+        return (None,)
 
     @property
     def feed_poster(self):

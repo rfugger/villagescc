@@ -25,9 +25,15 @@ def locator(request):
     # Work on a copy of profile location, since it is modified by
     # form validation.
     instance = profile and profile.location and profile.location.clone()
+    # Don't overwrite old location -- old posts, etc., still need it.
+    if instance:
+        instance.id = None
     if request.method == 'POST':
         form = LocationForm(request.POST, instance=instance)
         if form.is_valid():
+            if 'clear' in request.POST:
+                Location.clear_session(request)
+                return redirect_after_locator(request)
             save = (profile and (profile.location is None or
                                  form.cleaned_data['set_home']))
             location = form.save(commit=save)
@@ -38,10 +44,7 @@ def locator(request):
             else:
                 location.to_session(request)
             messages.info(request, MESSAGES['location_set'])
-            next = request.GET.get('next')
-            if next and ':' not in next:  # Local redirects only -- no 'http://...'.
-                return HttpResponseRedirect(next)
-            return redirect('home')
+            return redirect_after_locator(request)
         else:
             
             # TODO: Set initial_lat, initial_lng for map redisplay.
@@ -63,6 +66,13 @@ def locator(request):
                 initial_lat, initial_lng = settings.DEFAULT_LOCATION
     get_browser_location = request.location is None
     return locals()
+
+def redirect_after_locator(request):
+    next = request.GET.get('next')
+    if next and ':' not in next:  # Local redirects only -- no 'http://...'.
+        return HttpResponseRedirect(next)
+    return redirect('feed')
+    
 
 def get_geoip_coords(request):
     lat, lng = '', ''

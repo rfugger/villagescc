@@ -46,7 +46,7 @@ def edit_profile(request):
 @render()
 def profiles(request):
     profiles = FeedItem.objects.get_feed(
-        request.profile, radius=None, item_type_filter=Profile)
+        request.profile, request.location, item_type_filter=Profile)
     return locals()
 
 @render()
