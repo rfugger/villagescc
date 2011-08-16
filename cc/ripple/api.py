@@ -145,7 +145,8 @@ def get_entries_between(node, partner):
     account = Account.objects.get_account(node, partner)
     if account is None:
         return []
-    return [UserAccountEntry(entry, node) for entry in account.entries.all()]
+    return [UserAccountEntry(entry, node) for entry
+            in account.entries.all().order_by('-payment__last_attempted_at')]
 
 @accept_profiles
 def max_payment(payer, recipient):

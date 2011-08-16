@@ -56,7 +56,7 @@ class FlowGraph(object):
             return 0
         try:
             amount = nx.max_flow(
-                self.graph, self.payer.alias, self.recipient.alias)
+                unmulti(self.graph), self.payer.alias, self.recipient.alias)
         except nx.NetworkXUnbounded:
             return D('Infinity')
         else:
@@ -128,7 +128,7 @@ def add_creditline_to_graph(graph, creditline, ignore_balances):
     src = creditline.node.alias
     dest = creditline.partner.alias
     if ignore_balances:
-        chunks = [(creditline.limit, 0)]
+        chunks = [(scale_flow_amount(creditline.limit), 0)]
     else:
         chunks = edge_data(creditline)
     for i, chunk in enumerate(chunks):
@@ -207,4 +207,14 @@ def unscale_flow_amount(amount):
     "Convert scaled flow amount int back to decimal."
     return D(amount) / D('1' + '0' * SCALE)
 
-            
+def unmulti(G):
+    # Convert multidigraph to regular digraph by inserting nodes in the middle
+    # of each edge.
+    H = nx.DiGraph()
+    for n, data in G.nodes(data=True):
+        H.add_node(n, **data)
+    for u, v, k, data in G.edges(keys=True, data=True):
+        i = '%s__%s__%s' % (u, v, k)
+        H.add_edge(u, i, **data)
+        H.add_edge(i, v)
+    return H

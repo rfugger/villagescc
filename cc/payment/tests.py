@@ -9,7 +9,8 @@ from cc.payment.models import Payment
 from cc.ripple import audit
 from cc.account.models import Node, Account, CreditLine
 from cc.payment.mincost import min_cost_flow
-from cc.payment.testutil import generate_edges, unmulti
+from cc.payment.testutil import generate_edges
+from cc.payment.flow import unmulti
 
 class OneHopPaymentTest(BasicTest):
     def test_entry(self):
