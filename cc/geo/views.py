@@ -6,6 +6,7 @@ from django.conf import settings
 
 from cc.general.util import render
 from cc.geo.forms import LocationForm
+from cc.geo.models import Location
 
 MESSAGES = {
     'location_set': "Location set.",
@@ -21,17 +22,21 @@ def locator(request):
     so any posts using that location get their location modified as well.
     """
     profile = request.profile
-    set_home = 'home' in request.GET and profile
-    instance = profile and profile.location
+    # Work on a copy of profile location, since it is modified by
+    # form validation.
+    instance = profile and profile.location and profile.location.clone()
     if request.method == 'POST':
         form = LocationForm(request.POST, instance=instance)
         if form.is_valid():
-            location = form.save(commit=set_home)
-            if set_home:
+            save = (profile and (profile.location is None or
+                                 form.cleaned_data['set_home']))
+            location = form.save(commit=save)
+            if save:
                 profile.location = location
                 profile.save()
+                Location.clear_session(request)
             else:
-                location.set_current(request)
+                location.to_session(request)
             messages.info(request, MESSAGES['location_set'])
             next = request.GET.get('next')
             if next and ':' not in next:  # Local redirects only -- no 'http://...'.
@@ -46,18 +51,17 @@ def locator(request):
             pass
     else:
         form = LocationForm(instance=instance)
-        if set_home and profile.location:
+        if request.location:
 
             # TODO: Don't overwrite initial form data with geocoding javascript.
             
-            initial_lng, initial_lat = profile.location.point.tuple
+            initial_lng, initial_lat = request.location.point.tuple
         else:
             # Do an IP geocode as a rough first guess.
             initial_lat, initial_lng = get_geoip_coords(request)
             if initial_lat == '' or initial_lng == '':
                 initial_lat, initial_lng = settings.DEFAULT_LOCATION
-    location_type = set_home and "Home" or "Current"
-    get_browser_location = not (set_home and profile.location)
+    get_browser_location = request.location is None
     return locals()
 
 def get_geoip_coords(request):

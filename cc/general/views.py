@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse
+from django.contrib.auth import REDIRECT_FIELD_NAME
 
 def forbidden(request):
     """
@@ -10,8 +11,8 @@ def forbidden(request):
     forbidden message.
     """
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('%s?redirect_to=%s' % (
-                reverse('login'), request.path)) 
+        return HttpResponseRedirect('%s?%s=%s' % (
+                reverse('login'), REDIRECT_FIELD_NAME, request.path)) 
     else:
         return render(request, 'forbidden.html',
                       status=HttpResponseForbidden.status_code)

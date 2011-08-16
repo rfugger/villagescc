@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.core import serializers
 from django.core.serializers.base import DeserializationError
+from django.conf import settings
 
 from cc.general.models import VarCharField
 
@@ -39,10 +40,27 @@ class Location(models.Model):
                 names.append(value)
         return ', '.join(names)
 
-    def set_current(self, request):
+    def to_session(self, request):
         "Makes this location the current location for this session."
-        from cc.geo.middleware import LocationMiddleware
-        LocationMiddleware.set_current_location(request, self)
+        request.session[settings.LOCATION_SESSION_KEY] = self.serialize()
+
+    @classmethod
+    def from_session(cls, request):
+        location = None
+        str_data = request.session.get(settings.LOCATION_SESSION_KEY)
+        if str_data:
+            try:
+                location = cls.deserialize(str_data)
+            except LocationDeserializationError:
+                pass
+        return location
+
+    @classmethod
+    def clear_session(cls, request):
+        try:
+            del request.session[settings.LOCATION_SESSION_KEY]
+        except KeyError:
+            pass
     
     def serialize(self):
         "Serialize location to JSON."
@@ -57,3 +75,6 @@ class Location(models.Model):
         except Exception as e:
             raise LocationDeserializationError(*e.args)
         return location
+
+    def clone(self):
+        return Location.deserialize(self.serialize())

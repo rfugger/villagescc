@@ -48,12 +48,12 @@ MODEL_TYPES = dict(((item_type, model)
                     for model, item_type in ITEM_TYPES.items()))
 
 class FeedManager(models.Manager):
-    def get_feed(self, profile, radius,
-                 limit=settings.FEED_ITEMS_PER_PAGE, offset=0,
+    def get_feed(self, profile, location, same_city=True,
+                 page=1, limit=settings.FEED_ITEMS_PER_PAGE,
                  item_type_filter=None):
         """
         Get list of dereferenced feed items (actually load the Posts, Profiles,
-        etc.) for the given user profile within a certain radius.
+        etc.) for the given user profile.
         
         Pass a model class to 'item_type_filter' to only return those types of
         feed items.
@@ -65,8 +65,15 @@ class FeedManager(models.Manager):
             query = query.filter(user=None)
         if item_type_filter:
             query = query.filter(item_type=ITEM_TYPES[item_type_filter])
+        if same_city and location:
+            query = query.filter(
+                Q(location__country=location.country,
+                  location__state=location.state,
+                  location__city=location.city) |
+                Q(location__isnull=True))
         item_ids = query.values_list('item_type', 'item_id').distinct()
         if limit is not None:
+            offset = limit * (page - 1)
             item_ids = item_ids[offset:offset + limit]
         return self._load_feed_items(item_ids)
         

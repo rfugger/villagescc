@@ -33,8 +33,7 @@
 		<th>Home Location</th>
 		<td>{{ profile.location.full_name }}
 			{% ifequal user profile.user %}
-				| <a href="{% url locator %}?home=1&next={{ request.path }}">Change</a> 
-				| Make Current Location
+				| <a href="{% url locator %}?next={{ request.path }}">Change</a> 
 			{% endifequal %}
 		</td>
 	</tr><tr>
