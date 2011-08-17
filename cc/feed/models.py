@@ -66,7 +66,7 @@ class FeedManager(GeoManager):
             query = query.filter(user=None)
         if item_type_filter:
             query = query.filter(item_type=ITEM_TYPES[item_type_filter])
-        if radius and location and radius:
+        if location and radius:
             query = query.filter(
                 Q(location__point__dwithin=(location.point, radius)) |
                 Q(location__isnull=True))
@@ -140,6 +140,9 @@ class FeedItem(models.Model):
             cls.objects.filter(
                 item_type=item_type, item_id=instance.id).delete()
         for user in instance.get_feed_users():
+            # Don't allow public items with no location.
+            if user is None and instance.location is None:
+                continue
             cls.objects.create(
                 date=instance.date,
                 item_type=item_type,

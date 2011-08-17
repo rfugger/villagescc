@@ -12,9 +12,12 @@ class Profile(models.Model):
     name = VarCharField(blank=True)
     email = EmailField(blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
-    description = models.TextField(blank=True)
     photo = models.ImageField(
         upload_to='user_photos', max_length=256, blank=True)
+    description = models.TextField(
+        blank=True, help_text="Be sure to mention any skills you bring "
+        "to the community, so others can search for you.")
+    
     endorsements_remaining = models.PositiveIntegerField(
         default=settings.INITIAL_ENDORSEMENTS)
     created = models.DateTimeField(auto_now_add=True)

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 from cc.general.util import render
 from cc.profile.forms import RegistrationForm, ProfileForm, ContactForm
@@ -9,22 +10,33 @@ from cc.profile.models import Profile
 from cc.feed.models import FeedItem
 from cc.post.models import Post
 import cc.ripple.api as ripple
+from cc.geo.util import location_required
+from cc.geo.models import Location
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
     'contact_sent': "Message sent.",
+    'registration_done': ("Thank you for registering.  Please continue filling "
+                          "out your profile by uploading a photo and describing "
+                          "yourself for other users."),
 }
 
+@location_required
 @render()
 def register(request):
-    if 'done' in request.GET:
-        return {}, 'register_done.html'
-    
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('?done=1')
+            profile = form.save(request.location)
+            # Auto login.
+            user = authenticate(username=form.username, password=form.password)
+            login(request, user)
+            Location.clear_session(request)  # Location is in profile now.
+            messages.info(request, MESSAGES['registration_done'])
+
+            # TODO: Maybe validate email before allowing posts?
+            
+            return redirect(edit_profile)
     else:
         form = RegistrationForm()
     return locals()

@@ -9,7 +9,7 @@ class RegistrationForm(UserCreationForm):
     name = forms.CharField(max_length=100, required=False)
     email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
 
-    def save(self):
+    def save(self, location):
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
         # TODO: Reactivate this line when confirmation emails are implemented.
@@ -18,8 +18,20 @@ class RegistrationForm(UserCreationForm):
         # Profile is auto-created when User is saved.
         profile = user.get_profile()
         profile.name = data.get('name', '')
-        profile.email = data['email'] 
+        profile.email = data['email']
+        if not location.id:
+            location.save()
+        profile.location = location
         profile.save()
+        return profile
+
+    @property
+    def username(self):
+        return self.cleaned_data['username']
+
+    @property
+    def password(self):
+        return self.cleaned_data['password1']
 
 RegistrationForm.base_fields.keyOrder = [
     'username', 'name', 'email', 'password1', 'password2']
