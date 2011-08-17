@@ -1,9 +1,11 @@
+{% load media %}
 <div class="feed_item_user unit">
 	{% block user %}
-	{# TODO: Proper image resize here. #}
-	{# TODO: Generic profile image for users with no photo. #}
-	<img src="{% if item.feed_poster.photo %}{{ item.feed_poster.photo.url }}{% endif %}" 
-		 height="80">
+
+		{# TODO: Proper image resize here. #}
+
+		<img src="{% if item.feed_poster.photo %}{{ item.feed_poster.photo.url }}{% else %}{% media_url 'img/generic_user.png' %}{% endif %}" 
+			 height="80">
 	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
