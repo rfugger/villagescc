@@ -1,26 +1,19 @@
 {% extends "profile_base.html" %}
+{% load media %}
 
 {% block title %}{{ profile }}{% endblock %}
 
 {% block content %}
 <p>
-{% ifequal user profile.user %}
-	<a href="{% url edit_profile %}">Edit my profile</a>
-{% else %}
-	{% if my_endorsement %}
-		You have endorsed this user ({{ my_endorsement.weight }}).
-		<a href="{% url endorse_user profile.username %}">Edit endorsement</a>
-	{% else %}
-		<a href="{% url endorse_user profile.username %}">Endorse this user</a>
-	{% endif %}
-{% endifequal %}
+{% if my_endorsement %}
+	You have endorsed this user ({{ my_endorsement.weight }}).
+	<a href="{% url endorse_user profile.username %}">Edit endorsement</a>
+{% endif %}
 </p>
 
-{% if profile.photo %}
-	<img src="{{ profile.photo.url }}" height="200"/>  {# TODO: Resize properly. #}
-{% else %}
-	<p>[ no photo ]</p>
-{% endif %}
+{# TODO: Resize properly. #}
+<img src="{% if profile.photo %}{{ profile.photo.url }}{% else %}{% media_url 'img/generic_user.png' %}{% endif %}" 
+	 height="200"/>  
 
 <table>
 	<tr>

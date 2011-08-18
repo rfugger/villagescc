@@ -5,7 +5,8 @@ from cc.profile.models import Profile
 
 class SearchForm(forms.Form):
     q = forms.CharField(required=False)
-
+    # TODO: Search within radius of location.
+    
     def get_results(self):
         query_text = self.cleaned_data['q']
         if not query_text.strip():
@@ -22,7 +23,7 @@ class SearchForm(forms.Form):
 class PostSearchForm(SearchForm):
     def _results_query(self, query_text):
         return Post.objects.order_by('-date').extra(
-            where=["to_tsvector(text) @@ plainto_tsquery(%s)"],
+            where=["to_tsvector('english', text) @@ plainto_tsquery(%s)"],
             params=[query_text])
     
 class ProfileSearchForm(SearchForm):

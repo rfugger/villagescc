@@ -1,5 +1,9 @@
 /********* Global *********/
 
+body {
+	color: #333;
+}
+
 a {
 	color: brown;
 }
@@ -75,6 +79,10 @@ a {
 
 .inline_form {
 	display: inline;
+}
+
+.actions {
+	text-align: right;
 }
 
 /********** Feed ***********/

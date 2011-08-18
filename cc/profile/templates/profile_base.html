@@ -16,7 +16,7 @@
 	{% endif %}
 {% endblock %}
 
-{% block right_subnav %}
+{% block actions %}
 	{% if user.is_authenticated %}
 		{% ifequal request.profile profile %}
 			<li><a href="{% url edit_profile %}">Edit My Profile</a></li>

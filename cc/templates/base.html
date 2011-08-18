@@ -24,6 +24,9 @@
 		<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
 
 		<span class="site_nav nav">
+
+			{# TODO: Highlight nav item when on its sub-pages. #}
+			
 			<li><a href="{% url feed %}">Feed</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>

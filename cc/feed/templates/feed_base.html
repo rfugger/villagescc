@@ -12,8 +12,10 @@
 	{% endif %}
 {% endblock %}
 
-{% block right_subnav %}	
+{% block actions %}
 	{% if user.is_authenticated %}
 		<li><a href="{% url new_post %}">New Post</a></li>
 	{% endif %}
+	<li><a href="{% url search_posts %}">Search Posts</a></li>
+	<li><a href="{% url search_profiles %}">Search People</a></li>	
 {% endblock %}
