@@ -1,15 +1,3 @@
 {% extends "search_base.html" %}
 
 {% block title %}Search Posts{% endblock %}
-
-{% block content %}
-	<form action="" method="get">
-		{{ form.q }}
-		<input type="submit" value="Search">
-	</form>
-	
-	<h3>Results</h3>
-	{% with results as feed_items %}
-		{% include "feed_item_list.html" %}
-	{% endwith %}
-{% endblock %}

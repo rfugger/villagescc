@@ -6,3 +6,19 @@
 	<li><a href="{% url search_posts %}">Posts</a></li>
 	<li><a href="{% url search_profiles %}">Users</a></li>
 {% endblock %}
+
+{% block content %}
+	<form action="" method="get">
+		{{ form.q }}
+		<input type="submit" value="Search">
+	</form>
+	
+	{% if form.searched %}
+		<h3>Results</h3>
+		{% with results as feed_items %}
+		{% with "No results." as empty_string %}
+			{% include "feed_item_list.html" %}
+		{% endwith %}
+		{% endwith %}
+	{% endif %}
+{% endblock %}
