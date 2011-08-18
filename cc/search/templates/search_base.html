@@ -1,0 +1,8 @@
+{% extends "subnav_base.html" %}
+
+{% block subnav_title %}Search{% endblock %}
+
+{% block subnav %}
+	<li><a href="{% url search_posts %}">Posts</a></li>
+	<li><a href="{% url search_profiles %}">Users</a></li>
+{% endblock %}

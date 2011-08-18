@@ -14,4 +14,6 @@ urlpatterns = patterns(
     url(r'^profiles/([^/]+)/endorsements/$', 'profile_endorsements',
         name='profile_endorsements'),
     url(r'^profiles/([^/]+)/contact/$', 'contact', name='contact'),
+
+    # TODO: Change password view.
 )

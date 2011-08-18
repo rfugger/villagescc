@@ -8,7 +8,14 @@
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	{% include_media "content.css" %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#global_search_input").focus(function() {
+				$(this).val('');
+			});
+		});
+	</script>
 	{% block extrahead %}{% endblock %}
 </head>
 <body class="page">
@@ -21,7 +28,11 @@
 			{% if user.is_authenticated %}
 				<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
 			{% endif %}
-			<li><input name="q" type="text" value="Search"></li>
+			<li>
+				<form class="inline_form" action="{% url search_posts %}" method="get">
+					<input id="global_search_input" name="q" type="text" value="Search">
+				</form>
+			</li>
 		</span>
 
 		<div class="right_nav">
@@ -44,8 +55,8 @@
 </div>
 
 <div class="rightCol">
-	<ul>
-		<li>[ Put page-relevant actions here. ]</li>
+	<ul class="actions">
+		{% block actions %}{% endblock %}
 	</ul>
 </div>
 
