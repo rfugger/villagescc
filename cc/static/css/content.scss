@@ -2,6 +2,7 @@
 
 body {
 	color: #333;
+	margin: 0;
 }
 
 a {
@@ -9,13 +10,13 @@ a {
 }
 
 .extend {
-	padding: 10px 2000px;
-	margin: 0 -2000px;
+	padding: 10px 0;
+	overflow: hidden;
 }
 
 .logo_nav_line {
 	background-color: #ccc;
-	border-bottom: 1px solid #aaa
+	border-bottom: 1px solid #aaa;
 }
 
 .subnav_line {
@@ -33,16 +34,24 @@ a {
 
 .nav li {
 	display: inline;
-	margin-right: 2em;
+	padding: 10px 1em 50px;
+	margin-bottom: -50px;
 }
 
 .site_nav {
-	margin-left: 2em;
+	margin-left: 1em;
 	font-size: 125%;
 }
 
 .subnav {
-	margin-left: 2em;
+	margin-left: 1em;
+}
+
+.nav_highlight {
+	background: #555;
+	color: white;
+	a { color: white; }
+	border-radius: 5px 5px 0 0;
 }
 
 .location {
@@ -81,8 +90,16 @@ a {
 	display: inline;
 }
 
+.rightCol {
+	padding-top: 30px;
+	margin-top: -30px;
+	width: 150px;
+	border: 1px solid #eee;
+	padding-left: 2em;
+}
+
 .actions {
-	text-align: right;
+	margin-top: 0;
 }
 
 /********** Feed ***********/

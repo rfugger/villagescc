@@ -13,25 +13,26 @@
 		$(document).ready(function() {
 			$("#global_search_input").focus(function() {
 				$(this).val('');
+			}).blur(function() {
+				if ($(this).val() == '') $(this).val('Search')
 			});
 		});
 	</script>
 	{% block extrahead %}{% endblock %}
 </head>
-<body class="page">
+<body>
 <div class="head">
-	<div class="logo_nav_line extend line">
+	<div class="logo_nav_line extend"><div class="line page">
 		<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
 
 		<span class="site_nav nav">
-
-			{# TODO: Highlight nav item when on its sub-pages. #}
-			
-			<li><a href="{% url feed %}">Feed</a></li>
+			<li class="{% block nav_feed_class %}{% endblock %}">
+				<a href="{% url feed %}">Feed</a></li>
 			{% if user.is_authenticated %}
-				<li><a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
+				<li class="{% block nav_profile_class %}{% endblock %}">
+					<a href="{{ user.get_profile.get_absolute_url }}">Profile</a></li>
 			{% endif %}
-			<li>
+			<li class="{% block nav_search_class %}{% endblock %}">
 				<form class="inline_form" action="{% url search_posts %}" method="get">
 					<input id="global_search_input" name="q" type="text" value="Search">
 				</form>
@@ -52,25 +53,27 @@
 				<li><a href="{% url register %}">Register</a></li>
 			{% endif %}
 		</div>
-	</div>
+	</div></div>
 
 	{% block subnav_box %}{% endblock %}
 </div>
 
-<div class="rightCol">
-	<ul class="actions">
-		{% block actions %}{% endblock %}
-	</ul>
-</div>
-
-<div class="main">
-	{% if messages %}
-		<ul class="messages">
-		{% for message in messages %}
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-		{% endfor %}
+<div class="page">
+	<div class="rightCol">
+		<ul class="actions">
+			{% block actions %}{% endblock %}
 		</ul>
-	{% endif %}
-	{% block content %}{% endblock %}
+	</div>
+
+	<div class="main">
+		{% if messages %}
+			<ul class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		{% block content %}{% endblock %}
+	</div>
 </div>
 </body>

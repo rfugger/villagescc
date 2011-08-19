@@ -1,10 +1,12 @@
 {% extends "subnav_base.html" %}
 
+{% block nav_search_class %}nav_highlight{% endblock %}
+
 {% block subnav_title %}Search{% endblock %}
 
 {% block subnav %}
-	<li><a href="{% url search_posts %}">Posts</a></li>
-	<li><a href="{% url search_profiles %}">People</a></li>
+	<li><a href="{% url search_posts %}?{{ query_string }}">Posts</a></li>
+	<li><a href="{% url search_profiles %}?{{ query_string }}">People</a></li>
 {% endblock %}
 
 {% block content %}

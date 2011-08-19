@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block subnav_box %}
-<div class="subnav_line extend nav line">
+<div class="subnav_line extend"><div class="nav line page">
 	<h2 class="subnav_title"
 		>&raquo; {% block subnav_title %}{% endblock %}</h2>
 	<span class="subnav nav">
@@ -10,5 +10,5 @@
 	<span class="right_nav nav">
 		{% block right_subnav %}{% endblock %}
 	</span>
-</div>
+</div></div>
 {% endblock %}
