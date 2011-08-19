@@ -1,11 +1,11 @@
 {% extends "subnav_base.html" %}
 
-{% block nav_feed_class %}nav_highlight{% endblock %}
+{% block nav_feed_class %}selected{% endblock %}
 
 {% block subnav_title %}Activity{% endblock %}
 
 {% block subnav %}
-	<li><a href="{% url feed %}">All</a></li>
+	<li class="selected"><a href="{% url feed %}">All</a></li>
 	<li><a href="{% url profiles %}">People</a></li>
 	<li><a href="{% url posts %}">Posts</a></li>
 	{% if user.is_authenticated %}

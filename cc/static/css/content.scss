@@ -14,65 +14,6 @@ a {
 	overflow: hidden;
 }
 
-.logo_nav_line {
-	background-color: #ccc;
-	border-bottom: 1px solid #aaa;
-}
-
-.subnav_line {
-	background-color: #eee;
-}
-
-.logo {
-	display: inline;
-}
-
-.subnav_title {
-	display: inline;
-	margin-left: 1em;
-}
-
-.nav li {
-	display: inline;
-	padding: 10px 1em 50px;
-	margin-bottom: -50px;
-}
-
-.site_nav {
-	margin-left: 1em;
-	font-size: 125%;
-}
-
-.subnav {
-	margin-left: 1em;
-}
-
-.nav_highlight {
-	background: #555;
-	color: white;
-	a { color: white; }
-	border-radius: 5px 5px 0 0;
-}
-
-.location {
-	float: right;
-}
-
-.right_nav {
-	float: right;
-	clear: right;
-}
-
-.right_nav li {
-	margin-right: 0;
-	margin-left: 2em;
-}
-
-.main {
-	display: block;  /* OOCSS templates.css has this as table-cell - why? */
-	margin-top: 1.5em;
-}
-
 .data th, .data td {
 	padding: 3px 5px;
 }
@@ -90,16 +31,111 @@ a {
 	display: inline;
 }
 
-.rightCol {
-	padding-top: 30px;
-	margin-top: -30px;
-	width: 150px;
-	border: 1px solid #eee;
-	padding-left: 2em;
-}
-
 .actions {
 	margin-top: 0;
+}
+
+/********** Head/Nav **************/
+
+.logo_nav_line {
+	background-color: #ccc;
+	border-bottom: 1px solid #aaa;
+}
+
+.logo {
+	display: inline;
+}
+
+.nav li {
+	display: inline;
+	padding: 10px 1em 50px;
+	margin-bottom: -50px;
+}
+
+.site_nav {
+	margin-left: 1em;
+	font-size: 125%;
+}
+
+.nav li.selected {
+	background: #555;
+	color: white;
+	a { color: white; }
+	border-radius: 5px 5px 0 0;
+}
+
+.location {
+	float: right;
+}
+
+.right_nav {
+	float: right;
+	clear: right;
+}
+
+.right_nav li {
+	display: inline;
+	margin-right: 0;
+	margin-left: 2em;
+}
+
+/********** Message Box ************/
+
+.message_line {
+	background-color: brown;
+}
+
+.messages {
+	text-align: center;
+	font-size: 120%;
+	color: white;
+}
+
+/********* Side Nav **************/
+
+.subnav_bar {
+	display: table-cell;
+	vertical-align: top;
+	width: 150px;
+	padding: 20px 20px 20px 0;
+}
+
+.subnav_title {
+	margin-top: 0;
+}
+
+.subnav {
+	font-size: 120%;
+}
+
+.subnav li {
+	padding: 0.1em 20px 0.1em 1em;
+	margin: 0 -20px 0.3em -1em;
+}
+
+.subnav li.selected {
+	background: #555;
+	color: white;
+	a { color: white; }
+	border-radius: 5px 0 0 5px;
+}
+/********* Content Box ************/
+
+.content_box {
+	display: table-cell;
+	vertical-align: top;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	padding: 20px;
+}
+
+/********* Context Bar ***********/
+
+.context_bar {
+	display: table-cell;
+	vertical-align: top;
+	width: 150px;
+	padding: 20px 0 20px 20px;
 }
 
 /********** Feed ***********/

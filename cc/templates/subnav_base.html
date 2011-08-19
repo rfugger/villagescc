@@ -1,14 +1,10 @@
 {% extends "base.html" %}
+{% load media %}
 
 {% block subnav_box %}
-<div class="subnav_line extend"><div class="nav line page">
-	<h2 class="subnav_title"
-		>&raquo; {% block subnav_title %}{% endblock %}</h2>
-	<span class="subnav nav">
+	<img src="{% media_url 'img/generic_user.png' %}" height="100">
+	<h2 class="subnav_title">&raquo; {% block subnav_title %}{% endblock %}</h2>
+	<div class="subnav">
 		{% block subnav %}{% endblock %}
-	</span>
-	<span class="right_nav nav">
-		{% block right_subnav %}{% endblock %}
-	</span>
-</div></div>
+	</div>
 {% endblock %}

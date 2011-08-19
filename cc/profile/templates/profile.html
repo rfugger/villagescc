@@ -12,6 +12,7 @@
 </p>
 
 {# TODO: Resize properly. #}
+{# TODO: Get proper image url in method on model rather than if statement here. #}
 <img src="{% if profile.photo %}{{ profile.photo.url }}{% else %}{% media_url 'img/generic_user.png' %}{% endif %}" 
 	 height="200"/>  
 

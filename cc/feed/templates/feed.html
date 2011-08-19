@@ -3,7 +3,5 @@
 {% block title %}Feed{% endblock %}
 
 {% block content %}
-<p><a href="{% url new_post %}">New Post</a></p>
-
-{% include "feed_item_list.html" %}
+	{% include "feed_item_list.html" %}
 {% endblock %}

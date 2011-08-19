@@ -43,7 +43,7 @@
 			<a href="{% url locator %}?next={{ request.path }}"
 			   >{{ request.location|default:"Set Location" }}</a>
 		</div>
-		<div class="right_nav nav">
+		<div class="right_nav">
 			{% if user.is_authenticated %}
 				<li><a href="{{ request.profile.get_absolute_url }}"
 					   >{{ request.profile }}</a></li>
@@ -55,25 +55,31 @@
 		</div>
 	</div></div>
 
-	{% block subnav_box %}{% endblock %}
+	{% if messages %}
+		<div class="message_line extend"><div class="line page">
+			<div class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}
+					  >&raquo; {{ message }}</li>
+			{% endfor %}
+			</div>
+		</div></div>
+	{% endif %}
 </div>
 
 <div class="page">
-	<div class="rightCol">
+	<div class="subnav_bar">
+		{% block subnav_box %}{% endblock %}
+	</div>
+
+	<div class="content_box">
+		{% block content %}{% endblock %}
+	</div>
+
+	<div class="context_bar">
 		<ul class="actions">
 			{% block actions %}{% endblock %}
 		</ul>
-	</div>
-
-	<div class="main">
-		{% if messages %}
-			<ul class="messages">
-			{% for message in messages %}
-				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-			{% endfor %}
-			</ul>
-		{% endif %}
-		{% block content %}{% endblock %}
 	</div>
 </div>
 </body>
