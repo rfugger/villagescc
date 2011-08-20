@@ -2,7 +2,7 @@
 {% load media %}
 
 {% block subnav_box %}
-	<img src="{% media_url 'img/generic_user.png' %}" height="100">
+	{% block subnav_image %}{% endblock %}
 	<h2 class="subnav_title">&raquo; {% block subnav_title %}{% endblock %}</h2>
 	<div class="subnav">
 		{% block subnav %}{% endblock %}

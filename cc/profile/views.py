@@ -66,13 +66,21 @@ def profile(request, username):
     profile = get_object_or_404(Profile, user__username=username)
     if request.profile:
         my_endorsement = request.profile.endorsement_for(profile)
-    return locals()
+    if profile == request.profile:
+        template = 'my_profile.html'
+    else:
+        template = 'profile.html'
+    return locals(), template
         
 @render()
 def profile_posts(request, username):
     profile = get_object_or_404(Profile, user__username=username)
     posts = profile.posts.order_by('-date')
-    return locals()
+    if profile == request.profile:
+        template = 'my_posts.html'
+    else:
+        template = 'profile_posts.html'    
+    return locals(), template
 
 @render()
 def profile_endorsements(request, username):

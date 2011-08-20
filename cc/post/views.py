@@ -26,6 +26,7 @@ def edit_post(request, post_id=None):
         form = PostForm(instance=post)
     return locals()
 
+# TODO: Move to feed app.
 @login_required
 @render()
 def posts(request):

@@ -29,6 +29,7 @@ def endorse_user(request, recipient_username):
             return HttpResponseRedirect(recipient.get_absolute_url())
     else:
         form = EndorseForm(instance=endorsement)
+    profile = recipient  # For profile_base.html.
     return locals()
 
 @render()
@@ -71,6 +72,7 @@ def promise_user(request, recipient_username):
     else:
         form = PromiseForm(max_ripple=max_amount)
     can_ripple = max_amount > 0
+    profile = recipient  # For profile_base.html.
     return locals()
 
 @login_required

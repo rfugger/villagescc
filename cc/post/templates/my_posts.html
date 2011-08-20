@@ -1,0 +1,11 @@
+{% extends "home_base.html" %}
+
+{% block title %}My Posts{% endblock %}
+
+{% block nav_posts_class %}selected{% endblock %}
+
+{% block content %}
+	{% with posts as feed_items %}
+		{% include "feed_item_list.html" %}
+	{% endwith %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load media %}
+
+{% block subnav_image %}
+	{% if request.profile %}
+		<a href="{{ request.profile.get_absolute_url }}">
+			<img src="{{ request.profile.photo_url  }}" height="100"></a>
+	{% else %}
+		<img src="{% media_url 'img/generic_user.png' %}" height="100">
+	{% endif %}
+{% endblock %}
+
+{% block subnav_title %}
+	{% if request.profile %}
+		<a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a>
+	{% else %}Home{% endif %}
+{% endblock %}
+
+{% block subnav %}
+	<li class="{% block nav_feed_class %}{% endblock %}">
+		<a href="{% url feed %}">Feed</a></li>
+	{% if request.profile %}
+		<li class="{% block nav_info_class %}{% endblock %}">
+			<a href="{{ request.profile.get_absolute_url }}">Info</a></li>
+		<li class="{% block nav_posts_class %}{% endblock %}">
+			<a href="{% url profile_posts request.profile.username %}"
+			   >Posts</a></li>
+		<li class="{% block nav_relationships_class %}{% endblock %}"
+			><a href="{% url relationships %}">Relationships</a></li>
+	{% else %}
+		<li class="{% block nav_register_class %}{% endblock %}">
+			<a href="{% url register %}">Register</a></li>
+		<li class="{% block nav_login_class %}{% endblock %}">
+			<a href="{% url login %}">Login</a></li>
+	{% endif %}
+{% endblock %}
+
+{% block page_actions %}
+	<li><a href="{% url edit_profile %}">Edit My Profile</a></li>
+{% endblock %}

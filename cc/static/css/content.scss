@@ -20,6 +20,7 @@ a {
 
 .errorlist {
 	color: brown;
+	font-weight: bold;
 }
 
 .helptext {
@@ -31,8 +32,10 @@ a {
 	display: inline;
 }
 
-.actions {
-	margin-top: 0;
+hr {
+	height: 1px;
+	background-color: #ddd;
+	border: 0;
 }
 
 /********** Head/Nav **************/
@@ -48,20 +51,12 @@ a {
 
 .nav li {
 	display: inline;
-	padding: 10px 1em 50px;
-	margin-bottom: -50px;
+	padding: 0 1em;
 }
 
 .site_nav {
 	margin-left: 1em;
 	font-size: 125%;
-}
-
-.nav li.selected {
-	background: #555;
-	color: white;
-	a { color: white; }
-	border-radius: 5px 5px 0 0;
 }
 
 .location {
@@ -100,8 +95,12 @@ a {
 	padding: 20px 20px 20px 0;
 }
 
+.subnav_image {
+	text-align: center;
+}
+
 .subnav_title {
-	margin-top: 0;
+	text-align: center;
 }
 
 .subnav {
@@ -119,11 +118,13 @@ a {
 	a { color: white; }
 	border-radius: 5px 0 0 5px;
 }
+
 /********* Content Box ************/
 
 .content_box {
 	display: table-cell;
 	vertical-align: top;
+	width: 568px;
 	border-right: 1px solid #ddd;
 	border-left: 1px solid #ddd;
 	padding: 20px;
@@ -136,6 +137,12 @@ a {
 	vertical-align: top;
 	width: 150px;
 	padding: 20px 0 20px 20px;
+	font-size: 110%;
+	text-align: right;
+}
+
+.actions li {
+	margin-bottom: 0.5em;
 }
 
 /********** Feed ***********/
@@ -152,4 +159,3 @@ a {
 .feed_item_title {
 	display: inline;
 }
-

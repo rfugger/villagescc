@@ -1,6 +1,8 @@
-{% extends "feed_base.html" %}
+{% extends "home_base.html" %}
 
 {% block title %}Feed{% endblock %}
+
+{% block nav_feed_class %}selected{% endblock %}
 
 {% block content %}
 	{% include "feed_item_list.html" %}

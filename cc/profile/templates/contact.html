@@ -2,6 +2,8 @@
 
 {% block title %}Contact {{ profile }}{% endblock %}
 
+{% block nav_contact_class %}selected{% endblock %}
+
 {% block content %}
 <form action="" method="post">
 	{% csrf_token %}

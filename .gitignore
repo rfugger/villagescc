@@ -6,7 +6,6 @@
 local.py
 /develop.sh
 /django
-/docs/
 /mediagenerator
 /south
 uploads

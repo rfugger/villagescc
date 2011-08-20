@@ -2,6 +2,8 @@
 
 {% block title %}Endorsements for {{ profile }}{% endblock %}
 
+{% block nav_endorsements_class %}selected{% endblock %}
+
 {% block content %}
 <p>Trusted Endorsements: {{ trusted_endorsement_sum }}</p>
 <p>Total Endorsements: {{ profile.endorsement_sum }}</p>

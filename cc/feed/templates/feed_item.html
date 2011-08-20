@@ -4,9 +4,7 @@
 
 		{# TODO: Proper image resize here. #}
 	
-		{# TODO: Get proper image url in method on model rather than if statement here. #}
-		<img src="{% if item.feed_poster.photo %}{{ item.feed_poster.photo.url }}{% else %}{% media_url 'img/generic_user.png' %}{% endif %}" 
-			 height="80">
+		<img src="{{ item.feed_poster.photo_url }}" height="80">
 	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">

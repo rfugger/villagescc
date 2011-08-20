@@ -1,31 +1,35 @@
-{% extends "subnav_base.html" %}
+{% extends "base.html" %}
+{% load media %}
 
-{% block nav_profile_class %}selected{% endblock %}
+{% block subnav_image %}
+	<a href="{{ profile.get_absolute_url }}">
+		<img src="{{ profile.photo_url }}" height="100"></a>
+{% endblock %}
 
-{% block subnav_title %}{{ profile }}{% endblock %}
+{% block subnav_title %}
+	<a href="{{ profile.get_absolute_url }}">{{ profile }}</a>
+{% endblock %}
 
 {% block subnav %}
-	<li><a href="{{ profile.get_absolute_url }}">About</a></li>
-	<li><a href="{% url profile_posts profile.username %}">Posts</a></li>
-	{% if user.is_authenticated %}
-		{% ifequal request.profile profile %}
-			<li><a href="{% url relationships %}">Relationships</a></li>
-		{% else %}
-			<li><a href="{% url profile_endorsements profile.username %}"
-				   >Endorsements</a></li>
-			<li><a href="{% url relationship profile.username %}">Relationship</a></li>
-		{% endifequal %}
+	<li class="{% block nav_info_class %}{% endblock %}">
+		<a href="{{ profile.get_absolute_url }}">Info</a></li>
+	<li class="{% block nav_posts_class %}{% endblock %}">
+		<a href="{% url profile_posts profile.username %}">Posts</a></li>
+	{% if request.profile %}
+		<li class="{% block nav_endorsements_class %}{% endblock %}">
+			<a href="{% url profile_endorsements profile.username %}"
+			   >Endorsements</a></li>
+		<li class="{% block nav_relationship_class %}{% endblock %}">
+			<a href="{% url relationship profile.username %}">Relationship</a></li>
+		<hr>
+		<li class="{% block nav_endorse_class %}{% endblock %}">
+			<a href="{% url endorse_user profile.username %}">Endorse {{ profile }}</a></li>
+		<li class="{% block nav_promise_class %}{% endblock %}">
+			<a href="{% url promise_user profile.username %}">Promise {{ profile }}</a></li>
+		<li class="{% block nav_contact_class %}{% endblock %}">
+			<a href="{% url contact profile.username %}">Contact {{ profile }}</a></li>
 	{% endif %}
 {% endblock %}
 
-{% block actions %}
-	{% if user.is_authenticated %}
-		{% ifequal request.profile profile %}
-			<li><a href="{% url edit_profile %}">Edit My Profile</a></li>
-		{% else %}
-			<li><a href="{% url endorse_user profile.username %}">Endorse</a></li>
-			<li><a href="{% url promise_user profile.username %}">Promise</a></li>
-			<li><a href="{% url contact profile.username %}">Contact</a></li>
-		{% endifequal %}
-	{% endif %}
+{% block page_actions %}
 {% endblock %}
