@@ -25,6 +25,9 @@ class Node(models.Model):
     def __unicode__(self):
         return u"Node %d" % self.alias
 
+    def __repr__(self):
+        return "Node(%d)" % self.alias
+    
     def out_creditlines(self):
         return self.creditlines.all()
 

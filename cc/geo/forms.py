@@ -11,5 +11,8 @@ class LocationForm(forms.ModelForm):
         required=False, initial=True, label="Save as Home Location")
         
     def __init__(self, *args, **kwargs):
+        hide_set_home = kwargs.pop('hide_set_home', False)
         super(LocationForm, self).__init__(*args, **kwargs)
+        if hide_set_home:
+            del self.fields['set_home']
         self.fields['point'].widget = forms.HiddenInput()

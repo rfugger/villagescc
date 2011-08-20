@@ -39,4 +39,3 @@ class render(object):
         decorated_func.__name__ = view_func.__name__
         decorated_func.__module__ = view_func.__module__
         return decorated_func
-

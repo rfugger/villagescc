@@ -10,6 +10,9 @@
 	{% include_media "content.css" %}
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript">
+
+		{# TODO: Move to js file. #}
+
 		$(document).ready(function() {
 			$("#global_search_input").focus(function() {
 				$(this).val('');
@@ -41,14 +44,14 @@
 	</div></div>
 
 	{% if messages %}
-		<div class="message_line extend"><div class="line page">
+		<div class="message_line line page">
 			<div class="messages">
 			{% for message in messages %}
 				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}
 					  >&raquo; {{ message }}</li>
 			{% endfor %}
 			</div>
-		</div></div>
+		</div>
 	{% endif %}
 </div>
 
@@ -73,18 +76,17 @@
 		<div class="context_bar">
 			<div class="actions">
 				{% block actions %}
-					{% if request.profile %}
-						<li><a href="{{ request.profile.get_absolute_url }}"
-							   >{{ request.profile }}</a></li>
-					{% else %}
-						<li><a href="{% url register %}">Register</a></li>
-					{% endif %}
 					<li class="{% block nav_location_class %}{% endblock %}">
 						<a href="{% url locator %}?next={{ request.path }}"
 						   >{{ request.location|default:"Set Location" }}</a></li>
-					{% if request.profile %}						
+					<hr>
+					{% if request.profile %}
+						<li><a href="{{ request.profile.get_absolute_url }}"
+							   >{{ request.profile }}</a></li>
+						<li>Account Settings</li>
 						<li><a href="{% url logout %}">Logout</a></li>
 					{% else %}
+						<li><a href="{% url register %}">Register</a></li>
 						<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
 					{% endif %}
 					<hr>

@@ -35,7 +35,7 @@ class Post(models.Model):
         return ('cc.post.views.view_post', (self.id,))
 
     def can_edit(self, profile):
-        return self.user == profile or profile.user.is_staff
+        return self.user == profile
 
     def get_feed_users(self):
         "Make post available publicly."

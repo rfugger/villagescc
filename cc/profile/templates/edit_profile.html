@@ -5,7 +5,7 @@
 {% block nav_edit_profile_class %}selected{% endblock %}
 
 {% block content %}
-<p><a href="{{ form.instance.get_absoluate_url }}">View my profile</a></p>
+<p><a href="{{ form.instance.get_absolute_url }}">View my profile</a></p>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	<table>

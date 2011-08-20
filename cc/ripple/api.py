@@ -3,6 +3,7 @@
 # TODO: Test this module.
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.cache import cache
 
 from cc.profile.models import Profile
 from cc.account.models import CreditLine, Account, Node
@@ -172,7 +173,14 @@ def get_payment(payment_id):
     payment = Payment.objects.get(pk=payment_id)
     return RipplePayment(payment)
 
+# TODO: Cache reputation version to use when interacting with cache.
+# Increment version whenever limits change on an account.
 @accept_profiles
 def credit_reputation(target, asker):
-    flow_graph = FlowGraph(target, asker, ignore_balances=True)
-    return flow_graph.max_flow()
+    key = 'credit_reputation(%s,%s)' % (repr(target), repr(asker))
+    val = cache.get(key)
+    if val is None:
+        flow_graph = FlowGraph(target, asker, ignore_balances=True)
+        val = flow_graph.max_flow()
+        cache.set(key, 0)
+    return val

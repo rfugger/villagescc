@@ -22,6 +22,7 @@ def locator(request):
     so any posts using that location get their location modified as well.
     """
     profile = request.profile
+    hide_set_home = profile is None
     # Work on a copy of profile location, since it is modified by
     # form validation.
     instance = profile and profile.location and profile.location.clone()
@@ -29,13 +30,14 @@ def locator(request):
     if instance:
         instance.id = None
     if request.method == 'POST':
-        form = LocationForm(request.POST, instance=instance)
+        form = LocationForm(
+            request.POST, instance=instance, hide_set_home=hide_set_home)
         if form.is_valid():
             if 'clear' in request.POST:
                 Location.clear_session(request)
                 return redirect_after_locator(request)
             save = (profile and (profile.location is None or
-                                 form.cleaned_data['set_home']))
+                                 form.cleaned_data.get('set_home', False)))
             location = form.save(commit=save)
             if save:
                 profile.location = location
@@ -53,7 +55,7 @@ def locator(request):
 
             pass
     else:
-        form = LocationForm(instance=instance)
+        form = LocationForm(instance=instance, hide_set_home=hide_set_home)
         if request.location:
 
             # TODO: Don't overwrite initial form data with geocoding javascript.
