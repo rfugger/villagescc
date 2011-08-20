@@ -1,6 +1,10 @@
-{% extends "base.html" %}
+{% extends "home_base.html" %}
 
 {% block title %}{% if form.instance.id %}Edit{% else %}New{% endif %} Post{% endblock %}
+
+{% block nav_new_post_class %}
+	{% if not form.instance.id %}selected{% endif %}
+{% endblock %}
 
 {% block content %}
 <h2>{% if form.instance.id %}Edit{% else %}New{% endif %} Post</h2>

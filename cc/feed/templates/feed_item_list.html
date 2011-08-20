@@ -1,6 +1,8 @@
 {% load feed %}
-{% for feed_item in feed_items %}
-	<div class="feed_item line">{% render_in_feed feed_item %}</div>
-{% empty %}
-	<p><em>{{ empty_string|default:"No activity." }}</em></p>
-{% endfor %}
+<div class="feed_item_list">
+	{% for feed_item in feed_items %}
+		<div class="feed_item line">{% render_in_feed feed_item %}</div>
+	{% empty %}
+		<p><em>{{ empty_string|default:"No activity." }}</em></p>
+	{% endfor %}
+</div>

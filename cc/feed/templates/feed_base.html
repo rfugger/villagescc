@@ -1,21 +1,17 @@
-{% extends "subnav_base.html" %}
+{% extends "home_base.html" %}
 
-{% block subnav_title %}Activity{% endblock %}
+{% block nav_feed_class %}selected{% endblock %}
 
-{% block subnav %}
-	<li class="selected"><a href="{% url feed %}">All</a></li>
-	<li><a href="{% url profiles %}">People</a></li>
-	<li><a href="{% url posts %}">Posts</a></li>
-	{% if user.is_authenticated %}
-		<li><a href="{% url endorsements %}">Endorsements</a></li>
-		<li><a href="{% url promises %}">Promises</a></li>
-	{% endif %}
-{% endblock %}
-
-{% block actions %}
-	{% if user.is_authenticated %}
-		<li><a href="{% url new_post %}">New Post</a></li>
-	{% endif %}
-	<li><a href="{% url search_posts %}">Search Posts</a></li>
-	<li><a href="{% url search_profiles %}">Search People</a></li>	
+{% block content %}
+	<div class="feed_filter nav">
+		<li><a href="{% url feed %}">All</a></li>
+		<li><a href="{% url profiles %}">People</a></li>
+		<li><a href="{% url posts %}">Posts</a></li>
+		{% if user.is_authenticated %}
+			<li><a href="{% url endorsements %}">Endorsements</a></li>
+			<li><a href="{% url promises %}">Promises</a></li>
+		{% endif %}
+	</div>
+	<hr>
+	{% block feed_content %}{% endblock %}
 {% endblock %}

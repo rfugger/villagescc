@@ -27,14 +27,13 @@
 			   >Posts</a></li>
 		<li class="{% block nav_relationships_class %}{% endblock %}"
 			><a href="{% url relationships %}">Relationships</a></li>
+		<hr>
+		<li class="{% block nav_edit_profile_class %}{% endblock %}">
+			<a href="{% url edit_profile %}">Edit My Profile</a></li>
 	{% else %}
 		<li class="{% block nav_register_class %}{% endblock %}">
 			<a href="{% url register %}">Register</a></li>
 		<li class="{% block nav_login_class %}{% endblock %}">
 			<a href="{% url login %}">Login</a></li>
 	{% endif %}
-{% endblock %}
-
-{% block page_actions %}
-	<li><a href="{% url edit_profile %}">Edit My Profile</a></li>
 {% endblock %}

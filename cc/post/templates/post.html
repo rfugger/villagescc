@@ -1,9 +1,9 @@
-{% extends "feed_base.html" %}
+{% extends "home_base.html" %}
 {% load feed %}
 
 {% block title %}Post by {{ post.user }}{% endblock %}
 
 {% block content %}
-<div class="feed_item line">{% render_in_feed post %}</div>
+	<div class="feed_item line">{% render_in_feed post %}</div>
 {% endblock %}
 

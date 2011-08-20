@@ -38,6 +38,12 @@ hr {
 	border: 0;
 }
 
+.selected {
+	background: #555;
+	color: white;
+	a { color: white; }
+}
+
 /********** Head/Nav **************/
 
 .logo_nav_line {
@@ -108,14 +114,11 @@ hr {
 }
 
 .subnav li {
-	padding: 0.1em 20px 0.1em 1em;
+	padding: 0.2em 20px 0.2em 1em;
 	margin: 0 -20px 0.3em -1em;
 }
 
 .subnav li.selected {
-	background: #555;
-	color: white;
-	a { color: white; }
 	border-radius: 5px 0 0 5px;
 }
 
@@ -142,10 +145,23 @@ hr {
 }
 
 .actions li {
-	margin-bottom: 0.5em;
+	padding: 0.2em 1em 0.2em 20px;
+	margin: 0 -1em 0.3em -20px;
+}
+
+.actions li.selected {
+	border-radius: 0 5px 5px 0;
 }
 
 /********** Feed ***********/
+
+.feed_filter {
+	margin-bottom: 1em;
+}
+
+.feed_item_list {
+	margin-top: 20px;
+}
 
 .feed_item {
 	margin-bottom: 1em;

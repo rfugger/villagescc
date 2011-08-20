@@ -2,8 +2,8 @@
 
 {% block title %}Posts{% endblock %}
 
-{% block content %}
-{% with posts as feed_items %}
-	{% include "feed_item_list.html" %}
-{% endwith %}
+{% block feed_content %}
+	{% with posts as feed_items %}
+		{% include "feed_item_list.html" %}
+	{% endwith %}
 {% endblock %}
