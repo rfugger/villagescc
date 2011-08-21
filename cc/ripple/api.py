@@ -10,6 +10,8 @@ from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
 from cc.payment.models import Payment
 
+REPUTATION_VERSION_KEY = 'credit_reputation_version'
+
 class UserAccount(object):
     "Wrapper around CreditLine."
     def __init__(self, creditline):
@@ -135,6 +137,8 @@ def update_credit_limit(endorsement):
         node=endorsement.recipient_id, account=account)
     creditline.limit = endorsement.weight
     creditline.save()
+    
+    _invalidate_reputation_cache()
 
 @accept_profiles
 def get_or_create_account_from_profiles(node1, node2):
@@ -177,10 +181,19 @@ def get_payment(payment_id):
 # Increment version whenever limits change on an account.
 @accept_profiles
 def credit_reputation(target, asker):
+    version = _reputation_cache_version()
     key = 'credit_reputation(%s,%s)' % (repr(target), repr(asker))
-    val = cache.get(key)
+    val = cache.get(key, version=version)
     if val is None:
         flow_graph = FlowGraph(target, asker, ignore_balances=True)
         val = flow_graph.max_flow()
-        cache.set(key, 0)
+        cache.set(key, val, None, version=version)
     return val
+
+def _reputation_cache_version():
+    return cache.get(REPUTATION_VERSION_KEY, 1)
+
+def _invalidate_reputation_cache():
+    cache.add(REPUTATION_VERSION_KEY, 1)
+    cache.incr(REPUTATION_VERSION_KEY)
+    
