@@ -99,7 +99,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     # 'django.contrib.admindocs',
-
+    'django.contrib.gis',
+    
     'south',
     'mediagenerator',
 
@@ -109,6 +110,7 @@ INSTALLED_APPS = (
     'cc.feed',
     'cc.relate',
     'cc.search',
+    'cc.general',
     
     # Ripple
     'cc.account',

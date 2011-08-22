@@ -1,7 +1,5 @@
 {% extends "feed_item.html" %}
 
-{% block user_photo_url %}{{ item.endorser.photo.url }}{% endblock %}
-
 {% block content %}
 <p>
 	{% ifequal request.profile item.endorser %}

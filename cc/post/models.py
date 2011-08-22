@@ -17,7 +17,10 @@ class Post(models.Model):
     user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
+    title = VarCharField()
     text = models.TextField()
+    image = models.ImageField(
+        upload_to='%Y/%m/post', max_length=256, blank=True)
     want = models.BooleanField(
         default=False, help_text="Leave unchecked if your post is an offer.")
     location = models.ForeignKey(Location)

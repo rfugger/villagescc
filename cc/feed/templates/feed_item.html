@@ -1,16 +1,21 @@
-{% load media %}
+{% load image %}
 <div class="feed_item_user unit">
 	{% block user %}
 
-		{# TODO: Proper image resize here. #}
-	
-		<img src="{{ item.feed_poster.photo_url }}" height="80">
+		{# TODO: Link image to something useful (profile/post). #}
+
+		<img src="{% block user_photo %}
+				  	{{ item.feed_poster.photo|resize:'80x80'|default_img:'img/generic_user_80x80.png' }}
+				  {% endblock %}">
 	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
-	<a href="{{ item.feed_poster.get_absolute_url }}"
-	   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a>
-	- {{ item.date }}
-	{% if item.location %}- {{ item.location }}{% endif %}
-	{% block content %}{% endblock %}
+	{% block content_box %}
+		<a href="{{ item.feed_poster.get_absolute_url }}"
+		   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a>
+		- {{ item.date }}
+		{% if item.location %}- {{ item.location }}{% endif %}
+		{% block content %}{% endblock %}
+	{% endblock %}
 </div>
+

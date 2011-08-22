@@ -177,8 +177,6 @@ def get_payment(payment_id):
     payment = Payment.objects.get(pk=payment_id)
     return RipplePayment(payment)
 
-# TODO: Cache reputation version to use when interacting with cache.
-# Increment version whenever limits change on an account.
 @accept_profiles
 def credit_reputation(target, asker):
     version = _reputation_cache_version()
@@ -189,6 +187,9 @@ def credit_reputation(target, asker):
         val = flow_graph.max_flow()
         cache.set(key, val, None, version=version)
     return val
+
+
+##### Helpers #####
 
 def _reputation_cache_version():
     return cache.get(REPUTATION_VERSION_KEY, 1)

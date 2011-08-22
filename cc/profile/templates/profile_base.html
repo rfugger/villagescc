@@ -1,9 +1,7 @@
 {% extends "base.html" %}
-{% load media %}
 
 {% block subnav_image %}
-	<a href="{{ profile.get_absolute_url }}">
-		<img src="{{ profile.photo_url }}" height="100"></a>
+	{% include "profile_image.html" %}
 {% endblock %}
 
 {% block subnav_title %}

@@ -1,13 +1,10 @@
 {% extends "base.html" %}
-{% load media %}
+{% load media image %}
 
 {% block subnav_image %}
-	{% if request.profile %}
-		<a href="{{ request.profile.get_absolute_url }}">
-			<img src="{{ request.profile.photo_url  }}" height="100"></a>
-	{% else %}
-		<img src="{% media_url 'img/generic_user.png' %}" height="100">
-	{% endif %}
+	{% with request.profile as profile %}
+		{% include "profile_image.html" %}
+	{% endwith %}
 {% endblock %}
 
 {% block subnav_title %}

@@ -3,6 +3,9 @@ from django.core import serializers
 from django.core.serializers.base import DeserializationError
 from django.conf import settings
 
+# Import introspection rules to allow south to migrate geo fields.
+from south.introspection_plugins import geodjango
+
 from cc.general.models import VarCharField
 
 class LocationDeserializationError(Exception):

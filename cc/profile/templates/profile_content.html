@@ -1,4 +1,4 @@
-{% load media %}
+{% load image %}
 {% if my_endorsement %}
 	<p>You have endorsed this user ({{ my_endorsement.weight }}).
 		<a href="{% url endorse_user profile.username %}">Edit endorsement</a>
@@ -9,7 +9,7 @@
 {# TODO: Resize properly. #}
 <div class="line">
 	<div class="unit">
-		<img src="{{ profile.photo_url }}" height="200"/>  
+		<img src="{{ profile.photo|resize:'150x200'|default_img:'img/generic_user_150x150.png'  }}"></a>
 	</div>
 
 	<div class="profile_fields unit lastUnit">

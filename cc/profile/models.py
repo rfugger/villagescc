@@ -4,8 +4,6 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from mediagenerator.utils import media_url
-
 from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 
@@ -39,14 +37,6 @@ class Profile(models.Model):
         # Username is stored in django User model.
         return self.user.username
 
-    @property
-    def photo_url(self):
-        if self.photo:
-            return self.photo.url
-        else:
-            # Serve generic image via mediagenerator.
-            return media_url('img/generic_user.png')
-    
     def endorsement_for(self, recipient):
         "Returns this profile's endorsement of recipient, or None."
         try:
