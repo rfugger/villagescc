@@ -1,11 +1,11 @@
-{% load image %}
+{% load profile %}
 <div class="feed_item_user unit">
 	{% block user %}
 
 		{# TODO: Link image to something useful (profile/post). #}
 
 		<img src="{% block user_photo %}
-				  	{{ item.feed_poster.photo|resize:'80x80'|default_img:'img/generic_user_80x80.png' }}
+				  	{% profile_image_url item.feed_poster '80x80' %}
 				  {% endblock %}">
 	{% endblock %}
 </div>

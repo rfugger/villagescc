@@ -1,8 +1,8 @@
-{% load image media %}
+{% load profile media %}
 
 {% if profile %}
 	<a href="{{ profile.get_absolute_url }}">
-		<img src="{{ profile.photo|resize:'100x100'|default_img:'img/generic_user_100x100.png'  }}"></a>
+		<img src="{% profile_image_url profile '100x100' %}"></a>
 {% else %}
 	<img src="{% media_url 'img/generic_user_100x100.png' %}">
 {% endif %}

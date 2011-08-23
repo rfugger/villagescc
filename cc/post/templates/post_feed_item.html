@@ -1,9 +1,9 @@
 {% extends "feed_item.html" %}
-{% load image %}
+{% load image profile %}
 
 {% block user_photo %}
 	{% if item.image %}{{ item.image|resize:"80x80" }}
-	{% else %}{{ item.feed_poster.photo|resize:"80x80"|default_img:'img/generic_user_80x80.png' }}
+	{% else %}{% profile_image_url item.feed_poster "80x80" %}
 	{% endif %}
 {% endblock %}
 

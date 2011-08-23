@@ -40,14 +40,7 @@ def resize(file, size):
         image.thumbnail([x, y], Image.ANTIALIAS)
         try:
             image.save(miniature_filename, image.format, quality=90, optimize=1)
-        except:
+        except Exception:
             image.save(miniature_filename, image.format, quality=90)
 
     return miniature_url
-
-@register.filter
-def default_img(original, default):
-    if original:
-        return original
-    return media_url(default)
-    
