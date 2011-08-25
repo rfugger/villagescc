@@ -113,8 +113,6 @@ function update_form(address, location) {
 	}
 	$('#id_point').val('');
 
-	console.debug(address);
-
 	// Set form fields with new values.
 	for (var i = 0; i < address.length; i++) {
 		component = address[i];
@@ -124,9 +122,9 @@ function update_form(address, location) {
 			if (!target_type) {
 				continue;
 			}
+			// Abbreviate state.
 			var component_name;
-			if ((target_type == 'country' || target_type == 'state') &&
-				component.short_name ) {
+			if (target_type == 'state' && component.short_name ) {
 				component_name = component.short_name;
 			} else {
 				component_name = component.long_name;

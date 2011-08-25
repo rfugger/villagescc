@@ -17,10 +17,18 @@
 {% block content %}
 <h2>Set Your Location</h2>
 
+{% if form.errors %}
+	<p class="errorlist">Please correct the errors in the form below.</p>
+{% endif %}
+
+<p><strong>1.</strong> 
+	Select your location on the map by typing your 
+	address or dragging the map pointer.</p>
+
 <form id="loc_search_form" class="loc_search_form">
 	<input id="loc_search" type="text" 
-		   value="Type your address to move the map pointer"/>
-	<input type="submit" value="Map" />
+		   value="Address, Intersection, or City"/>
+	<input type="submit" value="Locate on Map" />
 </form>
 <hr>
 
@@ -29,8 +37,9 @@
 </div>
 
 <div class="loc_name_form">
-<p class="first">The map above shows the location you will be submitting.
-	Below, give this location a name to display for other users.</p>
+<p class="first"><strong>2.</strong>
+	The map above shows the location you will be choosing.
+	Please check that its name is correct before submitting.</p>
 
 <form action="" method="post">
 	{% csrf_token %}

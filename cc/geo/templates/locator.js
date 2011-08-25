@@ -16,5 +16,7 @@ $(document).ready(function() {
 
 	// Init map, etc.
 	initialize_geo(initial_lat, initial_lng);
-	get_browser_location();
+	{% if get_browser_location %}
+		get_browser_location();
+	{% endif %}
 });

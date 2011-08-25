@@ -23,6 +23,7 @@ def locator(request):
     """
     profile = request.profile
     hide_set_home = profile is None
+    get_browser_location = True
     # Work on a copy of profile location, since it is modified by
     # form validation.
     instance = profile and profile.location and profile.location.clone()
@@ -48,12 +49,11 @@ def locator(request):
             messages.info(request, MESSAGES['location_set'])
             return redirect_after_locator(request)
         else:
-            
+            get_browser_location = False
+
             # TODO: Set initial_lat, initial_lng for map redisplay.
             # Don't reset text fields in form though...
-            # Also, don't ask for browser location again.
 
-            pass
     else:
         form = LocationForm(instance=instance, hide_set_home=hide_set_home)
         if request.location:
