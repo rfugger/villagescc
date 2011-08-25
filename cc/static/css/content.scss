@@ -96,6 +96,12 @@ hr {
 	margin-left: 2em;
 }
 
+.feature {
+	padding: 1em;
+	background-color: #eee;
+	border: 1px solid #ddd;
+}
+
 /********** Message Box ************/
 
 .message_line {
@@ -239,10 +245,4 @@ p.first {
 
 .map_container {
 	margin: 1em auto;
-}
-
-.loc_name_form {
-	padding: 1em;
-	background-color: #eee;
-	border: 1px solid #ddd;
 }

@@ -1,14 +1,23 @@
-/* Common JS to be run on every page load. */
+/* JS functions available on every page. */
 
-$(document).ready(function() {
-	// Remove 'Search' text in search box when clicked.
-	$('#global_search_input').focus(function() {
-		$(this).val('');
-	}).blur(function() {
-		if ($(this).val() == '') $(this).val('Search')
+function init_instruction_input() {
+	/* Allow search boxes to give instructions that disappear when selected. */
+	$('.instruction_input').each(function(index) {
+		var orig_text = $(this).val()
+		$(this).focus(function() {
+			if ($(this).val() == orig_text) {
+				$(this).val('');
+			}
+		}).blur(function() {
+			if ($(this).val() == '') {
+				$(this).val(orig_text);
+			}
+		});
 	});
+}
 
-	// Clicking feed item container div goes to item page.
+function init_feed_items() {
+	/* Make feed item container divs clickable links. */
 	$('.feed_item').click(function() {
 		window.location = $(this).attr('href');
 	}).hover(function() {
@@ -16,4 +25,4 @@ $(document).ready(function() {
 	}, function() {
 		$(this).removeClass('hover')
 	});
-});
+}	

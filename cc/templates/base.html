@@ -11,6 +11,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	{% include_media "common.js" %}
 	{% block extrahead %}{% endblock %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			init_instruction_input();
+			{% block ready_js %}{% endblock %}
+		});
+	</script>
 </head>
 <body>
 <div class="head">
@@ -21,7 +27,8 @@
 			<li><a href="{% url home %}">Home</a></li>
 			<li>
 				<form class="inline_form" action="{% url search_posts %}" method="get">
-					<input id="global_search_input" name="q" type="text" value="Search">
+					<input id="global_search_input" class="instruction_input"
+						   name="q" type="text" value="Search">
 				</form>
 			</li>
 		</span>

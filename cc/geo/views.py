@@ -80,8 +80,6 @@ def get_geoip_coords(request):
     geoip = GeoIP()
     # TODO: Middleware to set REMOTE_ADDR from HTTP_X_FORWARDED_FOR.
     remote_addr = request.META['REMOTE_ADDR']
-    if remote_addr == '127.0.0.1':
-        remote_addr = '174.6.82.184'  # For dev on localhost.
     geoip_result = geoip.city(remote_addr)
     if geoip_result:
         lat = geoip_result.get('latitude', '')

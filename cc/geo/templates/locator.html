@@ -4,7 +4,6 @@
 {% block title %}Set Your Location{% endblock %}
 
 {% block nav_location_class %}selected{% endblock %}
-{% block nav_info_class %}selected{% endblock %}
 
 {% block extrahead %}
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -21,25 +20,32 @@
 	<p class="errorlist">Please correct the errors in the form below.</p>
 {% endif %}
 
+<p class="feature">To show you relevant postings in your neighborhood, and 
+	to know where your postings should be displayed, Villages 
+	needs to know your approximate location.</p>
+<hr>
+
 <p><strong>1.</strong> 
 	Select your location on the map by typing your 
 	address or dragging the map pointer.</p>
 
 <form id="loc_search_form" class="loc_search_form">
-	<input id="loc_search" type="text" 
-		   value="Address, Intersection, or City"/>
+	<input id="loc_search" class="instruction_input" type="text" 
+		   value="Neighborhood, Address, Intersection, or City"/>
 	<input type="submit" value="Locate on Map" />
 </form>
-<hr>
 
 <div class="map_container">
 	<div id="map_canvas" class="map_canvas"></div>
 </div>
 
-<div class="loc_name_form">
+<div class="feature">
 <p class="first"><strong>2.</strong>
-	The map above shows the location you will be choosing.
-	Please check that its name is correct before submitting.</p>
+	The map above shows the location you are choosing.
+	Please check that its name is correct before submitting.
+	Neigborhood, city, and state are optional fields if they're
+	not appropriate for your location.
+</p>
 
 <form action="" method="post">
 	{% csrf_token %}

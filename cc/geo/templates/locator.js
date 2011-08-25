@@ -9,12 +9,12 @@ $(document).ready(function() {
 		return false;
 	});	
 
-	// Clear instruction when clicking search input.
-	$('#loc_search').focus(function() {
-		$(this).val('');
-	});
-
 	// Init map, etc.
+	var prev_pt = wkt_to_latlng($('#id_point').val());
+	if (prev_pt) {
+		initial_lat = prev_pt[0];
+		initial_lng = prev_pt[1];
+	}
 	initialize_geo(initial_lat, initial_lng);
 	{% if get_browser_location %}
 		get_browser_location();

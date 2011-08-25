@@ -73,7 +73,6 @@ function get_browser_location() {
 				center_map(latlng);
 				marker.setPosition(latlng);
 				geocode_position(latlng);
-				map.setZoom(13);
 			}, 
 			function(msg) {},  // Error function (do nothing).
 			{timeout: 3000});
@@ -133,8 +132,7 @@ function update_form(address, location) {
 		}
 	}
 	// Point gets set in Well Known Text (WKT) for GeoDjango.
-	$('#id_point').val('POINT(' + location.lng() + ' ' + 
-					   location.lat() + ')');
+	$('#id_point').val(latlng_to_wkt(location.lat(), location.lng()));
 }
 
 function geocode_position(position) {
@@ -168,3 +166,19 @@ function is_better_address(addr1, addr2) {
 		address_type_preference_order[addr2.types[0]];
 }
 
+function latlng_to_wkt(lat, lng) {
+	/* Creates Well-Known Text for GeoDjango.
+	 * eg, 'POINT(-142.51152, 49.209830)'
+	 */
+	return 'POINT(' + lng + ' ' + lat + ')';
+}
+	
+function wkt_to_latlng(text) {
+	/* Takes Well-Known Text point and returns an array with lat, lng. */
+	re = /POINT\s*\((-?\d+\.\d+)\s+(-?\d+\.\d+)\)/;
+	match = re.exec(text);
+	if (match) {
+		return [match[2], match[1]];
+	}
+	return null;
+}
