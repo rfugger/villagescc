@@ -17,8 +17,8 @@ class Location(models.Model):
     # performance:
     # http://postgis.refractions.net/documentation/manual-1.5/ch04.html#PostGIS_GeographyVSGeometry
     point = models.PointField(geography=True)
-    country = VarCharField()
-    state = VarCharField("State/Province", blank=True)  # Store as abbreviation.
+    country = VarCharField("Country (Abbr.)")
+    state = VarCharField("State/Province (Abbr.)", blank=True)  # Store as abbreviation.
     city = VarCharField(blank=True)
     neighborhood = VarCharField(blank=True)
     

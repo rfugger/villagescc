@@ -93,6 +93,10 @@ class RipplePayment(object):
         return None
 
     @property
+    def text(self):
+        return self.memo
+    
+    @property
     def feed_poster(self):
         return self.payer()
     

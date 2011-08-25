@@ -17,16 +17,24 @@
 {% block content %}
 <h2>Set Your Location</h2>
 
-<form id="loc_search_form">
-	<input id="loc_search" type="text" />
+<form id="loc_search_form" class="loc_search_form">
+	<input id="loc_search" type="text" 
+		   value="Type your address to move the map pointer"/>
 	<input type="submit" value="Map" />
 </form>
+<hr>
 
-{# TODO: Move styles to css. #}
-<div id="map_canvas" style="width:560px; height:400px; float:left;"></div>
-<form action="" method="post" style="float:left">
+<div class="map_container">
+	<div id="map_canvas" class="map_canvas"></div>
+</div>
+
+<div class="loc_name_form">
+<p class="first">The map above shows the location you will be submitting.
+	Below, give this location a name to display for other users.</p>
+
+<form action="" method="post">
 	{% csrf_token %}
-	<table>
+	<table class="form_table">
 		{{ form }}
 		<tr>
 			<th></th>
@@ -40,5 +48,6 @@
 		{% endif %}
 	</table>
 </form>
+</div>
 {% endblock %}
 

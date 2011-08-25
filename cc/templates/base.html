@@ -9,18 +9,7 @@
 	<![endif]-->
 	{% include_media "content.css" %}
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script type="text/javascript">
-
-		{# TODO: Move to js file. #}
-
-		$(document).ready(function() {
-			$("#global_search_input").focus(function() {
-				$(this).val('');
-			}).blur(function() {
-				if ($(this).val() == '') $(this).val('Search')
-			});
-		});
-	</script>
+	{% include_media "common.js" %}
 	{% block extrahead %}{% endblock %}
 </head>
 <body>

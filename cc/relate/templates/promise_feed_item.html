@@ -1,10 +1,9 @@
 {% extends "feed_item.html" %}
+{% load profile %}
 
-{% block content %}
-<p><a href="{{ item.payer.get_absolute_url }}">{{ item.payer }}</a>
-	promised {{ item.amount }} to 
-	<a href="{{ item.recipient.get_absolute_url }}">{{ item.recipient }}</a>.</p>
-{% if item.memo %}
-	<p><em>{{ memo }}</em></p>
-{% endif %}
+{% block title %}
+	{% profile_display item.payer request "You" item.payer %}
+	promised 
+	{% profile_display item.recipient request "you" item.recipient %}
+	{{ item.amount }} hour{{ item.amount|pluralize:"s" }}
 {% endblock %}

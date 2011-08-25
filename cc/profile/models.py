@@ -46,12 +46,12 @@ class Profile(models.Model):
 
     @property
     def date(self):
-        """
-        For FeedItem source interface, returns last updated date as the
-        feed item date.
-        """
         return self.updated
 
+    @property
+    def text(self):
+        return self.description
+    
     def get_feed_users(self):
         "Make profile updates available publicly."
         return (None,)

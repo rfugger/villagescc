@@ -182,24 +182,67 @@ hr {
 }
 
 .feed_item {
-	margin-bottom: 1em;
+	padding: 0.5em;
+	margin: 0 -0.5em;
+	cursor: pointer;
+	border: 1px solid white;
+}
+
+.feed_item.hover {
+	background-color: #eee;
+	border: 1px solid #ddd;
 }
 
 .feed_item_user {
 	margin-right: 1em;
-	width: 80px;
+	width: 60px;
 }
 
-.feed_item_title {
-	display: inline;
+.feed_item_title, .feed_item_data {
+	margin: 0 0 0.2em 0;
 }
 
-.feed_item_actions {
-	margin-left: -1em;
+.feed_item_data {
+	font-size: 90%;
+}
+
+.feed_item_teaser {
+	margin: 0.5em 0 0.5em 1em;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+
+.more_link {
+	margin-left: 0.5em;
+}
+
+p.first {
+	margin-top: 0;
 }
 
 /********** Profile ***********/
 
 .profile_fields {
 	padding-left: 20px;
+}
+
+/********** Geolocator ***********/
+
+.loc_search_form {
+	input[type=text] { width: 300px; }
+}
+
+.map_container, .map_canvas {
+	width: 560px;
+	height: 320px;
+}
+
+.map_container {
+	margin: 1em auto;
+}
+
+.loc_name_form {
+	padding: 1em;
+	background-color: #eee;
+	border: 1px solid #ddd;
 }

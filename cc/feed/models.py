@@ -9,6 +9,7 @@ Properties:
 * id
 * date
 * location
+* text
 * feed_poster - Profile that created this feed item.
 * FEED_TEMPLATE - template for rendering this item in a feed.
 

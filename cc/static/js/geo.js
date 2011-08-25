@@ -18,14 +18,13 @@ var address_type_map = {
 var address_type_preference_order = {
 	neighborhood: 1,
 	sublocality: 2,
-	street_address: 3,
-	route: 4,
-	intersection: 5,
+	intersection: 3,
+	street_address: 4,
+	route: 5,
 	locality: 6,
 	administrative_area_level_1: 7,
 	country: 8
 };
-										  
 
 function initialize_geo(initial_lat, initial_lng) {
 	var initial_pos = true;
@@ -114,11 +113,25 @@ function update_form(address, location) {
 	}
 	$('#id_point').val('');
 
+	console.debug(address);
+
 	// Set form fields with new values.
 	for (var i = 0; i < address.length; i++) {
 		component = address[i];
-		if (component.types && address_type_map[component.types[0]]) {
-			$('#id_' + address_type_map[component.types[0]]).val(component.long_name);
+		if (component.types) {
+			var address_type = component.types[0];
+			var target_type = address_type_map[address_type];
+			if (!target_type) {
+				continue;
+			}
+			var component_name;
+			if ((target_type == 'country' || target_type == 'state') &&
+				component.short_name ) {
+				component_name = component.short_name;
+			} else {
+				component_name = component.long_name;
+			}
+			$('#id_' + target_type).val(component_name);
 		}
 	}
 	// Point gets set in Well Known Text (WKT) for GeoDjango.

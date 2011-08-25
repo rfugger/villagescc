@@ -1,24 +1,9 @@
 {% extends "feed_item.html" %}
+{% load profile %}
 
-{% block content %}
-<p>
-	{% ifequal request.profile item.endorser %}
-		You
-	{% else %}
-		<a href="{{ item.endorser.get_absolute_url }}">{{ item.endorser }}</a> 
-	{% endifequal %}
+{% block title %}
+	{% profile_display item.endorser request "You" item.endorser %}
 	endorsed 
-	{% ifequal request.profile item.recipient %}
-		you
-	{% else %}
-		<a href="{{ item.recipient.get_absolute_url }}">{{ item.recipient }}</a>
-	{% endifequal %}
+	{% profile_display item.recipient request "you" item.recipient %}
 	with {{ item.weight }} heart{{ item.weight|pluralize:"s" }}.
-</p>
-
-{% if can_edit %}
-<ul class="nav">
-	<li><a href="{% url endorse_user item.recipient.username %}">Edit</a></li>
-</ul>
-{% endif %}
 {% endblock %}

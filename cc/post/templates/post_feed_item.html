@@ -1,30 +1,12 @@
 {% extends "feed_item.html" %}
 {% load image profile %}
 
-{% block user_photo %}
-	{% if item.image %}{{ item.image|resize:"80x80" }}
-	{% else %}{% profile_image_url item.feed_poster "80x80" %}
-	{% endif %}
+{% block user %}
+		{% if item.image %}<img src="{{ item.image|resize:'60x60' }}">
+		{% else %}<img src="{% profile_image_url item.feed_poster '60x60' %}">
+		{% endif %}
 {% endblock %}
 
-{% block content_box %}
-<a href="{{ item.get_absolute_url }}"
-   ><h3 class="feed_item_title">{{ item.title }}</h3></a>
-<br>
-<a href="{{ item.feed_poster.get_absolute_url }}"
-   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a>
-- {{ item.date }}
-{% if item.location %}- {{ item.location }}{% endif %}
+{% block title %}{{ item.title }}{% endblock %}
 
-{# TODO: Truncate text and add a "more" link if needed. #}
-
-{{ item.text|linebreaks }}
-
-<ul class="feed_item_actions nav">
-	<li><a href="{{ item.get_absolute_url }}">Link</a></li>
-	{% if can_edit %}
-		<li><a href="{% url edit_post item.id %}">Edit</a></li>
-	{% endif %}
-	<li><a href="{% url contact item.feed_poster.username %}">Contact</a></li>
-</ul>
-{% endblock %}
+{% block poster %}{{ item.feed_poster }} - {% endblock %}

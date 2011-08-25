@@ -1,5 +1,5 @@
 {% extends "feed_item.html" %}
 
-{% block content %}
-<p><a href="{{ item.get_absolute_url }}">{{ item }}</a> updated their profile.</p>
+{% block title %}
+	{{ item }}
 {% endblock %}

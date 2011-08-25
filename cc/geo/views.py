@@ -66,7 +66,6 @@ def locator(request):
             initial_lat, initial_lng = get_geoip_coords(request)
             if initial_lat == '' or initial_lng == '':
                 initial_lat, initial_lng = settings.DEFAULT_LOCATION
-    get_browser_location = request.location is None
     return locals()
 
 def redirect_after_locator(request):

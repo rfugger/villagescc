@@ -1,21 +1,21 @@
-{% load profile %}
+{% load profile location %}
 <div class="feed_item_user unit">
 	{% block user %}
-
-		{# TODO: Link image to something useful (profile/post). #}
-
-		<img src="{% block user_photo %}
-				  	{% profile_image_url item.feed_poster '80x80' %}
-				  {% endblock %}">
+		<img src="{% profile_image_url item.feed_poster '60x60' %}">
 	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
-	{% block content_box %}
-		<a href="{{ item.feed_poster.get_absolute_url }}"
-		   ><h3 class="feed_item_title">{{ item.feed_poster }}</h3></a>
-		- {{ item.date }}
-		{% if item.location %}- {{ item.location }}{% endif %}
-		{% block content %}{% endblock %}
-	{% endblock %}
+	<h3 class="feed_item_title">
+			{% block title %}{% endblock %}</h3>
+	<div class="feed_item_data">
+		{% block poster %}{% endblock %}
+		{{ item.date }}
+		{% if item.location %}
+			- {% relative_location item.location request.location %}
+		{% endif %}
+	</div>
+	<div class="feed_item_teaser">
+		{% block teaser %}{{ item.text|truncatewords:20 }}{% endblock %}
+	</div>
 </div>
 
