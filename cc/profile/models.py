@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
+import cc.ripple.api as ripple
 
 class Profile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -71,8 +72,10 @@ class Profile(models.Model):
         Returns max flow of endorsements from asker to self across endorsement
         network.
         """
-        import cc.ripple.api as ripple
         return ripple.credit_reputation(self, asker)
+
+    def overall_balance(self):
+        return ripple.overall_balance(self)
     
     @classmethod
     def get_by_id(cls, id):

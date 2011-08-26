@@ -7,6 +7,15 @@ from south.modelsinspector import add_introspection_rules
 
 from cc.ripple import PRECISION, SCALE
 
+
+OVERALL_BALANCE_SQL = """
+select sum(balance) from (
+	select ac.balance * cl.bal_mult as balance
+	from account_creditline as cl
+	join account_account as ac on cl.account_id = ac.id
+	where cl.node_id = %s) as cl_balances
+"""
+
 class AmountField(models.DecimalField):
     "Field for value amounts."    
     def __init__(self, *args, **kwargs):
@@ -31,6 +40,16 @@ class Node(models.Model):
     def out_creditlines(self):
         return self.creditlines.all()
 
+    def overall_balance(self):
+        from django.db import connections
+        cursor = connections['ripple'].cursor()
+        cursor.execute(OVERALL_BALANCE_SQL, (self.id,))
+        row = cursor.fetchone()
+        if row:
+            return row[0]
+        else:
+            return D('0')
+    
 class AccountManager(models.Manager):
     def create_account(self, node1, node2):
         """

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load media profile %}
+{% load media profile number %}
 
 {% block subnav_image %}
 	{% with request.profile as profile %}
@@ -11,6 +11,14 @@
 	{% if request.profile %}
 		<a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a>
 	{% else %}Home{% endif %}
+{% endblock %}
+
+{% block profile_summary %}
+	{% if request.profile %}
+		{% with request.profile.overall_balance as balance %}
+			Balance: {{ balance|trim_zeroes }} hour{{ balance|pluralize:"s" }}
+		{% endwith %}
+	{% endif %}
 {% endblock %}
 
 {% block subnav %}

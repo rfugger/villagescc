@@ -5,7 +5,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
 
-from cc.profile.models import Profile
 from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
 from cc.payment.models import Payment
@@ -19,6 +18,7 @@ class UserAccount(object):
 
     def partner(self):
         # TODO: Cache this.
+        from cc.profile.models import Profile
         return Profile.objects.get(pk=self.creditline.partner.alias)
 
     def out_limit(self):
@@ -104,9 +104,11 @@ class RipplePayment(object):
         return (self.payer(), self.recipient())
 
     def payer(self):
+        from cc.profile.models import Profile
         return Profile.objects.get(pk=self.payment.payer.alias)
         
     def recipient(self):
+        from cc.profile.models import Profile
         return Profile.objects.get(pk=self.payment.recipient.alias)
     
     @classmethod
@@ -192,6 +194,9 @@ def credit_reputation(target, asker):
         cache.set(key, val, None, version=version)
     return val
 
+def overall_balance(profile):
+    node, _ = Node.objects.get_or_create(alias=profile.id)
+    return node.overall_balance()
 
 ##### Helpers #####
 

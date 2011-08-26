@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load relate %}
 
 {% block subnav_image %}
 	{% include "profile_image.html" %}
@@ -6,6 +7,13 @@
 
 {% block subnav_title %}
 	<a href="{{ profile.get_absolute_url }}">{{ profile }}</a>
+{% endblock %}
+
+{% block profile_summary %}
+	{% if request.profile %}
+		Trusted Endorsements:
+		{% trusted_endorsement_sum profile request.profile %}
+	{% endif %}
 {% endblock %}
 
 {% block subnav %}
@@ -18,16 +26,17 @@
 			<a href="{% url profile_endorsements profile.username %}"
 			   >Endorsements</a></li>
 		<li class="{% block nav_relationship_class %}{% endblock %}">
-			<a href="{% url relationship profile.username %}">Relationship</a></li>
+			<a href="{% url relationship profile.username %}"
+			   >Relationship</a></li>
 		<hr>
 		<li class="{% block nav_endorse_class %}{% endblock %}">
-			<a href="{% url endorse_user profile.username %}">Endorse {{ profile }}</a></li>
+			<a href="{% url endorse_user profile.username %}"
+			   >Endorse {{ profile }}</a></li>
 		<li class="{% block nav_promise_class %}{% endblock %}">
-			<a href="{% url promise_user profile.username %}">Promise {{ profile }}</a></li>
+			<a href="{% url promise_user profile.username %}"
+			   >Promise {{ profile }}</a></li>
 		<li class="{% block nav_contact_class %}{% endblock %}">
-			<a href="{% url contact profile.username %}">Contact {{ profile }}</a></li>
+			<a href="{% url contact profile.username %}"
+			   >Contact {{ profile }}</a></li>
 	{% endif %}
-{% endblock %}
-
-{% block page_actions %}
 {% endblock %}

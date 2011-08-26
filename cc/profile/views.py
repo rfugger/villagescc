@@ -71,7 +71,8 @@ def profile(request, username):
     else:
         template = 'profile.html'
     return locals(), template
-        
+
+# TODO: Move to post app?
 @render()
 def profile_posts(request, username):
     profile = get_object_or_404(Profile, user__username=username)
@@ -82,6 +83,7 @@ def profile_posts(request, username):
         template = 'profile_posts.html'    
     return locals(), template
 
+# TODO: Move to relate app?
 @render()
 def profile_endorsements(request, username):
     profile = get_object_or_404(Profile, user__username=username)

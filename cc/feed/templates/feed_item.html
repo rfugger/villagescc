@@ -1,4 +1,4 @@
-{% load profile location %}
+{% load profile location humanize %}
 <div class="feed_item_user unit">
 	{% block user %}
 		<img src="{% profile_image_url item.feed_poster '60x60' %}">
@@ -9,7 +9,7 @@
 			{% block title %}{% endblock %}</h3>
 	<div class="feed_item_data">
 		{% block poster %}{% endblock %}
-		{{ item.date }}
+		{{ item.date }}  {# TODO: Add humanize naturaltime filter here when available. #}
 		{% if item.location %}
 			- {% relative_location item.location request.location %}
 		{% endif %}
