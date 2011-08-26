@@ -135,6 +135,14 @@ def get_user_accounts(profile):
     return [UserAccount(cl) for cl in
             CreditLine.objects.filter(node__alias=profile.id)]
 
+@accept_profiles
+def get_account(node, partner):
+    account = Account.objects.get_account(node, partner)
+    if not account:
+        return None
+    cl = CreditLine.objects.get(node=node, account=account)
+    return UserAccount(cl)
+
 def update_credit_limit(endorsement):
     # Get endorsement recipient's creditline.
     account = get_or_create_account_from_profiles(

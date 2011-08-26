@@ -70,7 +70,7 @@ class AccountManager(models.Manager):
             "join account_creditline c1 on c1.account_id = a.id "
             "join account_creditline c2 on c2.account_id = a.id "
             "where c1.node_id = %s "
-            "and c2.node_id = %s" % (node1.id, node2.id)))
+            "and c2.node_id = %s", (node1.id, node2.id)))
         if len(acct_list) == 0:
             return None
         elif len(acct_list) == 1:

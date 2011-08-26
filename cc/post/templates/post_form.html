@@ -15,7 +15,7 @@
 
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
-	<table class="form_table">
+	<table class="form">
 		<tr>
 			<th><a href="{% url locator %}?next={{ request.path }}">
 					Location</a></th>
