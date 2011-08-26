@@ -61,11 +61,11 @@ class Profile(models.Model):
     def feed_poster(self):
         return self
 
-    # TODO: Cache this as a field on this model?
+    # TODO: Cache this across requests.
     @property
     def endorsement_sum(self):
         return self.endorsements_received.all().aggregate(
-            models.Sum('weight'))['weight__sum'] or 0
+            models.Sum('weight')).get('weight__sum', 0)
 
     def trusted_endorsement_sum(self, asker):
         """"

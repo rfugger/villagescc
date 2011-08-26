@@ -88,7 +88,6 @@ def profile_posts(request, username):
 def profile_endorsements(request, username):
     profile = get_object_or_404(Profile, user__username=username)
     endorsements = profile.endorsements_received.order_by('-updated')
-    trusted_endorsement_sum = profile.trusted_endorsement_sum(request.profile)
     return locals()
 
 @render()
