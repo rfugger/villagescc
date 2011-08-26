@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, Http404
+from django.db.models import Q
 
 from cc.general.util import render
 import cc.ripple.api as ripple
@@ -8,7 +9,6 @@ from cc.profile.models import Profile
 from cc.relate.forms import EndorseForm, PromiseForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
-from cc.ripple.api import RipplePayment
 
 
 @login_required
@@ -25,19 +25,29 @@ def endorse_user(request, recipient_username):
     if request.method == 'POST':
         form = EndorseForm(request.POST, instance=endorsement)
         if form.is_valid():
-            form.save(endorser=request.profile, recipient=recipient)
-            return HttpResponseRedirect(recipient.get_absolute_url())
+            endorsement = form.save(
+                endorser=request.profile, recipient=recipient)
+            return HttpResponseRedirect(endorsement.get_absolute_url())
     else:
         form = EndorseForm(instance=endorsement)
     profile = recipient  # For profile_base.html.
     return locals()
 
+@login_required
 @render()
 def endorsements(request):
     endorsements = FeedItem.objects.get_feed(
         request.profile, location=None, item_type_filter=Endorsement)
     return locals()
 
+@login_required
+@render()
+def endorsement(request, endorsement_id):
+    endorsement = get_object_or_404(
+        Endorsement, Q(endorser=request.profile) | Q(recipient=request.profile),
+        pk=endorsement_id)
+    return locals()
+    
 @login_required
 @render()
 def relationships(request):
@@ -79,6 +89,23 @@ def promise_user(request, recipient_username):
 @render()
 def promises(request):
     promises = FeedItem.objects.get_feed(
-        request.profile, location=None, item_type_filter=RipplePayment)
+        request.profile, location=None, item_type_filter=ripple.RipplePayment)
     return locals()    
 
+@login_required
+@render()
+def view_promise(request, payment_id):
+    payment = ripple.get_payment(payment_id)
+    if request.profile not in (payment.payer, payment.recipient):
+        raise Http404
+    entries = payment.entries_for_user(request.profile)
+    sent_entries = []
+    received_entries = []
+    for entry in entries:
+        if entry.amount < 0:
+            sent_entries.append(entry)
+        else:
+            received_entries.append(entry)
+    return locals()
+
+# TODO: View payment from POV of intermediary.

@@ -1,0 +1,46 @@
+{% extends "home_base.html" %}
+{% load number %}
+
+{% block title %}
+	Promise
+{% endblock %}
+
+{% block content %}
+	<h3>Promise</h3>
+	<table class="data">
+		<tr>
+			<th>From</th>
+			<td>{{ payment.payer }}</td>
+		</tr>
+		<tr>
+			<th>To</th>
+			<td>{{ payment.recipient }}</td>
+		</tr>
+		<tr>
+			<th>Amount</th>
+			<td>{{ payment.amount|trim_zeroes }} 
+				hour{{ payment.amount|pluralize:"s" }}</td>
+		</tr>
+		<tr>
+			<th>Time</th>
+			<td>{{ payment.date }}</td>
+		</tr>
+	</table>
+		
+	{{ payment.memo|linebreaks }}
+	
+	{# TODO: Reuse this in intermediary view of payment. #}
+	{% if sent_entries %}
+		<h4>Sent Amounts</h4>
+		{% with sent_entries as entries %}
+			{% include "payment_entries.html" %}
+		{% endwith %}
+	{% endif %}
+
+	{% if received_entries %}
+		<h4>Received Amounts</h4>
+		{% with received_entries as entries %}
+			{% include "payment_entries.html" %}
+		{% endwith %}
+	{% endif %}
+{% endblock %}

@@ -39,3 +39,16 @@ class render(object):
         decorated_func.__name__ = view_func.__name__
         decorated_func.__module__ = view_func.__module__
         return decorated_func
+
+def cache_on_object(accessor_func):
+    def decorated_func(obj):
+        cached_attr = '_cached_%s' % accessor_func.__name__
+        if hasattr(obj, cached_attr):
+            return getattr(obj, cached_attr)
+        val = accessor_func(obj)
+        setattr(obj, cached_attr, val)
+        return val
+    decorated_func.__name__ = accessor_func.__name__
+    decorated_func.__module__ = accessor_func.__module__
+    return decorated_func
+            

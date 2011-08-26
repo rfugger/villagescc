@@ -1,0 +1,23 @@
+{% extends "home_base.html" %}
+
+{% block title %}
+	{{ endorsement.endorser }} Endorses {{ endorsement.recipient }}
+{% endblock %}
+
+{% block content %}
+	<h3>{{ endorsement.endorser }} Endorses {{ endorsement.recipient }}</h3>
+
+	<p>Date: {{ endorsement.updated }}</p>
+	<p>Weight: {{ endorsement.weight }}</p>
+	{{ endorsement.text|linebreaks }}
+	{% ifequal request.profile endorsement.endorser %}
+		<p><a href="{% url endorse_user endorsement.recipient.username %}"
+			  >Edit</a></p>
+		<p><a href="{{ endorsement.recipient.get_absolute_url }}"
+			  >endorsement.recipient</a></p>
+	{% else %}
+		<p><a href="{{ endorsement.endorser.get_absolute_url }}"
+			  >endorsement.endorser</a></p>
+	{% endifequal %}
+
+{% endblock %}

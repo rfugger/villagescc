@@ -4,10 +4,12 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
+from django.db import models
 
 from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
 from cc.payment.models import Payment
+from cc.general.util import cache_on_object
 
 REPUTATION_VERSION_KEY = 'credit_reputation_version'
 
@@ -16,28 +18,33 @@ class UserAccount(object):
     def __init__(self, creditline):
         self.creditline = creditline
 
+    @property
+    @cache_on_object
     def partner(self):
-        # TODO: Cache this.
         from cc.profile.models import Profile
         return Profile.objects.get(pk=self.creditline.partner.alias)
 
+    @property
     def out_limit(self):
         return self.creditline.limit
 
+    @property
     def balance(self):
         return self.creditline.balance
 
+    @property
     def in_limit(self):
         return self.creditline.in_limit
 
-class UserAccountEntry(object):
+class UserEntry(object):
     """
-    Wrapper around AccountEntry, with amounts from point of view of one partner.
+    Wrapper around Entry, with amounts from point of view of one partner.
     """
     def __init__(self, entry, user):
         self.entry = entry
         creditline = entry.account.creditlines.get(node__alias=user.id)
         self.bal_mult = creditline.bal_mult
+        self.account = UserAccount(creditline)
 
     @property
     def date(self):
@@ -64,7 +71,7 @@ class UserAccountEntry(object):
     @property
     def new_balance(self):
         return self.entry.new_balance * self.bal_mult
-    
+
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."
 
@@ -77,8 +84,6 @@ class RipplePayment(object):
 
     def __getattr__(self, name):
         "Proxy attribute lookups to self.payment."
-        # TODO: Make more explicit the attributes accessible here, so
-        # interface is better-defined.
         if name in ('id', 'amount', 'memo'):
             return getattr(self.payment, name)
         raise AttributeError("%s does not have attribute '%s'." % (
@@ -98,18 +103,31 @@ class RipplePayment(object):
     
     @property
     def feed_poster(self):
-        return self.payer()
+        return self.payer
     
     def get_feed_users(self):
-        return (self.payer(), self.recipient())
+        return (self.payer, self.recipient)
 
+    @property
+    @cache_on_object
     def payer(self):
         from cc.profile.models import Profile
         return Profile.objects.get(pk=self.payment.payer.alias)
         
+    @property
+    @cache_on_object
     def recipient(self):
         from cc.profile.models import Profile
         return Profile.objects.get(pk=self.payment.recipient.alias)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return 'view_promise', (self.id,)
+
+    def entries_for_user(self, user):
+        return [UserEntry(entry, user) for entry in
+                self.payment.entries.filter(
+                    account__creditlines__node__alias=user.id)]
     
     @classmethod
     def get_by_id(cls, payment_id):
@@ -118,7 +136,7 @@ class RipplePayment(object):
         except Payment.DoesNotExist:
             raise cls.DoesNotExist
 
-
+        
 def accept_profiles(func):
     """
     Decorator for function that takes two Nodes, allowing it to take
@@ -164,7 +182,7 @@ def get_entries_between(node, partner):
     account = Account.objects.get_account(node, partner)
     if account is None:
         return []
-    return [UserAccountEntry(entry, node) for entry
+    return [UserEntry(entry, node) for entry
             in account.entries.all().order_by('-payment__last_attempted_at')]
 
 @accept_profiles

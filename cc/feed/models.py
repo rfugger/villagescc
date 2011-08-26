@@ -16,6 +16,7 @@ Properties:
 Methods:
 * get_feed_users - All users who can have this feed item in their feed,
     including None if feed item is public.
+* get_absolute_url
 
 Class Methods:
 * get_by_id - Model instance with given ID.
