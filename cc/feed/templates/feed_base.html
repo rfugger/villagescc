@@ -8,12 +8,17 @@
 
 {% block content %}
 	<div class="feed_filter nav">
-		<li><a href="{% url feed %}">All</a></li>
-		<li><a href="{% url profiles %}">People</a></li>
-		<li><a href="{% url posts %}">Posts</a></li>
+		<li class="{% block feed_all_class %}{% endblock %}">
+			<a href="{% url feed %}">All</a></li>
+		<li class="{% block feed_people_class %}{% endblock %}">
+			<a href="{% url profiles %}">People</a></li>
+		<li class="{% block feed_posts_class %}{% endblock %}">
+			<a href="{% url posts %}">Posts</a></li>
 		{% if user.is_authenticated %}
-			<li><a href="{% url endorsements %}">Endorsements</a></li>
-			<li><a href="{% url promises %}">Promises</a></li>
+			<li class="{% block feed_endorsements_class %}{% endblock %}">
+				<a href="{% url endorsements %}">Endorsements</a></li>
+			<li class="{% block feed_promises_class %}{% endblock %}">
+				<a href="{% url promises %}">Promises</a></li>
 		{% endif %}
 	</div>
 	<hr>

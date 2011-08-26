@@ -2,6 +2,8 @@
 
 {% block title %}Endorsements{% endblock %}
 
+{% block feed_endorsements_class %}selected{% endblock %}
+
 {% block feed_content %}
 	{% with endorsements as feed_items %}
 		{% include "feed_item_list.html" %}

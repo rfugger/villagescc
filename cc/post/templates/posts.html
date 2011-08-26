@@ -2,6 +2,8 @@
 
 {% block title %}Posts{% endblock %}
 
+{% block feed_posts_class %}selected{% endblock %}
+
 {% block feed_content %}
 	{% with posts as feed_items %}
 		{% include "feed_item_list.html" %}
