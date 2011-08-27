@@ -9,16 +9,17 @@
 <table class="data">
 	<tr>
 		<th>Date</th>
-		<th>Received</th>
-		<th>Sent</th>
-		<th>Balance</th>
+		<th class="number_header">Received</th>
+		<th class="number_header">Sent</th>
+		<th class="number_header">Balance</th>
 	</tr>
 	{% for entry in entries %}
 		<tr>
-			<td>{{ entry.date }}</td>
-			<td>{{ entry.received|default:"" }}</td>
-			<td>{{ entry.sent|default:"" }}</td>
-			<td>{{ entry.new_balance }}</td>
+			<td><a href="{% url view_promise entry.payment_id %}"
+				   >{{ entry.date }}</a></td>
+			<td class="number">{{ entry.received|default:"" }}</td>
+			<td class="number">{{ entry.sent|default:"" }}</td>
+			<td class="number">{{ entry.new_balance }}</td>
 		</tr>
 	{% endfor %}
 	</table>

@@ -10,11 +10,13 @@
 	<table class="data">
 		<tr>
 			<th>From</th>
-			<td>{{ payment.payer }}</td>
+			<td><a href="{{ payment.payer.get_absolute_url }}"
+				   >{{ payment.payer }}</a></td>
 		</tr>
 		<tr>
 			<th>To</th>
-			<td>{{ payment.recipient }}</td>
+			<td><a href="{{ payment.recipient.get_absolute_url }}"
+				   >{{ payment.recipient }}</a></td>
 		</tr>
 		<tr>
 			<th>Amount</th>

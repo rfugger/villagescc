@@ -46,14 +46,21 @@ class UserEntry(object):
         self.bal_mult = creditline.bal_mult
         self.account = UserAccount(creditline)
 
-    @property
-    def date(self):
-        return self.entry.date
+    def __getattr__(self, name):
+        "Proxy attribute lookups to self.entry."
+        if name in ('id', 'date', 'payment_id'):
+            return getattr(self.entry, name)
+        raise AttributeError("%s does not have attribute '%s'." % (
+                self.__class__, name))
 
     @property
     def amount(self):
         return self.entry.amount * self.bal_mult
 
+    @property
+    def abs_amount(self):
+        return abs(self.entry.amount)
+    
     @property
     def received(self):
         if self.amount > 0:
@@ -71,6 +78,7 @@ class UserEntry(object):
     @property
     def new_balance(self):
         return self.entry.new_balance * self.bal_mult
+
 
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."

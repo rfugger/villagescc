@@ -62,4 +62,5 @@ class PromiseForm(forms.Form):
         # Create feed item
         FeedItem.create_feed_items(
             sender=ripple.RipplePayment, instance=obj, created=True)
+        return obj
         

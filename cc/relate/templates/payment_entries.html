@@ -3,12 +3,12 @@
 <table class="data">
 	<tr>
 		<th>Person</th>
-		<th>Amount</th>
+		<th class="number_header">Amount</th>
 	{% for entry in entries %}
 		<tr>
 			<td><a href="{% url relationship entry.account.partner.username %}"
 				   >{{ entry.account.partner }}</a></td>
-			<td>{{ entry.amount|trim_zeroes }}</td>
+			<td class="number">{{ entry.abs_amount }}</td>
 		</tr>
 	{% endfor %}
 </table>
