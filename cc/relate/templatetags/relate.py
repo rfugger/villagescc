@@ -39,3 +39,16 @@ class LoadUserAccountNode(template.Node):
         user_account = ripple.get_account(profile, partner)
         context[self.target_var_name] = user_account
         return ''
+
+@register.simple_tag
+def entry_description(entry, profile):
+    if entry.payment.payer == profile:
+        desc = "Sent promise to %s" % (
+            entry.payment_id, entry.payment.recipient)
+    elif entry.payment.recipient == profile:
+        desc = "Received promise from %s" % (
+            entry.payment_id, entry.payment.payer)
+    else:
+        desc = "Routed promise from %s to %s" % (
+            entry.payment.payer, entry.payment.recipient)
+    return desc

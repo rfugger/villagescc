@@ -14,10 +14,10 @@
 		<p><a href="{% url endorse_user endorsement.recipient.username %}"
 			  >Edit</a></p>
 		<p><a href="{{ endorsement.recipient.get_absolute_url }}"
-			  >endorsement.recipient</a></p>
+			  >{{ endorsement.recipient }}</a></p>
 	{% else %}
 		<p><a href="{{ endorsement.endorser.get_absolute_url }}"
-			  >endorsement.endorser</a></p>
+			  >{{ endorsement.endorser }}</a></p>
 	{% endifequal %}
 
 {% endblock %}

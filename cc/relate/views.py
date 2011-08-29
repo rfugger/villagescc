@@ -64,6 +64,10 @@ def relationship(request, partner_username):
     if profile == request.profile:
         raise Http404
     entries = ripple.get_entries_between(request.profile, profile)
+    if entries:
+        balance = entries[0].new_balance
+    else:
+        balance = 0
     return locals()
 
 @login_required
@@ -97,9 +101,9 @@ def promises(request):
 @render()
 def view_promise(request, payment_id):
     payment = ripple.get_payment(payment_id)
-    if request.profile not in (payment.payer, payment.recipient):
-        raise Http404
     entries = payment.entries_for_user(request.profile)
+    if not entries:
+        raise Http404  # Non-participants don't get to see anything.
     sent_entries = []
     received_entries = []
     for entry in entries:

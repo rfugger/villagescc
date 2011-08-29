@@ -115,6 +115,10 @@ table.data {
 	border: 1px solid #ddd;
 }
 
+.feature .data {
+	background-color: white;
+}
+
 /********** Message Box ************/
 
 .message_line {
@@ -266,4 +270,11 @@ p.first {
 
 .map_container {
 	margin: 1em auto;
+}
+
+/********** Payments ***************/
+
+table.entries {
+	width: auto;
+	min-width: 50%;
 }

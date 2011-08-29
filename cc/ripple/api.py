@@ -79,6 +79,11 @@ class UserEntry(object):
     def new_balance(self):
         return self.entry.new_balance * self.bal_mult
 
+    @property
+    @cache_on_object
+    def payment(self):
+        return RipplePayment(self.entry.payment)
+
 
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."
