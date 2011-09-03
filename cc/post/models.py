@@ -31,7 +31,7 @@ class Post(models.Model):
     FEED_TEMPLATE = 'post_feed_item.html'
     
     def __unicode__(self):
-        return u"Post by %s at %s" % (self.user, self.date)
+        return u"%s [%s]" % (self.title, self.want and "Want" or "Offer")
 
     @models.permalink
     def get_absolute_url(self):

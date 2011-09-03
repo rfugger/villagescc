@@ -1,0 +1,6 @@
+<h3>{{ post }}</h3>
+<p><a href="{{ post.user.get_absolute_url }}">{{ post.user }}</a> - 
+	{{ post.date }} -
+	{{ post.location }}
+</p>
+{{ post.text|linebreaks }}

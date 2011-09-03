@@ -1,9 +1,25 @@
-{% extends "home_base.html" %}
-{% load feed %}
+{% extends "profile_base.html" %}
 
-{% block title %}Post by {{ post.user }}{% endblock %}
+{% block title %}{{ post }}{% endblock %}
 
 {% block content %}
-	<div class="feed_item line">{% render_in_feed post %}</div>
+<div class="line">
+	{% include "post_image.html" %}
+	<div class="unit lastUnit">
+		{% include "post_content.html" %}
+
+		<h4>Contact</h4>
+		<form action="{% url contact post.user.username %}">
+			{% csrf_token %}
+			<table class="form_table">
+				{{ contact_form }}
+				<tr>
+					<th></th>
+					<td><input type="submit" value="Contact"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
 {% endblock %}
 

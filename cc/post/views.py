@@ -8,6 +8,7 @@ from cc.post.forms import PostForm
 from cc.geo.util import location_required
 from cc.profile.util import profile_location_required
 from cc.feed.models import FeedItem
+from cc.profile.forms import ContactForm
 
 @login_required
 @profile_location_required
@@ -34,7 +35,13 @@ def posts(request):
         request.profile, request.location, item_type_filter=Post)
     return locals()    
 
-@render('post.html')
+@render()
 def view_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    return locals()
+    if request.profile == post.user:
+        template = 'my_post.html'
+    else:
+        template = 'post.html'
+        profile = post.user  # For profile_base.html.
+        contact_form = ContactForm()
+    return locals(), template

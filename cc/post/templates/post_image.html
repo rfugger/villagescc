@@ -1,0 +1,6 @@
+{% load image %}
+{% if post.image %}
+	<div class="unit">
+		<img src="{{ post.image|resize:'150x200' }}">
+	</div>
+{% endif %}
