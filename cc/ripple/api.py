@@ -1,6 +1,7 @@
 "API to Ripple backend."
 
 # TODO: Test this module.
+# TODO: Import * into __init__.py so `from cc import ripple` works.
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache

@@ -73,6 +73,10 @@ table.data {
 	text-align: right;
 }
 
+p.first {
+	margin-top: 0;
+}
+
 /********** Head/Nav **************/
 
 .logo_nav_line {
@@ -248,8 +252,8 @@ table.data {
 	margin-left: 0.5em;
 }
 
-p.first {
-	margin-top: 0;
+.feed_item.untrusted {
+	color: #666;
 }
 
 /********** Profile ***********/

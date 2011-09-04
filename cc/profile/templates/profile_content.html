@@ -1,4 +1,6 @@
 {% load profile %}
+<h2>{{ profile }}</h2>
+
 {% if my_endorsement %}
 	<p>You have endorsed this user ({{ my_endorsement.weight }}).
 		<a href="{% url endorse_user profile.username %}">Edit endorsement</a>

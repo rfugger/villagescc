@@ -5,6 +5,7 @@
 {% block nav_posts_class %}selected{% endblock %}
 
 {% block content %}
+	<h2>My Posts</h2>
 	{% with posts as feed_items %}
 		{% include "feed_item_list.html" %}
 	{% endwith %}

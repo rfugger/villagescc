@@ -1,7 +1,8 @@
 {% load feed %}
 <div class="feed_item_list">
 	{% for feed_item in feed_items %}
-		<div class="feed_item line" href="{{ feed_item.get_absolute_url }}">
+		<div class="feed_item line{% if feed_item.trusted %} trusted{% else %} untrusted{% endif %}" 
+			 href="{{ feed_item.get_absolute_url }}">
 			{% render_in_feed feed_item %}
 		</div>
 	{% empty %}

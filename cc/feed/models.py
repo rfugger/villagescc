@@ -36,14 +36,15 @@ from cc.profile.models import Profile
 from cc.geo.models import Location
 from cc.post.models import Post
 from cc.relate.models import Endorsement
-from cc.ripple.api import RipplePayment
+import cc.ripple.api as api
+from cc.general.util import cache_on_object
 
 # Classes that can be stored as feed items.
 ITEM_TYPES = {
     Post: 'post',
     Profile: 'profile',
     Endorsement: 'endorsement',
-    RipplePayment: 'promise',
+    api.RipplePayment: 'promise',
 }
 
 # Reverse keys and values in ITEM_TYPES.
@@ -56,7 +57,8 @@ class FeedManager(GeoManager):
                  item_type_filter=None):
         """
         Get list of dereferenced feed items (actually load the Posts, Profiles,
-        etc.) for the given user profile.
+        etc.) for the given user profile.  Each item gets a `trusted` attribute
+        set if its feed_poster is trusted by the requesting profile.
         
         Pass a model class to 'item_type_filter' to only return those types of
         feed items.
@@ -79,6 +81,7 @@ class FeedManager(GeoManager):
         for feed_item in query:
             item = feed_item.item
             if item:
+                item.trusted = feed_item.poster_trusted_by(profile)
                 items.append(item)
         return items
         
@@ -98,7 +101,7 @@ class FeedItem(models.Model):
     item_type = models.CharField(max_length=16, choices=(
             (ITEM_TYPES[Post], 'Post'),
             (ITEM_TYPES[Profile], 'Profile Update'),
-            (ITEM_TYPES[RipplePayment], 'Promise'),
+            (ITEM_TYPES[api.RipplePayment], 'Promise'),
             (ITEM_TYPES[Endorsement], 'Endorsement'),
         ))
     item_id = models.PositiveIntegerField()
@@ -117,6 +120,7 @@ class FeedItem(models.Model):
         return s
 
     @property
+    @cache_on_object
     def item(self):
         model = MODEL_TYPES[self.item_type]
         try:
@@ -126,7 +130,16 @@ class FeedItem(models.Model):
             # so catch cases where model record with item_id is gone.
             item = None
         return item
-        
+
+    def poster_trust(self, profile):
+        "Returns profile's trust level in poster."
+        if not self.item.feed_poster:
+            return 0
+        return api.credit_reputation(self.item.feed_poster, profile)
+    
+    def poster_trusted_by(self, profile):
+        return self.poster_trust(profile) > 0
+    
     @classmethod
     def create_feed_items(cls, sender, instance, created, **kwargs):
         """

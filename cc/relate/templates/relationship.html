@@ -1,11 +1,13 @@
 {% extends "profile_base.html" %}
 {% load relate %}
 
-{% block title %}Relationship with {{ profile }}{% endblock %}
+{% block title %}Relationship With {{ profile }}{% endblock %}
 
 {% block nav_relationship_class %}selected{% endblock %}
 
 {% block content %}
+<h2>Relationship With {{ profile }}</h2>
+
 Balance: {{ balance }} hours
 
 {% if entries %}
