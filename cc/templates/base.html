@@ -27,7 +27,7 @@
 		<span class="site_nav nav">
 			<li><a href="{% url home %}">Home</a></li>
 			<li>
-				<form class="inline_form" action="{% url search_posts %}" method="get">
+				<form class="inline_form" action="{% url feed %}" method="get">
 					<input id="global_search_input" class="instruction_input"
 						   name="q" type="text" value="Search">
 				</form>
@@ -94,8 +94,6 @@
 						<li class="{% block nav_new_post_class %}{% endblock %}">
 							<a href="{% url new_post %}">New Post</a></li>
 					{% endif %}
-					<li><a href="{% url search_posts %}">Search Posts</a></li>
-					<li><a href="{% url search_profiles %}">Search People</a></li>
 				{% endblock %}
 			</div>
 		</div>

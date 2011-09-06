@@ -4,9 +4,6 @@
 
 {% block feed_posts_class %}selected{% endblock %}
 
-{% block feed_content %}
+{% block pre_feed %}
 	<p><a href="{% url new_post %}">New Post</a></p>
-	{% with posts as feed_items %}
-		{% include "feed_item_list.html" %}
-	{% endwith %}
 {% endblock %}

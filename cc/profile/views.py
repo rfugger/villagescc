@@ -56,12 +56,6 @@ def edit_profile(request):
     return locals()
 
 @render()
-def profiles(request):
-    profiles = FeedItem.objects.get_feed(
-        request.profile, request.location, item_type_filter=Profile)
-    return locals()
-
-@render()
 def profile(request, username):
     profile = get_object_or_404(Profile, user__username=username)
     if request.profile:

@@ -38,7 +38,7 @@ class Endorsement(models.Model):
         "For FeedItem source interface.  Endorsements have no location."
         return None
 
-    def get_feed_users(self):
+    def get_feed_recipients(self):
         "Endorsement should show up in endorser's and recipient's feeds."
         return (self.endorser, self.recipient)
 
@@ -46,6 +46,14 @@ class Endorsement(models.Model):
     def feed_poster(self):
         return self.endorser
 
+    def get_search_text(self):
+        return [(self.text, 'B'),
+                (self.endorser.name, 'C'),
+                (self.endorser.username, 'C'),
+                (self.recipient.name, 'C'),
+                (self.recipient.username, 'C'),
+               ]
+        
     def can_edit(self, profile):
         return self.endorser == profile
 

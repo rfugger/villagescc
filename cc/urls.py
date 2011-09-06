@@ -10,7 +10,6 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'cc.views.intro', name='home'),
     (r'^feed/', include('cc.feed.urls')),
-    (r'^search/', include('cc.search.urls')),
     (r'', include('cc.geo.urls')),
     (r'', include('cc.profile.urls')),
     (r'^posts/', include('cc.post.urls')),

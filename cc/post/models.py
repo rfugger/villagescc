@@ -14,6 +14,9 @@ class UndeletedPostManager(models.Manager):
             deleted=False)
     
 class Post(models.Model):
+
+    # TODO: Rename `user` to `profile`?
+    
     user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
@@ -40,7 +43,7 @@ class Post(models.Model):
     def can_edit(self, profile):
         return self.user == profile
 
-    def get_feed_users(self):
+    def get_feed_recipients(self):
         "Make post available publicly."
         return (None,)
 
@@ -48,6 +51,13 @@ class Post(models.Model):
     def feed_poster(self):
         return self.user
 
+    def get_search_text(self):
+        return [(self.title, 'A'),
+                (self.text, 'B'),
+                (self.user.name, 'C'),
+                (self.user.username, 'C'),
+               ]
+        
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)

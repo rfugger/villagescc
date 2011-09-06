@@ -200,17 +200,21 @@ p.first {
 
 /********** Feed ***********/
 
-.feed_filter {
+.feed_type_filter {
 	margin-bottom: 20px;
 }
 
-.feed_filter li {
+.feed_type_filter li {
 	padding: 0.5em 1em 20px 1em;
 	margin: 0 0 -20px 0;
 }
 
-.feed_filter li.selected {
+.feed_type_filter li.selected {
 	border-radius: 5px 5px 0 0;
+}
+
+.feed_filter_form {
+	margin: 10px 0;
 }
 
 .feed_item_list {

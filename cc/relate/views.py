@@ -35,13 +35,6 @@ def endorse_user(request, recipient_username):
 
 @login_required
 @render()
-def endorsements(request):
-    endorsements = FeedItem.objects.get_feed(
-        request.profile, location=None, item_type_filter=Endorsement)
-    return locals()
-
-@login_required
-@render()
 def endorsement(request, endorsement_id):
     endorsement = get_object_or_404(
         Endorsement, Q(endorser=request.profile) | Q(recipient=request.profile),
@@ -92,13 +85,6 @@ def promise_user(request, recipient_username):
 
 @login_required
 @render()
-def promises(request):
-    promises = FeedItem.objects.get_feed(
-        request.profile, location=None, item_type_filter=ripple.RipplePayment)
-    return locals()    
-
-@login_required
-@render()
 def view_promise(request, payment_id):
     payment = ripple.get_payment(payment_id)
     entries = payment.entries_for_user(request.profile)
@@ -112,5 +98,3 @@ def view_promise(request, payment_id):
         else:
             received_entries.append(entry)
     return locals()
-
-# TODO: View payment from POV of intermediary.

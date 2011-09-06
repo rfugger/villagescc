@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-	<h3>Promise</h3>
+	<h2>Promise</h2>
 	<div class="feature">
 		<table class="data">
 				<tr>
@@ -34,14 +34,14 @@
 	</div>
 
 	{% if received_entries %}
-		<h4>Received</h4>
+		<h3>Received</h3>
 		{% with received_entries as entries %}
 			{% include "payment_entries.html" %}
 		{% endwith %}
 	{% endif %}
 
 	{% if sent_entries %}
-		<h4>Sent</h4>
+		<h3>Sent</h3>
 		{% with sent_entries as entries %}
 			{% include "payment_entries.html" %}
 		{% endwith %}

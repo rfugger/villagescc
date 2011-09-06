@@ -3,7 +3,7 @@
 {% block nav_feed_class %}selected{% endblock %}
 
 {% block content %}
-	<div class="feed_filter nav">
+	<div class="feed_type_filter nav">
 		<li class="{% block feed_all_class %}{% endblock %}">
 			<a href="{% url feed %}">All</a></li>
 		<li class="{% block feed_people_class %}{% endblock %}">
@@ -18,5 +18,18 @@
 		{% endif %}
 	</div>
 	<hr>
-	{% block feed_content %}{% endblock %}
+	<div class="feed_filter_form">
+		<form class="inline_form" action="" method="get">
+			{{ form.q }}
+			Show items within:
+			<select name="radius">
+				<option value="5000">5 km</option>
+			</select>
+			Trusted posters only:
+			<input type="checkbox" name="trusted">
+		</form>
+	</div>
+	<hr>
+	{% block pre_feed %}{% endblock %}
+	{% include "feed_item_list.html" %}	
 {% endblock %}

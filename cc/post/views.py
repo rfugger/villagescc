@@ -27,14 +27,6 @@ def edit_post(request, post_id=None):
         form = PostForm(instance=post)
     return locals()
 
-# TODO: Move to feed app?
-@location_required
-@render()
-def posts(request):
-    posts = FeedItem.objects.get_feed(
-        request.profile, request.location, item_type_filter=Post)
-    return locals()    
-
 @render()
 def view_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)

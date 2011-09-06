@@ -19,10 +19,12 @@ class Profile(models.Model):
         blank=True, help_text="Be sure to mention any skills you bring "
         "to the community, so others can search for you.")
     
-    endorsements_remaining = models.PositiveIntegerField(
-        default=settings.INITIAL_ENDORSEMENTS)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    endorsements_remaining = models.PositiveIntegerField(
+        default=settings.INITIAL_ENDORSEMENTS)
+    feed_radius = models.PositiveIntegerField(null=True, blank=True)
+    feed_trusted = models.BooleanField()
 
     FEED_TEMPLATE = 'profile_feed_item.html'
     
@@ -53,7 +55,7 @@ class Profile(models.Model):
     def text(self):
         return self.description
     
-    def get_feed_users(self):
+    def get_feed_recipients(self):
         "Make profile updates available publicly."
         return (None,)
 
@@ -61,6 +63,12 @@ class Profile(models.Model):
     def feed_poster(self):
         return self
 
+    def get_search_text(self):
+        return [(self.name, 'A'),
+                (self.username, 'A'),
+                (self.description, 'B'),
+               ]
+        
     # TODO: Cache this across requests.
     @property
     def endorsement_sum(self):
