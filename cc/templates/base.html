@@ -13,9 +13,9 @@
 	{% block extrahead %}{% endblock %}
 	<script type="text/javascript">
 		$(document).ready(function() {
+			{% block ready_js %}{% endblock %}
 			init_instruction_input();
 			init_feed_items();
-			{% block ready_js %}{% endblock %}
 		});
 	</script>
 </head>
@@ -29,7 +29,7 @@
 			<li>
 				<form class="inline_form" action="{% url feed %}" method="get">
 					<input id="global_search_input" class="instruction_input"
-						   name="q" type="text" value="Search">
+						   name="q" type="text" help="Search">
 				</form>
 			</li>
 		</span>

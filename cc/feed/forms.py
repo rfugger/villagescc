@@ -15,7 +15,9 @@ DEFAULT_RADIUS = 5000
 
 class FeedFilterForm(forms.Form):
     p = forms.IntegerField(label="Page", required=False, min_value=1)
-    q = forms.CharField(label="Search", required=False)
+    q = forms.CharField(
+        label="Search", required=False, widget=forms.TextInput(
+            attrs={'class': 'instruction_input', 'help': "Search"}))
     radius = forms.TypedChoiceField(
         required=False, choices=RADIUS_CHOICES, coerce=int, empty_value=None)
     trusted = forms.BooleanField(required=False)
@@ -23,7 +25,7 @@ class FeedFilterForm(forms.Form):
     def __init__(self, data, profile, *args, **kwargs):
         data = data.copy()
         data.setdefault('radius', profile.feed_radius or DEFAULT_RADIUS)
-        if 'q' not in data:
+        if 'q' not in data:  # Ie, form not submitted.
             # Checkbox value isn't in data when unchecked, so only set it
             # when the feed filter form hasn't been submitted.
             data.setdefault('trusted', bool(profile.feed_trusted))

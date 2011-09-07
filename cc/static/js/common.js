@@ -3,14 +3,27 @@
 function init_instruction_input() {
 	/* Allow search boxes to give instructions that disappear when selected. */
 	$('.instruction_input').each(function(index) {
-		var orig_text = $(this).val()
-		$(this).focus(function() {
+		// Only apply help instruction if blank.
+		if ($(this).val() != '')
+			return;
+		// Input instruction goes in 'help' attribute.
+		var orig_text = $(this).attr('help');
+		$(this).val(orig_text);
+
+		$(this).focus(function() {  // Remove instruction on focus.
 			if ($(this).val() == orig_text) {
 				$(this).val('');
 			}
-		}).blur(function() {
+		}).blur(function() {  // Restore on blur if nothing entered.
 			if ($(this).val() == '') {
 				$(this).val(orig_text);
+			}
+		});
+		// Remove on form submit.
+		input = $(this);  // Inside form submit handler, $(this) = form.
+		input.closest('form').submit(function() {
+			if (input.val() == orig_text) {
+				input.val('');
 			}
 		});
 	});
@@ -40,3 +53,4 @@ function init_feed_filter_form() {
 		$(this).closest('form').submit();
 	});
 }
+

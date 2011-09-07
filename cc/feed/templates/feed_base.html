@@ -22,19 +22,16 @@
 				<a href="{% url promises %}">Promises</a></li>
 		{% endif %}
 	</div>
-	<hr>
 	<div class="feed_filter_form">
-		<form class="inline_form" action="" method="get">
-			{{ form.q }}
-			<a id="id_clear" href="javascript:void(0)">Clear</a>
-			<br>
-			Show items within:
-			{{ form.radius }}
-			Trusted posters only:
-			{{ form.trusted }}
+		<form class="inline_form nav" action="" method="get">
+			<li class="first">
+				{{ form.q }}
+				<a id="id_clear" href="javascript:void(0)">Clear</a>
+			</li>
+			<li>Show within {{ form.radius }}</li>
+			<li>Trusted only {{ form.trusted }}</li>
 		</form>
 	</div>
-	<hr>
 	{% block pre_feed %}{% endblock %}
 	{% include "feed_item_list.html" %}	
 {% endblock %}

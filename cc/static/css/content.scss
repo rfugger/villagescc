@@ -33,6 +33,7 @@ a {
 }
 
 hr {
+	margin: 10px 0;
 	height: 1px;
 	background-color: #ddd;
 	border: 0;
@@ -75,6 +76,10 @@ table.data {
 
 p.first {
 	margin-top: 0;
+}
+
+li.first {
+	margin-left: -1em;
 }
 
 /********** Head/Nav **************/
@@ -214,7 +219,11 @@ p.first {
 }
 
 .feed_filter_form {
-	margin: 10px 0;
+	padding: 10px 20px;
+	margin: 0 -20px;
+	background-color: #eee;
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
 }
 
 .feed_item_list {
@@ -222,15 +231,17 @@ p.first {
 }
 
 .feed_item {
-	padding: 0.5em 10px;
-	margin: 0 -10px;
+	padding: 1em 20px 0.5em;
+	margin: 0 -20px;
 	cursor: pointer;
-	border: 1px solid white;
+	border-top: solid 1px white;
+	border-bottom: solid 1px white;
 }
 
 .feed_item.hover {
 	background-color: #eee;
-	border: 1px solid #ddd;
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
 }
 
 .feed_item_user {
