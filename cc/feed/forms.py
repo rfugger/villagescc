@@ -41,6 +41,8 @@ class FeedFilterForm(forms.Form):
         if trusted != profile.feed_trusted:
             profile.feed_trusted = trusted
             profile.save()
+        if radius == -1:
+            radius = None
         return FeedItem.objects.get_feed(
             profile, location, page=page, tsearch=tsearch, radius=radius,
             item_type=item_type)

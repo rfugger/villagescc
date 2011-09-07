@@ -35,4 +35,8 @@ function init_feed_filter_form() {
 	$('.feed_filter_form #id_trusted').change(function() {
 		$(this).closest('form').submit();
 	});
+	$('.feed_filter_form #id_clear').click(function() {
+		$('.feed_filter_form #id_q').val('');
+		$(this).closest('form').submit();
+	});
 }
