@@ -1,5 +1,10 @@
 {% extends "home_base.html" %}
 
+{% block ready_js %}
+	{{ block.super }}
+	init_feed_filter_form();
+{% endblock %}
+
 {% block nav_feed_class %}selected{% endblock %}
 
 {% block content %}
@@ -22,11 +27,9 @@
 		<form class="inline_form" action="" method="get">
 			{{ form.q }}
 			Show items within:
-			<select name="radius">
-				<option value="5000">5 km</option>
-			</select>
+			{{ form.radius }}
 			Trusted posters only:
-			<input type="checkbox" name="trusted">
+			{{ form.trusted }}
 		</form>
 	</div>
 	<hr>

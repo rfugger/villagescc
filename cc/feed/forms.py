@@ -8,7 +8,7 @@ RADIUS_CHOICES = (
     (5000, '5 km'),
     (10000, '10 km'),
     (50000, '50 km'),
-    (None, 'Anywhere'),
+    (-1, 'Anywhere'),
 )
 
 DEFAULT_RADIUS = 5000
@@ -21,16 +21,25 @@ class FeedFilterForm(forms.Form):
     trusted = forms.BooleanField(required=False)
 
     def __init__(self, data, profile, *args, **kwargs):
+        data = data.copy()
+        data.setdefault('radius', profile.feed_radius or DEFAULT_RADIUS)
+        if 'q' not in data:
+            # Checkbox value isn't in data when unchecked, so only set it
+            # when the feed filter form hasn't been submitted.
+            data.setdefault('trusted', bool(profile.feed_trusted))
         super(FeedFilterForm, self).__init__(data, *args, **kwargs)
-        self.fields['radius'].initial = profile.feed_radius or DEFAULT_RADIUS
     
     def get_results(self, profile, location, item_type):
         data = self.cleaned_data
         page = data.get('p') or 1
         tsearch = data.get('q')
-        radius = data.get('radius') or profile.feed_radius or DEFAULT_RADIUS
+        radius = data['radius']
         if radius != profile.feed_radius:
             profile.feed_radius = radius
+            profile.save()
+        trusted = data['trusted']
+        if trusted != profile.feed_trusted:
+            profile.feed_trusted = trusted
             profile.save()
         return FeedItem.objects.get_feed(
             profile, location, page=page, tsearch=tsearch, radius=radius,

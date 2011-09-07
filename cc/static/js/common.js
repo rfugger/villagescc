@@ -26,3 +26,13 @@ function init_feed_items() {
 		$(this).removeClass('hover')
 	});
 }	
+
+function init_feed_filter_form() {
+	/* Make form submit on change. */
+	$('.feed_filter_form #id_radius').change(function() {
+		$(this).closest('form').submit();
+	});
+	$('.feed_filter_form #id_trusted').change(function() {
+		$(this).closest('form').submit();
+	});
+}

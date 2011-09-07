@@ -23,7 +23,7 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now=True)
     endorsements_remaining = models.PositiveIntegerField(
         default=settings.INITIAL_ENDORSEMENTS)
-    feed_radius = models.PositiveIntegerField(null=True, blank=True)
+    feed_radius = models.IntegerField(null=True, blank=True)
     feed_trusted = models.BooleanField()
 
     FEED_TEMPLATE = 'profile_feed_item.html'
