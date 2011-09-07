@@ -26,6 +26,13 @@ class Profile(models.Model):
     feed_radius = models.IntegerField(null=True, blank=True)
     feed_trusted = models.BooleanField()
 
+    trusted_profiles = models.ManyToManyField(
+        'Profile', symmetrical=False, related_name='trusting_profiles')
+
+    # TODO: Should a profile always trust itself?
+
+    # TODO: Update trust checks to use trusted_profiles throughout code.
+    
     FEED_TEMPLATE = 'profile_feed_item.html'
     
     def __unicode__(self):

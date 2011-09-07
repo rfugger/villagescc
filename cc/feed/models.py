@@ -57,7 +57,7 @@ MODEL_TYPES = dict(((item_type, model)
 class FeedManager(GeoManager):
     def get_feed(self, profile, location, radius=settings.DEFAULT_FEED_RADIUS,
                  page=1, limit=settings.FEED_ITEMS_PER_PAGE,
-                 item_type=None, tsearch=None):
+                 item_type=None, tsearch=None, trusted_only=False):
         """
         Get list of dereferenced feed items (actually load the Posts, Profiles,
         etc.) for the given user profile.  Each item gets a `trusted` attribute
@@ -82,6 +82,10 @@ class FeedManager(GeoManager):
             query = query.extra(
                 where=["tsearch @@ plainto_tsquery(%s)"],
                 params=[tsearch])
+        if trusted_only:
+            trusted_profiles = set(profile.trusted_profiles.only('id'))
+            trusted_profiles.add(profile)  # Always trust yourself.
+            query = query.filter(poster__in=trusted_profiles)
             
         # Limit query.
         if limit is not None:

@@ -57,6 +57,19 @@ class Endorsement(models.Model):
     def can_edit(self, profile):
         return self.endorser == profile
 
+    def update_trust_network(self):
+        """
+        Add endorsement recipient plus recipient's entire trust network to
+        the trusted network of endorser and everyone who trusts endorser.
+        """
+        to_trust = set(self.recipient.trusted_profiles.only('id'))
+        to_trust.add(self.recipient)
+        to_trust = tuple(to_trust)
+        trusters = set(self.endorser.trusting_profiles.only('id'))
+        trusters.add(self.endorser)
+        for truster in trusters:
+            truster.trusted_profiles.add(*to_trust)        
+    
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)
@@ -65,7 +78,18 @@ class Endorsement(models.Model):
     def update_credit_limit(cls, sender, instance, created, **kwargs):
         ripple.update_credit_limit(instance)
 
-# Create new empty profile when a new user is created.
+    @classmethod
+    def update_trusted_profiles(cls, sender, instance, created, **kwargs):
+        if not created:
+            return
+        instance.update_trust_network()
+
 post_save.connect(Endorsement.update_credit_limit, sender=Endorsement,
                   dispatch_uid='relate.models')
+post_save.connect(Endorsement.update_trusted_profiles, sender=Endorsement,
+                  dispatch_uid='relate.models')
+
 # TODO: Propagate Endorsement delete through to ripple backend using post_delete.
+
+# TODO: Update trusted_profiles when endorsement deleted.  (Might have to recompute
+# everything?)
