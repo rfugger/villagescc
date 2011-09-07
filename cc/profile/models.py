@@ -58,13 +58,19 @@ class Profile(models.Model):
     def date(self):
         return self.updated
 
+    # TODO: Consider putting profile at top of feed whenever they come
+    # back online?  (Maybe change 'date' -> 'feed_date'?)
+    
     @property
     def text(self):
         return self.description
     
+    @property
+    def feed_public(self):
+        return True
+    
     def get_feed_recipients(self):
-        "Make profile updates available publicly."
-        return (None,)
+        return []
 
     @property
     def feed_poster(self):
@@ -91,6 +97,9 @@ class Profile(models.Model):
 
     def overall_balance(self):
         return ripple.overall_balance(self)
+
+    def trusts(self, profile):
+        return self.trusted_profiles.filter(pk=profile.id).count() > 0
     
     @classmethod
     def get_by_id(cls, id):

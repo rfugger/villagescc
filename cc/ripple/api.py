@@ -119,6 +119,10 @@ class RipplePayment(object):
     def feed_poster(self):
         return self.payer
     
+    @property
+    def feed_public(self):
+        return False
+    
     def get_feed_recipients(self):
         return (self.payer, self.recipient)
 
@@ -158,6 +162,9 @@ class RipplePayment(object):
         except Payment.DoesNotExist:
             raise cls.DoesNotExist
 
+    @classmethod
+    def get_all(cls):
+        return (cls(pmt) for pmt in Payment.objects.iterator())
         
 def accept_profiles(func):
     """

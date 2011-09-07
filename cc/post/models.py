@@ -43,9 +43,12 @@ class Post(models.Model):
     def can_edit(self, profile):
         return self.user == profile
 
+    @property
+    def feed_public(self):
+        return True
+    
     def get_feed_recipients(self):
-        "Make post available publicly."
-        return (None,)
+        return []
 
     @property
     def feed_poster(self):

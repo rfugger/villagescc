@@ -38,6 +38,10 @@ class Endorsement(models.Model):
         "For FeedItem source interface.  Endorsements have no location."
         return None
 
+    @property
+    def feed_public(self):
+        return False
+    
     def get_feed_recipients(self):
         "Endorsement should show up in endorser's and recipient's feeds."
         return (self.endorser, self.recipient)
@@ -45,7 +49,7 @@ class Endorsement(models.Model):
     @property
     def feed_poster(self):
         return self.endorser
-
+    
     def get_search_text(self):
         return [(self.text, 'B'),
                 (self.endorser.name, 'C'),
@@ -75,18 +79,19 @@ class Endorsement(models.Model):
         return cls.objects.get(pk=id)
     
     @classmethod
-    def update_credit_limit(cls, sender, instance, created, **kwargs):
+    def post_save_update_credit_limit(cls, sender, instance, created, **kwargs):
         ripple.update_credit_limit(instance)
 
     @classmethod
-    def update_trusted_profiles(cls, sender, instance, created, **kwargs):
+    def post_create_update_trust(cls, sender, instance, created, **kwargs):
+        "Update trust network"
         if not created:
             return
         instance.update_trust_network()
 
-post_save.connect(Endorsement.update_credit_limit, sender=Endorsement,
+post_save.connect(Endorsement.post_save_update_credit_limit, sender=Endorsement,
                   dispatch_uid='relate.models')
-post_save.connect(Endorsement.update_trusted_profiles, sender=Endorsement,
+post_save.connect(Endorsement.post_create_update_trust, sender=Endorsement,
                   dispatch_uid='relate.models')
 
 # TODO: Propagate Endorsement delete through to ripple backend using post_delete.

@@ -29,7 +29,9 @@
 				<a id="id_clear" href="javascript:void(0)">Clear</a>
 			</li>
 			<li>Show within {{ form.radius }}</li>
-			<li>Trusted only {{ form.trusted }}</li>
+			{% if request.profile %}
+				<li>Trusted only {{ form.trusted }}</li>
+			{% endif %}
 		</form>
 	</div>
 	{% block pre_feed %}{% endblock %}

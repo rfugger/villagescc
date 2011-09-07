@@ -11,6 +11,7 @@ Properties:
 * location
 * text
 * feed_poster - Profile that created this feed item.
+* feed_public - Boolean indicating whether this feed item is public.
 * FEED_TEMPLATE - template for rendering this item in a feed.
 
 Methods:
@@ -26,6 +27,8 @@ Class Methods:
 
 Exceptions:
 * DoesNotExist
+
+TODO: Feed item expiry.
 
 """
 
@@ -54,6 +57,12 @@ ITEM_TYPES = {
 MODEL_TYPES = dict(((item_type, model)
                     for model, item_type in ITEM_TYPES.items()))
 
+TRUSTED_SUBQUERY = (
+    "feed_feeditem.poster_id in "
+    "(select to_profile_id from profile_profile_trusted_profiles "
+    "    where from_profile_id = %s)")
+                    
+
 class FeedManager(GeoManager):
     def get_feed(self, profile, location, radius=settings.DEFAULT_FEED_RADIUS,
                  page=1, limit=settings.FEED_ITEMS_PER_PAGE,
@@ -69,9 +78,9 @@ class FeedManager(GeoManager):
         # Build query.
         query = self.get_query_set().order_by('-date')
         if profile:
-            query = query.filter(Q(recipient=profile) | Q(recipient=None))
+            query = query.filter(Q(recipients=profile) | Q(public=True))
         else:
-            query = query.filter(recipient=None)
+            query = query.filter(public=True)
         if item_type:
             query = query.filter(item_type=ITEM_TYPES[item_type])
         if location and radius:
@@ -82,10 +91,8 @@ class FeedManager(GeoManager):
             query = query.extra(
                 where=["tsearch @@ plainto_tsquery(%s)"],
                 params=[tsearch])
-        if trusted_only:
-            trusted_profiles = set(profile.trusted_profiles.only('id'))
-            trusted_profiles.add(profile)  # Always trust yourself.
-            query = query.filter(poster__in=trusted_profiles)
+        if trusted_only and profile:
+            query = query.extra(where=[TRUSTED_SUBQUERY], params=[profile.id])
             
         # Limit query.
         if limit is not None:
@@ -97,26 +104,39 @@ class FeedManager(GeoManager):
         for feed_item in query:
             item = feed_item.item
             if item:
-                item.trusted = feed_item.poster_trusted_by(profile)
+                item.trusted = profile and profile.trusts(feed_item.poster)
                 items.append(item)
             else:
                 # Orphan feed item -- delete.
                 feed_item.delete()
         return items
-        
+
+    def create_from_item(self, item):
+        item_type = ITEM_TYPES[type(item)]
+        feed_item = self.create(
+            date=item.date,
+            poster=item.feed_poster,
+            item_type=item_type,
+            item_id=item.id,
+            public=item.feed_public,
+            location=item.location)
+        feed_item.recipients = item.get_feed_recipients()
+        feed_item.update_tsearch(item.get_search_text())
+
+    
 class FeedItem(models.Model):
     """
     A denormalized record of feed data, merged for ease of ordering by date
     and selecting recent items without massive queries on several other tables
     and merging results every time.
     
-    Feed items are identified by (item_type, item_id, recipient) tuple,
-    where recipient is the user whose feed the item is for, and may be null,
-    indicating it may go in anyone's feed.
-    
-    Feed items may have a location used for filtering feeds by proximity.
+    Feed items are identified by (item_type, item_id) tuple.  They may have a
+    location used for filtering feeds by proximity.  They may also specify
+    particular recipient profiles whose feed they will appear in.  If the feed
+    item is marked public, then the recipients are ignored.
     """
     date = models.DateTimeField(db_index=True)
+    poster = models.ForeignKey(Profile, related_name='posted_feed_items')
     item_type = models.CharField(max_length=16, choices=(
             (ITEM_TYPES[Post], 'Post'),
             (ITEM_TYPES[Profile], 'Profile Update'),
@@ -124,19 +144,18 @@ class FeedItem(models.Model):
             (ITEM_TYPES[Endorsement], 'Endorsement'),
         ))
     item_id = models.PositiveIntegerField()
-    recipient = models.ForeignKey(Profile, null=True, blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
-
+    public = models.BooleanField()
+    recipients = models.ManyToManyField(
+        Profile, related_name='received_feed_items')
+                               
     objects = FeedManager()
     
     class Meta:
-        unique_together = ('item_type', 'item_id', 'recipient')
+        unique_together = ('item_type', 'item_id')
 
     def __unicode__(self):
-        s = u"Feed %s %d %s" % (self.item_type, self.item_id, self.date)
-        if self.recipient:
-            s = u"%s for %s" % (s, self.recipient)
-        return s
+        return u"Feed %s %d %s" % (self.item_type, self.item_id, self.date)
 
     @property
     @cache_on_object
@@ -149,15 +168,6 @@ class FeedItem(models.Model):
             # so catch cases where model record with item_id is gone.
             item = None
         return item
-
-    def poster_trust(self, profile):
-        "Returns profile's trust level in poster."
-        if not self.item.feed_poster:
-            return 0
-        return api.credit_reputation(self.item.feed_poster, profile)
-    
-    def poster_trusted_by(self, profile):
-        return self.poster_trust(profile) > 0
 
     def update_tsearch(self, search_text_elements):
         """
@@ -194,22 +204,11 @@ class FeedItem(models.Model):
         if not item_type:
             return
         if not created:
-            # Delete existing feed items.
+            # Delete existing feed item.
             cls.objects.filter(
                 item_type=item_type, item_id=instance.id).delete()
-        for recipient in instance.get_feed_recipients():
-            # Don't allow public items with no location.
-            if recipient is None and instance.location is None:
-                continue
-            feed_item = cls.objects.create(
-                date=instance.date,
-                item_type=item_type,
-                item_id=instance.id,
-                recipient=recipient,
-                location=instance.location)
-            # Set text search column.
-            feed_item.update_tsearch(instance.get_search_text())
-
+        cls.objects.create_from_item(instance)
+            
     @classmethod
     def delete_feed_items(cls, sender, instance, **kwargs):
         "Signal receiver to clean up feed items when an object is deleted."

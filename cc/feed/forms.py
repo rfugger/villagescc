@@ -47,5 +47,5 @@ class FeedFilterForm(forms.Form):
             radius = None
         return FeedItem.objects.get_feed(
             profile, location, page=page, tsearch=tsearch, radius=radius,
-            item_type=item_type)
+            item_type=item_type, trusted_only=trusted)
         
