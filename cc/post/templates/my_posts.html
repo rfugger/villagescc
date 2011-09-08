@@ -6,6 +6,9 @@
 
 {% block content %}
 	<h2>My Posts</h2>
+
+	<p><a href="{% url new_post %}">New Post</a></p>
+
 	{% with posts as feed_items %}
 		{% include "feed_item_list.html" %}
 	{% endwith %}

@@ -66,14 +66,16 @@ def relationships(request):
 @login_required
 @render()
 def relationship(request, partner_username):
-    profile = get_object_or_404(Profile, user__username=partner_username)
-    if profile == request.profile:
-        raise Http404
-    entries = ripple.get_entries_between(request.profile, profile)
+    partner = get_object_or_404(Profile, user__username=partner_username)
+    if partner == request.profile:
+        raise Http404  # Can't have relationship with yourself.
+    account = ripple.get_account(request.profile, partner)
+    entries = ripple.get_entries_between(request.profile, partner)
     if entries:
         balance = entries[0].new_balance
     else:
         balance = 0
+    profile = partner  # For profile_base.html.
     return locals()
 
 @login_required

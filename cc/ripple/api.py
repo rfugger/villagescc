@@ -2,6 +2,7 @@
 
 # TODO: Test this module.
 # TODO: Import * into __init__.py so `from cc import ripple` works.
+# TODO: Don't use 'user' when I really mean 'profile' (here and everywhere).
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
@@ -16,8 +17,9 @@ REPUTATION_VERSION_KEY = 'credit_reputation_version'
 
 class UserAccount(object):
     "Wrapper around CreditLine."
-    def __init__(self, creditline):
+    def __init__(self, creditline, user):
         self.creditline = creditline
+        self.user = user
 
     @property
     @cache_on_object
@@ -27,7 +29,7 @@ class UserAccount(object):
 
     @property
     def out_limit(self):
-        return self.creditline.limit
+        return int(self.creditline.limit)
 
     @property
     def balance(self):
@@ -35,7 +37,27 @@ class UserAccount(object):
 
     @property
     def in_limit(self):
-        return self.creditline.in_limit
+        return int(self.creditline.in_limit)
+
+    @property
+    @cache_on_object
+    def endorsement(self):
+        from cc.relate.models import Endorsement
+        try:
+            return Endorsement.objects.get(
+                endorser=self.user, recipient=self.partner)
+        except Endorsement.DoesNotExist:
+            return None
+
+    @property
+    @cache_on_object
+    def partner_endorsement(self):
+        from cc.relate.models import Endorsement
+        try:
+            return Endorsement.objects.get(
+                endorser=self.partner, recipient=self.user)
+        except Endorsement.DoesNotExist:
+            return None        
 
 class UserEntry(object):
     """
@@ -45,7 +67,7 @@ class UserEntry(object):
         self.entry = entry
         creditline = entry.account.creditlines.get(node__alias=user.id)
         self.bal_mult = creditline.bal_mult
-        self.account = UserAccount(creditline)
+        self.account = UserAccount(creditline, user)
 
     def __getattr__(self, name):
         "Proxy attribute lookups to self.entry."
@@ -165,7 +187,12 @@ class RipplePayment(object):
     @classmethod
     def get_all(cls):
         return (cls(pmt) for pmt in Payment.objects.iterator())
-        
+
+def get_nodes(profile1, profile2):
+    node1, _ = Node.objects.get_or_create(alias=profile1.id)
+    node2, _ = Node.objects.get_or_create(alias=profile2.id)
+    return node1, node2
+    
 def accept_profiles(func):
     """
     Decorator for function that takes two Nodes, allowing it to take
@@ -173,22 +200,23 @@ def accept_profiles(func):
     and passes the nodes to the original function.
     """
     def profile_accepting_wrapper(profile1, profile2, *args, **kwargs):
-        node1, _ = Node.objects.get_or_create(alias=profile1.id)
-        node2, _ = Node.objects.get_or_create(alias=profile2.id)
+        node1, node2 = get_nodes(profile1, profile2)
         return func(node1, node2, *args, **kwargs)
+    profile_accepting_wrapper.__name__ = func.__name__
+    profile_accepting_wrapper.__module__ = func.__module__
     return profile_accepting_wrapper
     
 def get_user_accounts(profile):
-    return [UserAccount(cl) for cl in
+    return [UserAccount(cl, profile) for cl in
             CreditLine.objects.filter(node__alias=profile.id)]
 
-@accept_profiles
-def get_account(node, partner):
+def get_account(profile, partner_profile):
+    node, partner = get_nodes(profile, partner_profile)
     account = Account.objects.get_account(node, partner)
     if not account:
         return None
     cl = CreditLine.objects.get(node=node, account=account)
-    return UserAccount(cl)
+    return UserAccount(cl, profile)
 
 def update_credit_limit(endorsement):
     # Get endorsement recipient's creditline.

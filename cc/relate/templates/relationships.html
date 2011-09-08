@@ -7,21 +7,42 @@
 {% block content %}
 <h2>My Relationships</h2>
 
+<p>TODO: Overall balance, trusted balance.</p>
+
 {% if accounts %}
 <table class="data">
 	<tr>
 		<th>Name</th>
-		<th>Their Endorsement Of You</th>
-		<th>Promise Balance</th>
-		<th>Your Endorsement of Them</th>
+		<th class="number_header">Their Endorsement Of You</th>
+		<th class="number_header">Promise Balance</th>
+		<th class="number_header">Your Endorsement of Them</th>
 	</tr>
 	{% for account in accounts %}
 		<tr>
-			<td><a href="{% url relationship account.partner.username %}"
+			<td><a href="{{ account.partner.get_absolute_url }}"
+				   title="View Profile for {{ account.partner }}"
 				   >{{ account.partner }}</a></td>
-			<td>{{ account.out_limit }}</td>
-			<td>{{ account.balance }}</td>
-			<td>{{ account.in_limit }}</td>
+			<td class="number">
+				{% if account.partner_endorsement %}
+					<a href="{{ account.partner_endorsement.get_absolute_url }}"
+					   title="View Endorsement from {{ account.partner }}"
+					   >{{ account.out_limit }}</a>
+				{% endif %}
+			</td>
+			<td class="number">
+				<a href="{% url relationship account.partner.username %}"
+				   title="View Relationship with {{ account.partner }}"
+				   >{{ account.balance }}</a></td>
+			<td class="number">
+				{% if account.endorsement %}
+					<a href="{{ account.endorsement.get_absolute_url }}"
+					   title="View Your Endorsement of {{ account.partner }}"
+					   >{{ account.in_limit }}</a>
+				{% else %}
+					<a href="{% url endorse_user account.partner.username %}"
+					   title="Endorse {{ account.partner }}">0</a>
+				{% endif %}
+			</td>
 		</tr>
 	{% endfor %}
 </table>

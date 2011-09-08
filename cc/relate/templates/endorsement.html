@@ -10,18 +10,20 @@
 		Endorses 
 		{% profile_display endorsement.recipient request endorsement.recipient %}
 	</h3>
-
-	<table class="data">
-		<tr>
-			<th>Date</th> 
-			<td>{{ endorsement.updated }}</td>
-		</tr><tr>
-			<th>Hearts</th>
-			<td>{{ endorsement.weight }}</td>
-		</tr>
-	</table>
 	
-	<div class="teaser">{{ endorsement.text|linebreaks }}</div>
+	<div class="feature">
+		<table class="data">
+			<tr>
+				<th>Date</th> 
+				<td>{{ endorsement.updated }}</td>
+			</tr><tr>
+				<th>Hearts</th>
+				<td>{{ endorsement.weight }}</td>
+			</tr>
+		</table>
+
+		{{ endorsement.text|linebreaks }}
+	</div>
 
 	{% ifequal request.profile endorsement.endorser %}
 		<p><a href="{% url endorse_user endorsement.recipient.username %}"

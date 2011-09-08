@@ -47,6 +47,6 @@ def entry_description(entry, profile):
     elif entry.payment.recipient == profile:
         desc = "Received promise from %s" % entry.payment.payer
     else:
-        desc = "Routed promise from %s to %s" % (
+        desc = "Helped route promise from %s to %s" % (
             entry.payment.payer, entry.payment.recipient)
     return desc

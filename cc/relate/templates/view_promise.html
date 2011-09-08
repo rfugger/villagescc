@@ -36,14 +36,18 @@
 	{% if received_entries %}
 		<h3>Received</h3>
 		{% with received_entries as entries %}
+		{% with "From" as person_descriptor %}
 			{% include "payment_entries.html" %}
+		{% endwith %}
 		{% endwith %}
 	{% endif %}
 
 	{% if sent_entries %}
 		<h3>Sent</h3>
 		{% with sent_entries as entries %}
+		{% with "To" as person_descriptor %}
 			{% include "payment_entries.html" %}
+		{% endwith %}
 		{% endwith %}
 	{% endif %}
 {% endblock %}
