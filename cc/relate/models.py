@@ -1,8 +1,18 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
+from django.db import models, connection, transaction
 
 from cc.profile.models import Profile
 import cc.ripple.api as ripple
+
+class EndorsementManager(models.Manager):
+    def rebuild_trust_network(self):
+        "Clear out all Profile.trusted_profiles and recreate from scratch."
+        cursor = connection.cursor()
+        cursor.execute("delete from profile_profile_trusted_profiles")
+        for endorsement in self.all():
+            endorsement.update_trust_network()
+        transaction.commit_unless_managed()
 
 class Endorsement(models.Model):
     endorser = models.ForeignKey(Profile, related_name='endorsements_made')
@@ -11,6 +21,8 @@ class Endorsement(models.Model):
     weight = models.PositiveIntegerField()
     text = models.TextField(blank=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = EndorsementManager()
     
     class Meta:
         unique_together = ('endorser', 'recipient')
@@ -84,10 +96,14 @@ class Endorsement(models.Model):
         if created:
             instance.update_trust_network()
 
+    @classmethod
+    def post_delete(cls, sender, instance, **kwargs):
+        ripple.update_credit_limit(instance)
+        # TODO: Do something more efficient than rebuild trust network
+        # from scratch here.
+        cls.objects.rebuild_trust_network()
+            
 post_save.connect(Endorsement.post_save, sender=Endorsement,
                   dispatch_uid='relate.models')
-
-# TODO: Propagate Endorsement delete through to ripple backend using post_delete.
-
-# TODO: Update trusted_profiles when endorsement deleted.  (Might have to recompute
-# everything?)
+post_delete.connect(Endorsement.post_delete, sender=Endorsement,
+                    dispatch_uid='relate.models')
