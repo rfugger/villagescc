@@ -24,8 +24,9 @@ class FeedFilterForm(forms.Form):
 
     def __init__(self, data, profile, *args, **kwargs):
         data = data.copy()
-        data.setdefault('radius', profile.feed_radius or DEFAULT_RADIUS)
-        if 'q' not in data:  # Ie, form not submitted.
+        data.setdefault(
+            'radius', profile and profile.feed_radius or DEFAULT_RADIUS)
+        if profile and 'q' not in data:  # Ie, form not submitted.
             # Checkbox value isn't in data when unchecked, so only set it
             # when the feed filter form hasn't been submitted.
             data.setdefault('trusted', bool(profile.feed_trusted))
@@ -36,11 +37,11 @@ class FeedFilterForm(forms.Form):
         page = data.get('p') or 1
         tsearch = data.get('q')
         radius = data['radius']
-        if radius != profile.feed_radius:
+        if profile and radius != profile.feed_radius:
             profile.feed_radius = radius
             profile.save()
         trusted = data['trusted']
-        if trusted != profile.feed_trusted:
+        if profile and trusted != profile.feed_trusted:
             profile.feed_trusted = trusted
             profile.save()
         if radius == -1:
