@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
+from cc.general.util import cache_on_object
 
 class Profile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -21,8 +22,8 @@ class Profile(models.Model):
     
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    endorsements_remaining = models.PositiveIntegerField(
-        default=settings.INITIAL_ENDORSEMENTS)
+    endorsement_limited = models.BooleanField(default=True)
+
     feed_radius = models.IntegerField(null=True, blank=True)
     feed_trusted = models.BooleanField()
 
@@ -81,13 +82,32 @@ class Profile(models.Model):
                 (self.username, 'A'),
                 (self.description, 'B'),
                ]
-        
-    # TODO: Cache this across requests.
+
+    @property
+    def endorsement_count(self):
+        return self.endorsements_received.all().count()
+    
+    # TODO: Cache this across requests?
     @property
     def endorsement_sum(self):
         return self.endorsements_received.all().aggregate(
-            models.Sum('weight')).get('weight__sum', 0)
+            models.Sum('weight')).get('weight__sum') or 0
 
+    @property
+    def endorsements_made_sum(self):
+        return self.endorsements_made.all().aggregate(
+            models.Sum('weight')).get('weight__sum') or 0
+
+    @property
+    @cache_on_object
+    def endorsements_remaining(self):
+        return max(((self.endorsement_count + 1) * settings.ENDORSEMENT_BONUS -
+                    self.endorsements_made_sum), 0)
+
+    @property
+    def can_endorse(self):
+        return not self.endorsement_limited or self.endorsements_remaining > 0
+    
     def trusted_endorsement_sum(self, asker):
         """"
         Returns max flow of endorsements from asker to self across endorsement
@@ -100,7 +120,7 @@ class Profile(models.Model):
 
     def trusts(self, profile):
         return self.trusted_profiles.filter(pk=profile.id).count() > 0
-    
+
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)

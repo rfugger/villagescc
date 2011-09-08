@@ -79,19 +79,12 @@ class Endorsement(models.Model):
         return cls.objects.get(pk=id)
     
     @classmethod
-    def post_save_update_credit_limit(cls, sender, instance, created, **kwargs):
+    def post_save(cls, sender, instance, created, **kwargs):
         ripple.update_credit_limit(instance)
+        if created:
+            instance.update_trust_network()
 
-    @classmethod
-    def post_create_update_trust(cls, sender, instance, created, **kwargs):
-        "Update trust network"
-        if not created:
-            return
-        instance.update_trust_network()
-
-post_save.connect(Endorsement.post_save_update_credit_limit, sender=Endorsement,
-                  dispatch_uid='relate.models')
-post_save.connect(Endorsement.post_create_update_trust, sender=Endorsement,
+post_save.connect(Endorsement.post_save, sender=Endorsement,
                   dispatch_uid='relate.models')
 
 # TODO: Propagate Endorsement delete through to ripple backend using post_delete.

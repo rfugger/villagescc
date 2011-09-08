@@ -8,7 +8,7 @@
 <p><a href="{{ form.instance.get_absolute_url }}">View my profile</a></p>
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
-	<table>
+	<table class="form">
 		{{ form }}
 		<tr>
 			<th></th>

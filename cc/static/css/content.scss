@@ -82,6 +82,16 @@ li.first {
 	margin-left: -1em;
 }
 
+input.int {
+	width: 4em;
+}
+
+.teaser {
+	margin: 0.5em 0;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+
 /********** Head/Nav **************/
 
 .logo_nav_line {
@@ -258,12 +268,6 @@ li.first {
 	font-size: 90%;
 }
 
-.feed_item_teaser {
-	margin: 0.5em 0;
-	padding-left: 1em;
-	border-left: 1px solid #ddd;
-}
-
 .more_link {
 	margin-left: 0.5em;
 }
@@ -298,3 +302,4 @@ table.entries {
 	width: auto;
 	min-width: 50%;
 }
+

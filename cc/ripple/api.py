@@ -195,7 +195,7 @@ def update_credit_limit(endorsement):
     account = get_or_create_account_from_profiles(
         endorsement.endorser, endorsement.recipient)
     creditline = CreditLine.objects.get(
-        node=endorsement.recipient_id, account=account)
+        node__alias=endorsement.recipient_id, account=account)
     creditline.limit = endorsement.weight
     creditline.save()
     

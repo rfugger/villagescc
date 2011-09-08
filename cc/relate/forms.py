@@ -1,6 +1,7 @@
 from decimal import Decimal as D
 
 from django import forms
+from django.core import validators
 
 from cc.relate.models import Endorsement
 from cc.ripple import PRECISION, SCALE
@@ -11,17 +12,44 @@ ROUTED = 'routed'
 DIRECT = 'direct'
 
 class EndorseForm(forms.ModelForm):
+    weight = forms.IntegerField(
+        label="Hearts", min_value=1,
+        widget=forms.TextInput(attrs={'class': 'int'}))
+
+    MESSAGES = {
+        'over_weight': "Please ensure this number is below %d."
+    }
+    
     class Meta:
         model = Endorsement
         exclude = ('endorser', 'recipient', 'updated')
 
-    # TODO: Limit weight to endorser.endorsements_remaining.
+    def __init__(self, *args, **kwargs):
+        self.endorser = kwargs.pop('endorser')
+        self.recipient = kwargs.pop('recipient')
+        super(EndorseForm, self).__init__(*args, **kwargs)
+
+    @property
+    def max_weight(self):
+        if not self.endorser.endorsement_limited:
+            return None
+        max_weight = self.endorser.endorsements_remaining
+        if self.instance.id:
+            max_weight += self.instance.weight
+        return max_weight
         
-    def save(self, endorser=None, recipient=None):
+    def clean_weight(self):
+        weight = self.cleaned_data['weight']
+        if self.endorser.endorsement_limited and weight > self.max_weight:
+            raise forms.ValidationError(
+                self.MESSAGES['over_weight'] % self.max_weight)
+        return weight
+    
+    def save(self):
         endorsement = super(EndorseForm, self).save(commit=False)
         if not self.instance.id:
-            endorsement.endorser = endorser
-            endorsement.recipient = recipient
+            endorsement.endorser = self.endorser
+            endorsement.recipient = self.recipient
         endorsement.save()
         return endorsement
 

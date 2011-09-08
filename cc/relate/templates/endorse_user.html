@@ -1,6 +1,26 @@
 {% extends "profile_base.html" %}
+{% load media %}
 
 {% block title %}Endorse {{ recipient }}{% endblock %}
+
+{% block extrahead %}
+	{{ block.super }}
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" 
+		  href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+	{% include_media "ui.spinner.js" %}
+	{% include_media "ui.spinner.css" %}
+{% endblock %}
+
+{% block ready_js %}
+	{{ block.super }}
+	{% if request.profile.endorsement_limited %}
+		var spinner_params = {min: 1, max: {{ form.max_weight }} };
+	{% else %}
+		var spinner_params = {min: 1};
+	{% endif %}
+	$("#id_weight").spinner(spinner_params);
+{% endblock %}
 
 {% block nav_endorse_class %}selected{% endblock %}
 
@@ -8,17 +28,40 @@
 <h2>Endorse {{ recipient }}</h2>
 
 {% if form.instance.id %}
-	<p>You have already endorsed {{ recipient }}.  You can edit the endorsement below.</p>
+	<p>You have already endorsed {{ recipient }} with 
+		<strong>{{ form.instance.weight }}</strong>
+		heart{{ form.instance.weight|pluralize:"s" }}.</p>
 {% endif %}
 
-<form action="" method="post">
-	{% csrf_token %}
-	<table>
-		{{ form }}
-		<tr>
-			<th></th>
-			<td><input type="submit" value="Save Endorsement" /></td>
-		</tr>
-	</table>
-</form>
+{% if request.profile.endorsement_limited %}
+	<p>You have <strong>{{ request.profile.endorsements_remaining }}</strong> 
+		heart{{ request.profile.endorsements_remaining|pluralize:"s" }} 
+		remaining to give out.</p>
+{% endif %}
+
+{% if form.instance.id or request.profile.can_endorse %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<table class="form">
+			{{ form }}
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" value="Save Endorsement">
+					{% if form.instance.id %}
+						<input type="submit" name="delete" 
+							   value="Delete"
+							   onclick="return confirm('Delete endorsement?')">
+					{% endif %}
+				</td>
+			</tr>
+		</table>
+	</form>
+{% else %}
+	<p>You need more hearts to endorse {{ recipient }}.</p>
+	
+	{# TODO: Instructions on how to get more endorsements. #}
+
+{% endif %}
+
 {% endblock %}

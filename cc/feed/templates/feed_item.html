@@ -16,7 +16,7 @@
 			- {% relative_location item.location request.location %}
 		{% endif %}
 	</div>
-	<div class="feed_item_teaser">
+	<div class="teaser">
 		{% block teaser %}{{ item.text|truncatewords:20 }}{% endblock %}
 	</div>
 </div>

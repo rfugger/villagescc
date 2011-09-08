@@ -169,6 +169,10 @@ MEDIA_BUNDLES = (
     ('geo.js',
      'js/geo.js',
      ),
+    ('ui.spinner.js',
+     'js/ui.spinner.min.js'),
+    ('ui.spinner.css',
+     'css/ui.spinner.css'),
 )
 
 LOGIN_URL = '/login/'
@@ -184,7 +188,9 @@ GEOIP_PATH = '/usr/share/GeoIP'
 LOCATION_SESSION_KEY = 'location_id'
 DEFAULT_LOCATION = ('49.2696243', '-123.0696036')  # East Vancouver.
 
-INITIAL_ENDORSEMENTS = 5
+# Extra hearts per endorsement received.
+ENDORSEMENT_BONUS = 5
+
 FEED_ITEMS_PER_PAGE = 20
 
 DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)

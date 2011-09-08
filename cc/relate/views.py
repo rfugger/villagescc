@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.db.models import Q
+from django.contrib import messages
 
 from cc.general.util import render
 import cc.ripple.api as ripple
@@ -10,6 +11,11 @@ from cc.relate.forms import EndorseForm, PromiseForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
 
+
+MESSAGES = {
+    'endorsement_saved': "Endorsement saved.",
+    'endorsement_deleted': "Endorsement deleted.",
+}
 
 @login_required
 @render()
@@ -23,13 +29,20 @@ def endorse_user(request, recipient_username):
     except Endorsement.DoesNotExist:
         endorsement = None
     if request.method == 'POST':
-        form = EndorseForm(request.POST, instance=endorsement)
+        if 'delete' in request.POST and endorsement:
+            endorsement.delete()
+            messages.info(request, MESSAGES['endorsement_deleted'])
+            return HttpResponseRedirect(
+                endorsement.recipient.get_absolute_url())
+        form = EndorseForm(request.POST, instance=endorsement,
+                           endorser=request.profile, recipient=recipient)
         if form.is_valid():
-            endorsement = form.save(
-                endorser=request.profile, recipient=recipient)
+            endorsement = form.save()
+            messages.info(request, MESSAGES['endorsement_saved'])
             return HttpResponseRedirect(endorsement.get_absolute_url())
     else:
-        form = EndorseForm(instance=endorsement)
+        form = EndorseForm(instance=endorsement, endorser=request.profile,
+                           recipient=recipient)
     profile = recipient  # For profile_base.html.
     return locals()
 
