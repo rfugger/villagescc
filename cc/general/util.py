@@ -1,6 +1,6 @@
 "General utilities."
 
-from django.shortcuts import render as django_render
+from django.shortcuts import render as django_render, redirect
 
 class render(object):
     """
@@ -52,3 +52,14 @@ def cache_on_object(accessor_func):
     decorated_func.__module__ = accessor_func.__module__
     return decorated_func
             
+def deflect_logged_in(view_func):
+    "Redirect logged-in users to home to prevent them from using this view."
+    def decorated_func(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect('home')
+        return view_func(request, *args, **kwargs)
+    decorated_func.__name__ = view_func.__name__
+    decorated_func.__module__ = view_func.__module__
+    return decorated_func
+    
+        

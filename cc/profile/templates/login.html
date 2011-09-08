@@ -8,8 +8,11 @@
 <h2>Login</h2>
 <form action="" method="post">
 	{% csrf_token %}
-	<table>
+	<table class="form">
 		{{ form }}
+		<script>
+			$("#id_username").focus();
+		</script>
 		<tr>
 			<th></th>
 			<td><input type="submit" value="Login" /></td>

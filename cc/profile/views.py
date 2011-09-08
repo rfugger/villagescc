@@ -2,9 +2,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth.views import login as django_login_view
+from django.core.urlresolvers import reverse
 
-from cc.general.util import render
+from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import RegistrationForm, ProfileForm, ContactForm
 from cc.profile.models import Profile
 from cc.feed.models import FeedItem
@@ -21,6 +23,7 @@ MESSAGES = {
                           "yourself for other users."),
 }
 
+@deflect_logged_in
 @location_required
 @render()
 def register(request):
@@ -30,7 +33,7 @@ def register(request):
             profile = form.save(request.location)
             # Auto login.
             user = authenticate(username=form.username, password=form.password)
-            login(request, user)
+            django_login(request, user)
             Location.clear_session(request)  # Location is in profile now.
             messages.info(request, MESSAGES['registration_done'])
 
@@ -40,6 +43,16 @@ def register(request):
     else:
         form = RegistrationForm()
     return locals()
+
+@deflect_logged_in
+def login(request):
+    response = django_login_view(
+        request, template_name='login.html', redirect_field_name='next')
+    # Don't redirect to locator view upon login.
+    if (isinstance(response, HttpResponseRedirect) and
+        response['Location'] == reverse('locator')):
+        return redirect('home')
+    return response
 
 @login_required
 @render()

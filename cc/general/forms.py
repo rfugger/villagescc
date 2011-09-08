@@ -2,7 +2,7 @@ from django import forms
 
 # *** HACK ALERT ***
 # Monkeypatch forms.CharField so it strips off leading/trailing whitespace.
-# Import this module from somewhere like settings to be sure the patch is loaded.
+# Import this module from somewhere like models to be sure the patch is loaded.
 
 def strip_result(func):
     def decorated_func(*args, **kwargs):

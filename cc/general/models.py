@@ -44,12 +44,5 @@ class EmailField(models.EmailField):
 add_introspection_rules([], ["^cc\.general"])
 
 # *** HACK ALERT ***
-# Monkeypatch forms.CharField so it strips off whitespace.
-# Should prevent trouble some users have logging in, etc.
-from django import forms
-
-def new_charfield_clean(self, value):
-        return self._orig_clean(value).strip()
-
-forms.CharField._orig_clean = forms.CharField.clean
-forms.CharField.clean = new_charfield_clean
+# Load forms monkeypatch.
+import cc.general.forms
