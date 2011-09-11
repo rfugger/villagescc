@@ -13,15 +13,6 @@
 	{% else %}Home{% endif %}
 {% endblock %}
 
-{% block profile_summary %}
-	{% if request.profile %}
-		Endorsements: {{ request.profile.endorsement_sum }}
-		{% with request.profile.overall_balance as balance %}
-			Balance: {{ balance|trim_zeroes }} hour{{ balance|pluralize:"s" }}
-		{% endwith %}
-	{% endif %}
-{% endblock %}
-
 {% block subnav %}
 	<li class="{% block nav_feed_class %}{% endblock %}">
 		<a href="{% url feed %}">Feed</a></li>

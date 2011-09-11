@@ -9,6 +9,18 @@ a {
 	color: brown;
 }
 
+h1 {
+	margin: 0.67em 0;
+}
+
+h2 {
+	margin: 0.75em 0;
+}
+
+h3 {
+	margin: 0.83em 0;
+}
+
 .extend {
 	padding: 10px 0;
 	overflow: hidden;
@@ -74,7 +86,7 @@ table.data {
 	text-align: right;
 }
 
-p.first {
+.first {
 	margin-top: 0;
 }
 

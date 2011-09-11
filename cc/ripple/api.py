@@ -57,8 +57,35 @@ class UserAccount(object):
             return Endorsement.objects.get(
                 endorser=self.partner, recipient=self.user)
         except Endorsement.DoesNotExist:
-            return None        
+            return None
 
+    @property
+    def health(self):
+        """
+        Returns (1 - ratio of credits used in balance direction) as a
+        percentage, or zero, whichever is larger.
+        """
+        if self.balance > 0:
+            if self.in_limit:
+                used_ratio = self.balance / self.in_limit
+            else:
+                used_ratio = 1
+        else:
+            if self.out_limit:
+                used_ratio = -self.balance / self.out_limit
+            else:
+                used_ratio = 1
+        return max(int((1 - used_ratio) * 100), 0)
+
+    @property
+    def owed_to_you(self):
+        return self.balance >= 0 and self.balance or None
+    
+    @property
+    def owed_to_them(self):
+        return self.balance < 0 and -self.balance or None
+    
+    
 class UserEntry(object):
     """
     Wrapper around Entry, with amounts from point of view of one partner.
@@ -280,6 +307,10 @@ def credit_reputation(target, asker):
 def overall_balance(profile):
     node, _ = Node.objects.get_or_create(alias=profile.id)
     return node.overall_balance()
+
+def trusted_balance(profile):
+    node, _ = Node.objects.get_or_create(alias=profile.id)
+    return node.trusted_balance()
 
 ##### Helpers #####
 

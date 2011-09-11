@@ -6,7 +6,7 @@ from django.db import models
 from south.modelsinspector import add_introspection_rules
 
 from cc.ripple import PRECISION, SCALE
-
+from cc.general.util import cache_on_object
 
 OVERALL_BALANCE_SQL = """
 select sum(balance) from (
@@ -14,6 +14,19 @@ select sum(balance) from (
 	from account_creditline as cl
 	join account_account as ac on cl.account_id = ac.id
 	where cl.node_id = %s) as cl_balances
+"""
+
+TRUSTED_BALANCE_SQL = """
+select sum(trusted_balance) from (
+	select (case when ac.balance * cl.bal_mult <= partner_cl.limit
+		then ac.balance * cl.bal_mult
+		else partner_cl.limit end) as trusted_balance
+	from account_creditline as cl
+	join account_account as ac on cl.account_id = ac.id
+	join account_creditline as partner_cl
+		on partner_cl.account_id = cl.account_id and
+			partner_cl.node_id != cl.node_id
+	where cl.node_id = %s) as trusted_balances
 """
 
 class AmountField(models.DecimalField):
@@ -40,15 +53,25 @@ class Node(models.Model):
     def out_creditlines(self):
         return self.creditlines.all()
 
-    def overall_balance(self):
+    def _balance_query(self, sql_template):
         from django.db import connections
         cursor = connections['ripple'].cursor()
-        cursor.execute(OVERALL_BALANCE_SQL, (self.id,))
+        cursor.execute(sql_template, (self.id,))
         row = cursor.fetchone()
         if row:
             return row[0]
         else:
             return D('0')
+    
+    def overall_balance(self):
+        return self._balance_query(OVERALL_BALANCE_SQL)
+        
+    def trusted_balance(self):
+        """
+        Return sum of all negative balances and all positive balances within
+        credit limits.
+        """
+        return self._balance_query(TRUSTED_BALANCE_SQL)
     
 class AccountManager(models.Manager):
     def create_account(self, node1, node2):
@@ -138,12 +161,10 @@ class CreditLine(models.Model):
         return self.account.balance * self.bal_mult
 
     @property
+    @cache_on_object
     def partner_creditline(self):
-        # Cache this to avoid multiple queries returning the same thing.
-        if not hasattr(self, '_partner_creditline'):
-            self._partner_creditline = CreditLine.objects.exclude(
-                node__pk=self.node_id).get(account__pk=self.account_id)
-        return self._partner_creditline
+        return CreditLine.objects.exclude(
+            node__pk=self.node_id).get(account__pk=self.account_id)
 
     @property
     def partner(self):

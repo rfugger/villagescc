@@ -8,8 +8,18 @@
 {% block content %}
 <h2>Endorsements For {{ profile }}</h2>
 
-<p>Trusted Endorsements: {% trusted_endorsement_sum profile request.profile %}</p>
-<p>Total Endorsements: {{ profile.endorsement_sum }}</p>
+<div class="feature">
+	<table class="data">
+		<tr title="Endorsements by people I trust">
+			<th>Trusted Endorsements</th>
+			<td>{% trusted_endorsement_sum profile request.profile %}</td>
+		</tr>
+		<tr title="Endorsements by anyone">
+			<th>Total Endorsements</th>
+			<td>{{ profile.endorsement_sum }}</td>
+		</tr>
+	</table>
+</div>
 
 {% with endorsements as feed_items %}
 	{% include "feed_item_list.html" %}

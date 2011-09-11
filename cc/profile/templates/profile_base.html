@@ -9,18 +9,6 @@
 	<a href="{{ profile.get_absolute_url }}">{{ profile }}</a>
 {% endblock %}
 
-{% block profile_summary %}
-	{% if request.profile %}
-		Trusted Endorsements:
-		{% trusted_endorsement_sum profile request.profile %}
-		<br>
-		{% load_user_account request.profile profile as account %}
-		{% if account %}
-			Balance: {{ account.balance }}
-		{% endif %}
-	{% endif %}
-{% endblock %}
-
 {% block subnav %}
 	<li class="{% block nav_info_class %}{% endblock %}">
 		<a href="{{ profile.get_absolute_url }}">Info</a></li>

@@ -118,6 +118,10 @@ class Profile(models.Model):
     def overall_balance(self):
         return ripple.overall_balance(self)
 
+    def trusted_balance(self):
+        "Overall balance minus promises received beyond trusted limits."
+        return ripple.trusted_balance(self)
+
     def trusts(self, profile):
         return self.trusted_profiles.filter(pk=profile.id).count() > 0
 

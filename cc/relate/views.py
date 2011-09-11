@@ -57,10 +57,7 @@ def endorsement(request, endorsement_id):
 @login_required
 @render()
 def relationships(request):
-    # TODO: 'profile' is a required template variable for profile_base.html...
-    # Take care of this somewhere else?  Decorator?
-    profile = request.profile
-    accounts = ripple.get_user_accounts(profile)
+    accounts = ripple.get_user_accounts(request.profile)
     return locals()
 
 @login_required

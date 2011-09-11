@@ -7,15 +7,43 @@
 {% block content %}
 <h2>My Relationships</h2>
 
-<p>TODO: Overall balance, trusted balance.</p>
+<div class="feature">
+	<h3 class="first">Summary</h3>
+	<table class="data">
+		<tr title="Sum of all promises sent to anyone, and received from people I trust">
+			<th>Trusted Balance</th>
+			<td>{{ request.profile.trusted_balance }}</td>
+		</tr>
+		<tr title="Sum of all promises sent and received from anyone">
+			<th>Overall Balance</th>
+			<td>{{ request.profile.overall_balance }}</td>
+		</tr>
+		<tr>
+			<th>Total Endorsements Received</th>
+			<td>{{ request.profile.endorsement_sum }}</td>
+		</tr>
+		<tr>
+			<th>Total Endorsements Made</th>
+			<td>{{ request.profile.endorsements_made_sum }}</td>
+		</tr>
+	</table>
+</div>
+
 
 {% if accounts %}
+<h3>Details</h3>
+
+{# TODO: Make this table sortable with jquery. #}
+
 <table class="data">
 	<tr>
 		<th>Name</th>
-		<th class="number_header">Their Endorsement Of You</th>
-		<th class="number_header">Promise Balance</th>
+		<th class="number_header">Their Endorsement of You</th>
+		<th class="number_header">Hours Owed to Them</th>
+		<th class="number_header">Hours Owed to You</th>
 		<th class="number_header">Your Endorsement of Them</th>
+		<th class="number_header" 
+			title="Credit remaining as a percentage of endorsement">Health</th>
 	</tr>
 	{% for account in accounts %}
 		<tr>
@@ -32,7 +60,11 @@
 			<td class="number">
 				<a href="{% url relationship account.partner.username %}"
 				   title="View Relationship with {{ account.partner }}"
-				   >{{ account.balance }}</a></td>
+				   >{{ account.owed_to_them|default_if_none:"" }}</a></td>
+			<td class="number">
+				<a href="{% url relationship account.partner.username %}"
+				   title="View Relationship with {{ account.partner }}"
+				   >{{ account.owed_to_you|default_if_none:"" }}</a></td>
 			<td class="number">
 				{% if account.endorsement %}
 					<a href="{{ account.endorsement.get_absolute_url }}"
@@ -43,6 +75,7 @@
 					   title="Endorse {{ account.partner }}">0</a>
 				{% endif %}
 			</td>
+			<td class="number">{{ account.health }}</td>
 		</tr>
 	{% endfor %}
 </table>
