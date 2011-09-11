@@ -25,9 +25,9 @@
 		{{ endorsement.text|linebreaks }}
 	</div>
 
-	{% ifequal request.profile endorsement.endorser %}
+	{% if request.profile == endorsement.endorser %}
 		<p><a href="{% url endorse_user endorsement.recipient.username %}"
 			  >Edit</a></p>
-	{% endifequal %}
+	{% endif %}
 
 {% endblock %}

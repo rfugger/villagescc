@@ -69,9 +69,10 @@ class Profile(models.Model):
     @property
     def feed_public(self):
         return True
-    
-    def get_feed_recipients(self):
-        return []
+
+    @property
+    def feed_recipient(self):
+        return None
 
     @property
     def feed_poster(self):

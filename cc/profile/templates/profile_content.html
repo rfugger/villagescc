@@ -1,6 +1,10 @@
 {% load profile %}
 <h2>{{ profile }}</h2>
 
+{% if profile == request.profile %}
+	<p><a href="{% url edit_profile %}">Edit My Profile</a></p>
+{% endif %}
+
 {% if my_endorsement %}
 	<p>You have endorsed this user ({{ my_endorsement.weight }}).
 		<a href="{% url endorse_user profile.username %}">Edit endorsement</a>
@@ -8,7 +12,7 @@
 	<hr>
 {% endif %}
 
-<div class="line">
+<div class="feature line">
 	<div class="unit">
 		<img src="{% profile_image_url profile '150x200' %}">
 	</div>
@@ -22,15 +26,15 @@
 				<th>Username</th>
 				<td>{{ profile.username }}</td>
 			</tr><tr>
-				<th>
-					{% ifequal profile request.profile %}
+				<th>Home Location</th>
+				<td>
+					{% if profile == request.profile %}
 						<a href="{% url locator %}?next={{ request.path }}">
-							Home Location</a>
+							{{ profile.location.full_name }}</a>
 					{% else %}
-						Home Location
-					{% endifequal %}
-				</th>
-				<td>{{ profile.location.full_name }}</td>
+						{{ profile.location.full_name }}
+					{% endif %}
+				</td>
 			</tr>
 
 			{% if request.profile %}
@@ -44,9 +48,14 @@
 			{% endif %}
 		</table>
 
-		{{ profile.description|linebreaks }}	
+		{{ profile.description|linebreaks }}
 	</div>
-
-<p>TODO: Relationship summary</p>
 </div>
 
+<h3>Relationships Summary</h3>
+{% include "relationships_summary.html" %}
+{% if profile == request.profile %}
+	<p><a href="{% url relationships %}">More</a></p>
+{% else %}
+	<p><a href="{% url profile_endorsements profile.username %}">More</a></p>	
+{% endif %}

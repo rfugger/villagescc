@@ -49,9 +49,7 @@ def endorse_user(request, recipient_username):
 @login_required
 @render()
 def endorsement(request, endorsement_id):
-    endorsement = get_object_or_404(
-        Endorsement, Q(endorser=request.profile) | Q(recipient=request.profile),
-        pk=endorsement_id)
+    endorsement = get_object_or_404(Endorsement, pk=endorsement_id)
     return locals()
     
 @login_required

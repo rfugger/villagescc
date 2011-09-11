@@ -167,14 +167,15 @@ class RipplePayment(object):
     @property
     def feed_poster(self):
         return self.payer
-    
+
+    @property
+    def feed_recipient(self):
+        return self.recipient
+
     @property
     def feed_public(self):
         return False
     
-    def get_feed_recipients(self):
-        return (self.payer, self.recipient)
-
     def get_search_text(self):
         return [(self.memo, 'B'),
                 (self.payer.name, 'C'),

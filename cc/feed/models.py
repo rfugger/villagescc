@@ -11,12 +11,12 @@ Properties:
 * location
 * text
 * feed_poster - Profile that created this feed item.
+* feed_recipient - Profile that is the target of this feed item (eg,
+	payment recipient, endorsement recipient)
 * feed_public - Boolean indicating whether this feed item is public.
 * FEED_TEMPLATE - template for rendering this item in a feed.
 
 Methods:
-* get_feed_recipients - All users who can have this feed item in their feed,
-    including None if feed item is public.
 * get_absolute_url
 * get_search_text - Returns a list of (text, weight) pairs for the text search
     index, where weight is in ('A', 'B', 'C', 'D') (as per postgres text
@@ -64,9 +64,11 @@ TRUSTED_SUBQUERY = (
                     
 
 class FeedManager(GeoManager):
-    def get_feed(self, profile, location, radius=settings.DEFAULT_FEED_RADIUS,
+    def get_feed(self, profile, location=None,
+                 radius=settings.DEFAULT_FEED_RADIUS,
                  page=1, limit=settings.FEED_ITEMS_PER_PAGE,
-                 item_type=None, tsearch=None, trusted_only=False):
+                 item_type=None, tsearch=None, trusted_only=False,
+                 poster=None, recipient=None):
         """
         Get list of dereferenced feed items (actually load the Posts, Profiles,
         etc.) for the given user profile.  Each item gets a `trusted` attribute
@@ -77,22 +79,36 @@ class FeedManager(GeoManager):
         """
         # Build query.
         query = self.get_query_set().order_by('-date')
-        if profile:
-            query = query.filter(Q(recipients=profile) | Q(public=True))
-        else:
-            query = query.filter(public=True)
+        if not poster and not recipient:
+            if profile:
+                query = query.filter(
+                    Q(poster=profile) | Q(recipient=profile) | Q(public=True))
+            else:
+                query = query.filter(public=True)
+        if poster:
+            query = query.filter(poster=poster)
+        if recipient:
+            query = query.filter(recipient=recipient)
         if item_type:
             query = query.filter(item_type=ITEM_TYPES[item_type])
+        if profile:
+            # Add extra `trusted` attribute which is True when
+            # requester trusts poster.
+            query = query.extra(
+                select={'trusted': TRUSTED_SUBQUERY},
+                select_params=[profile.id])
+        if trusted_only and profile:
+            query = query.extra(where=[TRUSTED_SUBQUERY], params=[profile.id])
+            
         if location and radius:
             query = query.filter(
+                # TODO: Bounding box query might be faster?
                 Q(location__point__dwithin=(location.point, radius)) |
                 Q(location__isnull=True))
         if tsearch:
             query = query.extra(
                 where=["tsearch @@ plainto_tsquery(%s)"],
                 params=[tsearch])
-        if trusted_only and profile:
-            query = query.extra(where=[TRUSTED_SUBQUERY], params=[profile.id])
             
         # Limit query.
         if limit is not None:
@@ -104,10 +120,11 @@ class FeedManager(GeoManager):
         for feed_item in query:
             item = feed_item.item
             if item:
-                item.trusted = profile and profile.trusts(feed_item.poster)
+                item.trusted = getattr(feed_item, 'trusted', None)
                 items.append(item)
             else:
                 # Orphan feed item -- delete.
+                # TODO: Move deletion of orphan feed items to cron job.
                 feed_item.delete()
         return items
 
@@ -116,11 +133,11 @@ class FeedManager(GeoManager):
         feed_item = self.create(
             date=item.date,
             poster=item.feed_poster,
+            recipient=item.feed_recipient,
             item_type=item_type,
             item_id=item.id,
             public=item.feed_public,
             location=item.location)
-        feed_item.recipients = item.get_feed_recipients()
         feed_item.update_tsearch(item.get_search_text())
 
     
@@ -137,6 +154,8 @@ class FeedItem(models.Model):
     """
     date = models.DateTimeField(db_index=True)
     poster = models.ForeignKey(Profile, related_name='posted_feed_items')
+    recipient = models.ForeignKey(
+        Profile, related_name='received_feed_items', null=True, blank=True)
     item_type = models.CharField(max_length=16, choices=(
             (ITEM_TYPES[Post], 'Post'),
             (ITEM_TYPES[Profile], 'Profile Update'),
@@ -146,8 +165,6 @@ class FeedItem(models.Model):
     item_id = models.PositiveIntegerField()
     location = models.ForeignKey(Location, null=True, blank=True)
     public = models.BooleanField()
-    recipients = models.ManyToManyField(
-        Profile, related_name='received_feed_items')
                                
     objects = FeedManager()
     

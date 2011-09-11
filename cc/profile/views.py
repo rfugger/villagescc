@@ -14,6 +14,7 @@ from cc.post.models import Post
 import cc.ripple.api as ripple
 from cc.geo.util import location_required
 from cc.geo.models import Location
+from cc.relate.models import Endorsement
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
@@ -83,7 +84,8 @@ def profile(request, username):
 @render()
 def profile_posts(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    posts = profile.posts.order_by('-date')
+    posts = FeedItem.objects.get_feed(
+        request.profile, poster=profile, item_type=Post)
     if profile == request.profile:
         template = 'my_posts.html'
     else:
@@ -94,7 +96,8 @@ def profile_posts(request, username):
 @render()
 def profile_endorsements(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    endorsements = profile.endorsements_received.order_by('-updated')
+    endorsements = FeedItem.objects.get_feed(
+        request.profile, recipient=profile, item_type=Endorsement)
     return locals()
 
 @render()

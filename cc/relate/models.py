@@ -53,10 +53,10 @@ class Endorsement(models.Model):
     @property
     def feed_public(self):
         return False
-    
-    def get_feed_recipients(self):
-        "Endorsement should show up in endorser's and recipient's feeds."
-        return (self.endorser, self.recipient)
+
+    @property
+    def feed_recipient(self):
+        return self.recipient
 
     @property
     def feed_poster(self):
