@@ -40,7 +40,7 @@ RegistrationForm.base_fields.keyOrder = [
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'location', 'endorsements_remaining')
+        fields = ('name', 'email', 'photo', 'description')
         
 class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)

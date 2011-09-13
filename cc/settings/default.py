@@ -191,7 +191,7 @@ DEFAULT_LOCATION = ('49.2696243', '-123.0696036')  # East Vancouver.
 # Extra hearts per endorsement received.
 ENDORSEMENT_BONUS = 5
 
-FEED_ITEMS_PER_PAGE = 20
+FEED_ITEMS_PER_PAGE = 5
 
 DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)
 

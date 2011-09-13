@@ -64,21 +64,51 @@ TRUSTED_SUBQUERY = (
                     
 
 class FeedManager(GeoManager):
-    def get_feed(self, profile, location=None,
-                 radius=settings.DEFAULT_FEED_RADIUS,
-                 page=1, limit=settings.FEED_ITEMS_PER_PAGE,
-                 item_type=None, tsearch=None, trusted_only=False,
-                 poster=None, recipient=None):
+    def get_feed_and_remaining(self, *args, **kwargs):
+        """
+        Returns feed and count of remaining items not returned after
+        limiting the query.
+        """
+        count_kwargs = kwargs.copy()
+        count_kwargs.pop('limit', None)
+        count = self.get_feed_count(*args, **count_kwargs)
+        items = self.get_feed(*args, **kwargs)
+        return items, count - len(items)
+    
+    def get_feed_count(self, *args, **kwargs):
+        return self._feed_query(*args, **kwargs).count()
+
+    def get_feed(self, *args, **kwargs):
         """
         Get list of dereferenced feed items (actually load the Posts, Profiles,
         etc.) for the given user profile.  Each item gets a `trusted` attribute
         set if its feed_poster is trusted by the requesting profile.
-        
-        Pass a model class to 'item_type' to only return those types of
-        feed items.
+
+        Takes a `limit` parameter that is the maximum number of items to return.
         """
-        # Build query.
+        limit = kwargs.pop('limit', settings.FEED_ITEMS_PER_PAGE)        
+        query = self._feed_query(*args, **kwargs)[:limit]
+        items = []
+        for feed_item in query:
+            item = feed_item.item
+            if item:
+                item.trusted = getattr(feed_item, 'trusted', None)
+                items.append(item)
+            else:
+                # Orphan feed item -- delete.
+                # TODO: Move deletion of orphan feed items to cron job.
+                feed_item.delete()
+        return items
+    
+    def _feed_query(self, profile=None, location=None,
+                    radius=settings.DEFAULT_FEED_RADIUS,
+                    item_type=None, tsearch=None, trusted_only=False,
+                    poster=None, recipient=None, up_to_date=None):
+        "Build a query for feed items corresponding to a particular feed."
         query = self.get_query_set().order_by('-date')
+        if up_to_date:
+            query = query.filter(date__lt=up_to_date)
+
         if not poster and not recipient:
             if profile:
                 query = query.filter(
@@ -108,26 +138,9 @@ class FeedManager(GeoManager):
         if tsearch:
             query = query.extra(
                 where=["tsearch @@ plainto_tsquery(%s)"],
-                params=[tsearch])
+                params=[tsearch])            
+        return query
             
-        # Limit query.
-        if limit is not None:
-            offset = limit * (page - 1)
-            query = query[offset:offset + limit]
-
-        # Load items.
-        items = []
-        for feed_item in query:
-            item = feed_item.item
-            if item:
-                item.trusted = getattr(feed_item, 'trusted', None)
-                items.append(item)
-            else:
-                # Orphan feed item -- delete.
-                # TODO: Move deletion of orphan feed items to cron job.
-                feed_item.delete()
-        return items
-
     def create_from_item(self, item):
         item_type = ITEM_TYPES[type(item)]
         feed_item = self.create(

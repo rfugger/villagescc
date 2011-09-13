@@ -9,12 +9,12 @@ from django.core.urlresolvers import reverse
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import RegistrationForm, ProfileForm, ContactForm
 from cc.profile.models import Profile
-from cc.feed.models import FeedItem
 from cc.post.models import Post
 import cc.ripple.api as ripple
 from cc.geo.util import location_required
 from cc.geo.models import Location
 from cc.relate.models import Endorsement
+from cc.feed.views import feed
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
@@ -81,24 +81,24 @@ def profile(request, username):
     return locals(), template
 
 # TODO: Move to post app?
-@render()
 def profile_posts(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    posts = FeedItem.objects.get_feed(
-        request.profile, poster=profile, item_type=Post)
     if profile == request.profile:
         template = 'my_posts.html'
+        extra_context = {}
     else:
         template = 'profile_posts.html'    
-    return locals(), template
+        extra_context = {'profile': profile}
+    return feed(request, item_type=Post, poster=profile, template=template,
+                extra_context=extra_context)
 
 # TODO: Move to relate app?
-@render()
+@login_required
 def profile_endorsements(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    endorsements = FeedItem.objects.get_feed(
-        request.profile, recipient=profile, item_type=Endorsement)
-    return locals()
+    return feed(request, item_type=Endorsement, recipient=profile,
+                template='profile_endorsements.html',
+                extra_context={'profile': profile})
 
 @render()
 def contact(request, username):

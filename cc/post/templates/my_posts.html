@@ -9,7 +9,5 @@
 
 	<p><a href="{% url new_post %}">New Post</a></p>
 
-	{% with posts as feed_items %}
-		{% include "feed_item_list.html" %}
-	{% endwith %}
+	{% include "feed_item_list.html" %}
 {% endblock %}

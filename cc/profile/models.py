@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -21,7 +23,7 @@ class Profile(models.Model):
         "to the community, so others can search for you.")
     
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField()
     endorsement_limited = models.BooleanField(default=True)
 
     feed_radius = models.IntegerField(null=True, blank=True)
@@ -43,6 +45,11 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return ('profile', (self.username,))
 
+    def save(self, set_updated=True, **kwargs):
+        if set_updated:
+            self.updated = datetime.now()
+        return super(Profile, self).save(**kwargs)
+    
     @property
     def username(self):
         # Username is stored in django User model.
@@ -138,4 +145,3 @@ class Profile(models.Model):
 # Create new empty profile when a new user is created.
 post_save.connect(Profile.create_profile, sender=User,
                   dispatch_uid='profile.models')
-                  

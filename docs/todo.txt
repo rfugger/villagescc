@@ -1,2 +1,46 @@
-To Do:
-------
+To Do
+-----
+
+Critical Path
+-------------
+
+Email notifications (verification?)
+
+Account settings
+- change password, email, notification settings
+
+Invite friends
+
+Paginate feeds
+
+Landing page
+
+About
+
+Feedback
+
+
+Post-Launch
+-----------
+
+User timezones
+
+Post expiry
+
+Cycle background colour on rows of long data tables
+
+Multiple contact methods on profile
+
+Enlarge image
+- lightbox
+
+
+Ideas
+-----
+
+Breadcrumbs
+- list of several previous pages visited
+
+Sort searches by relevance, especially user searches
+
+

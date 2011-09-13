@@ -52,10 +52,12 @@
 	</div>
 </div>
 
-<h3>Relationships Summary</h3>
-{% include "relationships_summary.html" %}
-{% if profile == request.profile %}
-	<p><a href="{% url relationships %}">More</a></p>
-{% else %}
-	<p><a href="{% url profile_endorsements profile.username %}">More</a></p>	
+{% if request.profile %}
+	<h3>Relationships Summary</h3>
+	{% include "relationships_summary.html" %}
+	{% if profile == request.profile %}
+		<p><a href="{% url relationships %}">More</a></p>
+	{% else %}
+		<p><a href="{% url profile_endorsements profile.username %}">More</a></p>	
+	{% endif %}
 {% endif %}

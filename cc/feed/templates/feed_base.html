@@ -10,16 +10,18 @@
 {% block content %}
 	<div class="feed_type_filter nav">
 		<li class="{% block feed_all_class %}{% endblock %}">
-			<a href="{% url feed %}">All</a></li>
+			<a href="{% url feed %}?{{ url_param_str }}">All</a></li>
 		<li class="{% block feed_people_class %}{% endblock %}">
-			<a href="{% url profiles %}">People</a></li>
+			<a href="{% url profiles %}?{{ url_param_str }}">People</a></li>
 		<li class="{% block feed_posts_class %}{% endblock %}">
-			<a href="{% url posts %}">Posts</a></li>
+			<a href="{% url posts %}?{{ url_param_str }}">Posts</a></li>
 		{% if user.is_authenticated %}
 			<li class="{% block feed_endorsements_class %}{% endblock %}">
-				<a href="{% url endorsements %}">Endorsements</a></li>
+				<a href="{% url endorsements %}?{{ url_param_str }}"
+				   >Endorsements</a></li>
 			<li class="{% block feed_promises_class %}{% endblock %}">
-				<a href="{% url promises %}">Promises</a></li>
+				<a href="{% url promises %}?{{ url_param_str }}"
+				   >Promises</a></li>
 		{% endif %}
 	</div>
 	<div class="feed_filter_form">
@@ -28,12 +30,12 @@
 				{{ form.q }}
 				<a id="id_clear" href="javascript:void(0)">Clear</a>
 			</li>
-			<li>Show within {{ form.radius }}</li>
+			<li>{{ form.radius }}</li>
 			{% if request.profile %}
 				<li>Trusted only {{ form.trusted }}</li>
 			{% endif %}
 		</form>
 	</div>
 	{% block pre_feed %}{% endblock %}
-	{% include "feed_item_list.html" %}	
+	{% include "feed_item_list.html" %}
 {% endblock %}

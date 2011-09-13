@@ -1,28 +1,38 @@
+from datetime import datetime
+
 from django import forms
 
 from cc.feed.models import FeedItem
 
-# TODO: Move these constants to settings?
+# Passing no radius => use default, so need a code for infinite.
+INFINITE_RADIUS = -1
+
 RADIUS_CHOICES = (
-    (1000, '1 km'),
-    (5000, '5 km'),
-    (10000, '10 km'),
-    (50000, '50 km'),
-    (-1, 'Anywhere'),
+    (1000, 'Within 1 km'),
+    (5000, 'Within 5 km'),
+    (10000, 'Within 10 km'),
+    (50000, 'Within 50 km'),
+    (INFINITE_RADIUS, 'Anywhere'),
 )
 
 DEFAULT_RADIUS = 5000
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
 class FeedFilterForm(forms.Form):
-    p = forms.IntegerField(label="Page", required=False, min_value=1)
+    d = forms.DateTimeField(
+        label="Up to date", required=False, input_formats=[DATE_FORMAT])
     q = forms.CharField(
         label="Search", required=False, widget=forms.TextInput(
             attrs={'class': 'instruction_input', 'help': "Search"}))
     radius = forms.TypedChoiceField(
         required=False, choices=RADIUS_CHOICES, coerce=int, empty_value=None)
     trusted = forms.BooleanField(required=False)
-
-    def __init__(self, data, profile, *args, **kwargs):
+    
+    def __init__(self, data, profile, location=None, item_type=None,
+                 poster=None, recipient=None, *args, **kwargs):
+        self.profile, self.location, self.item_type = (
+            profile, location, item_type)
+        self.poster, self.recipient = poster, recipient
         data = data.copy()
         data.setdefault(
             'radius', profile and profile.feed_radius or DEFAULT_RADIUS)
@@ -31,22 +41,49 @@ class FeedFilterForm(forms.Form):
             # when the feed filter form hasn't been submitted.
             data.setdefault('trusted', bool(profile.feed_trusted))
         super(FeedFilterForm, self).__init__(data, *args, **kwargs)
-    
-    def get_results(self, profile, location, item_type):
+
+    @property
+    def continued(self):
+        return 'd' in self.data
+        
+    def get_results(self):
         data = self.cleaned_data
-        page = data.get('p') or 1
+        date = data.get('d') or datetime.now()
         tsearch = data.get('q')
         radius = data['radius']
-        if profile and radius != profile.feed_radius:
-            profile.feed_radius = radius
-            profile.save()
+        query_radius = radius
+        if radius == INFINITE_RADIUS:
+            query_radius = None
         trusted = data['trusted']
-        if profile and trusted != profile.feed_trusted:
-            profile.feed_trusted = trusted
-            profile.save()
-        if radius == -1:
-            radius = None
-        return FeedItem.objects.get_feed(
-            profile, location, page=page, tsearch=tsearch, radius=radius,
-            item_type=item_type, trusted_only=trusted)
+        return FeedItem.objects.get_feed_and_remaining(
+            self.profile, location=self.location, tsearch=tsearch,
+            radius=query_radius, item_type=self.item_type,
+            trusted_only=trusted, up_to_date=date,
+            poster=self.poster, recipient=self.recipient)
         
+    def update_sticky_prefs(self):
+        """
+        Save radius and trusted as sticky prefs to profile.
+        Do this after getting feed results, because saving profile actually
+        creates a new feed item for the profile, excluding it from the query
+        above because it is contained in a transaction.
+        """
+        # TODO: Look into a custom feed_item_updated signal for better control
+        # over feed item creation.
+
+        if not self.profile:
+            return
+        data = self.cleaned_data
+        radius = data['radius']
+        trusted = data['trusted']        
+        save_profile = False
+        if radius != self.profile.feed_radius:
+            self.profile.feed_radius = radius
+            save_profile = True
+        if trusted != self.profile.feed_trusted:
+            self.profile.feed_trusted = trusted
+            save_profile = True
+        if save_profile:
+            # Save, but don't refresh updated date.
+            self.profile.save(set_updated=False)
+    

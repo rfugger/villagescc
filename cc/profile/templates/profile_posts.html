@@ -7,7 +7,5 @@
 {% block content %}
 	<h2>Posts by {{ profile }}</h2>
 
-	{% with posts as feed_items %}
-		{% include "feed_item_list.html" %}
-	{% endwith %}
+	{% include "feed_item_list.html" %}
 {% endblock %}

@@ -1,4 +1,8 @@
 {% load feed %}
+{% if form.continued %}
+	<p><a href="?{{ url_param_str }}">&laquo; Back to start</a></p>
+{% endif %}
+
 <div class="feed_item_list">
 	{% for feed_item in feed_items %}
 		<div class="feed_item line{% if feed_item.trusted %} trusted{% else %} untrusted{% endif %}" 
@@ -9,3 +13,7 @@
 		<p><em>{{ empty_string|default:"No activity." }}</em></p>
 	{% endfor %}
 </div>
+
+{% if remaining_count %}
+	<p><a href="?{{ next_page_param_str }}">{{ remaining_count }} More &raquo;</a></p>
+{% endif %}
