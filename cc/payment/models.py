@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.db.models import F
 
 from cc.account.models import AmountField, Node, CreditLine, Account
 from cc.payment.flow import FlowGraph, PaymentError
@@ -51,7 +52,8 @@ class Payment(models.Model):
             flow_links = flow_graph.min_cost_flow(self.amount)
             for creditline, amount in flow_links:
                 Entry.objects.create_entry(
-                    self, creditline.account, -amount * creditline.bal_mult)
+                    self, creditline.account, -amount * creditline.bal_mult,
+                    creditline.limit)
             self.status = 'completed'
             self.save()
         except BaseException as exc:
@@ -70,16 +72,28 @@ class Payment(models.Model):
         self.last_attempted_at = datetime.now()
         payer_creditline = account.creditlines.get(node=self.payer)
         Entry.objects.create_entry(
-            self, account, -self.amount * payer_creditline.bal_mult)
+            self, account, -self.amount * payer_creditline.bal_mult, limit=None)
         self.status = 'completed'
         self.save()
 
 class EntryManager(models.Manager):
-    def create_entry(self, payment, account, amount):
-        "Creates entry, updates account balance, and sets entry.new_balance."
-        new_balance = account.balance + amount
-        account.balance = new_balance
-        account.save()
+    def create_entry(self, payment, account, amount, limit):
+        "Updates account balance, and creates corresponding Entry."
+        bal_upd_query = Account.objects.filter(pk=account.id)
+        if limit is not None:
+            # Put a limit check in update query so this is safe even
+            # with concurrent transactions.
+            if amount > 0:  # Test against positive account limit.
+                bal_upd_query = bal_upd_query.filter(
+                    balance__lte=limit - amount)
+            else:  # Test against negative account limit.
+                bal_upd_query = bal_upd_query.filter(
+                    balance__gte=-limit - amount)
+        rows = bal_upd_query.update(balance=F('balance') + amount)
+        if rows != 1:
+            raise PaymentError("Limit exceeded on account %d." % account.id)
+        account = Account.objects.get(pk=account.id)  # Reload balance.
+        new_balance = account.balance
         self.create(payment=payment, account=account, amount=amount,
                     new_balance=new_balance)
 

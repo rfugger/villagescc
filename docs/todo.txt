@@ -11,13 +11,24 @@ Account settings
 
 Invite friends
 
-Paginate feeds
-
 Landing page
 
 About
 
 Feedback
+
+Registration by invite only
+- request invite form
+
+Asynchronous task queue
+- single process queue for data-modifying ripple transactions
+- always make sure records needed to tasks are committed to db before task is
+  dispatched (commit-per-view won't work)
+
+Explanatory text where necessary
+- links to help?
+
+Filter posts by offer/want
 
 
 Post-Launch
