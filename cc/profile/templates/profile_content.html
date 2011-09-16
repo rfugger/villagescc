@@ -1,4 +1,4 @@
-{% load profile %}
+{% load profile relate %}
 <h2>{{ profile }}</h2>
 
 {% if profile == request.profile %}
@@ -54,10 +54,35 @@
 
 {% if request.profile %}
 	<h3>Relationships Summary</h3>
-	{% include "relationships_summary.html" %}
 	{% if profile == request.profile %}
+		{% include "relationships_summary.html" %}
 		<p><a href="{% url relationships %}">More</a></p>
 	{% else %}
+		<table class="data">
+			<tr title="Endorsements by people I trust">
+				<th><a href="{% url profile_endorsements profile.username %}"
+					   >Trusted Endorsements</a></th>
+				<td>{% trusted_endorsement_sum profile request.profile %}</td>
+			</tr>
+			<tr title="Sum of all promises sent and received, but only from trusted partners">
+				<th>Trusted Balance</th>
+				<td>{{ profile.trusted_balance }} hours</td>
+			</tr>
+			<tr title="Sum of all promises sent and received">
+				<th>Overall Balance</th>
+				<td>{{ profile.overall_balance }} hours</td>
+			</tr>
+
+			{# TODO: Balance with nodes trusted by me. #}
+
+			{% if account %}
+				<tr>
+					<th><a href="{% url relationship profile.username %}"
+						   >Balance with Me</a></th>
+					<td>{{ account.balance }} hours</td>
+				</tr>
+			{% endif %}
+		</table>
 		<p><a href="{% url profile_endorsements profile.username %}">More</a></p>	
 	{% endif %}
 {% endif %}

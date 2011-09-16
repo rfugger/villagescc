@@ -92,16 +92,18 @@ class Profile(models.Model):
                ]
 
     @property
+    @cache_on_object
     def endorsement_count(self):
         return self.endorsements_received.all().count()
     
-    # TODO: Cache this across requests?
     @property
+    @cache_on_object
     def endorsement_sum(self):
         return self.endorsements_received.all().aggregate(
             models.Sum('weight')).get('weight__sum') or 0
 
     @property
+    @cache_on_object
     def endorsements_made_sum(self):
         return self.endorsements_made.all().aggregate(
             models.Sum('weight')).get('weight__sum') or 0
@@ -133,6 +135,9 @@ class Profile(models.Model):
     def trusts(self, profile):
         return self.trusted_profiles.filter(pk=profile.id).count() > 0
 
+    def account(self, profile):
+        return ripple.get_account(self, profile)
+    
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)

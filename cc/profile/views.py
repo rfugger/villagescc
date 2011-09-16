@@ -72,12 +72,13 @@ def edit_profile(request):
 @render()
 def profile(request, username):
     profile = get_object_or_404(Profile, user__username=username)
-    if request.profile:
-        my_endorsement = request.profile.endorsement_for(profile)
     if profile == request.profile:
         template = 'my_profile.html'
     else:
         template = 'profile.html'
+        if request.profile:
+            my_endorsement = request.profile.endorsement_for(profile)
+            account = profile.account(request.profile)
     return locals(), template
 
 # TODO: Move to post app?

@@ -83,6 +83,9 @@ class EntryManager(models.Manager):
         if limit is not None:
             # Put a limit check in update query so this is safe even
             # with concurrent transactions.
+
+            # TODO: Test with concurrent transactions.
+            
             if amount > 0:  # Test against positive account limit.
                 bal_upd_query = bal_upd_query.filter(
                     balance__lte=limit - amount)

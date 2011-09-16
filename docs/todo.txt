@@ -4,35 +4,42 @@ To Do
 Critical Path
 -------------
 
-Email notifications (verification?)
-
 Account settings
-- change password, email, notification settings
-
-Invite friends
+- change password, email
 
 Landing page
-
-About
-
-Feedback
 
 Registration by invite only
 - request invite form
 
-Asynchronous task queue
-- single process queue for data-modifying ripple transactions
-- always make sure records needed to tasks are committed to db before task is
-  dispatched (commit-per-view won't work)
+Contact user
+- from profile
+- re: post
+
+Invite friends
+
+Review all TODOs in code
+
+
+Post-Launch
+-----------
+
+Email notifications (verification?)
+- notification settings under account settings
+
+About
+
+Feedback
 
 Explanatory text where necessary
 - links to help?
 
 Filter posts by offer/want
 
-
-Post-Launch
------------
+Asynchronous task queue
+- single process queue for data-modifying ripple transactions
+- always make sure records needed to tasks are committed to db before task is
+  dispatched (commit-per-view won't work)
 
 User timezones
 
@@ -54,4 +61,4 @@ Breadcrumbs
 
 Sort searches by relevance, especially user searches
 
-
+Connect messages and payments to posts

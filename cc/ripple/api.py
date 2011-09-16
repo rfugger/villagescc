@@ -84,7 +84,15 @@ class UserAccount(object):
     @property
     def owed_to_them(self):
         return self.balance < 0 and -self.balance or None
-    
+
+    @property
+    def entries(self):
+        # TODO: Paginate entries.
+        node, _ = Node.objects.get_or_create(alias=self.user.id)
+        return [UserEntry(entry, node) for entry
+                in self.creditline.account.entries.all().order_by(
+                '-payment__last_attempted_at')]
+        
     
 class UserEntry(object):
     """
@@ -260,15 +268,6 @@ def update_credit_limit(endorsement):
 @accept_profiles
 def get_or_create_account_from_profiles(node1, node2):
     return Account.objects.get_or_create_account(node1, node2)
-
-@accept_profiles
-def get_entries_between(node, partner):
-    "Give entries between two nodes from POV of the first."
-    account = Account.objects.get_account(node, partner)
-    if account is None:
-        return []
-    return [UserEntry(entry, node) for entry
-            in account.entries.all().order_by('-payment__last_attempted_at')]
 
 @accept_profiles
 def max_payment(payer, recipient):

@@ -1,18 +1,20 @@
 <table class="data">
-	<tr title="Sum of all promises sent to anyone, and received from people I trust">
+	<tr title="Sum of all promises sent and received, but only from trusted partners">
 		<th>Trusted Balance</th>
-		<td>{{ request.profile.trusted_balance }}</td>
+		<td>{{ request.profile.trusted_balance }} hours</td>
 	</tr>
-	<tr title="Sum of all promises sent and received from anyone">
+	<tr title="Sum of all promises sent and received">
 		<th>Overall Balance</th>
-		<td>{{ request.profile.overall_balance }}</td>
+		<td>{{ request.profile.overall_balance }} hours</td>
 	</tr>
 	<tr>
 		<th>Total Endorsements Received</th>
-		<td>{{ request.profile.endorsement_sum }}</td>
+		<td>{{ request.profile.endorsement_sum }} 
+			heart{{ request.profile.endorsement_sum|pluralize:"s" }}</td>
 	</tr>
 	<tr>
 		<th>Total Endorsements Made</th>
-		<td>{{ request.profile.endorsements_made_sum }}</td>
+		<td>{{ request.profile.endorsements_made_sum }}
+			heart{{ request.profile.endorsements_made_sum|pluralize:"s" }}</td>
 	</tr>
 </table>

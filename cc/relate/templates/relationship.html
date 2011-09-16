@@ -8,46 +8,54 @@
 {% block content %}
 <h2>Relationship With {{ partner }}</h2>
 
-<p>Current Balance: {{ balance }} hours</p>
-
-<p>
-	{% if account.partner_endorsement %}
-		<a href="{{ account.partner_endorsement.get_absolute_url }}"
-			  >{{ partner }} has endorsed you with 
-			{{ account.partner_endorsement.weight }}
-			heart{{ account.partner_endorsement.weight|pluralize:"s" }}</a>
-	{% endif %}
-</p>
-
-<p>
-	{% if account.endorsement %}
-		<a href="{{ account.endorsement.get_absolute_url }}"
-		   >You have endorsed {{ partner }} with {{ account.endorsement.weight }}
-			heart{{ account.endorsement.weight|pluralize:"s" }}</a>
-	{% else %}
-		<a href="{% url endorse_user partner.username %}">Endorse {{ partner }}</a>
-	{% endif %}
-</p>
-
-{% if entries %}
-<table class="data">
-	<tr>
-		<th>Date</th>
-		<th>Description</th>
-		<th class="number_header">Received</th>
-		<th class="number_header">Sent</th>
-		<th class="number_header">Balance</th>
-	</tr>
-	{% for entry in entries %}
+<div class="feature">
+	<table class="data">
 		<tr>
-			<td>{{ entry.date }}</td>
-			<td><a href="{% url view_promise entry.payment_id %}"
-				   >{% entry_description entry request.profile %}</a></td>
-			<td class="number">{{ entry.received|default:"" }}</td>
-			<td class="number">{{ entry.sent|default:"" }}</td>
-			<td class="number">{{ entry.new_balance }}</td>
+			<th>Current Balance</th>
+			<td>{{ balance }} hours</td>
 		</tr>
-	{% endfor %}
+		{% if account.partner_endorsement %}
+			<tr>
+				<th><a href="{{ account.partner_endorsement.get_absolute_url }}"
+					  >{{ partner }}'s endorsement of you</a></th>
+				<td>{{ account.partner_endorsement.weight }}
+					heart{{ account.partner_endorsement.weight|pluralize:"s" }}</td>
+			</tr>
+		{% endif %}
+		<tr>
+			{% if account.endorsement %}
+				<th><a href="{{ account.endorsement.get_absolute_url }}"
+					  >Your endorsement of {{ partner }}</a></th>
+				<td>{{ account.endorsement.weight }}
+					heart{{ account.endorsement.weight|pluralize:"s" }}</td>
+			{% else %}
+				<th><a href="{% url endorse_user partner.username %}"
+					   >Endorse {{ partner }}</a></th>
+			{% endif %}
+		</tr>
+	</table>
+</div>
+
+<h3>Entries</h3>
+{% if entries %}
+	<table class="data">
+		<tr>
+			<th>Date</th>
+			<th>Description</th>
+			<th class="number_header">Received</th>
+			<th class="number_header">Sent</th>
+			<th class="number_header">Balance</th>
+		</tr>
+		{% for entry in entries %}
+			<tr>
+				<td>{{ entry.date }}</td>
+				<td><a href="{% url view_promise entry.payment_id %}"
+					   >{% entry_description entry request.profile %}</a></td>
+				<td class="number">{{ entry.received|default:"" }}</td>
+				<td class="number">{{ entry.sent|default:"" }}</td>
+				<td class="number">{{ entry.new_balance }}</td>
+			</tr>
+		{% endfor %}
 	</table>
 {% else %}
 	<p><em>No entries.</em></p>

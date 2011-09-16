@@ -5,5 +5,5 @@
 	{% profile_display item.payer request "You" item.payer %}
 	promised 
 	{% profile_display item.recipient request "you" item.recipient %}
-	{{ item.amount }} hour{{ item.amount|pluralize:"s" }}
+	{{ item.amount }} hours
 {% endblock %}
