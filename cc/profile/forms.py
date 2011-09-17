@@ -46,14 +46,15 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
     def send(self, sender, recipient):
-        # TODO: Send email.
         pass
+        
+class SettingsForm(forms.ModelForm):
+    email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
 
-class ChangeEmailForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('email',)
-    
+        fields = ('email',)    
+        
     def save(self):
         self.instance.save(set_updated=False)
         return self.instance

@@ -6,12 +6,10 @@ from cc.general.util import render
 from cc.post.models import Post
 from cc.post.forms import PostForm
 from cc.geo.util import location_required
-from cc.profile.util import profile_location_required
 from cc.feed.models import FeedItem
 from cc.profile.forms import ContactForm
 
 @login_required
-@profile_location_required
 @render('post_form.html')
 def edit_post(request, post_id=None):
     if post_id is not None:

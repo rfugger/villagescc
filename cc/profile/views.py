@@ -9,7 +9,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
-    RegistrationForm, ProfileForm, ContactForm, ChangeEmailForm)
+    RegistrationForm, ProfileForm, ContactForm, SettingsForm)
 from cc.profile.models import Profile
 from cc.post.models import Post
 import cc.ripple.api as ripple
@@ -25,7 +25,7 @@ MESSAGES = {
                           "out your profile by uploading a photo and describing "
                           "yourself for other users."),
     'password_changed': "Password changed.",
-    'email_changed': "Email saved.",
+    'settings_changed': "Settings saved.",
 }
 
 @deflect_logged_in
@@ -63,11 +63,11 @@ def login(request):
 @render()
 def settings(request):
     if request.method == 'POST':
-        if 'change_email' in request.POST:
-            email_form = ChangeEmailForm(request.POST, instance=request.profile)
-            if email_form.is_valid():
-                email_form.save()
-                messages.info(request, MESSAGES['email_changed'])
+        if 'change_settings' in request.POST:
+            settings_form = SettingsForm(request.POST, instance=request.profile)
+            if settings_form.is_valid():
+                settings_form.save()
+                messages.info(request, MESSAGES['settings_changed'])
                 return redirect(settings)
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)
@@ -76,8 +76,8 @@ def settings(request):
                 messages.info(request, MESSAGES['password_changed'])
                 return redirect(settings)
         
-    if 'change_email' not in request.POST:
-        email_form = ChangeEmailForm(instance=request.profile)
+    if 'change_settings' not in request.POST:
+        settings_form = SettingsForm(instance=request.profile)
     if 'change_password' not in request.POST:
         password_form = PasswordChangeForm(request.user)
     return locals()
