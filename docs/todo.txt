@@ -18,14 +18,16 @@ Contact user
 
 Invite friends
 
+Email notifications (verification?)
+- notification settings under account settings
+- new endorsement
+- new promise
+
 Review all TODOs in code
 
 
 Post-Launch
 -----------
-
-Email notifications (verification?)
-- notification settings under account settings
 
 About
 
@@ -52,6 +54,11 @@ Multiple contact methods on profile
 Enlarge image
 - lightbox
 
+Request promise
+
+Delete profile
+
+Messages for every form success.
 
 Ideas
 -----
@@ -62,3 +69,5 @@ Breadcrumbs
 Sort searches by relevance, especially user searches
 
 Connect messages and payments to posts
+
+Convert untrusted promise to trusted

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.views import login as django_login_view
 from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import PasswordChangeForm
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import RegistrationForm, ProfileForm, ContactForm
@@ -22,6 +23,7 @@ MESSAGES = {
     'registration_done': ("Thank you for registering.  Please continue filling "
                           "out your profile by uploading a photo and describing "
                           "yourself for other users."),
+    'password_changed': "Password changed.",
 }
 
 @deflect_logged_in
@@ -54,6 +56,20 @@ def login(request):
         response['Location'] == reverse('locator')):
         return redirect('home')
     return response
+
+@login_required
+@render()
+def settings(request):
+    if request.method == 'POST':
+        if 'password' in request.POST:
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                password_form.save()
+                messages.info(request, MESSAGES['password_changed'])
+                return redirect(settings)
+    else:
+        password_form = PasswordChangeForm(request.user)
+    return locals()
 
 @login_required
 @render()

@@ -83,7 +83,8 @@
 					{% if request.profile %}
 						<li><a href="{{ request.profile.get_absolute_url }}"
 							   >{{ request.profile }}</a></li>
-						<li>Account Settings</li>
+						<li class="{% block nav_settings_class %}{% endblock %}">
+							<a href="{% url settings %}">Account Settings</a></li>
 						<li><a href="{% url logout %}">Logout</a></li>
 						<hr>
 						<li class="{% block nav_new_post_class %}{% endblock %}">
