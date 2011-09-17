@@ -40,7 +40,7 @@ RegistrationForm.base_fields.keyOrder = [
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('name', 'email', 'photo', 'description')
+        fields = ('name', 'photo', 'description')
         
 class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
@@ -48,3 +48,12 @@ class ContactForm(forms.Form):
     def send(self, sender, recipient):
         # TODO: Send email.
         pass
+
+class ChangeEmailForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('email',)
+    
+    def save(self):
+        self.instance.save(set_updated=False)
+        return self.instance

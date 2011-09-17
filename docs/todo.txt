@@ -60,6 +60,9 @@ Delete profile
 
 Messages for every form success.
 
+Forgot password/password reset.
+
+
 Ideas
 -----
 

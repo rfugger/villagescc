@@ -5,14 +5,13 @@
 {% block content %}
 <h2>Account Settings</h2>
 
-<h3>Email</h3>
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">
 		{{ email_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="email" value="Change Email"></td>
+			<td><input type="submit" name="change_email" value="Change Email"></td>
 		</tr>
 	</table>
 </form>
@@ -25,7 +24,7 @@
 		{{ password_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="password" value="Change Password"></td>
+			<td><input type="submit" name="change_password" value="Change Password"></td>
 		</tr>
 	</table>
 </form>
