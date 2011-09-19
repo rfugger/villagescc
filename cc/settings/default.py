@@ -14,6 +14,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SITE_DOMAIN = 'villages.cc'
+DEFAULT_FROM_EMAIL = 'web@villages.cc'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

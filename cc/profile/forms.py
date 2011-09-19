@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from cc.profile.models import Profile
 from cc.general.models import EmailField
+from cc.general.mail import send_mail
 
 class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
@@ -45,8 +46,15 @@ class ProfileForm(forms.ModelForm):
 class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
-    def send(self, sender, recipient):
-        pass
+    def send(self, sender, recipient, subject=None,
+             template='contact_email.txt', extra_context=None):
+        if not subject:
+            subject = "Villages.cc message from %s" % sender
+        context = {'message': self.cleaned_data['message']}
+        if extra_context:
+            context.update(extra_context)
+        send_mail(subject, sender, recipient, template, context)
+                  
         
 class SettingsForm(forms.ModelForm):
     email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)

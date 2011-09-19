@@ -9,7 +9,7 @@
 		{% include "post_content.html" %}
 
 		<h4>Contact</h4>
-		<form action="{% url contact post.user.username %}">
+		<form action="" method="post">
 			{% csrf_token %}
 			<table class="form_table">
 				{{ contact_form }}

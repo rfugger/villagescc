@@ -1,0 +1,4 @@
+{{ message }}
+
+--
+http://{{ domain }}{{ post.get_absolute_url }}

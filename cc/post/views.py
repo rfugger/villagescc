@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.conf import settings
 
 from cc.general.util import render
 from cc.post.models import Post
@@ -8,6 +10,10 @@ from cc.post.forms import PostForm
 from cc.geo.util import location_required
 from cc.feed.models import FeedItem
 from cc.profile.forms import ContactForm
+
+MESSAGES = {
+    'post_message_sent': "Message sent.",
+}
 
 @login_required
 @render('post_form.html')
@@ -31,7 +37,21 @@ def view_post(request, post_id):
     if request.profile == post.user:
         template = 'my_post.html'
     else:
+        if request.method == 'POST':
+            contact_form = ContactForm(request.POST)
+            if contact_form.is_valid():
+                contact_form.send(
+                    sender=request.profile, recipient=post.user,
+                    subject="Villages.cc message from %s Re: %s" % (
+                        request.profile, post.title),
+                    template='post_contact_email.txt',
+                    extra_context={'post': post,
+                                   'domain': settings.SITE_DOMAIN})
+                messages.info(request, MESSAGES['post_message_sent'])
+                return HttpResponseRedirect('.')
+        else:
+            contact_form = ContactForm()
         template = 'post.html'
         profile = post.user  # For profile_base.html.
-        contact_form = ContactForm()
     return locals(), template
+
