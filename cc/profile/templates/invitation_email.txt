@@ -1,0 +1,7 @@
+{{ invitation.from_profile }} has endorsed you on Villages.cc.  To accept, please visit the following link:
+
+http://{{ self.SITE_DOMAIN }}{{ invitation.get_absolute_url }}
+
+Thanks.
+
+{# TODO: More explanation of what villages.cc is. #}

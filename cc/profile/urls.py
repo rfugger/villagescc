@@ -6,6 +6,7 @@ from cc.profile.models import Profile
 
 urlpatterns = patterns(
     'cc.profile.views',
+    url(r'^check_invitation/$', 'check_invitation', name='check_invitation'),
     url(r'^register/$', 'register', name='register'),
     url(r'^login/$', 'login', name='login'),
     url(r'^logout/$', logout, name='logout', kwargs=dict(next_page='/')),
@@ -18,6 +19,6 @@ urlpatterns = patterns(
     url(r'^profiles/([^/]+)/endorsements/$', 'profile_endorsements',
         name='profile_endorsements'),
     url(r'^profiles/([^/]+)/contact/$', 'contact', name='contact'),
-
-    # TODO: Change password view.
+    url(r'^invite/$', 'invite', name='invite'),    
+    url(r'^invitation/([^/]+)/$', 'invitation', name='invitation'),
 )

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from cc.profile.models import Profile
+from cc.profile.models import Profile, Invitation
 from cc.general.models import EmailField
 from cc.general.mail import send_mail
 
@@ -10,16 +10,21 @@ class RegistrationForm(UserCreationForm):
     name = forms.CharField(max_length=100, required=False)
     email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Profile.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(
+                "That email address is registered to another user.")
+        return email    
+    
     def save(self, location):
+
+        # TODO: Test registration.
+        
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
-        # TODO: Reactivate this line when confirmation emails are implemented.
-        #user.is_active = False
         user.save()
-        # Profile is auto-created when User is saved.
-        profile = user.get_profile()
-        profile.name = data.get('name', '')
-        profile.email = data['email']
+        profile = Profile(name=data.get('name', ''), email=data['email'])
         if not location.id:
             location.save()
         profile.location = location
@@ -37,6 +42,34 @@ class RegistrationForm(UserCreationForm):
 RegistrationForm.base_fields.keyOrder = [
     'username', 'name', 'email', 'password1', 'password2']
 
+class InvitationForm(forms.ModelForm):
+    class Meta:
+        model = Invitation
+        fields = ('to_email', 'endorsement_weight', 'endorsement_text')
+
+    def __init__(self, from_profile, *args, **kwargs):
+        self.from_profile = from_profile
+        super(InvitationForm, self).__init__(*args, **kwargs)
+        
+    def clean_to_email(self):
+        to_email = self.cleaned_data['to_email']
+        if Invitation.objects.filter(
+            from_profile=self.from_profile, to_email__iexact=to_email).exists():
+            raise forms.ValidationError(
+                "You have already invited %s." % to_email)
+        if to_email.lower() == self.from_profile.email.lower():
+            raise forms.ValidationError("You can't invite yourself.")
+        return to_email
+
+    # TODO: WORKING ON: Limit endorsement weight to
+    # from_profile.endorsements_remaining.
+    # Also, create nice spinner for weight like on endorsement form.
+    
+    def save(self, from_profile):
+        invitation = super(InvitationForm, self).save(commit=False)
+        invitation.from_profile = from_profile
+        invitation.save()
+        return invitation
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -54,14 +87,23 @@ class ContactForm(forms.Form):
         if extra_context:
             context.update(extra_context)
         send_mail(subject, sender, recipient, template, context)
-                  
         
 class SettingsForm(forms.ModelForm):
-    email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
-
     class Meta:
         model = Profile
         fields = ('email',)    
+
+    def __init__(self, profile, *args, **kwargs):
+        self.profile = profile
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Profile.objects.filter(email__iexact=email).exclude(
+            pk=self.profile.id).exists():
+            raise forms.ValidationError(
+                "That email address is registered to another user.")
+        return email
         
     def save(self):
         self.instance.save(set_updated=False)

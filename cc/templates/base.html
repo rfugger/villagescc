@@ -89,9 +89,10 @@
 						<hr>
 						<li class="{% block nav_new_post_class %}{% endblock %}">
 							<a href="{% url new_post %}">New Post</a></li>
-						<li>Invite Friends</li>
+						<li class="{% block nav_invite_class %}{% endblock %}">
+							<a href="{% url invite %}">Invite A Friend</a></li>
 					{% else %}
-						<li><a href="{% url register %}">Register</a></li>
+						<li><a href="{% url check_invitation %}">Join</a></li>
 						<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
 					{% endif %}
 				{% endblock %}

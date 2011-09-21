@@ -9,14 +9,15 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
-    RegistrationForm, ProfileForm, ContactForm, SettingsForm)
-from cc.profile.models import Profile
+    RegistrationForm, ProfileForm, ContactForm, SettingsForm, InvitationForm)
+from cc.profile.models import Profile, Invitation
 from cc.post.models import Post
 import cc.ripple.api as ripple
 from cc.geo.util import location_required
 from cc.geo.models import Location
 from cc.relate.models import Endorsement
 from cc.feed.views import feed
+from cc.general.views import forbidden
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
@@ -26,12 +27,48 @@ MESSAGES = {
                           "yourself for other users."),
     'password_changed': "Password changed.",
     'settings_changed': "Settings saved.",
+    'invitation_sent': "Invitation sent.",
 }
+
+INVITE_CODE_KEY = 'invite_code'
+
+def get_invitation(request):
+    """
+    Get invitation code saved in session by invitation view (shown
+    when clicking on invitation link).
+    """
+    invitation = None
+    invite_code = request.session.get(INVITE_CODE_KEY)
+    if invite_code:
+        try:
+            invitation = Invitation.objects.get(code=code)
+        except Invitation.DoesNotExist:
+            pass
+    return invitation
+
+@deflect_logged_in
+def check_invitation(request):
+    """
+    Check for invitation in session before proceeding to registration.
+    If no invitation, redirect to request_invitation.
+    """
+    invitation = get_invitation(request)
+    if invitation:
+        return redirect(register)
+    else:
+        return redirect(request_invitation)
 
 @deflect_logged_in
 @location_required
 @render()
 def register(request):
+    """
+    Registration form.  Requires invitation code in session (from
+    invitation view).
+    """
+    invitation = get_invitation(request)
+    if not invitation:
+        return forbidden(request)
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -50,6 +87,9 @@ def register(request):
     return locals()
 
 @deflect_logged_in
+@render()
+
+@deflect_logged_in
 def login(request):
     response = django_login_view(
         request, template_name='login.html', redirect_field_name='next')
@@ -64,7 +104,8 @@ def login(request):
 def settings(request):
     if request.method == 'POST':
         if 'change_settings' in request.POST:
-            settings_form = SettingsForm(request.POST, instance=request.profile)
+            settings_form = SettingsForm(
+                request.profile, request.POST, instance=request.profile)
             if settings_form.is_valid():
                 settings_form.save()
                 messages.info(request, MESSAGES['settings_changed'])
@@ -77,7 +118,8 @@ def settings(request):
                 return redirect(settings)
         
     if 'change_settings' not in request.POST:
-        settings_form = SettingsForm(instance=request.profile)
+        settings_form = SettingsForm(
+            request.profile, instance=request.profile)
     if 'change_password' not in request.POST:
         password_form = PasswordChangeForm(request.user)
     return locals()
@@ -139,4 +181,29 @@ def contact(request, username):
             return redirect(profile, (username,))
     else:
         form = ContactForm()
+    return locals()
+
+@login_required
+@render()
+def invite(request):
+    if request.method == 'POST':
+        form = InvitationForm(request.profile, request.POST)
+        if form.is_valid():
+            invitation = form.save()
+            messages.info(request, MESSAGES['invitation_sent'])
+            return redirect(invite)
+    else:
+        form = InvitationForm(request.profile)
+    return locals()
+
+@render()
+def invitation(request, code):
+    """
+    Shows invitation page.  Saves invitation code to session so user
+    can click around and still have code around for register view when
+    they get there.
+    """
+    if not Invitation.objects.filter(code=code).exists():
+        return {}, 'bad_invite_code.html'
+    request.session[INVITE_CODE_KEY] = code
     return locals()

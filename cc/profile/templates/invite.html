@@ -1,0 +1,20 @@
+{% extends "home_base.html" %}
+
+{% block title %}Invite A Friend{% endblock %}
+
+{% block nav_invite_class %}selected{% endblock %}
+
+{% block content %}
+<h2>Invite A Friend</h2>
+
+<form action="" method="post">
+	{% csrf_token %}
+	<table class="form">
+		{{ form }}
+		<tr>
+			<th></th>
+			<td><input type="submit" value="Invite"></td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

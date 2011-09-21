@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -10,6 +10,9 @@ from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
+
+CODE_LENGTH = 20
+CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 class Profile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -43,7 +46,7 @@ class Profile(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('profile', (self.username,))
+        return 'profile', (self.username,)
 
     def save(self, set_updated=True, **kwargs):
         if set_updated:
@@ -105,6 +108,9 @@ class Profile(models.Model):
     @property
     @cache_on_object
     def endorsements_made_sum(self):
+        
+        # TODO: Include sent invitations.
+        
         return self.endorsements_made.all().aggregate(
             models.Sum('weight')).get('weight__sum') or 0
 
@@ -141,12 +147,38 @@ class Profile(models.Model):
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)
-    
-    @classmethod
-    def create_profile(cls, sender, instance, created, **kwargs):
-        if created:
-            cls.objects.create(user=instance)
 
-# Create new empty profile when a new user is created.
-post_save.connect(Profile.create_profile, sender=User,
-                  dispatch_uid='profile.models')
+class Invitation(models.Model):
+    from_profile = models.ForeignKey(Profile)
+    to_email = EmailField()
+    endorsement_weight = models.PositiveIntegerField()
+    endorsement_text = models.TextField(blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    code = VarCharField(unique=True)
+
+    # TODO: Some help text in fields above.
+    
+    def __unicode__(self):
+        return u"%s invites %s" % (self.from_profile, self.to_email)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'invitation', (self.code,)
+
+    def set_code(self):
+        self.code = ''.join(
+            (random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
+
+    def send(self):
+        send_mail("%s Has Endorsed You On Villages.cc" % self.from_profile,
+                  self.from_profile, self.to_email, 'invitation_email.txt',
+                  {'invitation': self, 'domain': settings.SITE_DOMAIN})
+        
+    @classmethod
+    def pre_save(cls, sender, instance, **kwargs):
+        if not instance.code:
+            instance.set_code()
+
+# Fill in code before saving.
+pre_save.connect(Invitation.pre_save, sender=Invitation,
+                 dispatch_uid='profile.models')

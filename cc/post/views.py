@@ -37,6 +37,7 @@ def view_post(request, post_id):
     if request.profile == post.user:
         template = 'my_post.html'
     else:
+        # Process contact form if submitted.
         if request.method == 'POST':
             contact_form = ContactForm(request.POST)
             if contact_form.is_valid():

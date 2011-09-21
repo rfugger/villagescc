@@ -4,17 +4,10 @@ To Do
 Critical Path
 -------------
 
-Account settings
-- change password, email
-
 Landing page
 
 Registration by invite only
 - request invite form
-
-Contact user
-- from profile
-- re: post
 
 Invite friends
 
@@ -58,9 +51,13 @@ Request promise
 
 Delete profile
 
-Messages for every form success.
+Messages for every form success
 
-Forgot password/password reset.
+Forgot password/password reset
+
+Nice base html email template
+
+Automated tests for views
 
 
 Ideas
@@ -74,3 +71,5 @@ Sort searches by relevance, especially user searches
 Connect messages and payments to posts
 
 Convert untrusted promise to trusted
+
+In-site messaging system
