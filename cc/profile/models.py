@@ -160,7 +160,9 @@ class Invitation(models.Model):
     code = VarCharField(unique=True)
 
     # TODO: Some help text in fields above.
-    
+
+    # TODO: Cron job to delete old invitations?
+
     def __unicode__(self):
         return u"%s invites %s" % (self.from_profile, self.to_email)
 
@@ -176,6 +178,8 @@ class Invitation(models.Model):
         send_mail("%s Has Endorsed You On Villages.cc" % self.from_profile,
                   self.from_profile, self.to_email, 'invitation_email.txt',
                   {'invitation': self, 'domain': settings.SITE_DOMAIN})
+        self.date = datetime.now()
+        self.save()
         
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):

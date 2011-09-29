@@ -28,6 +28,7 @@ MESSAGES = {
     'password_changed': "Password changed.",
     'settings_changed': "Settings saved.",
     'invitation_sent': "Invitation sent.",
+    'invitation_deleted': "Invitation deleted.",
 }
 
 INVITE_CODE_KEY = 'invite_code'
@@ -212,5 +213,19 @@ def invitation(request, code):
 @login_required
 @render()
 def invitations_sent(request):
-    # TODO.
-    pass
+    if request.method == 'POST':
+        # Only key in request.POST should be either 'resend_NNN' or 'delete_NNN',
+        # where NNN is the invitation ID to act on.
+        key = request.POST.keys()[0]
+        invitation_id = key.split('_')[1]
+        invitation = get_object_or_404(
+            request.profile.invitations_sent, pk=invitation_id)
+        if key.startswith('resend'):
+            invitation.send()
+            messages.info(request, MESSAGES['invitation_sent'])
+        elif key.startswith('delete'):
+            invitation.delete()
+            messages.info(request, MESSAGES['invitation_deleted'])
+        return redirect(invitations_sent)
+    invitations = request.profile.invitations_sent.all()
+    return locals()

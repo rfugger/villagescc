@@ -22,14 +22,24 @@
 		remaining to give out.</p>
 {% endif %}
 
-<form action="" method="post">
-	{% csrf_token %}
-	<table class="form">
-		{{ form }}
-		<tr>
-			<th></th>
-			<td><input type="submit" value="Invite"></td>
-		</tr>
-	</table>
-</form>
+{% if request.profile.can_endorse %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<table class="form">
+			{{ form }}
+			<tr>
+				<th></th>
+				<td><input type="submit" value="Invite"></td>
+			</tr>
+		</table>
+	</form>
+{% else %}
+	<p>You need more hearts to invite a friend.</p>
+	
+	{# TODO: Instructions on how to get more endorsements. #}
+
+{% endif %}
+
+<p><a href="{% url invitations_sent %}">View pending sent invitations</a></p>
+
 {% endblock %}

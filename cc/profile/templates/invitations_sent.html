@@ -1,0 +1,38 @@
+{% extends "home_base.html" %}
+
+{% block title %}Invitations Sent{% endblock %}
+
+{% block nav_invite_class %}selected{% endblock %}
+
+{% block content %}
+<h2>Invitations Sent</h2>
+
+{% if invitations %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<table class="data">
+			<tr>
+				<th>Friend's Email</th>
+				<th>Hearts</th>
+				<th>Date Sent</th>
+			</tr>
+			{% for invitation in invitations %}
+				<tr>
+					<td>{{ invitation.to_email }}</td>
+					<td>{{ invitation.endorsement_weight }}</td>
+					<td>{{ invitation.date|date }}</td>
+					<td>						
+						<input type="submit" name="resend_{{ invitation.id }}"
+							   value="Resend">
+						<input type="submit" name="delete_{{ invitation.id }}" 
+							   value="Delete">
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</form>
+{% else %}
+	<p>You have no pending sent invitations.</p>
+{% endif %}
+
+{% endblock %}
