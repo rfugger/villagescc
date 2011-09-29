@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -10,6 +11,7 @@ from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
+from cc.general.mail import send_mail
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -108,11 +110,12 @@ class Profile(models.Model):
     @property
     @cache_on_object
     def endorsements_made_sum(self):
-        
-        # TODO: Include sent invitations.
-        
-        return self.endorsements_made.all().aggregate(
-            models.Sum('weight')).get('weight__sum') or 0
+        return (
+            (self.endorsements_made.all().aggregate(
+                models.Sum('weight')).get('weight__sum') or 0) +
+            (self.invitations_sent.all().aggregate(
+                models.Sum('endorsement_weight')).get(
+                'endorsement_weight__sum') or 0))
 
     @property
     @cache_on_object
@@ -149,8 +152,8 @@ class Profile(models.Model):
         return cls.objects.get(pk=id)
 
 class Invitation(models.Model):
-    from_profile = models.ForeignKey(Profile)
-    to_email = EmailField()
+    from_profile = models.ForeignKey(Profile, related_name='invitations_sent')
+    to_email = EmailField("Friend's email")
     endorsement_weight = models.PositiveIntegerField()
     endorsement_text = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True)

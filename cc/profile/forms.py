@@ -43,6 +43,16 @@ RegistrationForm.base_fields.keyOrder = [
     'username', 'name', 'email', 'password1', 'password2']
 
 class InvitationForm(forms.ModelForm):
+    endorsement_weight = forms.IntegerField(
+        label="Endorsement hearts", min_value=1,
+        widget=forms.TextInput(attrs={'class': 'int spinner'}))
+
+    # TODO: Merge with EndorseForm somehow, into a common superclass?
+    
+    MESSAGES = {
+        'over_weight': "Please ensure this number is below %d."
+    }
+    
     class Meta:
         model = Invitation
         fields = ('to_email', 'endorsement_weight', 'endorsement_text')
@@ -61,13 +71,27 @@ class InvitationForm(forms.ModelForm):
             raise forms.ValidationError("You can't invite yourself.")
         return to_email
 
-    # TODO: WORKING ON: Limit endorsement weight to
-    # from_profile.endorsements_remaining.
-    # Also, create nice spinner for weight like on endorsement form.
+    # TODO: Also, create nice spinner for weight like on endorsement form.
     
-    def save(self, from_profile):
+    @property
+    def max_weight(self):
+        if not self.from_profile.endorsement_limited:
+            return None
+        max_weight = self.from_profile.endorsements_remaining
+        if self.instance.id:
+            max_weight += self.instance.weight
+        return max_weight
+        
+    def clean_endorsement_weight(self):
+        weight = self.cleaned_data['endorsement_weight']
+        if self.from_profile.endorsement_limited and weight > self.max_weight:
+            raise forms.ValidationError(
+                self.MESSAGES['over_weight'] % self.max_weight)
+        return weight
+    
+    def save(self):
         invitation = super(InvitationForm, self).save(commit=False)
-        invitation.from_profile = from_profile
+        invitation.from_profile = self.from_profile
         invitation.save()
         return invitation
 

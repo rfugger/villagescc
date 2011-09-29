@@ -190,6 +190,7 @@ def invite(request):
         form = InvitationForm(request.profile, request.POST)
         if form.is_valid():
             invitation = form.save()
+            invitation.send()
             messages.info(request, MESSAGES['invitation_sent'])
             return redirect(invite)
     else:
@@ -207,3 +208,9 @@ def invitation(request, code):
         return {}, 'bad_invite_code.html'
     request.session[INVITE_CODE_KEY] = code
     return locals()
+
+@login_required
+@render()
+def invitations_sent(request):
+    # TODO.
+    pass

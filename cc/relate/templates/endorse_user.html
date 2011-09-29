@@ -1,25 +1,10 @@
 {% extends "profile_base.html" %}
-{% load media %}
 
 {% block title %}Endorse {{ recipient }}{% endblock %}
 
 {% block extrahead %}
 	{{ block.super }}
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type="text/css" 
-		  href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
-	{% include_media "ui.spinner.js" %}
-	{% include_media "ui.spinner.css" %}
-{% endblock %}
-
-{% block ready_js %}
-	{{ block.super }}
-	{% if request.profile.endorsement_limited %}
-		var spinner_params = {min: 1, max: {{ form.max_weight }} };
-	{% else %}
-		var spinner_params = {min: 1};
-	{% endif %}
-	$("#id_weight").spinner(spinner_params);
+	{% include "spinner_js.html" %}
 {% endblock %}
 
 {% block nav_endorse_class %}selected{% endblock %}

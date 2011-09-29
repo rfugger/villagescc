@@ -2,10 +2,25 @@
 
 {% block title %}Invite A Friend{% endblock %}
 
+{% block extrahead %}
+	{{ block.super }}
+	{% include "spinner_js.html" %}
+{% endblock %}
+
 {% block nav_invite_class %}selected{% endblock %}
 
 {% block content %}
 <h2>Invite A Friend</h2>
+
+<p>If you know someone who would love to participate in Villages.cc and
+	has something to contribute to the community, please invite them by
+	endorsing them.</p>
+
+{% if request.profile.endorsement_limited %}
+	<p>You have <strong>{{ request.profile.endorsements_remaining }}</strong> 
+		heart{{ request.profile.endorsements_remaining|pluralize:"s" }} 
+		remaining to give out.</p>
+{% endif %}
 
 <form action="" method="post">
 	{% csrf_token %}
