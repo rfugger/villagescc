@@ -2,9 +2,28 @@
 
 {% block title %}Request Invitation{% endblock %}
 
+{% block nav_register_class %}selected{% endblock %}
+
 {% block content %}
 <h2>Request Invitation</h2>
 
-<p>Villages.cc is invite-only...
+<p>Villages.cc is invite-only...</p>
 
+{% if form.errors %}
+	<ul class="errorlist">
+		<li>Please enter some text.</li>
+	</ul>
+{% endif %}
+
+<form action="" method="post">
+	{% csrf_token %}
+	<table class="form">
+		<tr>
+			<td>{{ form.text }}</td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="Request Invitation"></td>
+		</tr>
+	</table>
+</form>
 {% endblock %}

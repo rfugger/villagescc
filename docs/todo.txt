@@ -9,12 +9,13 @@ Landing page
 Registration by invite only
 - request invite form
 
-Invite friends
-
 Email notifications (verification?)
 - notification settings under account settings
 - new endorsement
 - new promise
+
+Logged in logo link back to intro page
+- handle logged-in users on intro page
 
 Review all TODOs in code
 

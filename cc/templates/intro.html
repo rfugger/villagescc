@@ -1,8 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}[Some Nice Tagline]{% endblock %}
+{% block title %}The Social Marketplace{% endblock %}
 
 {% block page %}
-<a href="{% url feed %}">Feed</a>
-<a href="{% url login %}">Login</a>
+<div class="content_box page_content">
+	<h2>Welcome to Villages.cc, The Social Marketplace</h2>
+
+	<h3>Discover People You Can Trust In Your Neighborhood</h3>
+
+	<p>The foundation of Villages is a network of trust, built on friends 
+		endorsing each other as valuable members of the community.</p>
+
+	<h3>Trade Without Money</h3>
+
+	<p>Villages network of trust lets you buy and sell using personal 
+		promises as Community Currency.</p>
+
+	<h3>Change The World</h3>
+
+	<p>By working for friends and neighbors in our community, rather
+		than for banks and corporations, we take control of our own 
+		economic destiny back from the centralized institutions that 
+		have so badly mismanaged it.</p>
+
+	<p><a href="">Read More</a></p>
+</div>
+
+<div class="context_bar">
+	<div class="actions">
+		<li><a href="{% url feed %}">Browse Marketplace</a></li>
+		<hr>
+		<li><a href="{% url check_invitation %}">Join</a></li>
+		<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
+</div>
 {% endblock %}

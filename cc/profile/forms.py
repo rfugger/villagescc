@@ -95,6 +95,9 @@ class InvitationForm(forms.ModelForm):
         invitation.save()
         return invitation
 
+class RequestInvitationForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea)
+    
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile

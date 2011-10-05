@@ -22,4 +22,6 @@ urlpatterns = patterns(
     url(r'^invite/$', 'invite', name='invite'),    
     url(r'^invitation/([^/]+)/$', 'invitation', name='invitation'),
     url(r'^invitations/$', 'invitations_sent', name='invitations_sent'),
+    url(r'^request_invitation/$', 'request_invitation',
+        name='request_invitation'),
 )

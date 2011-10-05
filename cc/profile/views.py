@@ -9,7 +9,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
-    RegistrationForm, ProfileForm, ContactForm, SettingsForm, InvitationForm)
+    RegistrationForm, ProfileForm, ContactForm, SettingsForm, InvitationForm,
+    RequestInvitationForm)
 from cc.profile.models import Profile, Invitation
 from cc.post.models import Post
 import cc.ripple.api as ripple
@@ -228,4 +229,16 @@ def invitations_sent(request):
             messages.info(request, MESSAGES['invitation_deleted'])
         return redirect(invitations_sent)
     invitations = request.profile.invitations_sent.all()
+    return locals()
+
+@deflect_logged_in
+@render()
+def request_invitation(request):
+    if request.method == 'POST':
+        form = RequestInvitationForm(request.POST)
+        if form.is_valid():
+            # TODO, WORKING ON: What here?
+            pass
+    else:
+        form = RequestInvitationForm()
     return locals()
