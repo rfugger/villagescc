@@ -8,15 +8,8 @@ def send_mail(subject, sender, recipient, template, context):
     and template/context pair for the body, and sends an email.
     """
     body = loader.render_to_string(template, context)
-    
-    # TODO: Consider security implications of putting profile name directly
-    # into email address below (is escaping needed?)
-    from_email = '"%s" <%s>' % (sender.name, sender.email)
-    if isinstance(recipient, basestring):
-        to_email = recipient
-    else:
-        # recipient is a Profile.
-        to_email = '"%s" <%s>' % (recipient.name, recipient.email)
+    from_email = make_email(sender)
+    to_email = make_email(recipient)
 
     # Set headers to avoid SPF errors as per
     # http://www.openspf.org/Best_Practices/Webgenerated
@@ -30,4 +23,15 @@ def send_mail(subject, sender, recipient, template, context):
     # TODO: Relay bounces back to original sender?  See
     # http://www.openspf.org/svn/software/php-mail-bounce/trunk/mail-bounce.php
 
+def make_email(email_or_profile):
+    if isinstance(email_or_profile, basestring):
+        email = email_or_profile
+    else:
+        # Create email from Profile.
+        
+        # TODO: Consider security implications of putting profile name directly
+        # into email address below (is escaping needed?)
+        
+        email = '"%s" <%s>' % (email_or_profile.name, email_or_profile.email)
+    return email
     

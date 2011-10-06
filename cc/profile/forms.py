@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 
 from cc.profile.models import Profile, Invitation
 from cc.general.models import EmailField
@@ -96,7 +97,24 @@ class InvitationForm(forms.ModelForm):
         return invitation
 
 class RequestInvitationForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(required=False)
+    email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
+    text = forms.CharField(widget=forms.Textarea, label="Why I want to join")
+
+    def sender(self):
+        "Returns appropriate text for email sender field."
+        data = self.cleaned_data
+        sender = u'<%s>' % data['email']
+        if data.get('name'):
+            sender = u'"%s" %s' % (data['name'], sender)
+        return sender
+    
+    def send(self):
+        data = self.cleaned_data
+        send_mail("Villages.cc Invitation Request",
+                  self.sender(), settings.MANAGERS[0][1],
+                  'request_invitation_email.txt',
+                  {'text': data['text']})
     
 class ProfileForm(forms.ModelForm):
     class Meta:

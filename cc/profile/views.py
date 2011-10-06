@@ -30,6 +30,7 @@ MESSAGES = {
     'settings_changed': "Settings saved.",
     'invitation_sent': "Invitation sent.",
     'invitation_deleted': "Invitation deleted.",
+    'invitation_request_sent': "Invitation request sent.",
 }
 
 INVITE_CODE_KEY = 'invite_code'
@@ -237,8 +238,9 @@ def request_invitation(request):
     if request.method == 'POST':
         form = RequestInvitationForm(request.POST)
         if form.is_valid():
-            # TODO, WORKING ON: What here?
-            pass
+            form.send()
+            messages.info(request, MESSAGES['invitation_request_sent'])
+            return redirect('feed')
     else:
         form = RequestInvitationForm()
     return locals()

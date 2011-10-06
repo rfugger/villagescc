@@ -21,6 +21,11 @@ h3 {
 	margin: 0.83em 0;
 }
 
+ul > li {
+	list-style-type: disc;
+	margin: 0.3em 0 0.3em 1em;
+}
+
 .extend {
 	padding: 10px 0;
 	overflow: hidden;
@@ -33,6 +38,11 @@ h3 {
 .errorlist {
 	color: brown;
 	font-weight: bold;
+}
+
+ul.errorlist > li {
+	list-style-type: none;
+	margin: 0;
 }
 
 .helptext {
@@ -206,8 +216,9 @@ input.int {
 }
 
 .page_content {
-	border-left: 0;
-	padding-left: 0;
+	display: table-cell;
+	vertical-align: top;
+	border-right: 1px solid #ddd;
 }
 
 /********* Context Bar ***********/

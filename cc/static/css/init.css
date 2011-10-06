@@ -3,7 +3,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* Minimal partial reset. */
 ul { padding:0; }
-li { list-style:none; }
+li { list-style-type:none; }
 table { border-collapse:collapse; border-spacing:0; }
 th { text-align:left; vertical-align:top; }
 a { text-decoration:none; }
