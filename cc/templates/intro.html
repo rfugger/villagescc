@@ -1,36 +1,31 @@
-{% extends "base.html" %}
+{% extends "no_subnav_base.html" %}
 
-{% block title %}The Social Marketplace{% endblock %}
+{% block title %}Trade in a Network of Overlapping Villages{% endblock %}
 
-{% block page %}
-<div class="page_content">
-	<h2>Welcome to Villages.cc, The Social Marketplace</h2>
+{% block content %}
+	<h2>Villages Community Currency: Trade in a Network of Overlapping Villages</h2>
 
-	<h3>Discover People You Can Trust In Your Neighborhood</h3>
+	<h3>Discover Nearby People You Can Trust</h3>
 
-	<p>The foundation of Villages is a network of trust, built on friends 
-		endorsing each other as valuable members of the community.</p>
+	<p>By adding trusted friends to your village, you recommend
+		them to others, and use their recommendations to help find
+		reliable new people to trade with.</p>
 
-	<h3>Trade Without Money</h3>
+	<h3>Pay With Promises</h3>
 
-	<p>Villages network of trust lets you buy and sell using personal 
-		promises as Community Currency.</p>
+	<p>To buy something in Villages, you simply give your word that
+		you will give back equal value in the future.
+		When you sell, the buyer's promises are converted into promises 
+		from someone you trust using
+		<a href="{% url about_ripple %}">Ripple technology</a>,
+		meaning you don't have to worry about trusting the buyer directly.
+	</p>
 
 	<h3>Change The World</h3>
 
 	<p>By working for friends and neighbors in our community, rather
-		than for banks and corporations, we take control of our own 
-		economic destiny back from the centralized institutions that 
-		have so badly mismanaged it.</p>
+		than for banks and corporations, and issuing our own money rather
+		than using theirs, we take control of our own economic destiny.</p>
 
 	<p><a href="">Read More</a></p>
-</div>
-
-<div class="context_bar">
-	<div class="actions">
-		<li><a href="{% url feed %}">Browse Marketplace</a></li>
-		<hr>
-		<li><a href="{% url check_invitation %}">Join</a></li>
-		<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
-</div>
 {% endblock %}

@@ -4,6 +4,6 @@ from cc.general.util import render
 
 @render()
 def intro(request):
-    if request.profile:
+    if request.profile and not request.GET:
         return redirect('feed')
     return {}

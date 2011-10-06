@@ -216,9 +216,9 @@ input.int {
 }
 
 .page_content {
-	display: table-cell;
-	vertical-align: top;
-	border-right: 1px solid #ddd;
+	width: 759px;
+	border-left: 0;
+	padding-left: 0;
 }
 
 /********* Context Bar ***********/

@@ -35,7 +35,7 @@
 		</span>
 
 		<div class="right_nav">
-			<li>About</li>
+			<li><a href="{% url about %}">About</a></li>
 			<li>Feedback</li>
 		</div>
 	</div></div>
@@ -54,28 +54,33 @@
 
 <div class="page">
 	{% block page %}
-		<div class="subnav_bar">
-			{% block subnav_box %}
-				<div class="subnav_image">
-					{% block subnav_image %}{% endblock %}
-				</div>
-				<h2 class="subnav_title">{% block subnav_title %}{% endblock %}</h2>
-				<div class="profile_summary">
-					{% block profile_summary %}{% endblock %}
-				</div>
-				<div class="subnav">
-					{% block subnav %}{% endblock %}
-				</div>
-			{% endblock %}
-		</div>
+		{% block no_subnav_content %}
+			<div class="subnav_bar">
+				{% block subnav_box %}
+					<div class="subnav_image">
+						{% block subnav_image %}{% endblock %}
+					</div>
+					<h2 class="subnav_title">{% block subnav_title %}{% endblock %}</h2>
+					<div class="profile_summary">
+						{% block profile_summary %}{% endblock %}
+					</div>
+					<div class="subnav">
+						{% block subnav %}{% endblock %}
+					</div>
+				{% endblock %}
+			</div>
 
-		<div class="content_box">
-			{% block content %}{% endblock %}
-		</div>
+			<div class="content_box">
+				{% block content %}{% endblock %}
+			</div>
+		{% endblock %}
 
 		<div class="context_bar">
 			<div class="actions">
 				{% block actions %}
+					{% if not request.profile %}
+						<li><a href="{% url feed %}">Browse Marketplace</a></li>
+					{% endif %}
 					<li class="{% block nav_location_class %}{% endblock %}">
 						<a href="{% url locator %}?next={{ request.path }}"
 						   >{{ request.location|default:"Set Location" }}</a></li>

@@ -240,7 +240,7 @@ def request_invitation(request):
         if form.is_valid():
             form.send()
             messages.info(request, MESSAGES['invitation_request_sent'])
-            return redirect('feed')
+            return redirect('home')
     else:
         form = RequestInvitationForm()
     return locals()
