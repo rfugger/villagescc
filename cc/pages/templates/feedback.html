@@ -1,0 +1,20 @@
+{% extends "no_subnav_base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<h2>Feedback</h2>
+
+<p>Please let us know any comments or questions you have about Villages.  Thanks!</p>
+
+<form action="" method="post">
+	{% csrf_token %}
+	<table class="form">
+		{{ form }}
+		<tr>
+			<th></th>
+			<td><input type="submit" value="Send Feedback"></td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

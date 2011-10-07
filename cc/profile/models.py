@@ -11,7 +11,7 @@ from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
-from cc.general.mail import send_mail
+from cc.general.mail import send_mail, email_str
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -146,6 +146,12 @@ class Profile(models.Model):
 
     def account(self, profile):
         return ripple.get_account(self, profile)
+
+    def email_str(self):
+        """
+        Returns '"Name" <email>' suitable for email headers.
+        """
+        return email_str(self.name, self.email)
     
     @classmethod
     def get_by_id(cls, id):

@@ -4,7 +4,7 @@ from django.conf import settings
 
 from cc.profile.models import Profile, Invitation
 from cc.general.models import EmailField
-from cc.general.mail import send_mail
+from cc.general.mail import send_mail, send_mail_to_admin, email_str
 
 class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
@@ -104,17 +104,13 @@ class RequestInvitationForm(forms.Form):
     def sender(self):
         "Returns appropriate text for email sender field."
         data = self.cleaned_data
-        sender = u'<%s>' % data['email']
-        if data.get('name'):
-            sender = u'"%s" %s' % (data['name'], sender)
-        return sender
+        return email_str(data.get('name'), data['email'])
     
     def send(self):
         data = self.cleaned_data
-        send_mail("Villages.cc Invitation Request",
-                  self.sender(), settings.MANAGERS[0][1],
-                  'request_invitation_email.txt',
-                  {'text': data['text']})
+        send_mail_to_admin(
+            "Villages.cc Invitation Request", self.sender(), 
+            'request_invitation_email.txt', {'text': data['text']})
     
 class ProfileForm(forms.ModelForm):
     class Meta:
