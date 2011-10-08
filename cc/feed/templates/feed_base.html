@@ -1,4 +1,5 @@
 {% extends "home_base.html" %}
+{% load media %}
 
 {% block ready_js %}
 	{{ block.super }}
@@ -32,7 +33,10 @@
 			</li>
 			<li>{{ form.radius }}</li>
 			{% if request.profile %}
-				<li>Trusted only {{ form.trusted }}</li>
+				<li>{{ form.trusted }}
+					<img src="{% media_url 'img/heart_icon.png' %}" 
+						 alt="Heart icon = trusted user">
+					Trusted only</li>
 			{% endif %}
 		</form>
 	</div>

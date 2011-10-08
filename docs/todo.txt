@@ -4,10 +4,10 @@ To Do
 Critical Path
 -------------
 
-Landing page
-
-Registration by invite only
-- request invite form
+Static pages
+- fill out landing page
+- about
+- about Ripple
 
 Email notifications (verification?)
 - notification settings under account settings
@@ -23,12 +23,9 @@ Review all TODOs in code
 Post-Launch
 -----------
 
-About
-
-Feedback
-
 Explanatory text where necessary
 - links to help?
+- slide-down help on every page?
 
 Filter posts by offer/want
 

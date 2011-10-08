@@ -9,7 +9,9 @@ from django import forms
 
 def strip_input(func):
     def decorated_func(self, value):
-        return func(self, value and value.strip() or value)
+        if isinstance(value, basestring):
+            value = value.strip()
+        return func(self, value)
     decorated_func.__name__ = func.__name__
     decorated_func.__module__ == func.__module__
     return decorated_func

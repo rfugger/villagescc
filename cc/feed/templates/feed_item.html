@@ -1,4 +1,4 @@
-{% load profile location humanize %}
+{% load profile location humanize media %}
 <div class="feed_item_user unit">
 	{% block user %}
 		<img src="{% profile_image_url item.feed_poster '60x60' %}">
@@ -6,8 +6,11 @@
 </div>
 <div class="feed_item_content unit lastUnit">
 	<h3 class="feed_item_title">
+			{% if item.trusted %}
+				<img src="{% media_url 'img/heart_icon.png' %}" title="Trusted User"
+					 alt="Heart icon = trusted user">
+			{% endif %}
 			{% block title %}{% endblock %}
-			{% if item.trusted %}<span title="Trusted User">[T]</span>{% endif %}
 	</h3>
 	<div class="feed_item_data">
 		{% block poster %}{% endblock %}
