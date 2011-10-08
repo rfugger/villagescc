@@ -146,7 +146,7 @@ class UserEntry(object):
 class RipplePayment(object):
     "Wrapper around Payment.  Implements feed item model interface."
 
-    FEED_TEMPLATE = 'promise_feed_item.html'
+    FEED_TEMPLATE = 'acknowledgement_feed_item.html'
 
     DoesNotExist = ObjectDoesNotExist
     
@@ -206,7 +206,7 @@ class RipplePayment(object):
     
     @models.permalink
     def get_absolute_url(self):
-        return 'view_promise', (self.id,)
+        return 'view_acknowledgement', (self.id,)
 
     def entries_for_user(self, user):
         return [UserEntry(entry, user) for entry in

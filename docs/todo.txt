@@ -4,6 +4,14 @@ To Do
 Critical Path
 -------------
 
+"Acknowledgement" instead of "promise"
+- go over wording/presentation everywhere to make sure this is presented
+as a gift you do that is acknowledged, rather than a sale that is traded
+for an obligation
+
+Icons
+- heart (trusted) icon everywhere
+
 Static pages
 - fill out landing page
 - about
@@ -22,6 +30,14 @@ Review all TODOs in code
 
 Post-Launch
 -----------
+
+Automatically route as much of a payment as possible, then complete the rest
+by direct promise?
+- no need for routed/direct selector on payment form
+- how would users control if seller only wanted trusted routing?
+
+View trusted acknowledgements
+- must be trusted via someone other than acknowledgement recipient
 
 Explanatory text where necessary
 - links to help?

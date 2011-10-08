@@ -50,7 +50,7 @@ ITEM_TYPES = {
     Post: 'post',
     Profile: 'profile',
     Endorsement: 'endorsement',
-    api.RipplePayment: 'promise',
+    api.RipplePayment: 'acknowledgement',
 }
 
 # Reverse keys and values in ITEM_TYPES.
@@ -172,7 +172,7 @@ class FeedItem(models.Model):
     item_type = models.CharField(max_length=16, choices=(
             (ITEM_TYPES[Post], 'Post'),
             (ITEM_TYPES[Profile], 'Profile Update'),
-            (ITEM_TYPES[api.RipplePayment], 'Promise'),
+            (ITEM_TYPES[api.RipplePayment], 'Acknowledgement'),
             (ITEM_TYPES[Endorsement], 'Endorsement'),
         ))
     item_id = models.PositiveIntegerField()

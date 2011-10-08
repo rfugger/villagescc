@@ -49,7 +49,7 @@
 		{% for entry in entries %}
 			<tr>
 				<td>{{ entry.date }}</td>
-				<td><a href="{% url view_promise entry.payment_id %}"
+				<td><a href="{% url view_acknowledgement entry.payment_id %}"
 					   >{% entry_description entry request.profile %}</a></td>
 				<td class="number">{{ entry.received|default:"" }}</td>
 				<td class="number">{{ entry.sent|default:"" }}</td>

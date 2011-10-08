@@ -43,10 +43,14 @@ class LoadUserAccountNode(template.Node):
 @register.simple_tag
 def entry_description(entry, profile):
     if entry.payment.payer == profile:
-        desc = "Sent promise to %s" % entry.payment.recipient
+        desc = "Sent acknowledgement to %s" % entry.payment.recipient
     elif entry.payment.recipient == profile:
-        desc = "Received promise from %s" % entry.payment.payer
+        desc = "Received acknowledgement from %s" % entry.payment.payer
     else:
-        desc = "Helped route promise from %s to %s" % (
+
+        # TODO: Maybe "acknowledged %s in exchange for acknowledgement from %s"?
+        # Something else with "exchanged"?
+        
+        desc = "Helped route acknowledgement from %s to %s" % (
             entry.payment.payer, entry.payment.recipient)
     return desc

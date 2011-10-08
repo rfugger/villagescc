@@ -7,7 +7,7 @@ from django.contrib import messages
 from cc.general.util import render
 import cc.ripple.api as ripple
 from cc.profile.models import Profile
-from cc.relate.forms import EndorseForm, PromiseForm
+from cc.relate.forms import EndorseForm, AcknowledgementForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
 
@@ -76,7 +76,7 @@ def relationship(request, partner_username):
 
 @login_required
 @render()
-def promise_user(request, recipient_username):
+def acknowledge_user(request, recipient_username):
     recipient = get_object_or_404(Profile, user__username=recipient_username)
     if recipient == request.profile:
         raise Http404
@@ -84,19 +84,20 @@ def promise_user(request, recipient_username):
     # as hidden field?
     max_amount = ripple.max_payment(request.profile, recipient)
     if request.method == 'POST':
-        form = PromiseForm(request.POST, max_ripple=max_amount)
+        form = AcknowledgementForm(request.POST, max_ripple=max_amount)
         if form.is_valid():
-            promise = form.send_promise(request.profile, recipient)
-            return HttpResponseRedirect(promise.get_absolute_url())
+            acknowledgement = form.send_acknowledgement(
+                request.profile, recipient)
+            return HttpResponseRedirect(acknowledgement.get_absolute_url())
     else:
-        form = PromiseForm(max_ripple=max_amount)
+        form = AcknowledgementForm(max_ripple=max_amount)
     can_ripple = max_amount > 0
     profile = recipient  # For profile_base.html.
     return locals()
 
 @login_required
 @render()
-def view_promise(request, payment_id):
+def view_acknowledgement(request, payment_id):
     payment = ripple.get_payment(payment_id)
     entries = payment.entries_for_user(request.profile)
     if not entries:

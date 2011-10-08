@@ -1,9 +1,9 @@
 {% extends "feed_item.html" %}
-{% load profile %}
+{% load profile number %}
 
 {% block title %}
 	{% profile_display item.payer request "You" item.payer %}
-	promised 
+	acknowledged 
 	{% profile_display item.recipient request "you" item.recipient %}
-	{{ item.amount }} hours
+	with {{ item.amount|trim_zeroes }} hours promised
 {% endblock %}

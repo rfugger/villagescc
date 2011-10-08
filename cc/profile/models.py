@@ -138,7 +138,7 @@ class Profile(models.Model):
         return ripple.overall_balance(self)
 
     def trusted_balance(self):
-        "Overall balance minus promises received beyond trusted limits."
+        "Overall balance minus acknowledgements received beyond trusted limits."
         return ripple.trusted_balance(self)
 
     def trusts(self, profile):

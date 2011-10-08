@@ -53,9 +53,10 @@ class EndorseForm(forms.ModelForm):
         endorsement.save()
         return endorsement
 
-class PromiseForm(forms.Form):
+class AcknowledgementForm(forms.Form):
     ripple = forms.ChoiceField(
-        choices=((ROUTED, 'Routed Promise'), (DIRECT, 'Personal Promise')),
+        choices=((ROUTED, 'Routed Acknowledgement'),
+                 (DIRECT, 'Personal Acknowledgement')),
         widget=forms.RadioSelect)
     amount = forms.DecimalField(
         max_digits=PRECISION, decimal_places=SCALE,
@@ -64,12 +65,12 @@ class PromiseForm(forms.Form):
     
     ERRORS = {
         'max_ripple': ("This is higher than the maximum possible routed "
-                       "promise amount."),
+                       "acknowledgement amount."),
     }
     
     def __init__(self, *args, **kwargs):
         self.max_ripple = kwargs.pop('max_ripple')
-        super(PromiseForm, self).__init__(*args, **kwargs)
+        super(AcknowledgementForm, self).__init__(*args, **kwargs)
         if self.max_ripple == 0:
             del self.fields['ripple']
 
@@ -82,7 +83,7 @@ class PromiseForm(forms.Form):
                     [self.ERRORS['max_ripple']])
         return data
 
-    def send_promise(self, payer, recipient):
+    def send_acknowledgement(self, payer, recipient):
         data = self.cleaned_data
         routed = data.get('ripple') == ROUTED
         obj = ripple.pay(

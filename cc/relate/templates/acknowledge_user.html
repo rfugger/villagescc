@@ -1,0 +1,27 @@
+{% extends "profile_base.html" %}
+
+{% block title %}Acknowledge {{ recipient }}{% endblock %}
+
+{% block nav_acknowledge_class %}selected{% endblock %}
+
+{% block content %}
+<h2>Acknowledge {{ recipient }}</h2>
+
+{% if can_ripple %}
+	<p>You can route a trusted acknowledgement of up to {{ max_amount }}, or send
+	a personal acknowledgement.</p>
+{% else %}
+	<p>Send a personal acknowledgement to {{ recipient }}.</p>
+{% endif %}
+		
+<form action="" method="post">
+	{% csrf_token %}
+	<table class="form">
+		{{ form }}
+		<tr>
+			<th></th>
+			<td><input type="submit" value="Send Acknowledgement"></td>
+		</tr>
+	</table>
+</form>
+{% endblock %}
