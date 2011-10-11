@@ -20,7 +20,7 @@ Static pages
 Email notifications (verification?)
 - notification settings under account settings
 - new endorsement
-- new promise
+- new acknowledgement
 
 Logged in logo link back to intro page
 - handle logged-in users on intro page

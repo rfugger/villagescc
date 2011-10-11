@@ -7,6 +7,4 @@ urlpatterns = patterns(
     url(r'^feedback/$', 'feedback', name='feedback'),
     url(r'^about/$', direct_to_template, {'template': 'about.html'},
         name='about'),
-    url(r'^about/ripple/$', direct_to_template,
-        {'template': 'about_ripple.html'}, name='about_ripple'),
 )
