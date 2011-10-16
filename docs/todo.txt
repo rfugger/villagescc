@@ -12,11 +12,6 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
-Static pages
-- fill out landing page
-- about
-- about Ripple
-
 Email notifications (verification?)
 - notification settings under account settings
 - new endorsement
@@ -87,3 +82,5 @@ Connect messages and payments to posts
 Convert untrusted promise to trusted
 
 In-site messaging system
+
+Overall credit limits (in and out)

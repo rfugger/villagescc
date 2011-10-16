@@ -17,7 +17,7 @@ CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User, related_name='profile')
     name = VarCharField(blank=True)
     email = EmailField(blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)

@@ -18,8 +18,8 @@
 	<table class="form">
 		<tr>
 			<th><a href="{% url locator %}?next={{ request.path }}">
-					Location</a></th>
-			<td>{{ user.get_profile.location }}</td>
+					Location</a>:</th>
+			<td>{{ request.profile.location }}</td>
 		</tr>
 		{{ form }}
 		<tr>
