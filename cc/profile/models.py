@@ -3,7 +3,7 @@ import random
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
+from django.db.models.signals import post_save, pre_save
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -19,6 +19,9 @@ CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     name = VarCharField(blank=True)
+
+    # TODO: Move email field to Settings.
+    
     email = EmailField(blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
     photo = models.ImageField(
@@ -30,9 +33,6 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField()
     endorsement_limited = models.BooleanField(default=True)
-
-    feed_radius = models.IntegerField(null=True, blank=True)
-    feed_trusted = models.BooleanField()
 
     trusted_profiles = models.ManyToManyField(
         'Profile', symmetrical=False, related_name='trusting_profiles')
@@ -156,6 +156,26 @@ class Profile(models.Model):
     @classmethod
     def get_by_id(cls, id):
         return cls.objects.get(pk=id)
+
+    @classmethod
+    def post_save(cls, sender, instance, created, **kwargs):
+        # Create Settings for this profile if it is new.
+        if created:
+            Settings.objects.create(profile=instance)
+
+post_save.connect(Profile.post_save, sender=Profile,
+                  dispatch_uid='profile.models')
+    
+class Settings(models.Model):
+    "Profile settings."
+    profile = models.OneToOneField(Profile, related_name='settings')
+
+    # Sticky form settings.
+    feed_radius = models.IntegerField(null=True, blank=True)
+    feed_trusted = models.BooleanField()
+
+    def __unicode__(self):
+        return u"Settings for %s" % self.profile
 
 class Invitation(models.Model):
     from_profile = models.ForeignKey(Profile, related_name='invitations_sent')

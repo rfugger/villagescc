@@ -35,11 +35,11 @@ class FeedFilterForm(forms.Form):
         self.poster, self.recipient = poster, recipient
         data = data.copy()
         data.setdefault(
-            'radius', profile and profile.feed_radius or DEFAULT_RADIUS)
+            'radius', profile and profile.settings.feed_radius or DEFAULT_RADIUS)
         if profile and 'q' not in data:  # Ie, form not submitted.
             # Checkbox value isn't in data when unchecked, so only set it
             # when the feed filter form hasn't been submitted.
-            data.setdefault('trusted', bool(profile.feed_trusted))
+            data.setdefault('trusted', bool(profile.settings.feed_trusted))
         super(FeedFilterForm, self).__init__(data, *args, **kwargs)
 
     @property
@@ -76,14 +76,14 @@ class FeedFilterForm(forms.Form):
         data = self.cleaned_data
         radius = data['radius']
         trusted = data['trusted']        
-        save_profile = False
-        if radius != self.profile.feed_radius:
-            self.profile.feed_radius = radius
-            save_profile = True
-        if trusted != self.profile.feed_trusted:
-            self.profile.feed_trusted = trusted
-            save_profile = True
-        if save_profile:
+        save_settings = False
+        if radius != self.profile.settings.feed_radius:
+            self.profile.settings.feed_radius = radius
+            save_settings = True
+        if trusted != self.profile.settings.feed_trusted:
+            self.profile.settings.feed_trusted = trusted
+            save_settings = True
+        if save_settings:
             # Save, but don't refresh updated date.
-            self.profile.save(set_updated=False)
+            self.profile.settings.save(set_updated=False)
     
