@@ -108,7 +108,7 @@ def settings(request):
     if request.method == 'POST':
         if 'change_settings' in request.POST:
             settings_form = SettingsForm(
-                request.profile, request.POST, instance=request.profile)
+                request.POST, instance=request.profile.settings)
             if settings_form.is_valid():
                 settings_form.save()
                 messages.info(request, MESSAGES['settings_changed'])
@@ -121,8 +121,7 @@ def settings(request):
                 return redirect(settings)
         
     if 'change_settings' not in request.POST:
-        settings_form = SettingsForm(
-            request.profile, instance=request.profile)
+        settings_form = SettingsForm(instance=request.profile.settings)
     if 'change_password' not in request.POST:
         password_form = PasswordChangeForm(request.user)
     return locals()

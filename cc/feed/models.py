@@ -7,6 +7,9 @@ interface:
 
 Properties:
 * id
+
+TODO: Change these to feed_date, feed_location, feed_text
+
 * date
 * location
 * text
@@ -72,7 +75,10 @@ class FeedManager(GeoManager):
         count_kwargs = kwargs.copy()
         count_kwargs.pop('limit', None)
         count = self.get_feed_count(*args, **count_kwargs)
-        items = self.get_feed(*args, **kwargs)
+        if count > 0:
+            items = self.get_feed(*args, **kwargs)
+        else:
+            items = []
         return items, count - len(items)
     
     def get_feed_count(self, *args, **kwargs):

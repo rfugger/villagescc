@@ -68,9 +68,6 @@ class FeedFilterForm(forms.Form):
         creates a new feed item for the profile, excluding it from the query
         above because it is contained in a transaction.
         """
-        # TODO: Look into a custom feed_item_updated signal for better control
-        # over feed item creation.
-
         if not self.profile:
             return
         data = self.cleaned_data
@@ -84,6 +81,5 @@ class FeedFilterForm(forms.Form):
             self.profile.settings.feed_trusted = trusted
             save_settings = True
         if save_settings:
-            # Save, but don't refresh updated date.
-            self.profile.settings.save(set_updated=False)
+            self.profile.settings.save()
     

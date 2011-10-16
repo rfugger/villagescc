@@ -2,9 +2,16 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 
-from cc.profile.models import Profile, Invitation
+from cc.profile.models import Profile, Invitation, Settings
 from cc.general.models import EmailField
 from cc.general.mail import send_mail, send_mail_to_admin, email_str
+
+ERRORS = {
+    'email_dup': "That email address is registered to another user.",
+    'already_invited': "You have already sent an invitation to %s.",
+    'self_invite': "You can't invite yourself.",
+    'over_weight': "Please ensure this number is below %d.",
+}
 
 class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
@@ -13,9 +20,8 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if Profile.objects.filter(email__iexact=email).exists():
-            raise forms.ValidationError(
-                "That email address is registered to another user.")
+        if Settings.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(ERRORS['email_dup'])
         return email    
     
     def save(self, location):
@@ -25,11 +31,13 @@ class RegistrationForm(UserCreationForm):
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
         user.save()
-        profile = Profile(name=data.get('name', ''), email=data['email'])
+        profile = Profile(name=data.get('name', ''))
         if not location.id:
             location.save()
         profile.location = location
         profile.save()
+        profile.settings.email = data['email']
+        profile.settings.save()
         return profile
 
     @property
@@ -50,10 +58,6 @@ class InvitationForm(forms.ModelForm):
 
     # TODO: Merge with EndorseForm somehow, into a common superclass?
     
-    MESSAGES = {
-        'over_weight': "Please ensure this number is below %d."
-    }
-    
     class Meta:
         model = Invitation
         fields = ('to_email', 'endorsement_weight', 'endorsement_text')
@@ -66,10 +70,9 @@ class InvitationForm(forms.ModelForm):
         to_email = self.cleaned_data['to_email']
         if Invitation.objects.filter(
             from_profile=self.from_profile, to_email__iexact=to_email).exists():
-            raise forms.ValidationError(
-                "You have already invited %s." % to_email)
+            raise forms.ValidationError(ERRORS['already_invited'] % to_email)
         if to_email.lower() == self.from_profile.email.lower():
-            raise forms.ValidationError("You can't invite yourself.")
+            raise forms.ValidationError(ERRORS['self_invite'])
         return to_email
 
     # TODO: Also, create nice spinner for weight like on endorsement form.
@@ -87,7 +90,7 @@ class InvitationForm(forms.ModelForm):
         weight = self.cleaned_data['endorsement_weight']
         if self.from_profile.endorsement_limited and weight > self.max_weight:
             raise forms.ValidationError(
-                self.MESSAGES['over_weight'] % self.max_weight)
+                ERRORS['over_weight'] % self.max_weight)
         return weight
     
     def save(self):
@@ -131,21 +134,12 @@ class ContactForm(forms.Form):
         
 class SettingsForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        fields = ('email',)    
+        model = Settings
+        fields = ('email',)
 
-    def __init__(self, profile, *args, **kwargs):
-        self.profile = profile
-        super(SettingsForm, self).__init__(*args, **kwargs)
-        
     def clean_email(self):
         email = self.cleaned_data['email']
-        if Profile.objects.filter(email__iexact=email).exclude(
-            pk=self.profile.id).exists():
-            raise forms.ValidationError(
-                "That email address is registered to another user.")
+        if Settings.objects.filter(email__iexact=email).exclude(
+            pk=self.instance.id).exists():
+            raise forms.ValidationError(ERRORS['email_dup'])
         return email
-        
-    def save(self):
-        self.instance.save(set_updated=False)
-        return self.instance

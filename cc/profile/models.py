@@ -19,20 +19,18 @@ CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     name = VarCharField(blank=True)
-
-    # TODO: Move email field to Settings.
-    
-    email = EmailField(blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
     photo = models.ImageField(
         upload_to='user_photos', max_length=256, blank=True)
     description = models.TextField(
         blank=True, help_text="Be sure to mention any skills you bring "
         "to the community, so others can search for you.")
-    
+
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField()
-    endorsement_limited = models.BooleanField(default=True)
+
+    # TODO: Set updated date manually in code where it should be set.
+    
+    updated = models.DateTimeField(auto_now_add=True)
 
     trusted_profiles = models.ManyToManyField(
         'Profile', symmetrical=False, related_name='trusting_profiles')
@@ -50,6 +48,8 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return 'profile', (self.username,)
 
+    # TODO: Remove save method once updating date happens manually in code.
+
     def save(self, set_updated=True, **kwargs):
         if set_updated:
             self.updated = datetime.now()
@@ -60,6 +60,14 @@ class Profile(models.Model):
         # Username is stored in django User model.
         return self.user.username
 
+    @property
+    def email(self):
+        return self.settings.email
+
+    @property
+    def endorsement_limited(self):
+        return self.settings.endorsement_limited
+    
     def endorsement_for(self, recipient):
         "Returns this profile's endorsement of recipient, or None."
         try:
@@ -72,7 +80,7 @@ class Profile(models.Model):
         return self.updated
 
     # TODO: Consider putting profile at top of feed whenever they come
-    # back online?  (Maybe change 'date' -> 'feed_date'?)
+    # back online?
     
     @property
     def text(self):
@@ -169,10 +177,12 @@ post_save.connect(Profile.post_save, sender=Profile,
 class Settings(models.Model):
     "Profile settings."
     profile = models.OneToOneField(Profile, related_name='settings')
+    email = EmailField(blank=True)
+    endorsement_limited = models.BooleanField(default=True)
 
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)
-    feed_trusted = models.BooleanField()
+    feed_trusted = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u"Settings for %s" % self.profile

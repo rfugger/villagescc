@@ -17,6 +17,9 @@ Email notifications (verification?)
 - new endorsement
 - new acknowledgement
 
+Set profile.updated manually where it needs to be.
+- create profile.set_updated() method?
+
 Logged in logo link back to intro page
 - handle logged-in users on intro page
 

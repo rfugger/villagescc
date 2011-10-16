@@ -5,20 +5,20 @@ from cc.feed.forms import FeedFilterForm, DATE_FORMAT
 @location_required
 @render()
 def feed(request, item_type=None, template='feed.html', poster=None,
-         recipient=None, sticky_prefs=True, extra_context=None):
+         recipient=None, extra_context=None):
     """
     Generic view for displaying feed items.
 
-    Set sticky_prefs=False if not showing feed filter form, so
-    profile preferences for feed filtering don't get reset to defaults.
+    Set sticky_prefs=True to save filter choices to profile settings.
+    Warning: this will reset them to defaults if the form doesn't
+    provide any values for filter choices.
     """
     form = FeedFilterForm(
         request.GET, request.profile, request.location, item_type,
         poster, recipient)
     if form.is_valid():
         feed_items, remaining_count = form.get_results()
-        if sticky_prefs:
-            form.update_sticky_prefs()
+        form.update_sticky_prefs()
     else:
         raise Exception(unicode(form.errors))
     if feed_items:
