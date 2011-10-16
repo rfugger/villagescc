@@ -27,9 +27,6 @@ class Profile(models.Model):
         "to the community, so others can search for you.")
 
     created = models.DateTimeField(auto_now_add=True)
-
-    # TODO: Set updated date manually in code where it should be set.
-    
     updated = models.DateTimeField(auto_now_add=True)
 
     trusted_profiles = models.ManyToManyField(
@@ -48,13 +45,14 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return 'profile', (self.username,)
 
-    # TODO: Remove save method once updating date happens manually in code.
+    def set_updated(self):
+        """
+        Call this every time a user-facing change is made to profile that
+        should cause it to be bumped to the top of the feed.
+        Must still save the profile after to have any effect.
+        """
+        self.updated = datetime.now()
 
-    def save(self, set_updated=True, **kwargs):
-        if set_updated:
-            self.updated = datetime.now()
-        return super(Profile, self).save(**kwargs)
-    
     @property
     def username(self):
         # Username is stored in django User model.

@@ -42,6 +42,7 @@ def locator(request):
             location = form.save(commit=save)
             if save:
                 profile.location = location
+                profile.set_updated()
                 profile.save()
                 Location.clear_session(request)
             else:

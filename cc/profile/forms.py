@@ -119,6 +119,10 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('name', 'photo', 'description')
+
+    def save(self):
+        self.instance.set_updated()
+        return super(ProfileForm, self).save()
         
 class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
