@@ -46,8 +46,7 @@ def view_post(request, post_id):
                     subject="Villages.cc message from %s Re: %s" % (
                         request.profile, post.title),
                     template='post_contact_email.txt',
-                    extra_context={'post': post,
-                                   'domain': settings.SITE_DOMAIN})
+                    extra_context={'post': post})
                 messages.info(request, MESSAGES['post_message_sent'])
                 return HttpResponseRedirect('.')
         else:

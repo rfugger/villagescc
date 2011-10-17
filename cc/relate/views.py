@@ -10,6 +10,7 @@ from cc.profile.models import Profile
 from cc.relate.forms import EndorseForm, AcknowledgementForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
+from cc.general.mail import send_notification
 
 
 MESSAGES = {
@@ -37,7 +38,10 @@ def endorse_user(request, recipient_username):
         form = EndorseForm(request.POST, instance=endorsement,
                            endorser=request.profile, recipient=recipient)
         if form.is_valid():
+            is_new = endorsement is None
             endorsement = form.save()
+            if is_new:
+                send_endorsement_notification(endorsement)
             messages.info(request, MESSAGES['endorsement_saved'])
             return HttpResponseRedirect(endorsement.get_absolute_url())
     else:
@@ -45,6 +49,12 @@ def endorse_user(request, recipient_username):
                            recipient=recipient)
     profile = recipient  # For profile_base.html.
     return locals()
+
+def send_endorsement_notification(endorsement):
+    subject = "%s has endorsed you on Villages.cc" % endorsement.endorser
+    send_notification(subject, endorsement.endorser, endorsement.recipient,
+                      'endorsement_notification_email.txt',
+                      {'endorsement': endorsement})
 
 @login_required
 @render()

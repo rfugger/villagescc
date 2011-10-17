@@ -7,6 +7,7 @@ def send_mail(subject, sender, recipient, template, context):
     Takes email subject, sender profile or email, recipient profile or email,
     and template/context pair for the body, and sends an email.
     """
+    context.update({'domain': settings.SITE_DOMAIN})
     body = loader.render_to_string(template, context)
     from_email = make_email(sender)
     to_email = make_email(recipient)
@@ -30,6 +31,11 @@ def send_mail_to_admin(subject, sender, template, context):
     if isinstance(sender, Profile):
         subject = u"%s (from user: %s)" % (subject, sender.username)
     send_mail(subject, sender, recipient, template, context)
+
+def send_notification(subject, sender, recipient, template, context):
+    "Sends mail only if recipient has notifications on."
+    if recipient.settings.send_notifications:
+        send_mail(subject, sender, recipient, template, context)
     
 def make_email(email_or_profile):
     "Returns email string from email string or profile input."

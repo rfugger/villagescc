@@ -177,7 +177,8 @@ class Settings(models.Model):
     profile = models.OneToOneField(Profile, related_name='settings')
     email = EmailField(blank=True)
     endorsement_limited = models.BooleanField(default=True)
-
+    send_notifications = models.BooleanField(default=True)
+    
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)
     feed_trusted = models.BooleanField(default=False)
@@ -211,7 +212,7 @@ class Invitation(models.Model):
     def send(self):
         send_mail("%s Has Endorsed You On Villages.cc" % self.from_profile,
                   self.from_profile, self.to_email, 'invitation_email.txt',
-                  {'invitation': self, 'domain': settings.SITE_DOMAIN})
+                  {'invitation': self})
         self.date = datetime.now()
         self.save()
         

@@ -1,0 +1,9 @@
+You have been endorsed with {{ endorsement.weight }} heart{{ endorsement.weight|pluralize:"s" }} on Villages.cc by {{ endorsement.endorser }}.
+
+{% if endorsement.text %}{{ endorsement.endorser }} added:
+
+{{ endorsement.text }}
+
+{% endif %}To view the endorsement, visit:
+
+http://{{ domain }}{{ endorsement.get_absolute_url }}

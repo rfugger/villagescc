@@ -191,6 +191,10 @@ def invite(request):
     if request.method == 'POST':
         form = InvitationForm(request.profile, request.POST)
         if form.is_valid():
+            
+            # TODO: Check for email belonging to existing user,
+            # call endorse_user(request), make sure it works.
+            
             invitation = form.save()
             invitation.send()
             messages.info(request, MESSAGES['invitation_sent'])

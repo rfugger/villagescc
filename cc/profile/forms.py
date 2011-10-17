@@ -139,7 +139,7 @@ class ContactForm(forms.Form):
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = Settings
-        fields = ('email',)
+        fields = ('email', 'send_notifications')
 
     def clean_email(self):
         email = self.cleaned_data['email']

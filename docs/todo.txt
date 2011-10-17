@@ -16,12 +16,23 @@ Email notifications (verification?)
 - notification settings under account settings
 - new endorsement
 - new acknowledgement
-
-Set profile.updated manually where it needs to be.
-- create profile.set_updated() method?
+- registration
+  - let user know they will receive a notification to email, and if they don't
+    to verify they have entered the correct email
+- email change
+  - let user know they will receive a notification to email, and if they don't
+    to verify they have entered the correct email
 
 Logged in logo link back to intro page
 - handle logged-in users on intro page
+
+Privacy notification on registration page
+- profiles are public
+- logged-in users can contact by email (no way to turn off)
+- email is private
+- transactions...
+- everything else is basically public
+- make a privacy static page to explain everything.
 
 Review all TODOs in code
 
