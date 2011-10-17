@@ -1,0 +1,9 @@
+{% load number %}You have been acknowledged with {{ acknowledgement.amount|trim_zeroes }} hour{{ acknowledgement.weight|pluralize:"s" }} on Villages.cc by {{ acknowledgement.payer }}.
+
+{% if acknowledgement.memo %}{{ acknowledgement.payer }} added:
+
+{{ acknowledgement.memo }}
+
+{% endif %}To view the acknowledgement, visit:
+
+http://{{ domain }}{{ acknowledgement.get_absolute_url }}

@@ -12,10 +12,10 @@ from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
 from cc.general.mail import send_notification
 
-
 MESSAGES = {
     'endorsement_saved': "Endorsement saved.",
     'endorsement_deleted': "Endorsement deleted.",
+    'acknowledgement_sent': "Acknowledgement sent.",
 }
 
 @login_required
@@ -98,12 +98,21 @@ def acknowledge_user(request, recipient_username):
         if form.is_valid():
             acknowledgement = form.send_acknowledgement(
                 request.profile, recipient)
+            send_acknowledgement_notification(acknowledgement)
+            messages.info(request, MESSAGES['acknowledgement_sent'])
             return HttpResponseRedirect(acknowledgement.get_absolute_url())
     else:
         form = AcknowledgementForm(max_ripple=max_amount)
     can_ripple = max_amount > 0
     profile = recipient  # For profile_base.html.
     return locals()
+
+def send_acknowledgement_notification(acknowledgement):
+    subject = "%s has acknowledged you on Villages.cc" % (
+        acknowledgement.payer)
+    send_notification(subject, acknowledgement.payer, acknowledgement.recipient,
+                      'acknowledgement_notification_email.txt',
+                      {'acknowledgement': acknowledgement})
 
 @login_required
 @render()

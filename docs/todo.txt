@@ -34,6 +34,11 @@ Privacy notification on registration page
 - everything else is basically public
 - make a privacy static page to explain everything.
 
+Nicer payment form
+- "Ripple" heading is confusing.
+
+Check every page to make sure it is self-explanatory.
+
 Review all TODOs in code
 
 
