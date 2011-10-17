@@ -33,6 +33,10 @@ MESSAGES = {
                           "address under account settings."),
     'password_changed': "Password changed.",
     'settings_changed': "Settings saved.",
+    'email_updated': ("Settings saved.<br><br>"
+                      "A confirmation email has been sent to your new address. "
+                      "If you do not receive it, please verify that you have "
+                      "entered the correct email."),
     'invitation_sent': "Invitation sent.",
     'invitation_deleted': "Invitation deleted.",
     'invitation_request_sent': "Invitation request sent.",
@@ -125,7 +129,9 @@ def settings(request):
                 settings_obj = settings_form.save()
                 if settings_obj.email != old_email:
                     send_new_address_email(settings_obj)
-                messages.info(request, MESSAGES['settings_changed'])
+                    messages.info(request, MESSAGES['email_updated'])
+                else:
+                    messages.info(request, MESSAGES['settings_changed'])
                 return redirect(settings)
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)

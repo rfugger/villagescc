@@ -12,14 +12,6 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
-Email notifications
-- registration
-  - let user know they will receive a notification to email, and if they don't
-    to verify they have entered the correct email
-- email change
-  - let user know they will receive a notification to email, and if they don't
-    to verify they have entered the correct email
-
 Default email template with URL in sig
 
 Logged in logo link back to intro page

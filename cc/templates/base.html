@@ -45,7 +45,7 @@
 			<div class="messages">
 			{% for message in messages %}
 				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}
-					  >&raquo; {{ message|safe }}</li>
+					  >{{ message|safe }}</li>
 			{% endfor %}
 			</div>
 		</div>
