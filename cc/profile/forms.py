@@ -25,13 +25,10 @@ class RegistrationForm(UserCreationForm):
         return email    
     
     def save(self, location):
-
-        # TODO: Test registration.
-        
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
         user.save()
-        profile = Profile(name=data.get('name', ''))
+        profile = Profile(user=user, name=data.get('name', ''))
         if not location.id:
             location.save()
         profile.location = location
@@ -137,6 +134,9 @@ class ContactForm(forms.Form):
         send_mail(subject, sender, recipient, template, context)
         
 class SettingsForm(forms.ModelForm):
+    # Email is required.
+    email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
+
     class Meta:
         model = Settings
         fields = ('email', 'send_notifications')

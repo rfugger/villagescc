@@ -12,16 +12,15 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
-Email notifications (verification?)
-- notification settings under account settings
-- new endorsement
-- new acknowledgement
+Email notifications
 - registration
   - let user know they will receive a notification to email, and if they don't
     to verify they have entered the correct email
 - email change
   - let user know they will receive a notification to email, and if they don't
     to verify they have entered the correct email
+
+Default email template with URL in sig
 
 Logged in logo link back to intro page
 - handle logged-in users on intro page
@@ -37,6 +36,8 @@ Privacy notification on registration page
 Nicer payment form
 - "Ripple" heading is confusing.
 
+Invitation landing page
+
 Check every page to make sure it is self-explanatory.
 
 Review all TODOs in code
@@ -45,10 +46,21 @@ Review all TODOs in code
 Post-Launch
 -----------
 
+What happens when you have multiple invitations
+- to same email address?
+- to different email addresses?
+- what happens when you change your email to one that has invites?
+  - dangerous to allow getting the endorsements without email verification.
+
 Automatically route as much of a payment as possible, then complete the rest
 by direct promise?
 - no need for routed/direct selector on payment form
 - how would users control if seller only wanted trusted routing?
+
+Logs
+- everything Ripple so it can be reconstructed
+- email changes so can make corrections if someone enters wrong address
+  and owner complains
 
 View trusted acknowledgements
 - must be trusted via someone other than acknowledgement recipient

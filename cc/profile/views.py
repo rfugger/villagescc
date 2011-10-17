@@ -19,13 +19,18 @@ from cc.geo.models import Location
 from cc.relate.models import Endorsement
 from cc.feed.views import feed
 from cc.general.views import forbidden
+from cc.general.mail import send_mail_from_system
 
 MESSAGES = {
     'profile_saved': "Profile saved.",
     'contact_sent': "Message sent.",
-    'registration_done': ("Thank you for registering.  Please continue filling "
-                          "out your profile by uploading a photo and describing "
-                          "yourself for other users."),
+    'registration_done': ("Thank you for registering.<br><br>"
+                          "Please continue filling out your profile by "
+                          "uploading a photo and describing yourself for other "
+                          "users.<br><br>"
+                          "We have sent a welcome email to your address. "
+                          "If you do not receive it, please verify your email "
+                          "address under account settings."),
     'password_changed': "Password changed.",
     'settings_changed': "Settings saved.",
     'invitation_sent': "Invitation sent.",
@@ -44,7 +49,7 @@ def get_invitation(request):
     invite_code = request.session.get(INVITE_CODE_KEY)
     if invite_code:
         try:
-            invitation = Invitation.objects.get(code=code)
+            invitation = Invitation.objects.get(code=invite_code)
         except Invitation.DoesNotExist:
             pass
     return invitation
@@ -80,17 +85,23 @@ def register(request):
             user = authenticate(username=form.username, password=form.password)
             django_login(request, user)
             Location.clear_session(request)  # Location is in profile now.
+            send_registration_email(profile)
             messages.info(request, MESSAGES['registration_done'])
 
             # TODO: Maybe validate email before allowing posts?
             
             return redirect(edit_profile)
     else:
+
+        # TODO: Populate form with email from invitation.
+        
         form = RegistrationForm()
     return locals()
 
-@deflect_logged_in
-@render()
+def send_registration_email(profile):
+    subject = "Welcome to Villages.cc"
+    send_mail_from_system(subject, profile, 'registration_email.txt',
+                          {'profile': profile})
 
 @deflect_logged_in
 def login(request):
@@ -107,10 +118,13 @@ def login(request):
 def settings(request):
     if request.method == 'POST':
         if 'change_settings' in request.POST:
+            old_email = request.profile.settings.email
             settings_form = SettingsForm(
                 request.POST, instance=request.profile.settings)
             if settings_form.is_valid():
-                settings_form.save()
+                settings_obj = settings_form.save()
+                if settings_obj.email != old_email:
+                    send_new_address_email(settings_obj)
                 messages.info(request, MESSAGES['settings_changed'])
                 return redirect(settings)
         elif 'change_password' in request.POST:
@@ -125,6 +139,11 @@ def settings(request):
     if 'change_password' not in request.POST:
         password_form = PasswordChangeForm(request.user)
     return locals()
+
+def send_new_address_email(settings):
+    subject = "Your Villages.cc email address has been updated"
+    send_mail_from_system(subject, settings.profile, 'new_email.txt',
+                          {'new_email': settings.email})
 
 @login_required
 @render()
@@ -203,6 +222,7 @@ def invite(request):
         form = InvitationForm(request.profile)
     return locals()
 
+@deflect_logged_in
 @render()
 def invitation(request, code):
     """

@@ -1,0 +1,5 @@
+This is a confirmation that your email address on Villages.cc has been updated to {{ new_email }}.
+
+If you have received this email in error, please reply and let us know so that we can remove your email address from the system.
+
+Thanks!

@@ -36,7 +36,11 @@ def send_notification(subject, sender, recipient, template, context):
     "Sends mail only if recipient has notifications on."
     if recipient.settings.send_notifications:
         send_mail(subject, sender, recipient, template, context)
-    
+
+def send_mail_from_system(subject, recipient, template, context):
+    sender = u'"Villages.cc" <%s>' % settings.DEFAULT_FROM_EMAIL
+    send_mail(subject, sender, recipient, template, context)
+        
 def make_email(email_or_profile):
     "Returns email string from email string or profile input."
     if isinstance(email_or_profile, basestring):
