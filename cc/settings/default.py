@@ -42,7 +42,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds static files.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(ROOT_PATH, 'static/')
+STATIC_ROOT = os.path.join(ROOT_PATH, '../static/')
 
 # URL that handles the static files served from STATIC_ROOT.
 # Example: "http://media.lawrence.com/static/"
@@ -50,7 +50,7 @@ STATIC_URL = '/static/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, 'uploads/')
+MEDIA_ROOT = os.path.join(ROOT_PATH, '../uploads/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
