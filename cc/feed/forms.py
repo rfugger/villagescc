@@ -65,12 +65,10 @@ class FeedFilterForm(forms.Form):
             trusted_only=trusted, up_to_date=date,
             poster=self.poster, recipient=self.recipient)
         
-    def update_sticky_prefs(self):
+    def update_sticky_filter_prefs(self):
         """
-        Save radius and trusted as sticky prefs to profile.
-        Do this after getting feed results, because saving profile actually
-        creates a new feed item for the profile, excluding it from the query
-        above because it is contained in a transaction.
+        Save radius and trusted filter values as sticky prefs to profile
+        settings.
         """
         if not self.profile:
             return

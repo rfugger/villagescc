@@ -18,7 +18,8 @@ def feed(request, item_type=None, template='feed.html', poster=None,
         poster, recipient, do_filter)
     if form.is_valid():
         feed_items, remaining_count = form.get_results()
-        form.update_sticky_prefs()
+        if do_filter:
+            form.update_sticky_filter_prefs()
     else:
         raise Exception(unicode(form.errors))
     if feed_items:

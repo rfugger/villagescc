@@ -29,7 +29,12 @@
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Save Post" /></td>
+			<td><input type="submit" value="Save Post">
+				{% if form.instance.id %}
+					<input type="submit" name="delete" value="Delete"
+						   onclick="return confirm('Delete post?')">
+				{% endif %}
+			</td>
 		</tr>
 	</table>
 </form>

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -23,6 +23,9 @@ def edit_post(request, post_id=None):
     else:
         post = None
     if request.method == 'POST':
+        if post and 'delete' in request.POST:
+            post.delete()
+            return redirect('posts')
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(request.profile)
