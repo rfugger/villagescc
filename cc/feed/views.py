@@ -5,7 +5,7 @@ from cc.feed.forms import FeedFilterForm, DATE_FORMAT
 @location_required
 @render()
 def feed(request, item_type=None, template='feed.html', poster=None,
-         recipient=None, extra_context=None):
+         recipient=None, extra_context=None, do_filter=False):
     """
     Generic view for displaying feed items.
 
@@ -15,7 +15,7 @@ def feed(request, item_type=None, template='feed.html', poster=None,
     """
     form = FeedFilterForm(
         request.GET, request.profile, request.location, item_type,
-        poster, recipient)
+        poster, recipient, do_filter)
     if form.is_valid():
         feed_items, remaining_count = form.get_results()
         form.update_sticky_prefs()

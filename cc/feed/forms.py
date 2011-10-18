@@ -29,17 +29,21 @@ class FeedFilterForm(forms.Form):
     trusted = forms.BooleanField(required=False)
     
     def __init__(self, data, profile, location=None, item_type=None,
-                 poster=None, recipient=None, *args, **kwargs):
+                 poster=None, recipient=None, do_filter=False, *args, **kwargs):
         self.profile, self.location, self.item_type = (
             profile, location, item_type)
         self.poster, self.recipient = poster, recipient
         data = data.copy()
-        data.setdefault(
-            'radius', profile and profile.settings.feed_radius or DEFAULT_RADIUS)
-        if profile and 'q' not in data:  # Ie, form not submitted.
-            # Checkbox value isn't in data when unchecked, so only set it
-            # when the feed filter form hasn't been submitted.
-            data.setdefault('trusted', bool(profile.settings.feed_trusted))
+        if do_filter:
+            default_radius = (profile and profile.settings.feed_radius
+                              or DEFAULT_RADIUS)
+            data.setdefault('radius', default_radius)
+        if do_filter and 'q' not in data:  # Fresh load, no search/filter.
+            # Set trusted checkbox to the profile sticky setting.
+            # Can't just check for presence of 'trusted' in data, because
+            # it is not submitted when unchecked.
+            if profile:
+                data.setdefault('trusted', bool(profile.settings.feed_trusted))
         super(FeedFilterForm, self).__init__(data, *args, **kwargs)
 
     @property

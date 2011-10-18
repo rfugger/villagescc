@@ -202,5 +202,3 @@ DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)
 # Testing.
 TEST_RUNNER = 'cc.general.tests.AdvancedTestSuiteRunner'
 TEST_PACKAGES = ['cc']
-
-DEFAULT_FEED_RADIUS = 5000  # Metres.

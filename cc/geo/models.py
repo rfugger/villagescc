@@ -20,7 +20,7 @@ class Location(models.Model):
     country = VarCharField("Country")
     state = VarCharField("State/Province (Abbr.)", blank=True)
     city = VarCharField(blank=True)
-    neighborhood = VarCharField(blank=True)
+    neighborhood = VarCharField("Neighbourhood", blank=True)
     
     objects = models.GeoManager()
 

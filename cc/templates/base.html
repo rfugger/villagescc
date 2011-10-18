@@ -22,7 +22,7 @@
 <body>
 <div class="head">
 	<div class="logo_nav_line extend"><div class="line page">
-		<h1 class="logo"><a href="{% url home %}">Villages.cc</a></h1>
+		<h1 class="logo"><a href="{% url home %}?logo">Villages.cc</a></h1>
 
 		<span class="site_nav nav">
 			<li><a href="{% url home %}">Home</a></li>
@@ -83,7 +83,7 @@
 					{% endif %}
 					<li class="{% block nav_location_class %}{% endblock %}">
 						<a href="{% url locator %}?next={{ request.path }}"
-						   >{{ request.location|default:"Set Location" }}</a></li>
+						   >{{ request.location|default:"Location" }}</a></li>
 					<hr>
 					{% if request.profile %}
 						<li><a href="{{ request.profile.get_absolute_url }}"

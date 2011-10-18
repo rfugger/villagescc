@@ -13,7 +13,8 @@
 	<li class="{% block nav_info_class %}{% endblock %}">
 		<a href="{{ profile.get_absolute_url }}">Info</a></li>
 	<li class="{% block nav_posts_class %}{% endblock %}">
-		<a href="{% url profile_posts profile.username %}">Posts</a></li>
+		<a href="{% url profile_posts profile.username %}"
+		   >Posts</a></li>
 	{% if request.profile %}
 		<li class="{% block nav_endorsements_class %}{% endblock %}">
 			<a href="{% url profile_endorsements profile.username %}"

@@ -17,8 +17,13 @@
 	{% csrf_token %}
 	<table class="form">
 		<tr>
-			<th><a href="{% url locator %}?next={{ request.path }}">
-					Location</a>:</th>
+			<th>{% if not form.instance.id %}
+					<a href="{% url locator %}?next={{ request.path }}">
+						Location</a>:
+				{% else %}
+					Location:
+				{% endif %}
+			</th>
 			<td>{{ request.profile.location }}</td>
 		</tr>
 		{{ form }}

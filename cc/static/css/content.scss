@@ -160,9 +160,17 @@ input.int {
 }
 
 .feature {
-	padding: 1em;
+	padding: 10px;
 	background-color: #eee;
 	border: 1px solid #ddd;
+}
+
+.feature > p:first-child {
+	margin-top: 0;
+}
+
+.feature > p:last-child {
+	margin-bottom: 0;
 }
 
 .feature .data {

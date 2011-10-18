@@ -28,7 +28,7 @@ Privacy notification on registration page
 Nicer payment form
 - "Ripple" heading is confusing.
 
-Invitation landing page
+Flesh out invitation landing page
 
 Check every page to make sure it is self-explanatory.
 
@@ -37,6 +37,9 @@ Review all TODOs in code
 
 Post-Launch
 -----------
+
+Invitation requests should be feed items that any user can see and fulfill, 
+by geographic area!
 
 What happens when you have multiple invitations
 - to same email address?

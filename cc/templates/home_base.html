@@ -10,7 +10,7 @@
 {% block subnav_title %}
 	{% if request.profile %}
 		<a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a>
-	{% else %}Home{% endif %}
+	{% else %}Guest Visitor{% endif %}
 {% endblock %}
 
 {% block subnav %}

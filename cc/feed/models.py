@@ -106,8 +106,7 @@ class FeedManager(GeoManager):
                 feed_item.delete()
         return items
     
-    def _feed_query(self, profile=None, location=None,
-                    radius=settings.DEFAULT_FEED_RADIUS,
+    def _feed_query(self, profile=None, location=None, radius=None,
                     item_type=None, tsearch=None, trusted_only=False,
                     poster=None, recipient=None, up_to_date=None):
         "Build a query for feed items corresponding to a particular feed."

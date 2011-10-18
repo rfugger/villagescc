@@ -23,7 +23,7 @@ class Post(models.Model):
     title = VarCharField()
     text = models.TextField()
     image = models.ImageField(
-        upload_to='%Y/%m/post', max_length=256, blank=True)
+        upload_to='post/%Y/%m', max_length=256, blank=True)
     want = models.BooleanField(
         default=False, help_text="Leave unchecked if your post is an offer.")
     location = models.ForeignKey(Location)

@@ -10,6 +10,7 @@ MESSAGES = {
 
 @render()
 def intro(request):
+    # Let logged-in users see the intro page if there's a GET param.
     if request.profile and not request.GET:
         return redirect('feed')
     return {}
