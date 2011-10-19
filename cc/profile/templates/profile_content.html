@@ -59,10 +59,10 @@
 		<p><a href="{% url relationships %}">More</a></p>
 	{% else %}
 		<table class="data">
-			<tr title="Endorsements by people I trust">
+			<tr title="Max. trusted acknowledgements I would accept from this user">
 				<th><a href="{% url profile_endorsements profile.username %}"
-					   >Trusted Endorsements</a></th>
-				<td>{% trusted_endorsement_sum profile request.profile %}</td>
+					   >Reputation</a></th>
+				<td>{% reputation profile request.profile %}</td>
 			</tr>
 			<tr title="Sum of all acknowledgements sent and received, but only from trusted partners">
 				<th>Trusted Balance</th>

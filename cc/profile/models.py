@@ -133,7 +133,7 @@ class Profile(models.Model):
     def can_endorse(self):
         return not self.endorsement_limited or self.endorsements_remaining > 0
     
-    def trusted_endorsement_sum(self, asker):
+    def reputation(self, asker):
         """"
         Returns max flow of endorsements from asker to self across endorsement
         network.

@@ -28,8 +28,6 @@ Privacy notification on registration page
 Nicer payment form
 - "Ripple" heading is confusing.
 
-Flesh out invitation landing page
-
 Check every page to make sure it is self-explanatory.
 
 Review all TODOs in code
@@ -68,6 +66,8 @@ Asynchronous task queue
 - single process queue for data-modifying ripple transactions
 - always make sure records needed to tasks are committed to db before task is
   dispatched (commit-per-view won't work)
+
+Acceptable use policy
 
 User timezones
 

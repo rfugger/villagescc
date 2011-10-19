@@ -5,8 +5,8 @@ import cc.ripple.api as ripple
 register = template.Library()
 
 @register.simple_tag
-def trusted_endorsement_sum(profile, asker):
-    return profile.trusted_endorsement_sum(asker)
+def reputation(profile, asker):
+    return profile.reputation(asker)
 
 @register.tag
 def load_user_account(parser, token):
