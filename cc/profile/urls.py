@@ -20,7 +20,7 @@ urlpatterns = patterns(
         name='profile_endorsements'),
     url(r'^profiles/([^/]+)/contact/$', 'contact', name='contact'),
     url(r'^invite/$', 'invite', name='invite'),    
-    url(r'^invitation/([^/]+)/$', 'invitation', name='invitation'),
+    url(r'^invitations/([^/]+)/$', 'invitation', name='invitation'),
     url(r'^invitations/$', 'invitations_sent', name='invitations_sent'),
     url(r'^request_invitation/$', 'request_invitation',
         name='request_invitation'),

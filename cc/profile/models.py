@@ -21,7 +21,7 @@ class Profile(models.Model):
     name = VarCharField(blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
     photo = models.ImageField(
-        upload_to='%Y/%m/user', max_length=256, blank=True)
+        upload_to='user/%Y/%m', max_length=256, blank=True)
     description = models.TextField(
         blank=True, help_text="Be sure to mention any skills you bring "
         "to the community, so others can search for you.")
@@ -126,7 +126,7 @@ class Profile(models.Model):
     @property
     @cache_on_object
     def endorsements_remaining(self):
-        return max(((self.endorsement_count + 1) * settings.ENDORSEMENT_BONUS -
+        return max(((self.endorsement_count) * settings.ENDORSEMENT_BONUS -
                     self.endorsements_made_sum), 0)
 
     @property

@@ -40,6 +40,9 @@ MESSAGES = {
     'invitation_sent': "Invitation sent.",
     'invitation_deleted': "Invitation deleted.",
     'invitation_request_sent': "Invitation request sent.",
+    'invitation_landing': ("%s has invited you to Villages.cc.<br>"
+                           "Please take a look around and then use the "
+                           "<em>Join</em> link on the right to register."),
 }
 
 INVITE_CODE_KEY = 'invite_code'
@@ -85,15 +88,20 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             profile = form.save(request.location)
+            # Turn invitation into endorsement.
+            Endorsement.objects.create(
+                endorser = invitation.from_profile,
+                recipient = profile,
+                weight = invitation.endorsement_weight,
+                text = invitation.endorsement_text)
+            invitation.delete()
             # Auto login.
             user = authenticate(username=form.username, password=form.password)
             django_login(request, user)
             Location.clear_session(request)  # Location is in profile now.
+            # Notifications.
             send_registration_email(profile)
-            messages.info(request, MESSAGES['registration_done'])
-
-            # TODO: Maybe validate email before allowing posts?
-            
+            messages.info(request, MESSAGES['registration_done'])            
             return redirect(edit_profile)
     else:
 
@@ -232,14 +240,22 @@ def invite(request):
 @render()
 def invitation(request, code):
     """
-    Shows invitation page.  Saves invitation code to session so user
-    can click around and still have code around for register view when
-    they get there.
+    Saves invitation code to session so user can register later and
+    redirects to intro page with a message reflecting invite.
     """
-    if not Invitation.objects.filter(code=code).exists():
+    try:
+        invitation = Invitation.objects.get(code=code)
+    except Invitation.DoesNotExist:
+        invitation = None
+    if invitation is None:
         return {}, 'bad_invite_code.html'
+
+    # TODO: Allow logged in users to convert an invitation to an endorsement.
+    
     request.session[INVITE_CODE_KEY] = code
-    return locals()
+    messages.info(request, MESSAGES['invitation_landing'] % (
+            invitation.from_profile))
+    return redirect('home')
 
 @login_required
 @render()

@@ -41,11 +41,9 @@ Post-Launch
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
 
-What happens when you have multiple invitations
-- to same email address?
-- to different email addresses?
-- what happens when you change your email to one that has invites?
-  - dangerous to allow getting the endorsements without email verification.
+Allow registered users to accept invitations by converting them directly to 
+endorsements.
+- Invitations to registered emails should auto-convert to endorsements.
 
 Automatically route as much of a payment as possible, then complete the rest
 by direct promise?
