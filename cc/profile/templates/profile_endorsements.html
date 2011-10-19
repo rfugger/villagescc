@@ -19,7 +19,12 @@
 			<td>{{ profile.endorsement_sum }}</td>
 		</tr>
 	</table>
-	<p>Reputation is how much trust I have in {{ profile }}, through the network.</p>
+	<p>Reputation is how much trust I have in someone, directly, as well as
+		indirectly through the network.
+		It is equal to the maximum number of acknowledgement hours they could
+		send me if all outstanding acknowledgements were wiped away and we 
+		started from zero.
+	</p>
 </div>
 
 {% include "feed_item_list.html" %}

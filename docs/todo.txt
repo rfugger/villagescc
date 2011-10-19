@@ -12,6 +12,12 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
+"About" sub-pages:
+- How it works (default)
+- Privacy
+- Motivation
+- Developers
+
 Explain more about hearts/endorsements and hours/acknowledgements.
 
 Default email template with URL in sig
