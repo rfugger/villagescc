@@ -12,6 +12,8 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
+Explain more about hearts/endorsements and hours/acknowledgements.
+
 Default email template with URL in sig
 
 Logged in logo link back to intro page

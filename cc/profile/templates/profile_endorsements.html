@@ -10,7 +10,7 @@
 
 <div class="feature">
 	<table class="data">
-		<tr title="Max. trusted acknowledgements I would accept from this user">
+		<tr>
 			<th>Reputation</th>
 			<td>{% reputation profile request.profile %}</td>
 		</tr>
@@ -19,6 +19,7 @@
 			<td>{{ profile.endorsement_sum }}</td>
 		</tr>
 	</table>
+	<p>Reputation is how much trust I have in {{ profile }}, through the network.</p>
 </div>
 
 {% include "feed_item_list.html" %}
