@@ -44,6 +44,9 @@ Review all TODOs in code
 Post-Launch
 -----------
 
+Donations page.
+- Need Villages user to accept Ripple donations.
+
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
 
