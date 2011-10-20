@@ -10,7 +10,14 @@
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">
-		{{ form }}
+		{% if request.profile %}
+			<tr>
+				<th></th>
+				<td>{{ form.feedback.errors }}{{ form.feedback }}</td>
+			</tr>
+		{% else %}
+			{{ form }}
+		{% endif %}
 		<tr>
 			<th></th>
 			<td><input type="submit" value="Send Feedback"></td>

@@ -12,26 +12,12 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
-"About" sub-pages:
-- How it works (default)
-- Privacy
-- Motivation
-- Developers
-
 Explain more about hearts/endorsements and hours/acknowledgements.
 
 Default email template with URL in sig
 
 Logged in logo link back to intro page
 - handle logged-in users on intro page
-
-Privacy notification on registration page
-- profiles are public
-- logged-in users can contact by email (no way to turn off)
-- email is private
-- transactions...
-- everything else is basically public
-- make a privacy static page to explain everything.
 
 Nicer payment form
 - "Ripple" heading is confusing.
