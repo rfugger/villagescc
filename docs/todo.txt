@@ -12,12 +12,11 @@ for an obligation
 Icons
 - heart (trusted) icon everywhere
 
+Forms should state whether the data entered will be public or private.
+
 Explain more about hearts/endorsements and hours/acknowledgements.
 
 Default email template with URL in sig
-
-Nicer payment form
-- "Ripple" heading is confusing.
 
 Better explanation of transactions on relationship page.
 

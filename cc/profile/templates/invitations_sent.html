@@ -7,6 +7,8 @@
 {% block content %}
 <h2>Invitations Sent</h2>
 
+<p><a href="{% url invite %}">Back to invitation form</a></p>
+
 {% if invitations %}
 	<form action="" method="post">
 		{% csrf_token %}
@@ -15,6 +17,7 @@
 				<th>Friend's Email</th>
 				<th>Hearts</th>
 				<th>Date Sent</th>
+				<th></th>
 			</tr>
 			{% for invitation in invitations %}
 				<tr>

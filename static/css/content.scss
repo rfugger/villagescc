@@ -1,3 +1,9 @@
+/******* SCSS constants **********/
+
+/* TODO: Move more reusable constants here from below. */
+
+$feature: #ebf9ff;
+
 /********* Global *********/
 
 body {
@@ -43,10 +49,6 @@ table.form > tbody > tr > td > ul > li {
 .extend {
 	padding: 10px 0;
 	overflow: hidden;
-}
-
-.data th, .data td {
-	padding: 3px 5px;
 }
 
 .errorlist {
@@ -128,6 +130,29 @@ input.int {
 	border-left: 1px solid #ddd;
 }
 
+.feature {
+	padding: 10px;
+	margin: 1em 0;
+	background-color: $feature;
+	border: 1px solid #ddd;
+}
+
+.feature > *:first-child {
+	margin-top: 0;
+}
+
+.feature > *:last-child {
+	margin-bottom: 0;
+}
+
+.feature .data {
+	background-color: white;
+}
+
+textarea {
+	height: 6em;
+}
+
 /********** Head/Nav **************/
 
 .logo_nav_line {
@@ -162,25 +187,6 @@ input.int {
 	display: inline;
 	margin-right: 0;
 	margin-left: 2em;
-}
-
-.feature {
-	padding: 10px;
-	margin: 1em 0;
-	background-color: #eee;
-	border: 1px solid #ddd;
-}
-
-.feature > *:first-child {
-	margin-top: 0;
-}
-
-.feature > *:last-child {
-	margin-bottom: 0;
-}
-
-.feature .data {
-	background-color: white;
 }
 
 /********** Message Box ************/

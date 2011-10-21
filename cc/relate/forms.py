@@ -15,7 +15,6 @@ class EndorseForm(forms.ModelForm):
     weight = forms.IntegerField(
         label="Hearts", min_value=1,
         widget=forms.TextInput(attrs={'class': 'int spinner'}))
-
     MESSAGES = {
         'over_weight': "Please ensure this number is below %d."
     }

@@ -52,12 +52,13 @@ class InvitationForm(forms.ModelForm):
     endorsement_weight = forms.IntegerField(
         label="Endorsement hearts", min_value=1,
         widget=forms.TextInput(attrs={'class': 'int spinner'}))
-
+    
     # TODO: Merge with EndorseForm somehow, into a common superclass?
     
     class Meta:
         model = Invitation
-        fields = ('to_email', 'endorsement_weight', 'endorsement_text')
+        fields = ('to_email', 'message', 'endorsement_weight',
+                  'endorsement_text')
 
     def __init__(self, from_profile, *args, **kwargs):
         self.from_profile = from_profile

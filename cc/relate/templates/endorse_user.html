@@ -12,6 +12,18 @@
 {% block content %}
 <h2>Endorse {{ recipient }}</h2>
 
+<div class="feature">
+	<p>If you trust {{ recipient }} to provide value to the community,
+		please fill out the form below.  
+	</p>
+	<p>Each heart represents an hour of value you are willing to
+		provide for {{ recipient }}, trusting that by acknowledging
+		your gift, they will return the favour eventually.
+	</p>
+	<p><a href="{% url about %}">Read more</a></p>
+	<p>This endorsement will be <strong>public</strong>.</p>
+</div>
+
 {% if form.instance.id %}
 	<p>You have already endorsed {{ recipient }} with 
 		<strong>{{ form.instance.weight }}</strong>

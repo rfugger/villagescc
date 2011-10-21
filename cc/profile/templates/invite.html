@@ -12,9 +12,18 @@
 {% block content %}
 <h2>Invite A Friend</h2>
 
-<p>If you know someone who would love to participate in Villages.cc and
-	has something to contribute to the community, please invite them by
-	endorsing them.</p>
+<div class="feature">
+	<p>If you know someone who would love to participate in Villages.cc and
+		has something to contribute to the community, please invite them by
+		endorsing them.</p>
+	<p>Each heart represents an hour of value you are willing to
+		provide for your friend, trusting that by acknowledging
+		your gift, they will return the favour eventually.
+	</p>
+	<p><a href="{% url about %}">Read more</a></p>
+	<p>If your friend accepts your invitation, this endorsement will 
+		be <strong>public</strong>.</p>
+</div>
 
 {% if request.profile.endorsement_limited %}
 	<p>You have <strong>{{ request.profile.endorsements_remaining }}</strong> 

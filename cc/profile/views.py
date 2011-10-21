@@ -263,9 +263,15 @@ def invitation(request, code):
 @render()
 def invitations_sent(request):
     if request.method == 'POST':
-        # Only key in request.POST should be either 'resend_NNN' or 'delete_NNN',
+        # Keys of interest in request.POST are be 'resend_NNN' and 'delete_NNN',
         # where NNN is the invitation ID to act on.
-        key = request.POST.keys()[0]
+        key = None
+        for k in request.POST.keys():
+            if k.startswith('resend') or k.startswith('delete'):
+                key = k
+                break
+        if key is None:
+            raise Exception("Missing resend or delete paramter.")
         invitation_id = key.split('_')[1]
         invitation = get_object_or_404(
             request.profile.invitations_sent, pk=invitation_id)

@@ -191,6 +191,10 @@ class Invitation(models.Model):
     to_email = EmailField("Friend's email")
     endorsement_weight = models.PositiveIntegerField()
     endorsement_text = models.TextField(blank=True)
+    message = models.TextField(
+        "Private message",
+        blank=True, help_text="Sent with the invitation email.")
+    
     date = models.DateTimeField(auto_now_add=True)
     code = VarCharField(unique=True)
 
