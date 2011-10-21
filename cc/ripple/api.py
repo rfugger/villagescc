@@ -63,18 +63,19 @@ class UserAccount(object):
     def health(self):
         """
         Returns (1 - ratio of credits used in balance direction) as a
-        percentage, or zero, whichever is larger.
+        percentage, or zero, whichever is larger.  If there is no credit
+        limit in balance direction, returns None.
         """
         if self.balance > 0:
             if self.in_limit:
                 used_ratio = self.balance / self.in_limit
             else:
-                used_ratio = 1
+                return None
         else:
             if self.out_limit:
                 used_ratio = -self.balance / self.out_limit
             else:
-                used_ratio = 1
+                return None
         return max(int((1 - used_ratio) * 100), 0)
 
     @property

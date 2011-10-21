@@ -18,6 +18,10 @@
 		</li>
 	</ol>
 	<p><a href="{% url about %}">Read more</a></p>
+	<p>Acknowledgements are only visible to you, the recipient, and for
+		routed acknowledgements, anyone on the path the acknowlegdement 
+		takes between you and the recipient.
+	</p>
 </div>
 {% if can_ripple %}
 	<p>You can route a trusted acknowledgement of up to {{ max_amount }} 

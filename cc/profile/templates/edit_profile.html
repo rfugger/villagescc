@@ -5,7 +5,19 @@
 {% block nav_edit_profile_class %}selected{% endblock %}
 
 {% block content %}
+<h2>Edit My Profile</h2>
+
+<div class="feature">
+	<p>Your profile tells other community members about you, and lets
+		them find you based on your interests and skills.  Please mention
+		anything that you wish to offer or bring to the community generally,
+		so others will find you when they search for those things.
+	</p>
+	<p>Your profile data is <strong>public</strong>.</p>
+</div>
+
 <p><a href="{{ form.instance.get_absolute_url }}">View my profile</a></p>
+
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	<table class="form">

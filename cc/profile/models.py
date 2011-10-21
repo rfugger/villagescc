@@ -22,9 +22,7 @@ class Profile(models.Model):
     location = models.ForeignKey(Location, null=True, blank=True)
     photo = models.ImageField(
         upload_to='user/%Y/%m', max_length=256, blank=True)
-    description = models.TextField(
-        blank=True, help_text="Be sure to mention any skills you bring "
-        "to the community, so others can search for you.")
+    description = models.TextField(blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
