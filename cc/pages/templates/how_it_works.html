@@ -42,28 +42,52 @@
 
 <p>When someone has helped you out, acknowledge that help on Villages.
 	Villages acknowledgements are a currency denominated in 
-	<a href="#hours">hours</a>, consisting
-	of gentle promises made to the person who helped you out to return the 
-	favour at some point in the future.
+	<a href="#hours">hours</a>, consisting of gentle promises made to
+	the person who helped you out to return the favour at some point
+	in the future.  When you have received acknowledgements, you can
+	spend them to acknowledge others without having to issue any
+	promises of your own.
 </p>
-<p>If there is a connection through the trust network to the person being
-	acknowledged, Villages can transmit the acknowledgement through the
-	network using <a href="http://ripple-project.org/">Ripple</a>, so that
-	the person who helped you receives your acknowledgement as promises
-	from someone they have endorsed, and your promises go to someone who 
-	has endorsed you.
+<p>If there is a connection through the trust network from you to the
+	person you're acknowledging, Villages can transmit the
+	acknowledgement through the network using 
+	<a href="http://ripple-project.org/">Ripple</a>, so that the
+	person who helped you receives your acknowledgement as promises
+	from someone they have endorsed, and your promises go to someone
+	who has endorsed you.
 </p>
-<p>When you have received acknowledgements, you can spend them to acknowledge
-	others without having to issue any promises of your own.
+<p>Sometimes you will be on a path connecting another person to
+	someone they're acknowledging.  For example, your friend Anne, who
+	you have endorsed, might want to acknowledge Bob, who has endorsed
+	you, but does not know Anne.  In this case, the system will find
+	the path from Anne to you to Bob, and record the acknowledgement
+	as Anne acknoledging you, and you acknowledging Bob.
+</p>
+<p>Anne's acknowledgement might not have meant that much to Bob, since
+	he doesn't know her.  Anne's acknowledgement has meaning to you,
+	however, since you have endorsed her, and your acknowledgement has
+	meaning to Bob, since you have endorsed him.
+</p>
+<p>(If anyone want to make a nice picture here, please <a href="{% url feedback %}">
+		let me know</a>.)
+</p>
+<p>Acknowledgements are meant to represent that you have received a gift,
+	and would one day like to return the favour.  They are not a debt to
+	be collected, or an obligation that creates stress or worry.  They
+	are more like a reminder to yourself of something you would like to
+	do, and a way for the friendly exchange of gifts within a social circle
+	to extend beyond to encompass the entire community.
 </p>
 
+<a name="hours"></a>
 <h4>A Note About Hours</h4>
 
-<p>In Villages, one hour of acknowledgement is meant to represent one hour
-	of basic, unskilled labour, approximately equal to minimum wage.
-	Those offering skills to the community that have taken years of work
-	to develop can and should be acknowledged with multiple acknowledgement
-	hours for each hour of their time given.
+<p>In Villages, one hour of acknowledgement is meant to represent one
+	hour of basic, unskilled labour, approximately equal in value to
+	minimum wage.  Those offering skills to the community that have
+	taken years of work to develop can and should be acknowledged with
+	multiple acknowledgement-hours for each hour of their time given, 
+	according to the value of what they have given in that time.
 </p>
 <p>If you need a dollar value for hours, $10 is a good guideline.</p>
 {% endblock %}

@@ -16,11 +16,10 @@ Explain more about hearts/endorsements and hours/acknowledgements.
 
 Default email template with URL in sig
 
-Logged in logo link back to intro page
-- handle logged-in users on intro page
-
 Nicer payment form
 - "Ripple" heading is confusing.
+
+Better explanation of transactions on relationship page.
 
 Check every page to make sure it is self-explanatory.
 
@@ -89,6 +88,8 @@ Nice base html email template
 
 Automated tests for views
 
+Better explanation of Ripple
+- Ripple page with diagrams/video?
 
 Ideas
 -----
@@ -97,6 +98,8 @@ Breadcrumbs
 - list of several previous pages visited
 
 Sort searches by relevance, especially user searches
+- ability to pay/be paid
+- desirability of paying/being paid by?
 
 Connect messages and payments to posts
 
