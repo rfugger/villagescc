@@ -7,11 +7,26 @@
 {% block content %}
 <h2>Acknowledge {{ recipient }}</h2>
 
+<div class="feature">
+	<p>There are two ways to send acknowledgement:
+	<ol>
+		<li>Route an acknowledgement through the trust network so the recipient
+			receives acknowledgement from someone they have endorsed.
+		</li>
+		<li>Send an acknowledgement directly to the recipient, even
+			if they don't trust you.
+		</li>
+	</ol>
+</div>
 {% if can_ripple %}
-	<p>You can route a trusted acknowledgement of up to {{ max_amount }}, or send
-	a personal acknowledgement.</p>
+	<p>You can route a trusted acknowledgement of up to {{ max_amount }} 
+		hour{{ max_amount|pluralize:"s" }}, or send a direct
+		acknowledgement.
+	</p>
 {% else %}
-	<p>Send a personal acknowledgement to {{ recipient }}.</p>
+	<p>There are no available paths through the trust network to {{ recipient }},
+		so you can only send direct acknowledgement.
+	</p>
 {% endif %}
 		
 <form action="" method="post">
