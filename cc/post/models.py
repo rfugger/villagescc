@@ -14,9 +14,6 @@ class UndeletedPostManager(models.Manager):
             deleted=False)
     
 class Post(models.Model):
-
-    # TODO: Rename `user` to `profile`?
-    
     user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)

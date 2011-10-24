@@ -6,6 +6,8 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+handler500 = 'cc.pages.views.server_error'
+
 urlpatterns = patterns(
     '',
     (r'', include('cc.pages.urls')),

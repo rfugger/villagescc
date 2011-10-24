@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "no_subnav_base.html" %}
 
 {% block title %}Page Not Found{% endblock %}
 
@@ -7,7 +7,7 @@
 <p>We're sorry to disrupt your browsing experience.  A programmer 
 	has been informed of the broken link and if it was on our site,
 	it will be fixed as soon as possible.</p>
-<p>Please <a href="/">keep using the site</a>, or 
-	<a href="TODO">contact us</a> if you need further assistance.</p>
+<p>Please <a href="{% url home %}">keep using the site</a>, or 
+	<a href="{% url feedback %}">contact us</a> if you need further assistance.</p>
 <p>Thank you!</p>
 {% endblock %}

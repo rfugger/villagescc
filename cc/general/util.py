@@ -18,11 +18,15 @@ class render(object):
     def view_func(request):
         return {'key': value}
 
+    The render decorator passes any extra keyword parameters, such as 'status',
+    to django.shortcuts.render.
+        
     To select another template to render from the view function itself,
     return a tuple of the usual response, paired with the desired template.
     """
-    def __init__(self, template=None):
+    def __init__(self, template=None, **render_kwargs):
         self.template = template
+        self.render_kwargs = render_kwargs
     
     def __call__(self, view_func):
         def decorated_func(request, *args, **kwargs):
@@ -32,7 +36,8 @@ class render(object):
             if isinstance(result, tuple):
                 result, self.template = result
             if isinstance(result, dict):
-                response = django_render(request, self.template, result)
+                response = django_render(
+                    request, self.template, result, **self.render_kwargs)
             else:
                 response = result
             return response

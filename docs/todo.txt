@@ -6,6 +6,11 @@ Critical Path
 
 Review all TODOs in code
 
+Set up handler404, handler500, handler403 views/templates.
+- forbidden view/template already there, as well as 500.html, 404.html.
+
+Make sure server can get client IP address for GeoIP
+
 
 Post-Launch
 -----------
@@ -13,8 +18,16 @@ Post-Launch
 Donations page.
 - Need Villages user to accept Ripple donations.
 
+Asynchronous task queue
+- single process queue for data-modifying ripple transactions
+- always make sure records needed to tasks are committed to db before task is
+  dispatched (commit-per-view won't work)
+
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
+
+Let unregistered users click on links that go to pages only registered users
+can see, but then show them the signup form?
 
 Allow registered users to accept invitations by converting them directly to 
 endorsements.
@@ -39,14 +52,13 @@ Explanatory text where necessary
 
 Filter posts by offer/want
 
-Asynchronous task queue
-- single process queue for data-modifying ripple transactions
-- always make sure records needed to tasks are committed to db before task is
-  dispatched (commit-per-view won't work)
-
 Default email template with URL in sig
 
 Acceptable use policy
+
+Users should agree to terms of use?
+- Developers of Villages are not responsible for any loss or harm from using
+  the system.
 
 User timezones
 

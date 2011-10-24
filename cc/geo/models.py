@@ -13,9 +13,12 @@ class LocationDeserializationError(Exception):
 
 class Location(models.Model):
     "A geographic location, named by neighborhood, city, state, country."
-    # TODO: Investigate using geometry instead of geography here for better
-    # performance:
-    # http://postgis.refractions.net/documentation/manual-1.5/ch04.html#PostGIS_GeographyVSGeometry
+
+    # TODO: Possible optimizations for distance queries:
+    # - use bounding box only (__bboverlaps or && operator)
+    # - use planar projection rather than spherical coordinates
+    # - use spheroid=False for geography queries (not needed on planar projection)
+    
     point = models.PointField(geography=True)
     country = VarCharField("Country")
     state = VarCharField("State/Province (Abbr.)", blank=True)

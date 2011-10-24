@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.views import login as django_login_view
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.exceptions import PermissionDenied
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
@@ -18,7 +19,6 @@ from cc.geo.util import location_required
 from cc.geo.models import Location
 from cc.relate.models import Endorsement
 from cc.feed.views import feed
-from cc.general.views import forbidden
 from cc.general.mail import send_mail_from_system
 
 MESSAGES = {
@@ -83,7 +83,7 @@ def register(request):
     """
     invitation = get_invitation(request)
     if not invitation:
-        return forbidden(request)
+        raise PermissionDenied
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

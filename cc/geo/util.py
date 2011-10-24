@@ -10,8 +10,10 @@ def location_required(view_func):
     """
 
     # TODO: Don't just redirect to locator view when there's no
-    # location, autodetect from IP and browser.  Use the default
-    # geocoding.
+    # location, autodetect from IP and browser and set session location
+    # in cookie.  Use default names from geocoding.
+    # Have separate decorator home_location_required for when we
+    # need the name of the location?
 
     def decorated_func(request, *args, **kwargs):
         if not request.location:
