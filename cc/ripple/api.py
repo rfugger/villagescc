@@ -3,10 +3,11 @@
 # TODO: Test this module.
 # TODO: Import * into __init__.py so `from cc import ripple` works.
 # TODO: Don't use 'user' when I really mean 'profile' (here and everywhere).
+# TODO: Test transaction handling here, think more deeply about it.
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
-from django.db import models
+from django.db import models, transaction
 
 from cc.account.models import CreditLine, Account, Node
 from cc.payment.flow import FlowGraph, PaymentError
@@ -255,6 +256,7 @@ def get_account(profile, partner_profile):
     cl = CreditLine.objects.get(node=node, account=account)
     return UserAccount(cl, profile)
 
+@transaction.commit_on_success
 def update_credit_limit(endorsement):
     # Get endorsement recipient's creditline.
     account = get_or_create_account_from_profiles(
@@ -276,6 +278,7 @@ def max_payment(payer, recipient):
     return flow_graph.max_flow()
 
 @accept_profiles
+@transaction.commit_on_success
 def pay(payer, recipient, amount, memo, routed):
     """
     Performs payment.  Routed=False just creates an entry on account between

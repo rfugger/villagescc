@@ -104,10 +104,8 @@ def register(request):
             messages.info(request, MESSAGES['registration_done'])            
             return redirect(edit_profile)
     else:
-
-        # TODO: Populate form with email from invitation.
-        
-        form = RegistrationForm()
+        initial = {'email': invitation.to_email}
+        form = RegistrationForm(initial=initial)
     return locals()
 
 def send_registration_email(profile):

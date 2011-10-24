@@ -73,8 +73,6 @@ class InvitationForm(forms.ModelForm):
             raise forms.ValidationError(ERRORS['self_invite'])
         return to_email
 
-    # TODO: Also, create nice spinner for weight like on endorsement form.
-    
     @property
     def max_weight(self):
         if not self.from_profile.endorsement_limited:

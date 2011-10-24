@@ -6,14 +6,14 @@ Critical Path
 
 Review all TODOs in code
 
-Set up handler404, handler500, handler403 views/templates.
-- forbidden view/template already there, as well as 500.html, 404.html.
-
 Make sure server can get client IP address for GeoIP
 
 
 Post-Launch
 -----------
+
+Move this into trac
+- Add all code TODOs as well.
 
 Donations page.
 - Need Villages user to accept Ripple donations.
@@ -22,6 +22,8 @@ Asynchronous task queue
 - single process queue for data-modifying ripple transactions
 - always make sure records needed to tasks are committed to db before task is
   dispatched (commit-per-view won't work)
+
+Explain limited hearts in help.
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!

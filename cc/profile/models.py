@@ -32,8 +32,6 @@ class Profile(models.Model):
 
     # TODO: Should a profile always trust itself?
 
-    # TODO: Update trust checks to use trusted_profiles throughout code.
-    
     FEED_TEMPLATE = 'profile_feed_item.html'
     
     def __unicode__(self):

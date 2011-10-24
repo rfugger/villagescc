@@ -37,12 +37,6 @@ class Payment(models.Model):
         serial fashion.  No checks are performed to account for the possibility
         of parallel payments.
         """
-        # TODO: Some kind of transaction management here.
-        # Django's transaction middleware only handles the default db,
-        # and this will probably eventually be done as an asynchronous task
-        # in a separate process anyway...
-        # Maybe transaction should be controlled at a higher level?
-        
         self.last_attempted_at = datetime.now()
         # Write attempted date now so if something happens we can see this
         # payment was interrupted.

@@ -87,6 +87,7 @@ class AccountManager(models.Manager):
         return acct
 
     def get_account(self, node1, node2):
+        "Gets account between node1 and node2."
         # TODO: Test this thoroughly.
         acct_list = list(self.raw(
             "select a.* from account_account a "

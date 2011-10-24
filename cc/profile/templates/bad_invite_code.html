@@ -1,14 +1,12 @@
-{% extends "base.html" %}
+{% extends "no_subnav_base.html" %}
 
 {% block title %}Unknown or Expired Invitation{% endblock %}
 
-{% block page %}
+{% block content %}
 <h2>Unknown or Expired Invitation</h2>
 
 <p>Please contact the person who invited you to see if they can invite you again.</p>
 
 <p><a href="{% url home %}">Return Home</a></p>
-
-{# TODO: Link to contact admin? #}
 
 {% endblock %}

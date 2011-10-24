@@ -64,17 +64,14 @@
 					   >Reputation</a></th>
 				<td>{% reputation profile request.profile %}</td>
 			</tr>
-			<tr title="Sum of all acknowledgements sent and received, but only from trusted partners">
-				<th>Trusted Balance</th>
-				<td>{{ profile.trusted_balance }} hours</td>
-			</tr>
 			<tr title="Sum of all acknowledgements sent and received">
 				<th>Overall Balance</th>
 				<td>{{ profile.overall_balance }} hours</td>
 			</tr>
-
-			{# TODO: Balance with nodes trusted by me. #}
-
+			<tr title="Sum of all acknowledgements sent and received, but only from trusted partners">
+				<th>Trusted Balance</th>
+				<td>{{ profile.trusted_balance }} hours</td>
+			</tr>
 			{% if account %}
 				<tr>
 					<th><a href="{% url relationship profile.username %}"
