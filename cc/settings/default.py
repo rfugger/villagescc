@@ -90,6 +90,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'cc.urls'
 
+# Python dotted path to the WSGI application used by Django's runserver.
+WSGI_APPLICATION = 'cc.wsgi.application'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
