@@ -59,6 +59,8 @@ Filter posts by offer/want
 
 Default email template with URL in sig
 
+SSL
+
 Acceptable use policy
 
 Users should agree to terms of use?
