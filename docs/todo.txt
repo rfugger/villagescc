@@ -4,7 +4,7 @@ To Do
 Critical Path
 -------------
 
-Review all TODOs in code
+Deploy to production.
 
 Make sure server can get client IP address for GeoIP
 
@@ -17,6 +17,9 @@ Move this into trac
 
 Donations page.
 - Need Villages user to accept Ripple donations.
+
+Request acknowledgement
+- have user setting to auto-acknowledge after N days?
 
 Asynchronous task queue
 - single process queue for data-modifying ripple transactions

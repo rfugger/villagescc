@@ -51,32 +51,17 @@
 	<tr>
 		<th>Name</th>
 		<th class="number_header">Health</th>
-		<th class="number_header">Hearts from them</th>
+		<th class="number_header">Hearts from you</th>
 		<th class="number_header">Hours from them</th>
 		<th class="number_header">Hours from you</th>
-		<th class="number_header">Hearts from you</th>
+		<th class="number_header">Hearts from them</th>
 	</tr>
 	{% for account in accounts %}
 		<tr>
 			<td><a href="{{ account.partner.get_absolute_url }}"
 				   title="View Profile for {{ account.partner }}"
 				   >{{ account.partner }}</a></td>
-			<td class="number">{{ account.health|default:"" }}</td>
-			<td class="number">
-				{% if account.partner_endorsement %}
-					<a href="{{ account.partner_endorsement.get_absolute_url }}"
-					   title="View Endorsement from {{ account.partner }}"
-					   >{{ account.out_limit }}</a>
-				{% endif %}
-			</td>
-			<td class="number">
-				<a href="{% url relationship account.partner.username %}"
-				   title="View Relationship with {{ account.partner }}"
-				   >{{ account.owed_to_them|default_if_none:"" }}</a></td>
-			<td class="number">
-				<a href="{% url relationship account.partner.username %}"
-				   title="View Relationship with {{ account.partner }}"
-				   >{{ account.owed_to_you|default_if_none:"" }}</a></td>
+			<td class="number">{{ account.health|default:"X" }}</td>
 			<td class="number">
 				{% if account.endorsement %}
 					<a href="{{ account.endorsement.get_absolute_url }}"
@@ -85,6 +70,21 @@
 				{% else %}
 					<a href="{% url endorse_user account.partner.username %}"
 					   title="Endorse {{ account.partner }}">0</a>
+				{% endif %}
+			</td>
+			<td class="number">
+				<a href="{% url relationship account.partner.username %}"
+				   title="View Relationship with {{ account.partner }}"
+				   >{{ account.owed_to_you|default_if_none:"" }}</a></td>
+			<td class="number">
+				<a href="{% url relationship account.partner.username %}"
+				   title="View Relationship with {{ account.partner }}"
+				   >{{ account.owed_to_them|default_if_none:"" }}</a></td>
+			<td class="number">
+				{% if account.partner_endorsement %}
+					<a href="{{ account.partner_endorsement.get_absolute_url }}"
+					   title="View Endorsement from {{ account.partner }}"
+					   >{{ account.out_limit }}</a>
 				{% endif %}
 			</td>
 		</tr>

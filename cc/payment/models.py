@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.db import models
+from django.db import models, transaction
 from django.db.models import F
 
 from cc.account.models import AmountField, Node, CreditLine, Account
@@ -44,18 +44,24 @@ class Payment(models.Model):
         try:
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
-            for creditline, amount in flow_links:
-                Entry.objects.create_entry(
-                    self, creditline.account, -amount * creditline.bal_mult,
-                    creditline.limit)
-            self.status = 'completed'
-            self.save()
+            with transaction.commit_on_success(using='ripple'):
+                for creditline, amount in flow_links:
+                    Entry.objects.create_entry(
+                        self, creditline.account, -amount * creditline.bal_mult,
+                        creditline.limit)
+                self.status = 'completed'
+                self.save()
         except BaseException as exc:
+
+            # TODO: Handle collisions better here so we can retry or give the
+            # user an informative error message, rather than the server error page.
+            
             self.status = 'failed'
             self.save()
             if not isinstance(exc, PaymentError):
                 raise
 
+    @transaction.commit_on_success(using='ripple')
     def as_entry(self):
         """
         Performs this payment as a direct entry between payer and recipient.

@@ -256,7 +256,7 @@ def get_account(profile, partner_profile):
     cl = CreditLine.objects.get(node=node, account=account)
     return UserAccount(cl, profile)
 
-@transaction.commit_on_success
+@transaction.commit_on_success(using='ripple')
 def update_credit_limit(endorsement):
     # Get endorsement recipient's creditline.
     account = get_or_create_account_from_profiles(
@@ -278,7 +278,6 @@ def max_payment(payer, recipient):
     return flow_graph.max_flow()
 
 @accept_profiles
-@transaction.commit_on_success
 def pay(payer, recipient, amount, memo, routed):
     """
     Performs payment.  Routed=False just creates an entry on account between
