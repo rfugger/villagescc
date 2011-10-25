@@ -9,6 +9,13 @@
 {% block content %}
 <h2>{% if form.instance.id %}Edit{% else %}New{% endif %} Post</h2>
 
+<div class="feature">
+	<p>Posts are temporary advertisements for items and services offered and
+		wanted.  For permanent advertisements, such as skills you have to offer,
+		please use your profile description.</p>
+	<p>Any information you post will be <strong>public</strong>.</p>
+</div>
+
 {% if form.instance.id %}
 	<p><a href="{{ post.get_absolute_url }}">View post</a></p>
 {% endif %}
