@@ -8,6 +8,11 @@ Deploy to production.
 
 Make sure server can get client IP address for GeoIP
 
+Make sure emails work.
+
+Make logging good.
+- Real IP address in django logs.
+
 
 Post-Launch
 -----------
