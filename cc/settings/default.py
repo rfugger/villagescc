@@ -56,7 +56,7 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, '../uploads/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = os.path.join('/uploads/')
+MEDIA_URL = '/uploads/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'uhgdro=&vs^nml1u$9k!159rq3u^bp(wd)_8nax-d^2%=9ndrp'
