@@ -28,7 +28,8 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now_add=True)
 
     trusted_profiles = models.ManyToManyField(
-        'Profile', symmetrical=False, related_name='trusting_profiles')
+        'Profile', symmetrical=False, related_name='trusting_profiles',
+        blank=True)
 
     # TODO: Should a profile always trust itself?
 
