@@ -4,16 +4,24 @@ To Do
 Critical Path
 -------------
 
-Make sure server can get client IP address for GeoIP
-
 Make sure emails work.
+- set up spf records
+- google apps for domains account
 
 Make logging good.
 - Real IP address in django logs.
 
 logrotate for nginx and apache logs.
 
-create ryan profile.
+robots.txt to prevent indexing of user data?
+- bots can't set a location, so can't see feed, but can see profiles?
+- tell bots to ignore locator, feed, and profiles
+- add to privacy page that user data is not indexed by search engines
+
+firewall to block ports to external traffic
+- 8000, 9000, 5432 (postgres)
+- block all and then add exceptions?
+  - maybe just above 1024?
 
 invite first users!
 
@@ -27,8 +35,14 @@ Move this into trac
 Donations page.
 - Need Villages user to accept Ripple donations.
 
+Set up quick tests of views to catch pages that blow up after changes.
+
 Request acknowledgement
 - have user setting to auto-acknowledge after N days?
+
+Improve admin section
+- add Settings (on Profile), Invitation, and other missing models.
+- make some fields editable=False
 
 Asynchronous task queue
 - single process queue for data-modifying ripple transactions
@@ -36,6 +50,8 @@ Asynchronous task queue
   dispatched (commit-per-view won't work)
 
 Explain limited hearts in help.
+
+Confirm acknowledge form before submitting, since it can't be undone.
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
@@ -54,8 +70,8 @@ by direct promise?
 
 Logs
 - everything Ripple so it can be reconstructed
-- email changes so can make corrections if someone enters wrong address
-  and owner complains
+- log changes to email addresses so can make corrections if someone enters 
+  wrong address and owner complains
 
 View trusted acknowledgements
 - must be trusted via someone other than acknowledgement recipient
