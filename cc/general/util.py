@@ -67,4 +67,6 @@ def deflect_logged_in(view_func):
     decorated_func.__module__ = view_func.__module__
     return decorated_func
     
-        
+def get_remote_ip(request):
+    "Get the original client IP address."
+    return request.META.get('HTTP_X_FORWARDED_FOR', request.META['REMOTE_ADDR'])

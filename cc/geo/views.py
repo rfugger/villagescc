@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.conf import settings
 
-from cc.general.util import render
+from cc.general.util import render, get_remote_ip
 from cc.geo.forms import LocationForm
 from cc.geo.models import Location
 
@@ -75,12 +75,11 @@ def redirect_after_locator(request):
         return HttpResponseRedirect(next)
     return redirect('feed')
     
-
 def get_geoip_coords(request):
     lat, lng = '', ''
     geoip = GeoIP()
     # TODO: Middleware to set REMOTE_ADDR from HTTP_X_FORWARDED_FOR.
-    remote_addr = request.META['REMOTE_ADDR']
+    remote_addr = get_remote_ip(request)
     geoip_result = geoip.city(remote_addr)
     if geoip_result:
         lat = geoip_result.get('latitude', '')
