@@ -58,10 +58,7 @@ class Node(models.Model):
         cursor = connections['ripple'].cursor()
         cursor.execute(sql_template, (self.id,))
         row = cursor.fetchone()
-        if row:
-            return row[0]
-        else:
-            return D('0')
+        return row[0] or D('0')
     
     def overall_balance(self):
         return self._balance_query(OVERALL_BALANCE_SQL)
