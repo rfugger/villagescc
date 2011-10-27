@@ -1,5 +1,5 @@
 from django.core.mail import EmailMessage
-from django.template import loader
+from django.template import loader, Context
 from django.conf import settings
 
 def send_mail(subject, sender, recipient, template, context):
@@ -8,7 +8,8 @@ def send_mail(subject, sender, recipient, template, context):
     and template/context pair for the body, and sends an email.
     """
     context.update({'domain': settings.SITE_DOMAIN})
-    body = loader.render_to_string(template, context)
+    body = loader.render_to_string(
+        template, context, context_instance=Context(autoescape=False))
     from_email = make_email(sender)
     to_email = make_email(recipient)
 
