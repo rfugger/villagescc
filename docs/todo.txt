@@ -4,10 +4,6 @@ To Do
 Critical Path
 -------------
 
-Make sure emails work.
-- set up spf records
-- google apps for domains account
-
 Make logging good.
 - Real IP address in django logs.
 

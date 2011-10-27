@@ -9,7 +9,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Ryan Fugger', 'arv@ryanfugger.com'),
+    ('Ryan Fugger', 'info@villages.cc'),
 )
 
 MANAGERS = ADMINS
