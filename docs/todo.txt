@@ -9,6 +9,10 @@ Get SPF working on gmail.
 
 Set up www subdomain and redirect it.
 
+Need memcached running?
+
+Add more buffers to postgres.
+
 Make logging good.
 - Real IP address in django logs.
 

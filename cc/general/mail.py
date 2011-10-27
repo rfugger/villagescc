@@ -1,4 +1,4 @@
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, smtp
 from django.template import loader, Context
 from django.conf import settings
 
@@ -10,12 +10,15 @@ def send_mail(subject, sender, recipient, template, context):
     context.update({'domain': settings.SITE_DOMAIN})
     body = loader.render_to_string(
         template, context, context_instance=Context(autoescape=False))
-    from_email = make_email(sender)
     to_email = make_email(recipient)
 
-    # Set headers to avoid SPF errors as per
-    # http://www.openspf.org/Best_Practices/Webgenerated
-    headers = {'Sender': settings.DEFAULT_FROM_EMAIL}
+    # Set headers to avoid SPF errors.
+    # From_email = envelope sender -> return-path, address that is checked
+    # on SPF validation.
+    # From header = sender displayed to user.
+    from_email = settings.DEFAULT_FROM_EMAIL
+    headers = {'From': make_email(sender)}
+    
     msg = EmailMessage(subject=subject, body=body, from_email=from_email,
                        to=(to_email,), headers=headers)
     msg.send()
