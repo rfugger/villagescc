@@ -1,4 +1,4 @@
-from django.core.mail import EmailMessage, smtp
+from django.core.mail import EmailMessage
 from django.template import loader, Context
 from django.conf import settings
 
