@@ -4,11 +4,6 @@ To Do
 Critical Path
 -------------
 
-robots.txt to prevent indexing of user data?
-- bots can't set a location, so can't see feed, but can see profiles?
-- tell bots to ignore locator, feed, and profiles
-- add to privacy page that user data is not indexed by search engines
-
 firewall to block ports to external traffic
 - 8000, 9000, 5432 (postgres)
 - block all and then add exceptions?
