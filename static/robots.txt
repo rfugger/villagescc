@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /locator/
+Disallow: /feed/
+Disallow: /profiles/
+Disallow: /posts/

@@ -4,19 +4,6 @@ To Do
 Critical Path
 -------------
 
-set up a backup!
-- set up a warning system on backup errors.
-  - failed cron jobs should email, right? Test.
-
-Need memcached running?
-
-Add more buffers to postgres.
-
-Make logging good.
-- Real IP address in django logs.
-
-logrotate for nginx and apache logs.
-
 robots.txt to prevent indexing of user data?
 - bots can't set a location, so can't see feed, but can see profiles?
 - tell bots to ignore locator, feed, and profiles
@@ -27,7 +14,7 @@ firewall to block ports to external traffic
 - block all and then add exceptions?
   - maybe just above 1024?
 
-invite first users!
+invite more users!
 
 
 Post-Launch
@@ -36,7 +23,20 @@ Post-Launch
 Move this into trac
 - Add all code TODOs as well.
 
+Make logging good.
+- Real IP address in django logs.
+
+Check backup is working.
+
 Test restore from backup
+
+Test failed backup cron job email warning.
+
+Check logrotate is working
+
+Add more buffers to postgres.
+- currently at 28mb
+- need to reconfigure the kernel with larger SHMMAX
 
 Give someone else access to server in case
 
@@ -50,6 +50,8 @@ Set up cron jobs for:
 
 Request acknowledgement
 - have user setting to auto-acknowledge after N days?
+
+Auto-increase endorsements after sufficient payoff?
 
 Improve admin section
 - add Settings (on Profile), Invitation, and other missing models.
