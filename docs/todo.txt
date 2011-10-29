@@ -4,10 +4,9 @@ To Do
 Critical Path
 -------------
 
-Get SPF working on gmail.
-- emails must be from web@villages.cc, with reply-to appropriately.
-
-Set up www subdomain and redirect it.
+set up a backup!
+- set up a warning system on backup errors.
+  - failed cron jobs should email, right? Test.
 
 Need memcached running?
 
@@ -28,8 +27,6 @@ firewall to block ports to external traffic
 - block all and then add exceptions?
   - maybe just above 1024?
 
-set up a backup!
-
 invite first users!
 
 
@@ -39,10 +36,17 @@ Post-Launch
 Move this into trac
 - Add all code TODOs as well.
 
+Test restore from backup
+
+Give someone else access to server in case
+
 Donations page.
 - Need Villages user to accept Ripple donations.
 
 Set up quick tests of views to catch pages that blow up after changes.
+
+Set up cron jobs for:
+- cleaning expired sessions
 
 Request acknowledgement
 - have user setting to auto-acknowledge after N days?
@@ -62,6 +66,7 @@ Confirm acknowledge form before submitting, since it can't be undone.
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
+- maybe have them fill out their profile first, so people can see who they are?
 
 Let unregistered users click on links that go to pages only registered users
 can see, but then show them the signup form?
@@ -124,6 +129,13 @@ Automated tests for views
 
 Better explanation of Ripple
 - Ripple page with diagrams/video?
+
+Design
+- logo
+- favicon
+- helpful icons
+
+Intro video
 
 Ideas
 -----
