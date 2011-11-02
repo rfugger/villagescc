@@ -1,19 +1,23 @@
-To Do
------
-
 Critical Path
 -------------
 
-firewall to block ports to external traffic
-- 8000, 9000, 5432 (postgres)
-- block all and then add exceptions?
-  - maybe just above 1024?
+Donations page.
+- Need Villages user to accept Ripple donations.
 
-invite more users!
+Confirm acknowledge form before submitting, since it can't be undone.
+
+SSL
+- set session cookie to ssl only
+
+User timezones?
+- using relative times helps this
+  - convert signed up/last logged in times to relative
+
+Invite Ripple group
 
 
-Post-Launch
------------
+To Do
+-----
 
 Move this into trac
 - Add all code TODOs as well.
@@ -21,11 +25,11 @@ Move this into trac
 Make logging good.
 - Real IP address in django logs.
 
+Backup entire server tolle.ryanfugger.com.
+
 Check backup is working.
 
 Test restore from backup
-
-Test failed backup cron job email warning.
 
 Check logrotate is working
 
@@ -35,15 +39,12 @@ Add more buffers to postgres.
 
 Give someone else access to server in case
 
-Donations page.
-- Need Villages user to accept Ripple donations.
-
 Set up quick tests of views to catch pages that blow up after changes.
 
 Set up cron jobs for:
 - cleaning expired sessions
 
-Make is easy to use current location for posts.
+Make it easy to use current location for posts.
 
 Locator should show current location if different than home location.
 
@@ -52,20 +53,22 @@ Never redirect from locator to locator again, go to feed instead.
 Request acknowledgement
 - have user setting to auto-acknowledge after N days?
 
-Auto-increase endorsements after sufficient payoff?
+Request undo acknowledgement (similar to request acknowledgement)
 
 Improve admin section
 - add Settings (on Profile), Invitation, and other missing models.
 - make some fields editable=False
 
 Asynchronous task queue
-- single process queue for data-modifying ripple transactions
+- single process queue for data-modifying ripple transactions?
 - always make sure records needed to tasks are committed to db before task is
   dispatched (commit-per-view won't work)
+  - maybe have some kind of task middleware where you can do:
+  	import task; task.add(do_thing, args, kwargs)
+	and then the middleware will pick it up and dispatch it after 
+	view transaction is committed?
 
 Explain limited hearts in help.
-
-Confirm acknowledge form before submitting, since it can't be undone.
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
@@ -91,24 +94,19 @@ Logs
 View trusted acknowledgements
 - must be trusted via someone other than acknowledgement recipient
 
-Explanatory text where necessary
-- links to help?
-- slide-down help on every page?
+Split explanatory text into two parts:
+- short overview bit
+- longer explanation, hidden by default, slides down on clicking "More"
 
 Filter posts by offer/want
 
 Default email template with URL in sig
-
-SSL
-- set session cookie to ssl only
 
 Acceptable use policy
 
 Users should agree to terms of use?
 - Developers of Villages are not responsible for any loss or harm from using
   the system.
-
-User timezones
 
 Post expiry
 
@@ -118,13 +116,10 @@ Multiple contact methods on profile
 - add as many alternate contact methods as you want, list on contact page.
 
 Enlarge image
-- lightbox
-
-Request promise
+- lightbox?
+- highslide?
 
 Delete profile
-
-Messages for every form success
 
 Forgot password/password reset
 
@@ -149,6 +144,11 @@ Weekly newsletter to all users
 Ideas
 -----
 
+firewall to block ports to external traffic
+- 8000, 9000, 5432 (postgres)
+- block all and then add exceptions?
+  - maybe just above 1024?
+
 Breadcrumbs
 - list of several previous pages visited
 
@@ -163,3 +163,5 @@ Convert untrusted promise to trusted
 In-site messaging system
 
 Overall credit limits (in and out)
+
+Auto-increase endorsements after sufficient payoff?

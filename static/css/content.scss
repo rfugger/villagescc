@@ -3,11 +3,12 @@
 /* TODO: Move more reusable constants here from below. */
 
 $feature: #ebf9ff;
+$text_black: #333;
 
 /********* Global *********/
 
 body {
-	color: #333;
+	color: $text_black;
 	margin: 0;
 }
 
@@ -101,6 +102,16 @@ table.data {
 
 .form th {
 	padding-right: 1em;
+}
+
+form tr > th {
+	font-weight: normal;
+	color: #666;
+}
+
+form tr.required > th {
+	font-weight: bold;
+	color: $text_black;
 }
 
 .number {

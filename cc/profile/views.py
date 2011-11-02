@@ -37,7 +37,7 @@ MESSAGES = {
                       "A confirmation email has been sent to your new address. "
                       "If you do not receive it, please verify that you have "
                       "entered the correct email."),
-    'invitation_sent': "Invitation sent.",
+    'invitation_sent': "Invitation sent to %s.",
     'invitation_deleted': "Invitation deleted.",
     'invitation_request_sent': "Invitation request sent.",
     'invitation_landing': ("%s has invited you to Villages.cc.<br>"
@@ -230,7 +230,8 @@ def invite(request):
             
             invitation = form.save()
             invitation.send()
-            messages.info(request, MESSAGES['invitation_sent'])
+            messages.info(request, MESSAGES['invitation_sent'] % (
+                    invitation.to_email))
             return redirect(invite)
     else:
         form = InvitationForm(request.profile)
