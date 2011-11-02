@@ -43,6 +43,12 @@ Set up quick tests of views to catch pages that blow up after changes.
 Set up cron jobs for:
 - cleaning expired sessions
 
+Make is easy to use current location for posts.
+
+Locator should show current location if different than home location.
+
+Never redirect from locator to locator again, go to feed instead.
+
 Request acknowledgement
 - have user setting to auto-acknowledge after N days?
 
@@ -94,6 +100,7 @@ Filter posts by offer/want
 Default email template with URL in sig
 
 SSL
+- set session cookie to ssl only
 
 Acceptable use policy
 
@@ -108,6 +115,7 @@ Post expiry
 Cycle background colour on rows of long data tables
 
 Multiple contact methods on profile
+- add as many alternate contact methods as you want, list on contact page.
 
 Enlarge image
 - lightbox
@@ -133,6 +141,10 @@ Design
 - helpful icons
 
 Intro video
+
+Weekly newsletter to all users
+- opt out on settings.
+
 
 Ideas
 -----
