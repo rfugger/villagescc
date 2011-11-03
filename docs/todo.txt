@@ -17,6 +17,11 @@ Link to profile of sender in email notification/contact email.
 
 Think about making usernames case-insensitive?
 
+Log
+- log changes to email addresses so can make corrections if someone enters 
+  wrong address and owner complains
+- who invited whom, to see who is bringing in spammers?
+
 Invite Ripple group
 
 
@@ -95,8 +100,6 @@ by direct promise?
 
 Logs
 - everything Ripple so it can be reconstructed
-- log changes to email addresses so can make corrections if someone enters 
-  wrong address and owner complains
 
 View trusted acknowledgements
 - must be trusted via someone other than acknowledgement recipient

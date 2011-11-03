@@ -276,7 +276,8 @@ def invitations_sent(request):
             request.profile.invitations_sent, pk=invitation_id)
         if key.startswith('resend'):
             invitation.send()
-            messages.info(request, MESSAGES['invitation_sent'])
+            messages.info(request, MESSAGES['invitation_sent'] %
+                          invitation.to_email)
         elif key.startswith('delete'):
             invitation.delete()
             messages.info(request, MESSAGES['invitation_deleted'])

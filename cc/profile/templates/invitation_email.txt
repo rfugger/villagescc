@@ -1,12 +1,14 @@
-{{ invitation.from_profile }} has endorsed you on Villages.cc.
-
 {% if invitation.message %}{{ invitation.message }}
 
 ----
 
-{% endif %}Villages is a cooperative community economic system, where you can endorse your friends, and use the resulting trust network to trade without money.
+{% endif %}{{ invitation.from_profile }} has endorsed you as someone they value in their community.
 
-To learn more, please visit the following link:
+{% if invitation.endorsement_text %}"{{ invitation.endorsement_text }}"
+
+{% endif %}Villages is a cooperative economic network, where friends can endorse each other and trade without money.
+
+To accept the invitation, or to simply learn more, please visit the following link:
 
 http://{{ domain }}{{ invitation.get_absolute_url }}
 

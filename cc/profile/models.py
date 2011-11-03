@@ -213,7 +213,7 @@ class Invitation(models.Model):
             (random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
 
     def send(self):
-        send_mail("%s Has Endorsed You On Villages.cc" % self.from_profile,
+        send_mail("%s Has Invited You To Villages.cc" % self.from_profile,
                   self.from_profile, self.to_email, 'invitation_email.txt',
                   {'invitation': self})
         self.date = datetime.now()
