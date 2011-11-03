@@ -110,6 +110,9 @@ Users should agree to terms of use?
 
 Post expiry
 
+Say whether acknowledgement was routed or direct on notification and on ack page
+- may have to store in Payment model.
+
 Cycle background colour on rows of long data tables
 
 Multiple contact methods on profile

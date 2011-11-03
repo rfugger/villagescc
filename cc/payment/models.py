@@ -32,10 +32,6 @@ class Payment(models.Model):
     def attempt(self):
         """
         Try to perform this payment.
-
-        WARNING: All payments must be performed by a single process in
-        serial fashion.  No checks are performed to account for the possibility
-        of parallel payments.
         """
         self.last_attempted_at = datetime.now()
         # Write attempted date now so if something happens we can see this
