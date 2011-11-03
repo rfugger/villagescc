@@ -198,7 +198,7 @@ def profile_posts(request, username):
 # TODO: Move to relate app?
 @login_required
 def profile_endorsements(request, username):
-    eligible_profiles = Profile.objects.exclude(user=request.profile)
+    eligible_profiles = Profile.objects.exclude(pk=request.profile.id)
     profile = get_object_or_404(
         eligible_profiles, user__username=username)
     return feed(request, item_type=Endorsement, recipient=profile,
