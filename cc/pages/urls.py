@@ -14,4 +14,6 @@ urlpatterns = patterns(
         {'template': 'motivation.html'}, name='motivation'),
     url(r'^about/developers/$', direct_to_template,
         {'template': 'developers.html'}, name='developers'),
+    url(r'^about/donate/$', direct_to_template,
+        {'template': 'donate.html'}, name='donate'),
 )

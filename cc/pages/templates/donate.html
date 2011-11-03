@@ -1,0 +1,49 @@
+{% extends "about_base.html" %}
+
+{% block title %}Donate{% endblock %}
+
+{% block content %}
+{{ block.super }}
+
+<h3>Support Villages with your Donation</h3>
+
+<p>There are three ways you can donate to help keep Villages running and
+	support its continued development:</p>
+
+<h4>1. Send Acknowledgement</h4>
+
+<p>{% if request.profile %}
+	<a href="{% url acknowledge_user 'villages' %}">Acknowledge the work 
+		of Villages developers</a>.
+	{% else %}
+		Acknowledge the work of Villages developers (must be registered
+		and logged in).
+	{% endif %}
+	This helps them receive goods and services from others in the network.
+</p>
+
+<h4>2. Paypal</h4>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="hosted_button_id" value="CWE7SQESWX8R8">
+	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+<p>Until the developers can survive on acknowledgements alone, donating
+	national currency helps pay hosting costs and things like rent.
+</p>
+
+<h4>3. Bitcoin</h4>
+
+<p>Villages and other <a href="http://ripple-project.org">Ripple</a> systems
+	are built on decentralized trust &ndash; <a href="http://bitcoin.org/">Bitcoin</a>
+	is built on decentralized transactions.  Check it out if you haven't already.
+</p>
+
+<p>You can donate Bitcoins to <strong>16UDi2BbzLHS2LKa6ENbsZCkhV5ZkHyQKD</strong>
+</p>
+
+<p>Thanks!</p>
+{% endblock %}
