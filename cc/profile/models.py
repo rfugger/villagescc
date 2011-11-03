@@ -174,7 +174,9 @@ class Settings(models.Model):
     profile = models.OneToOneField(Profile, related_name='settings')
     email = EmailField(blank=True)
     endorsement_limited = models.BooleanField(default=True)
-    send_notifications = models.BooleanField(default=True)
+    send_notifications = models.BooleanField(
+        default=True, help_text=(
+            "Receive email whenever someone endorses or acknowledges you."))
     
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)

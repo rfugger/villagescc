@@ -11,6 +11,8 @@ User timezones?
 - using relative times helps this
   - show signed up/last logged in times as relative?
 
+Explain limited hearts in help.
+
 Link to profile of sender in email notification/contact email.
 
 Think about making usernames case-insensitive?
@@ -79,8 +81,6 @@ Asynchronous task queue
   	import task; task.add(do_thing, args, kwargs)
 	and then the middleware will pick it up and dispatch it after 
 	view transaction is committed?
-
-Explain limited hearts in help.
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
