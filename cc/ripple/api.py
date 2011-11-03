@@ -293,7 +293,10 @@ def pay(payer, recipient, amount, memo, routed):
     return RipplePayment(payment)
 
 def get_payment(payment_id):
-    payment = Payment.objects.get(pk=payment_id)
+    try:
+        payment = Payment.objects.get(pk=payment_id)
+    except Payment.DoesNotExist:
+        raise RipplePayment.DoesNotExist
     return RipplePayment(payment)
 
 @accept_profiles

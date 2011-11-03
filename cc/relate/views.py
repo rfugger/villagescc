@@ -117,7 +117,10 @@ def send_acknowledgement_notification(acknowledgement):
 @login_required
 @render()
 def view_acknowledgement(request, payment_id):
-    payment = ripple.get_payment(payment_id)
+    try:
+        payment = ripple.get_payment(payment_id)
+    except ripple.RipplePayment.DoesNotExist:
+        raise Http404
     entries = payment.entries_for_user(request.profile)
     if not entries:
         raise Http404  # Non-participants don't get to see anything.

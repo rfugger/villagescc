@@ -13,6 +13,8 @@ User timezones?
 - using relative times helps this
   - show signed up/last logged in times as relative?
 
+Link to profile of sender in email notification/contact email.
+
 Invite Ripple group
 
 
@@ -50,10 +52,13 @@ Locator should show current location if different than home location.
 
 Never redirect from locator to locator again, go to feed instead.
 
-Request acknowledgement
+Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
 
 Request undo acknowledgement (similar to request acknowledgement)
+
+Subscriptions/email notifications
+- new posts/people matching a particular filter
 
 Improve admin section
 - add Settings (on Profile), Invitation, and other missing models.
