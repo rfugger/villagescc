@@ -55,8 +55,8 @@ class EndorseForm(forms.ModelForm):
 class AcknowledgementForm(forms.Form):
     ripple = forms.ChoiceField(
         label="Send",
-        choices=((ROUTED, 'Routed acknowledgement'),
-                 (DIRECT, 'Direct acknowledgement')),
+        choices=((ROUTED, "Trusted acknowledgement"),
+                 (DIRECT, "Direct acknowledgement")),
         widget=forms.RadioSelect,
         initial=ROUTED)
     amount = forms.DecimalField(
@@ -79,7 +79,7 @@ class AcknowledgementForm(forms.Form):
     def clean(self):
         data = self.cleaned_data
         # Enforce max_ripple amount.
-        if data.get('ripple') == ROUTED:
+        if data.get('ripple') == ROUTED and 'amount' in data:
             if data['amount'] > self.max_ripple:
                 self._errors['amount'] = self.error_class(
                     [self.ERRORS['max_ripple']])

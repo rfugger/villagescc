@@ -10,8 +10,8 @@
 <div class="feature">
 	<p>There are two ways to send acknowledgement:
 	<ol>
-		<li><strong>Route an acknowledgement</strong> through the
-			trust network so the recipient receives it only from
+		<li><strong>Send a trusted acknowledgement</strong> through
+			the trust network so the recipient receives it only from
 			people they have endorsed, and only up to the number of
 			hearts they have given to each.
 		</li>
@@ -22,13 +22,13 @@
 	</ol>
 	<p><a href="{% url how_it_works %}">Read more</a></p>
 	<p>Acknowledgements are only visible to you, the recipient, and for
-		routed acknowledgements, anyone on the path the acknowlegdement 
+		trusted acknowledgements, anyone on the path the acknowlegdement 
 		takes between you and the recipient.
 	</p>
 </div>
 {% if can_ripple %}
-	<p>You can route a trusted acknowledgement of up to {{ max_amount }} 
-		hour{{ max_amount|pluralize:"s" }}, or send a direct
+	<p>You can send a trusted acknowledgement of up to {{ max_amount }} 
+		hour{{ max_amount|pluralize:"s" }}, or a direct
 		acknowledgement of any amount.
 	</p>
 {% else %}
@@ -43,8 +43,27 @@
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Send Acknowledgement"></td>
+			<td><input type="submit" value="Send Acknowledgement"
+					   onclick="return confirm(confirm_text());"></td>
 		</tr>
 	</table>
 </form>
+{% endblock %}
+
+{% block extrahead %}
+<script>
+	function confirm_text() {
+		var can_ripple = {% if can_ripple %}true{% else %}false{% endif %};
+		var hours = $("#id_amount").val();
+		var ack_type = "direct";
+		if (can_ripple) {
+			var ripple = ($("#id_ripple").val() == "routed");
+			if (ripple) {
+				ack_type = "trusted";
+			} 
+		}
+		return "Send a " + ack_type + " acknowledgement of " + hours + 
+			" hours?";
+	}
+</script>
 {% endblock %}

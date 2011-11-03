@@ -4,8 +4,6 @@ Critical Path
 Donations page.
 - Need Villages user to accept Ripple donations.
 
-Confirm acknowledge form before submitting, since it can't be undone.
-
 SSL
 - set session cookie to ssl only
 
@@ -21,6 +19,8 @@ Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
 - who invited whom, to see who is bringing in spammers?
+
+More explanation on acknowledgement page.
 
 Invite Ripple group
 
