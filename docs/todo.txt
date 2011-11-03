@@ -8,10 +8,6 @@ User timezones?
 - using relative times helps this
   - show signed up/last logged in times as relative?
 
-Explain limited hearts in help.
-
-Link to profile of sender in email notification/contact email.
-
 Think about making usernames case-insensitive?
 
 Log

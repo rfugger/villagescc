@@ -126,7 +126,8 @@ class ContactForm(forms.Form):
              template='contact_email.txt', extra_context=None):
         if not subject:
             subject = "Villages.cc message from %s" % sender
-        context = {'message': self.cleaned_data['message']}
+        context = {'message': self.cleaned_data['message'],
+                   'sender': sender}
         if extra_context:
             context.update(extra_context)
         send_mail(subject, sender, recipient, template, context)

@@ -1,1 +1,4 @@
 {{ message }}
+
+----
+View {{ sender }}: http://{{ domain }}{{ sender.get_absolute_url }}
