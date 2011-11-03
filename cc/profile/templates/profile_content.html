@@ -40,11 +40,14 @@
 			{% if request.profile %}
 				<tr>
 					<th>Registered</th>
-					<td>{{ profile.user.date_joined|naturaltime }}</td>
-				</tr><tr>
-					<th>Last Online</th>
-					<td>{{ profile.user.last_login|naturaltime }}</td>
+					<td>{{ profile.user.date_joined|naturalday }}</td>
 				</tr>
+				{% comment - TODO: last_login != last online time %}
+				<tr>
+					<th>Last Online</th>
+					<td>{{ profile.user.last_login|naturalday }}</td>
+				</tr>
+				{% endcomment %}
 			{% endif %}
 		</table>
 

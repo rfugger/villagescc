@@ -11,7 +11,7 @@ SSL
 
 User timezones?
 - using relative times helps this
-  - convert signed up/last logged in times to relative
+  - show signed up/last logged in times as relative?
 
 Invite Ripple group
 
@@ -118,6 +118,8 @@ Multiple contact methods on profile
 Enlarge image
 - lightbox?
 - highslide?
+
+Last login != last online time - fix.
 
 Delete profile
 
