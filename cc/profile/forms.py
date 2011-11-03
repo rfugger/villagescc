@@ -49,10 +49,6 @@ RegistrationForm.base_fields.keyOrder = [
     'username', 'name', 'email', 'password1', 'password2']
 
 class InvitationForm(forms.ModelForm):
-    endorsement_weight = forms.IntegerField(
-        label="Endorsement hearts", min_value=1,
-        widget=forms.TextInput(attrs={'class': 'int spinner'}))
-    
     # TODO: Merge with EndorseForm somehow, into a common superclass?
     
     class Meta:
@@ -63,6 +59,9 @@ class InvitationForm(forms.ModelForm):
     def __init__(self, from_profile, *args, **kwargs):
         self.from_profile = from_profile
         super(InvitationForm, self).__init__(*args, **kwargs)
+        self.fields['endorsement_weight'].widget = (
+            forms.TextInput(attrs={'class': 'int spinner'}))
+        self.fields['endorsement_weight'].min_value = 1        
         
     def clean_to_email(self):
         to_email = self.cleaned_data['to_email']

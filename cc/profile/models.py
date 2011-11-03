@@ -186,11 +186,13 @@ class Settings(models.Model):
 class Invitation(models.Model):
     from_profile = models.ForeignKey(Profile, related_name='invitations_sent')
     to_email = EmailField("Friend's email")
-    endorsement_weight = models.PositiveIntegerField()
-    endorsement_text = models.TextField(blank=True)
+    endorsement_weight = models.PositiveIntegerField("Hearts", help_text=(
+            "Each heart represents an hour of value you'd provide "
+            "in exchange for acknowledgements."))
+    endorsement_text = models.TextField("Testimonial", blank=True)
     message = models.TextField(
-        "Private message",
-        blank=True, help_text="Sent with the invitation email.")
+        "Private message", blank=True,
+        help_text="Sent with the invitation email only. Not public.")
     
     date = models.DateTimeField(auto_now_add=True)
     code = VarCharField(unique=True)

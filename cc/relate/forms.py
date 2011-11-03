@@ -12,9 +12,6 @@ ROUTED = 'routed'
 DIRECT = 'direct'
 
 class EndorseForm(forms.ModelForm):
-    weight = forms.IntegerField(
-        label="Hearts", min_value=1,
-        widget=forms.TextInput(attrs={'class': 'int spinner'}))
     MESSAGES = {
         'over_weight': "Please ensure this number is below %d."
     }
@@ -27,6 +24,9 @@ class EndorseForm(forms.ModelForm):
         self.endorser = kwargs.pop('endorser')
         self.recipient = kwargs.pop('recipient')
         super(EndorseForm, self).__init__(*args, **kwargs)
+        self.fields['weight'].widget = (
+            forms.TextInput(attrs={'class': 'int spinner'}))
+        self.fields['weight'].min_value = 1
 
     @property
     def max_weight(self):

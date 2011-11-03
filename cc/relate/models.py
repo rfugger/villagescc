@@ -18,8 +18,10 @@ class Endorsement(models.Model):
     endorser = models.ForeignKey(Profile, related_name='endorsements_made')
     recipient = models.ForeignKey(
         Profile, related_name='endorsements_received')
-    weight = models.PositiveIntegerField()
-    text = models.TextField(blank=True)
+    weight = models.PositiveIntegerField("Hearts", help_text=(
+            "Each heart represents an hour of value you'd provide "
+            "in exchange for acknowledgements."))
+    text = models.TextField("Testimonial", blank=True)
     updated = models.DateTimeField(auto_now=True)
 
     objects = EndorsementManager()
