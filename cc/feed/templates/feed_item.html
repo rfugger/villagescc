@@ -1,7 +1,8 @@
 {% load profile location humanize media %}
 <div class="feed_item_user unit">
 	{% block user %}
-		<img src="{% profile_image_url item.feed_poster '60x60' %}">
+		<a href="{{ item.feed_poster.get_absolute_url }}"
+		   ><img src="{% profile_image_url item.feed_poster '60x60' %}"></a>
 	{% endblock %}
 </div>
 <div class="feed_item_content unit lastUnit">
