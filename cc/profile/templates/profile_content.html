@@ -1,4 +1,4 @@
-{% load profile relate %}
+{% load profile relate humanize %}
 <h2>{{ profile }}</h2>
 
 {% if profile == request.profile %}
@@ -39,11 +39,11 @@
 
 			{% if request.profile %}
 				<tr>
-					<th>User Since</th>
-					<td>{{ profile.user.date_joined|date }}</td>
+					<th>Registered</th>
+					<td>{{ profile.user.date_joined|naturaltime }}</td>
 				</tr><tr>
 					<th>Last Online</th>
-					<td>{{ profile.user.last_login|date }}</td>
+					<td>{{ profile.user.last_login|naturaltime }}</td>
 				</tr>
 			{% endif %}
 		</table>
