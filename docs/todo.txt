@@ -70,8 +70,9 @@ Subscriptions/email notifications
 - new posts/people matching a particular filter
 
 Improve admin section
-- add Settings (on Profile), Invitation, and other missing models.
-- make some fields editable=False
+- add Invitation, and other missing models.
+- customize ModelAdmins
+  - make some fields editable=False
 
 Asynchronous task queue
 - single process queue for data-modifying ripple transactions?
@@ -154,6 +155,9 @@ Intro video
 
 Weekly newsletter to all users
 - opt out on settings.
+
+Fix 'X' in health when I endorse someone but they don't endorse me and
+balance is zero
 
 
 Ideas
