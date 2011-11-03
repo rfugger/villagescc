@@ -54,10 +54,11 @@ class EndorseForm(forms.ModelForm):
 
 class AcknowledgementForm(forms.Form):
     ripple = forms.ChoiceField(
-        label="Send as",
+        label="Send",
         choices=((ROUTED, 'Routed acknowledgement'),
                  (DIRECT, 'Direct acknowledgement')),
-        widget=forms.RadioSelect)
+        widget=forms.RadioSelect,
+        initial=ROUTED)
     amount = forms.DecimalField(
         label="Hours",
         max_digits=PRECISION, decimal_places=SCALE,
