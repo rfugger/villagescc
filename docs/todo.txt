@@ -1,9 +1,6 @@
 Critical Path
 -------------
 
-Donations page.
-- Need Villages user to accept Ripple donations.
-
 SSL
 - set session cookie to ssl only
 
@@ -30,8 +27,11 @@ Invite Ripple group
 To Do
 -----
 
-Move this into trac
+Move this into trac?
 - Add all code TODOs as well.
+
+Look into caching
+- why don't template changes always show up immediately on production?
 
 Make logging good.
 - Real IP address in django logs.
