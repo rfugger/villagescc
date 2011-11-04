@@ -107,6 +107,8 @@ Split explanatory text into two parts:
 
 Filter posts by offer/want
 
+Filter endorsement feed by sent and received.
+
 Default email template with URL in sig
 
 Acceptable use policy
@@ -180,3 +182,6 @@ In-site messaging system
 Overall credit limits (in and out)
 
 Auto-increase endorsements after sufficient payoff?
+
+Have endorsement info built into profile feed item, and profile info page
+- won't need endorsement feed anymore (although it might still be nice to have)
