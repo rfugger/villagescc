@@ -1,4 +1,7 @@
 {{ message }}
 
---
+----
 http://{{ domain }}{{ post.get_absolute_url }}
+
+View {{ sender }}: http://{{ domain }}{{ sender.get_absolute_url }}
+

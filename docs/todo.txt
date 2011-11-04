@@ -90,10 +90,16 @@ Allow registered users to accept invitations by converting them directly to
 endorsements.
 - Invitations to registered emails should auto-convert to endorsements.
 
-Automatically route as much of a payment as possible, then complete the rest
-by direct promise?
-- no need for routed/direct selector on payment form
-- how would users control if seller only wanted trusted routing?
+Set trusted/direct acknowledgement routing automatically by amount
+- always prefer trusted if amount is low enough
+- show max trusted when user enters amount, so it is clear what they are doing
+- what if user wants to route the max, and send the rest directly?
+  - could do it manually
+
+Automatically unset endorsement_limited at a certain point:
+- 20 endorsements incoming
+- 2 endorsements from other unlimited users (1?)
+- a certain acknowledgement volume in and out
 
 Logs
 - everything Ripple so it can be reconstructed
@@ -185,3 +191,6 @@ Auto-increase endorsements after sufficient payoff?
 
 Have endorsement info built into profile feed item, and profile info page
 - won't need endorsement feed anymore (although it might still be nice to have)
+
+Have favourite users that you can filter your feed by
+
