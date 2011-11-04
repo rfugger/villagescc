@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from cc.profile.models import Profile, Invitation, Settings
 from cc.general.models import EmailField
@@ -23,6 +25,17 @@ class RegistrationForm(UserCreationForm):
         if Settings.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(ERRORS['email_dup'])
         return email    
+
+    def clean_username(self):
+        # Adapted from UserCreationForm.clean_username.
+        # Make username uniqueness check case-insensitive.
+        username = self.cleaned_data["username"]
+        try:
+            User.objects.get(username__iexact=username)
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError(
+            _("A user with that username already exists."))
     
     def save(self, location):
         data = self.cleaned_data

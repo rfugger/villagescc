@@ -1,9 +1,6 @@
 Critical Path
 -------------
 
-SSL
-- set session cookie to ssl only
-
 User timezones?
 - using relative times helps this
   - show signed up/last logged in times as relative?
