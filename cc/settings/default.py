@@ -178,6 +178,10 @@ LOGIN_URL = '/login/'
 AUTH_PROFILE_MODULE = 'profile.Profile'
 LOGIN_REDIRECT_URL = '/'  # Default place to redirect after login.
 
+AUTHENTICATION_BACKENDS = (
+    'cc.profile.auth_backends.CaseInsensitiveModelBackend',
+)
+
 SESSION_COOKIE_SECURE = True
 LOCATION_COOKIE_NAME = 'location_id'
 LOCATION_COOKIE_AGE = timedelta(days=365)

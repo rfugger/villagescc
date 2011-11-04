@@ -5,8 +5,6 @@ User timezones?
 - using relative times helps this
   - show signed up/last logged in times as relative?
 
-Think about making usernames case-insensitive?
-
 Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
