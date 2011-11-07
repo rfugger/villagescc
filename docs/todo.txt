@@ -1,10 +1,6 @@
 Critical Path
 -------------
 
-User timezones?
-- using relative times helps this
-  - show signed up/last logged in times as relative?
-
 Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
@@ -12,7 +8,12 @@ Log
 
 More explanation on acknowledgement page.
 
+Hannah's changes
+
 Invite Ripple group
+
+Request (claim?) acknowledgement
+- have user setting to auto-acknowledge after N days?
 
 
 To Do
@@ -21,11 +22,20 @@ To Do
 Move this into trac?
 - Add all code TODOs as well.
 
+User timezones?
+- using relative times helps this
+  - show signed up/last logged in times as relative?
+
 Look into caching
 - why don't template changes always show up immediately on production?
 
 Make logging good.
 - Real IP address in django logs.
+
+Nicer welcome text for new users in area than blank feed and "no activity".
+- could expand to show further away posts
+- could say "welcome to area, you are the first", and "expand area to show more
+  posts".
 
 Backup entire server tolle.ryanfugger.com.
 
@@ -51,9 +61,6 @@ Make it easy to use current location for posts.
 Locator should show current location if different than home location.
 
 Never redirect from locator to locator again, go to feed instead.
-
-Request (claim?) acknowledgement
-- have user setting to auto-acknowledge after N days?
 
 Request undo acknowledgement (similar to request acknowledgement)
 
