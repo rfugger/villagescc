@@ -1,6 +1,8 @@
 Critical Path
 -------------
 
+*** Figure out how invalid node alias (16) got into local dev db.
+
 First newsletter to users
 - i'm stoked about the site and am serious about wanting to set up an economic
   village for myself to live in
@@ -170,6 +172,9 @@ Weekly newsletter to all users
 
 Fix 'X' in health when I endorse someone but they don't endorse me and
 balance is zero
+
+Translations
+- Jorge Timon can do Spanish and maybe Portuguese
 
 
 Ideas

@@ -90,8 +90,7 @@ class UserAccount(object):
     @property
     def entries(self):
         # TODO: Paginate entries.
-        node, _ = Node.objects.get_or_create(alias=self.user.id)
-        return [UserEntry(entry, node) for entry
+        return [UserEntry(entry, self.user) for entry
                 in self.creditline.account.entries.all().order_by(
                 '-payment__last_attempted_at')]
         
