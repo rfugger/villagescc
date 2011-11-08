@@ -15,7 +15,7 @@ RADIUS_CHOICES = (
     (INFINITE_RADIUS, 'Anywhere'),
 )
 
-DEFAULT_RADIUS = 5000
+DEFAULT_RADIUS = INFINITE_RADIUS
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
 class FeedFilterForm(forms.Form):

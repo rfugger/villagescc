@@ -1,6 +1,12 @@
 Critical Path
 -------------
 
+First newsletter to users
+- i'm stoked about the site and am serious about wanting to set up an economic
+  village for myself to live in
+- ask them to invite more people
+- ask them for feedback, see if they need clarification on anything, questions?
+
 Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
@@ -83,7 +89,7 @@ Asynchronous task queue
 
 Invitation requests should be feed items that any user can see and fulfill, 
 by geographic area!
-- maybe have them fill out their profile first, so people can see who they are?
+- have them fill out their profile first, so people can see who they are
 
 Let unregistered users click on links that go to pages only registered users
 can see, but then show them the signup form?
