@@ -6,7 +6,8 @@
 {% endif %}
 
 {% if my_endorsement %}
-	<p>You have endorsed this user with {{ my_endorsement.weight }}
+	<p>You have endorsed this user with 
+		<strong>{{ my_endorsement.weight }}</strong>
 		heart{{ my_endorsement.weight|pluralize:"s" }}.
 		<a href="{% url endorse_user profile.username %}">Edit</a>
 	</p>
