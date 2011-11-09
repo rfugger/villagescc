@@ -1,13 +1,18 @@
 Critical Path
 -------------
 
-*** Figure out how invalid node alias (16) got into local dev db.
-
 First newsletter to users
 - i'm stoked about the site and am serious about wanting to set up an economic
   village for myself to live in
 - ask them to invite more people
 - ask them for feedback, see if they need clarification on anything, questions?
+
+Better invitation request handling
+- give users a link they can share on fb, twitter, etc. that sends invitation
+  requests directly to them?
+- Invitation requests should be feed items that any user can see and fulfill, 
+  by geographic area?
+- have them fill out their profile first, so people can see who they are
 
 Log
 - log changes to email addresses so can make corrections if someone enters 
@@ -22,6 +27,8 @@ Invite Ripple group
 
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
+
+Encourage new users to endorse their inviter back
 
 
 To Do
@@ -88,10 +95,6 @@ Asynchronous task queue
   	import task; task.add(do_thing, args, kwargs)
 	and then the middleware will pick it up and dispatch it after 
 	view transaction is committed?
-
-Invitation requests should be feed items that any user can see and fulfill, 
-by geographic area!
-- have them fill out their profile first, so people can see who they are
 
 Let unregistered users click on links that go to pages only registered users
 can see, but then show them the signup form?
@@ -207,3 +210,4 @@ Have endorsement info built into profile feed item, and profile info page
 
 Have favourite users that you can filter your feed by
 
+Invite with acknowledgement as well as endorsement?
