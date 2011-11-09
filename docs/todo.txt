@@ -9,28 +9,19 @@ First newsletter to users
 - ask them to invite more people
 - ask them for feedback, see if they need clarification on anything, questions?
 
-Better invitation request handling
-- give users a link they can share on fb, twitter, etc. that sends invitation
-  requests directly to them?
-- Invitation requests should be feed items that any user can see and fulfill, 
-  by geographic area?
-- have them fill out their profile first, so people can see who they are
+Hannah's changes
+
+Encourage new users to endorse their inviter back
+
+More explanation on acknowledgement page.
 
 Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
 - who invited whom, to see who is bringing in spammers?
 
-More explanation on acknowledgement page.
-
-Hannah's changes
-
-Invite Ripple group
-
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
-
-Encourage new users to endorse their inviter back
 
 
 To Do
