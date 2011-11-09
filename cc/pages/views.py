@@ -6,6 +6,8 @@ from django.conf import settings
 
 from cc.general.util import render
 from cc.pages.forms import AnonymousFeedbackForm, UserFeedbackForm
+from cc.profile.views import SHARED_BY_PROFILE_ID_KEY, SHARED_BY_USERNAME_KEY
+from cc.profile.models import Profile
 
 MESSAGES = {
     'feedback_sent': "Thank you for your feedback.",
@@ -16,6 +18,15 @@ def intro(request):
     # Let logged-in users see the intro page if there's a GET param.
     if request.profile and not request.GET:
         return redirect('feed')
+    # Store link sharer profile ID in session.
+    sharer_username = request.GET.get(SHARED_BY_USERNAME_KEY, None)
+    if not request.profile and sharer_username:
+        try:
+            sharer_profile = Profile.objects.get(user__username=sharer_username)
+        except Profile.DoesNotExist:
+            pass
+        else:
+            request.session[SHARED_BY_PROFILE_ID_KEY] = sharer_profile.id
     return {}
 
 @render()

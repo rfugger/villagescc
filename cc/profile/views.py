@@ -21,6 +21,15 @@ from cc.relate.models import Endorsement
 from cc.feed.views import feed
 from cc.general.mail import send_mail_from_system
 
+# Session key to store invite code for later signing up.
+INVITE_CODE_KEY = 'invite_code'
+
+# Session key for profile ID of link sharer.
+SHARED_BY_PROFILE_ID_KEY = 'shared_by'
+
+# URL param key for username of link sharer.
+SHARED_BY_USERNAME_KEY = 'u'
+
 MESSAGES = {
     'profile_saved': "Profile saved.",
     'contact_sent': "Message sent.",
@@ -44,8 +53,6 @@ MESSAGES = {
                            "Please take a look around and then use the "
                            "<em>Join</em> link on the right to register."),
 }
-
-INVITE_CODE_KEY = 'invite_code'
 
 def get_invitation(request):
     """
@@ -124,8 +131,8 @@ def login(request):
     return response
 
 @login_required
-@render()
-def settings(request):
+@render('settings.html')
+def edit_settings(request):
     if request.method == 'POST':
         if 'change_settings' in request.POST:
             old_email = request.profile.settings.email
@@ -234,7 +241,8 @@ def invite(request):
                     invitation.to_email))
             return redirect(invite)
     else:
-        form = InvitationForm(request.profile)
+        initial = {'to_email': request.GET.get('email', '')}
+        form = InvitationForm(request.profile, initial=initial)
     return locals()
 
 @deflect_logged_in
@@ -291,9 +299,25 @@ def request_invitation(request):
     if request.method == 'POST':
         form = RequestInvitationForm(request.POST)
         if form.is_valid():
-            form.send()
+            to_profile = get_shared_by_profile(request)
+            form.send(to_profile)
             messages.info(request, MESSAGES['invitation_request_sent'])
             return redirect('home')
     else:
         form = RequestInvitationForm()
+    return locals()
+
+def get_shared_by_profile(request):
+    profile = None
+    if SHARED_BY_PROFILE_ID_KEY in request.session:
+        try:
+            profile = Profile.objects.get(
+                pk=request.session[SHARED_BY_PROFILE_ID_KEY])
+        except Profile.DoesNotExist:
+            pass
+    return profile
+
+@login_required
+@render()
+def share(request):
     return locals()

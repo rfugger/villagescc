@@ -1,1 +1,4 @@
 {{ text }}
+
+----
+Invite this user: http://{{ domain }}{% url invite %}?email={{ email }}

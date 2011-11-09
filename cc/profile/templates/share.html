@@ -1,0 +1,33 @@
+{% extends "home_base.html" %}
+{% load profile %}
+
+{% block title %}Share Villages{% endblock %}
+
+{% block nav_share_class %}selected{% endblock %}
+
+{% block content %}
+<h2>Share Villages</h2>
+
+<p>To share Villages with a group of friends, and have their invitation requests
+	come to you, share this link:</p>
+<p class="feature">
+	<a href="{% share_link request.profile %}"
+	   >{% share_link request.profile %}</a>
+</p>
+
+<div class="share_buttons line">
+	<div class="unit">
+		<a name="fb_share" share_url="{% share_link request.profile %}"></a> 
+		<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" 
+				type="text/javascript">
+		</script>
+	</div>
+	<div class="unit lastUnit">
+		<a href="https://twitter.com/share" class="twitter-share-button" 
+		   data-url="{% share_link request.profile %}" data-count="none"
+		   >Tweet</a>
+		<script type="text/javascript" src="//platform.twitter.com/widgets.js">
+		</script>
+	</div>
+</div>
+{% endblock %}

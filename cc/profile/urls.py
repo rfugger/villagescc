@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^register/$', 'register', name='register'),
     url(r'^login/$', 'login', name='login'),
     url(r'^logout/$', logout, name='logout', kwargs=dict(next_page='/')),
-    url(r'^settings/$', 'settings', name='settings'),
+    url(r'^settings/$', 'edit_settings', name='settings'),
     url(r'^profiles/edit/$', 'edit_profile', name='edit_profile'),
     url(r'^profiles/$', feed,
         dict(item_type=Profile, template='profiles.html', do_filter=True),
@@ -25,4 +25,5 @@ urlpatterns = patterns(
     url(r'^invitations/$', 'invitations_sent', name='invitations_sent'),
     url(r'^request_invitation/$', 'request_invitation',
         name='request_invitation'),
+    url(r'^share/$', 'share', name='share'),
 )

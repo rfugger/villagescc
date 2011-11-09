@@ -117,11 +117,18 @@ class RequestInvitationForm(forms.Form):
         data = self.cleaned_data
         return email_str(data.get('name'), data['email'])
     
-    def send(self):
+    def send(self, to_profile=None):
         data = self.cleaned_data
-        send_mail_to_admin(
-            "Villages.cc Invitation Request", self.sender(), 
-            'request_invitation_email.txt', {'text': data['text']})
+        subject = "Villages.cc Invitation Request"
+        context = {'text': data['text'],
+                   'email': data['email']}
+        if to_profile:
+            send_mail(subject, self.sender(), to_profile,
+                      'request_invitation_email.txt', context)
+        else:
+            send_mail_to_admin(
+                subject, self.sender(), 'request_invitation_email.txt',
+                context)
     
 class ProfileForm(forms.ModelForm):
     class Meta:
