@@ -22,12 +22,22 @@
 				type="text/javascript">
 		</script>
 	</div>
-	<div class="unit lastUnit">
+	<div class="unit">
 		<a href="https://twitter.com/share" class="twitter-share-button" 
 		   data-url="{% share_link request.profile %}"
 		   data-text="{% share_link request.profile %}" data-count="none"
 		   >Tweet</a>
 		<script type="text/javascript" src="//platform.twitter.com/widgets.js">
+		</script>
+	</div>
+	<div class="unit lastUnit">
+		<g:plusone annotation="none" href="{% share_link request.profile %}"></g:plusone>
+		<script type="text/javascript">
+			(function() {
+				var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+				po.src = 'https://apis.google.com/js/plusone.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			})();
 		</script>
 	</div>
 </div>
