@@ -18,13 +18,13 @@
 <div class="share_buttons line">
 	<div class="unit">
 		<a name="fb_share" share_url="{% share_link request.profile %}"></a> 
-		<script src="https://s-static.ak.fbcdn.net/connect.php/js/FB.Share" 
+		<script src="//s-static.ak.fbcdn.net/connect.php/js/FB.Share" 
 				type="text/javascript">
 		</script>
 	</div>
 	<div class="unit lastUnit">
 		<a href="https://twitter.com/share" class="twitter-share-button" 
-		   data-url="{% share_link request.profile %}" data-count="none"
+		   data-text="{% share_link request.profile %}" data-count="none"
 		   >Tweet</a>
 		<script type="text/javascript" src="//platform.twitter.com/widgets.js">
 		</script>
