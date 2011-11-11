@@ -145,13 +145,13 @@ def edit_settings(request):
                     messages.info(request, MESSAGES['email_updated'])
                 else:
                     messages.info(request, MESSAGES['settings_changed'])
-                return redirect(settings)
+                return redirect(edit_settings)
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 password_form.save()
                 messages.info(request, MESSAGES['password_changed'])
-                return redirect(settings)
+                return redirect(edit_settings)
         
     if 'change_settings' not in request.POST:
         settings_form = SettingsForm(instance=request.profile.settings)
