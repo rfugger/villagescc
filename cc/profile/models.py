@@ -123,7 +123,7 @@ class Profile(models.Model):
     @property
     @cache_on_object
     def endorsements_remaining(self):
-        return max(((self.endorsement_count) * settings.ENDORSEMENT_BONUS -
+        return max(((self.endorsement_count + 1) * settings.ENDORSEMENT_BONUS -
                     self.endorsements_made_sum), 0)
 
     @property
