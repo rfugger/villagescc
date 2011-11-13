@@ -158,7 +158,7 @@ class SettingsForm(forms.ModelForm):
 
     class Meta:
         model = Settings
-        fields = ('email', 'send_notifications')
+        fields = ('email', 'send_notifications', 'send_newsletter')
 
     def clean_email(self):
         email = self.cleaned_data['email']

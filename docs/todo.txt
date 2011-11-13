@@ -1,24 +1,57 @@
 Critical Path
 -------------
 
-favicon
-
 First newsletter to users
+- send newsletter feature in admin
 - i'm stoked about the site and am serious about wanting to set up an economic
   village for myself to live in
 - ask them to invite more people
 - ask them for feedback, see if they need clarification on anything, questions?
+- encourage reciprocal endorsement of inviters
 
-Hannah's changes
+Copy editing
+- Wording improvements
+  - endorsement -> thumbs up; endorse -> "give thumbs up"?
+  - hearts -> thumbs up
+  - acknowledge -> thank; acknowledgement -> thank you
+  - N acknowledgement hours -> N hours of goodwill
+- Rewrite How It Works as a real-world example
+  - include how goodwill between friends integrates with the goodwill accounting
+    we already do with each other
+- Hannah's changes
+- More explanation on acknowledgement page.
+
+First feed search starts at 5km and keeps expanding until there are at least 20
+items.
+
+Location improvements
+- Make it easy to use current location for posts.
+- Change post location
+- Option to have a post follow you when your location changes.
+- manage multiple locations.
+  - drop down of my locations on locator and post
+  - my locations page to manage these locations
 
 Encourage new users to endorse their inviter back
-
-More explanation on acknowledgement page.
 
 Log
 - log changes to email addresses so can make corrections if someone enters 
   wrong address and owner complains
 - who invited whom, to see who is bringing in spammers?
+
+Set up cron jobs for:
+- cleaning expired sessions
+- maybe do with task queue?
+
+Design
+- colour scheme
+- logo
+- favicon
+- helpful icons
+
+Translations
+- strings file
+- Jorge Timon can do Spanish and maybe Portuguese
 
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
@@ -60,11 +93,6 @@ Add more buffers to postgres.
 Give someone else access to server in case
 
 Set up quick tests of views to catch pages that blow up after changes.
-
-Set up cron jobs for:
-- cleaning expired sessions
-
-Make it easy to use current location for posts.
 
 Locator should show current location if different than home location.
 
@@ -156,11 +184,6 @@ Automated tests for views
 Better explanation of Ripple
 - Ripple page with diagrams/video?
 
-Design
-- logo
-- favicon
-- helpful icons
-
 Intro video
 
 Weekly newsletter to all users
@@ -169,8 +192,8 @@ Weekly newsletter to all users
 Fix 'X' in health when I endorse someone but they don't endorse me and
 balance is zero
 
-Translations
-- Jorge Timon can do Spanish and maybe Portuguese
+Load jquery locally rather than from google
+- mix into js bundle
 
 
 Ideas
@@ -204,3 +227,7 @@ Have endorsement info built into profile feed item, and profile info page
 Have favourite users that you can filter your feed by
 
 Invite with acknowledgement as well as endorsement?
+
+Share posts to facebook, etc?
+- hook to get new users signed up
+- request invites to poster
