@@ -57,7 +57,7 @@
 		var hours = $("#id_amount").val();
 		var ack_type = "direct";
 		if (can_ripple) {
-			var ripple = ($("#id_ripple").val() == "routed");
+			var ripple = ($("input:radio[name=ripple]:checked").val() == "routed");
 			if (ripple) {
 				ack_type = "trusted";
 			} 
