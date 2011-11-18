@@ -1,11 +1,11 @@
 from django import forms
 
 from cc.general.models import EmailField
-from cc.general.mail import send_mail_to_admin, email_str
+from cc.general.mail import send_mail_to_admin
 
 class FeedbackForm(forms.Form):
     feedback = forms.CharField(widget=forms.Textarea)
-
+    
     def get_sender(self):
         return NotImplementedError  # Implement in subclasses.
 
@@ -20,7 +20,7 @@ class AnonymousFeedbackForm(FeedbackForm):
 
     def get_sender(self):
         data = self.cleaned_data
-        return email_str(data.get('name'), data['email'])
+        return data.get('name'), data['email']
     
 AnonymousFeedbackForm.base_fields.keyOrder = ['name', 'email', 'feedback']
 

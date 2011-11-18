@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from cc.profile.models import Profile, Invitation, Settings
 from cc.general.models import EmailField
-from cc.general.mail import send_mail, send_mail_to_admin, email_str
+from cc.general.mail import send_mail, send_mail_to_admin
 
 ERRORS = {
     'email_dup': "That email address is registered to another user.",
@@ -115,7 +115,7 @@ class RequestInvitationForm(forms.Form):
     def sender(self):
         "Returns appropriate text for email sender field."
         data = self.cleaned_data
-        return email_str(data.get('name'), data['email'])
+        return data.get('name'), data['email']
     
     def send(self, to_profile=None):
         data = self.cleaned_data
@@ -127,8 +127,7 @@ class RequestInvitationForm(forms.Form):
                       'request_invitation_email.txt', context)
         else:
             send_mail_to_admin(
-                subject, self.sender(), 'request_invitation_email.txt',
-                context)
+                subject, self.sender(), 'request_invitation_email.txt', context)
     
 class ProfileForm(forms.ModelForm):
     class Meta:

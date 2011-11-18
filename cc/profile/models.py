@@ -178,7 +178,7 @@ class Settings(models.Model):
         "Receive notifications", default=True, help_text=(
             "Receive email whenever someone endorses or acknowledges you."))
     send_newsletter = models.BooleanField(
-        "Receive newsletter", default=True, help_text=(
+        "Receive updates", default=True, help_text=(
             "Receive occasional news about the Villages community."))
     
     # Sticky form settings.

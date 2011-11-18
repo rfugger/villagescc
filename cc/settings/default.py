@@ -100,7 +100,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.admin',
     # 'django.contrib.admindocs',
     'django.contrib.gis',
     'django.contrib.humanize',
@@ -115,10 +114,14 @@ INSTALLED_APPS = (
     'cc.relate',
     'cc.general',
     'cc.pages',
+    'cc.admin',
     
     # Ripple
     'cc.account',
     'cc.payment',
+
+    # This goes below cc.admin, so cc.admin's templates are used first.
+    'django.contrib.admin',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

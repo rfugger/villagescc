@@ -17,6 +17,7 @@ urlpatterns = patterns(
     (r'^posts/', include('cc.post.urls')),
     (r'', include('cc.relate.urls')),
 
+    (r'^admin/', include('cc.admin.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
 

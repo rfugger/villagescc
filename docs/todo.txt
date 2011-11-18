@@ -1,6 +1,10 @@
 Critical Path
 -------------
 
+Get DKIM and SenderID working
+- must send from web@villages.cc, reply-to actual sender
+  - check send_mail_* and send_notification calls
+
 First newsletter to users
 - send newsletter feature in admin
 - i'm stoked about the site and am serious about wanting to set up an economic
@@ -11,8 +15,7 @@ First newsletter to users
 
 Copy editing
 - Wording improvements
-  - endorsement -> thumbs up; endorse -> "give thumbs up"?
-  - hearts -> thumbs up
+  - endorse -> trust; endorsement -> trust connection/connection
   - acknowledge -> thank; acknowledgement -> thank you
   - N acknowledgement hours -> N hours of goodwill
 - Rewrite How It Works as a real-world example
@@ -20,6 +23,9 @@ Copy editing
     we already do with each other
 - Hannah's changes
 - More explanation on acknowledgement page.
+
+No invitation required.
+- no more invitation request form.
 
 First feed search starts at 5km and keeps expanding until there are at least 20
 items.
@@ -39,9 +45,15 @@ Log
   wrong address and owner complains
 - who invited whom, to see who is bringing in spammers?
 
+Get rid of hearts limit
+
+Hide # of hearts from endorsement recipient and others?
+
 Set up cron jobs for:
 - cleaning expired sessions
 - maybe do with task queue?
+
+Forgot password/password reset
 
 Design
 - colour scheme
@@ -175,8 +187,6 @@ Last login != last online time - fix.
 
 Delete profile
 
-Forgot password/password reset
-
 Nice base html email template
 
 Automated tests for views
@@ -231,3 +241,5 @@ Invite with acknowledgement as well as endorsement?
 Share posts to facebook, etc?
 - hook to get new users signed up
 - request invites to poster
+
+Recommend someone to a friend
