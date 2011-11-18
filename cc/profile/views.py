@@ -290,7 +290,7 @@ def invitations_sent(request):
             invitation.delete()
             messages.info(request, MESSAGES['invitation_deleted'])
         return redirect(invitations_sent)
-    invitations = request.profile.invitations_sent.all()
+    invitations = request.profile.invitations_sent.order_by('-date')
     return locals()
 
 @deflect_logged_in
