@@ -1,9 +1,7 @@
 Critical Path
 -------------
 
-Get DKIM and SenderID working
-- must send from web@villages.cc, reply-to actual sender
-  - check send_mail_* and send_notification calls
+Resend all hotmail invites.
 
 First newsletter to users
 - send newsletter feature in admin
