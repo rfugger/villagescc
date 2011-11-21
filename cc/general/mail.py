@@ -12,15 +12,14 @@ def send_mail(subject, sender, recipient, template, context):
     body = loader.render_to_string(
         template, context, context_instance=Context(autoescape=False))
     sender_name, sender_email = split_name_email(sender)
-    from_email_str = email_str(sender_name, sender_email)
     to_email_str = make_email(recipient)
 
-    # Set headers for SPF/DKIM/SenderID validation.
-    headers = {'From': from_email_str,
-               'Sender': settings.DEFAULT_FROM_EMAIL}
+    # Set headers SPF/DKIM/SenderID validation.
+    # Email from DEFAULT_FROM_EMAIL, Reply-to sender's email.
+    from_email_str = email_str(sender_name, settings.DEFAULT_FROM_EMAIL)
+    headers = {'Reply-To': email_str(sender_name, sender_email)}
     
-    msg = EmailMessage(subject=subject, body=body,
-                       from_email=settings.DEFAULT_FROM_EMAIL,
+    msg = EmailMessage(subject=subject, body=body, from_email=from_email_str,
                        to=(to_email_str,), headers=headers)
     msg.send()
 
