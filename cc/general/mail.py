@@ -16,10 +16,11 @@ def send_mail(subject, sender, recipient, template, context):
     to_email_str = make_email(recipient)
 
     # Set headers for SPF/DKIM/SenderID validation.
-    headers = {'Sender': settings.DEFAULT_FROM_EMAIL,
-               'Return-Path': settings.DEFAULT_FROM_EMAIL}
+    headers = {'From': from_email_str,
+               'Sender': settings.DEFAULT_FROM_EMAIL}
     
-    msg = EmailMessage(subject=subject, body=body, from_email=from_email_str,
+    msg = EmailMessage(subject=subject, body=body,
+                       from_email=settings.DEFAULT_FROM_EMAIL,
                        to=(to_email_str,), headers=headers)
     msg.send()
 
