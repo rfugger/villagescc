@@ -181,6 +181,8 @@ LOGIN_URL = '/login/'
 AUTH_PROFILE_MODULE = 'profile.Profile'
 LOGIN_REDIRECT_URL = '/'  # Default place to redirect after login.
 
+INVITATION_ONLY = False
+
 AUTHENTICATION_BACKENDS = (
     'cc.profile.auth_backends.CaseInsensitiveModelBackend',
 )

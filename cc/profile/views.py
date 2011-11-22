@@ -7,6 +7,7 @@ from django.contrib.auth.views import login as django_login_view
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
@@ -75,7 +76,7 @@ def check_invitation(request):
     If no invitation, redirect to request_invitation.
     """
     invitation = get_invitation(request)
-    if invitation:
+    if invitation or not settings.INVITATION_ONLY:
         return redirect(register)
     else:
         return redirect(request_invitation)
@@ -85,23 +86,23 @@ def check_invitation(request):
 @render()
 def register(request):
     """
-    Registration form.  Requires invitation code in session (from
-    invitation view).
+    Registration form.
     """
     invitation = get_invitation(request)
-    if not invitation:
-        raise PermissionDenied
+    if settings.INVITATION_ONLY and not invitation:
+        raise PermissionDenied    
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             profile = form.save(request.location)
-            # Turn invitation into endorsement.
-            Endorsement.objects.create(
-                endorser = invitation.from_profile,
-                recipient = profile,
-                weight = invitation.endorsement_weight,
-                text = invitation.endorsement_text)
-            invitation.delete()
+            if invitation:
+                # Turn invitation into endorsement.
+                Endorsement.objects.create(
+                    endorser = invitation.from_profile,
+                    recipient = profile,
+                    weight = invitation.endorsement_weight,
+                    text = invitation.endorsement_text)
+                invitation.delete()
             # Auto login.
             user = authenticate(username=form.username, password=form.password)
             django_login(request, user)
@@ -111,7 +112,9 @@ def register(request):
             messages.info(request, MESSAGES['registration_done'])            
             return redirect(edit_profile)
     else:
-        initial = {'email': invitation.to_email}
+        initial = {}
+        if invitation:
+            initial['email'] = invitation.to_email
         form = RegistrationForm(initial=initial)
     return locals()
 
@@ -159,10 +162,10 @@ def edit_settings(request):
         password_form = PasswordChangeForm(request.user)
     return locals()
 
-def send_new_address_email(settings):
+def send_new_address_email(settings_obj):
     subject = "Your Villages.cc email address has been updated"
-    send_mail_from_system(subject, settings.profile, 'new_email.txt',
-                          {'new_email': settings.email})
+    send_mail_from_system(subject, settings_obj.profile, 'new_email.txt',
+                          {'new_email': settings_obj.email})
 
 @login_required
 @render()
