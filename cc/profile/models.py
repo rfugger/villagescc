@@ -173,7 +173,10 @@ class Settings(models.Model):
     "Profile settings."
     profile = models.OneToOneField(Profile, related_name='settings')
     email = EmailField(blank=True)
-    endorsement_limited = models.BooleanField(default=True)
+    endorsement_limited = models.BooleanField(
+        "Limited hearts", default=True, help_text=(
+            "Uncheck this if you know what you're doing and want to give "
+            "out more hearts."))
     send_notifications = models.BooleanField(
         "Receive notifications", default=True, help_text=(
             "Receive email whenever someone endorses or acknowledges you."))

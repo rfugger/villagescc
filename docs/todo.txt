@@ -1,21 +1,22 @@
 Critical Path
 -------------
 
-Resend all hotmail invites.
+Resend all hotmail invites once sender-id=temperror is fixed.
 
 First newsletter to users
-- send newsletter feature in admin
 - i'm stoked about the site and am serious about wanting to set up an economic
   village for myself to live in
 - ask them to invite more people
 - ask them for feedback, see if they need clarification on anything, questions?
 - encourage reciprocal endorsement of inviters
+- new features: unlimited hearts, ...
 
 Copy editing
 - Wording improvements
   - endorse -> trust; endorsement -> trust connection/connection
   - acknowledge -> thank; acknowledgement -> thank you
   - N acknowledgement hours -> N hours of goodwill
+  - hours -> stones
 - Rewrite How It Works as a real-world example
   - include how goodwill between friends integrates with the goodwill accounting
     we already do with each other
@@ -43,8 +44,6 @@ Log
   wrong address and owner complains
 - who invited whom, to see who is bringing in spammers?
 
-Get rid of hearts limit
-
 Hide # of hearts from endorsement recipient and others?
 
 Set up cron jobs for:
@@ -60,6 +59,7 @@ Design
 - helpful icons
 
 Translations
+- tranlate-to link to google translate for different languages on static pages
 - strings file
 - Jorge Timon can do Spanish and maybe Portuguese
 

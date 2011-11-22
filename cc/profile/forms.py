@@ -17,9 +17,18 @@ ERRORS = {
 
 class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
-    name = forms.CharField(max_length=100, required=False)
-    email = forms.EmailField(max_length=EmailField.MAX_EMAIL_LENGTH)
+    name = forms.CharField(
+        max_length=100, required=False, help_text=(
+            "Name displayed to other users."))
+    email = forms.EmailField(
+        max_length=EmailField.MAX_EMAIL_LENGTH, help_text=(
+            "The address to receive notifications from Villages."))
 
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].help_text = "Desired login name."
+        self.fields['password1'].help_text = "Desired password."
+    
     def clean_email(self):
         email = self.cleaned_data['email']
         if Settings.objects.filter(email__iexact=email).exists():
@@ -59,7 +68,7 @@ class RegistrationForm(UserCreationForm):
         return self.cleaned_data['password1']
 
 RegistrationForm.base_fields.keyOrder = [
-    'username', 'name', 'email', 'password1', 'password2']
+    'name', 'email', 'username', 'password1', 'password2']
 
 class InvitationForm(forms.ModelForm):
     # TODO: Merge with EndorseForm somehow, into a common superclass?
@@ -157,7 +166,8 @@ class SettingsForm(forms.ModelForm):
 
     class Meta:
         model = Settings
-        fields = ('email', 'send_notifications', 'send_newsletter')
+        fields = ('email', 'endorsement_limited',
+                  'send_notifications', 'send_newsletter')
 
     def clean_email(self):
         email = self.cleaned_data['email']
