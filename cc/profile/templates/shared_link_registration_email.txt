@@ -1,0 +1,11 @@
+{{ profile }} has registered on Villages after clicking on a link that you shared.
+
+To view their profile, go to:
+
+http://{{ domain }}{% url profile profile.username %}
+
+To endorse them:
+
+http://{{ domain }}{% url endorse_user profile.username %}
+
+Thank you for sharing Villages!

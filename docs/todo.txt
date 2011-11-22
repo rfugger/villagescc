@@ -23,9 +23,6 @@ Copy editing
 - Hannah's changes
 - More explanation on acknowledgement page.
 
-No invitation required.
-- no more invitation request form.
-
 First feed search starts at 5km and keeps expanding until there are at least 20
 items.
 

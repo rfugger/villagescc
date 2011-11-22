@@ -1,0 +1,7 @@
+{{ profile }} has accepted your invitation to Villages.
+
+To see their profile, go to:
+
+http://{{ domain }}{% url profile profile.username %}
+
+Thanks for sharing Villages!

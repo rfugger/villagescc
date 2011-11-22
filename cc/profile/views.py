@@ -102,7 +102,11 @@ def register(request):
                     recipient = profile,
                     weight = invitation.endorsement_weight,
                     text = invitation.endorsement_text)
+                send_invitation_accepted_email(invitation, profile)
                 invitation.delete()
+            else:
+                # Let sharer know someone registered through their link.
+                send_shared_link_registration_email(request, profile)
             # Auto login.
             user = authenticate(username=form.username, password=form.password)
             django_login(request, user)
@@ -123,6 +127,25 @@ def send_registration_email(profile):
     send_mail_from_system(subject, profile, 'registration_email.txt',
                           {'profile': profile})
 
+def send_invitation_accepted_email(invitation, profile):
+    "Let inviter know invitation has been accepted."
+    subject = "%s accepted your invitation to Villages" % profile
+    send_mail_from_system(
+        subject, invitation.from_profile, 'invitation_accepted_email.txt',
+        {'profile': profile})
+    
+def send_shared_link_registration_email(request, profile):
+    "Let sharer know someone registered through their link."
+    sharer_id = request.session.get(SHARED_BY_PROFILE_ID_KEY)
+    if sharer_id:
+        # Sharer_id shouldn't go into session unless it's a valid ID, so no
+        # need to catch invalid ID.
+        sharer = Profile.objects.get(pk=sharer_id)
+        subject = "%s registered on Villages using your shared link" % profile
+        send_mail_from_system(
+            subject, sharer, 'shared_link_registration_email.txt',
+            {'profile': profile})
+    
 @deflect_logged_in
 def login(request):
     response = django_login_view(
