@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from cc.profile.models import Profile, Invitation, Settings
+from cc.profile.models import (
+    Profile, Invitation, Settings, PasswordResetLink)
 from cc.general.models import EmailField
 from cc.general.mail import send_mail, send_mail_to_admin
 
@@ -13,6 +14,7 @@ ERRORS = {
     'already_invited': "You have already sent an invitation to %s.",
     'self_invite': "You can't invite yourself.",
     'over_weight': "Please ensure this number is below %d.",
+    'invalid_username': "That username or email isn't recognized.",
 }
 
 class RegistrationForm(UserCreationForm):
@@ -69,6 +71,32 @@ class RegistrationForm(UserCreationForm):
 
 RegistrationForm.base_fields.keyOrder = [
     'name', 'email', 'username', 'password1', 'password2']
+
+class ForgotPasswordForm(forms.Form):
+    username_or_email = forms.CharField()
+
+    def clean_username_or_email(self):
+        """
+        If username or email is known to the system, set self.profile to
+        appropriate value.  If username or email is unknown, and raise
+        ValidationError.
+        """
+        username_or_email = self.cleaned_data['username_or_email']
+        try:
+            user = User.objects.get(username__iexact=username_or_email)
+            self.profile = user.profile
+        except User.DoesNotExist:
+            try:
+                self.profile = Profile.objects.get(
+                    settings__email__iexact=username_or_email)
+            except Profile.DoesNotExist:
+                raise forms.ValidationError(ERRORS['invalid_username'])
+        return username_or_email
+
+    def create_reset_link(self):
+        link = PasswordResetLink(profile=self.profile)
+        link.save()
+        link.send()
 
 class InvitationForm(forms.ModelForm):
     # TODO: Merge with EndorseForm somehow, into a common superclass?

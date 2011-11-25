@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -5,15 +7,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.views import login as django_login_view
 from django.core.urlresolvers import reverse
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
     RegistrationForm, ProfileForm, ContactForm, SettingsForm, InvitationForm,
-    RequestInvitationForm)
-from cc.profile.models import Profile, Invitation
+    RequestInvitationForm, ForgotPasswordForm)
+from cc.profile.models import Profile, Invitation, PasswordResetLink
 from cc.post.models import Post
 import cc.ripple.api as ripple
 from cc.geo.util import location_required
@@ -53,6 +55,9 @@ MESSAGES = {
     'invitation_landing': ("%s has invited you to Villages.cc.<br>"
                            "Please take a look around and then use the "
                            "<em>Join</em> link on the right to register."),
+    'password_link_sent': "A password reset link has been emailed to you.",
+    'password_reset': ("Your password has been reset.  You may now log in with "
+                       "your new password."),
 }
 
 def get_invitation(request):
@@ -155,6 +160,34 @@ def login(request):
         response['Location'] == reverse('locator')):
         return redirect('home')
     return response
+
+@deflect_logged_in
+@render()
+def forgot_password(request):
+    if request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            form.create_reset_link()
+            messages.info(request, MESSAGES['password_link_sent'])
+            return redirect(login)
+    else:
+        form = ForgotPasswordForm()
+    return locals()
+
+@deflect_logged_in
+@render()
+def reset_password(request, code):
+    link = get_object_or_404(
+        PasswordResetLink, code=code, expires__gt=datetime.now())
+    if request.method == 'POST':
+        form = SetPasswordForm(link.profile.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, MESSAGES['password_reset'])
+            return redirect(login)
+    else:
+        form = SetPasswordForm(link.profile.user)
+    return locals()
 
 @login_required
 @render('settings.html')

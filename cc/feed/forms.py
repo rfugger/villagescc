@@ -73,9 +73,6 @@ class FeedFilterForm(forms.Form):
                 poster=self.poster, recipient=self.recipient)
             # On first or anonymous visits without explicit radius, expand radius
             # until there are a bunch of items or until we're at max radius.
-
-            # TODO, WORKING ON: Test this out... *************************
-            
             if (not (self.profile and self.profile.settings.feed_radius) and
                 not self._explicit_radius and
                 len(items) < settings.FEED_ITEMS_PER_PAGE and

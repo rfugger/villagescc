@@ -1,6 +1,8 @@
 from django.core.mail import EmailMessage
 from django.template import loader, Context
 from django.conf import settings
+from django.core.validators import validate_email
+from django import forms
 
 def send_mail(subject, sender, recipient, template, context):
     """
@@ -68,3 +70,11 @@ def email_str(name, email):
         return u'"%s" <%s>' % (name, email)
     else:
         return email
+
+def is_valid_email(email):
+    try:
+        validate_email(email)
+    except forms.ValidationError:
+        return False
+    else:
+        return True

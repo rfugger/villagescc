@@ -11,7 +11,7 @@ from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
-from cc.general.mail import send_mail, email_str
+from cc.general.mail import send_mail, email_str, send_mail_from_system
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -216,10 +216,6 @@ class Invitation(models.Model):
     def get_absolute_url(self):
         return 'invitation', (self.code,)
 
-    def set_code(self):
-        self.code = ''.join(
-            (random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
-
     def send(self):
         send_mail("%s Has Invited You To Villages.cc" % self.from_profile,
                   self.from_profile, self.to_email, 'invitation_email.txt',
@@ -230,8 +226,42 @@ class Invitation(models.Model):
     @classmethod
     def pre_save(cls, sender, instance, **kwargs):
         if not instance.code:
-            instance.set_code()
+            instance.code = generate_code()
 
 # Fill in code before saving.
 pre_save.connect(Invitation.pre_save, sender=Invitation,
                  dispatch_uid='profile.models')
+
+class PasswordResetLink(models.Model):
+    profile = models.ForeignKey(Profile)
+    code = VarCharField(unique=True)
+    expires = models.DateTimeField()
+
+    def __unicode__(self):
+        return "Password reset link for %s" % self.profile
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'reset_password', (self.code,)
+
+    def send(self):
+        subject = "Villages.cc Password Reset Link"
+        send_mail_from_system(subject, self.profile, 'password_reset_email.txt',
+                              {'link': self})
+
+    @classmethod
+    def pre_save(cls, sender, instance, **kwargs):
+        if not instance.code:
+            instance.code = generate_code()
+        if not instance.expires:
+            instance.expires = (
+                datetime.now() + settings.PASSWORD_RESET_LINK_EXPIRY)
+
+# Fill in code before saving.
+pre_save.connect(PasswordResetLink.pre_save, sender=PasswordResetLink,
+                 dispatch_uid='profile.models')
+
+    
+def generate_code():
+    return ''.join((random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
+    

@@ -33,6 +33,13 @@ Location improvements
   - drop down of my locations on locator and post
   - my locations page to manage these locations
 
+Show acknowledgements on relationship, not just entries
+- If Vicki acknowledges Dion through me, it's not in the entries
+  on her relationship with Dion.
+- users get confused...
+
+Endorse|Acknowledge|Contact buttons next to user's name on profile page.
+
 Encourage new users to endorse their inviter back
 - give them a link
 
@@ -79,6 +86,8 @@ Look into caching
 
 Make logging good.
 - Real IP address in django logs.
+
+Log in with email address, not just username.
 
 Backup entire server tolle.ryanfugger.com.
 

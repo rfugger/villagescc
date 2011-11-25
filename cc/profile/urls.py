@@ -10,6 +10,9 @@ urlpatterns = patterns(
     url(r'^register/$', 'register', name='register'),
     url(r'^login/$', 'login', name='login'),
     url(r'^logout/$', logout, name='logout', kwargs=dict(next_page='/')),
+    url(r'^forgot/$', 'forgot_password', name='forgot_password'),
+    url(r'^resetpass/([^/]+)/$', 'reset_password', name='reset_password'),
+
     url(r'^settings/$', 'edit_settings', name='settings'),
     url(r'^profiles/edit/$', 'edit_profile', name='edit_profile'),
     url(r'^profiles/$', feed,

@@ -183,6 +183,8 @@ LOGIN_REDIRECT_URL = '/'  # Default place to redirect after login.
 
 INVITATION_ONLY = False
 
+PASSWORD_RESET_LINK_EXPIRY = timedelta(days=7)
+
 AUTHENTICATION_BACKENDS = (
     'cc.profile.auth_backends.CaseInsensitiveModelBackend',
 )
