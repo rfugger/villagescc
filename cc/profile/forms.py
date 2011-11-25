@@ -21,14 +21,15 @@ class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
     name = forms.CharField(
         max_length=100, required=False, help_text=(
-            "Name displayed to other users."))
+            "Name displayed to other users. You can change this later."))
     email = forms.EmailField(
         max_length=EmailField.MAX_EMAIL_LENGTH, help_text=(
             "The address to receive notifications from Villages."))
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].help_text = "Desired login name."
+        self.fields['username'].help_text = (
+            "Desired login name. You cannot change this.")
         self.fields['password1'].help_text = "Desired password."
     
     def clean_email(self):

@@ -183,6 +183,7 @@ def reset_password(request, code):
         form = SetPasswordForm(link.profile.user, request.POST)
         if form.is_valid():
             form.save()
+            link.delete()
             messages.info(request, MESSAGES['password_reset'])
             return redirect(login)
     else:
