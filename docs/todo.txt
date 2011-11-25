@@ -1,7 +1,9 @@
 Critical Path
 -------------
 
-Resend all hotmail invites once sender-id=temperror is fixed.
+Tranlate-to link to google translate for different languages on static pages
+
+Forgot password/password reset
 
 First newsletter to users
 - i'm stoked about the site and am serious about wanting to set up an economic
@@ -23,9 +25,6 @@ Copy editing
 - Hannah's changes
 - More explanation on acknowledgement page.
 
-First feed search starts at 5km and keeps expanding until there are at least 20
-items.
-
 Location improvements
 - Make it easy to use current location for posts.
 - Change post location
@@ -35,6 +34,7 @@ Location improvements
   - my locations page to manage these locations
 
 Encourage new users to endorse their inviter back
+- give them a link
 
 Log
 - log changes to email addresses so can make corrections if someone enters 
@@ -46,8 +46,7 @@ Hide # of hearts from endorsement recipient and others?
 Set up cron jobs for:
 - cleaning expired sessions
 - maybe do with task queue?
-
-Forgot password/password reset
+- delete orphan locations
 
 Design
 - colour scheme
@@ -56,12 +55,13 @@ Design
 - helpful icons
 
 Translations
-- tranlate-to link to google translate for different languages on static pages
 - strings file
 - Jorge Timon can do Spanish and maybe Portuguese
 
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
+
+Set up quick tests of views to catch pages that blow up after changes.
 
 
 To Do
@@ -80,11 +80,6 @@ Look into caching
 Make logging good.
 - Real IP address in django logs.
 
-Nicer welcome text for new users in area than blank feed and "no activity".
-- could expand to show further away posts
-- could say "welcome to area, you are the first", and "expand area to show more
-  posts".
-
 Backup entire server tolle.ryanfugger.com.
 
 Check backup is working.
@@ -98,8 +93,6 @@ Add more buffers to postgres.
 - need to reconfigure the kernel with larger SHMMAX
 
 Give someone else access to server in case
-
-Set up quick tests of views to catch pages that blow up after changes.
 
 Locator should show current location if different than home location.
 
@@ -178,8 +171,6 @@ Enlarge image
 - lightbox?
 - highslide?
 
-Last login != last online time - fix.
-
 Delete profile
 
 Nice base html email template
@@ -190,9 +181,6 @@ Better explanation of Ripple
 - Ripple page with diagrams/video?
 
 Intro video
-
-Weekly newsletter to all users
-- opt out on settings.
 
 Fix 'X' in health when I endorse someone but they don't endorse me and
 balance is zero

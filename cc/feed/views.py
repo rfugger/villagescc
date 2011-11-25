@@ -9,9 +9,7 @@ def feed(request, item_type=None, template='feed.html', poster=None,
     """
     Generic view for displaying feed items.
 
-    Set sticky_prefs=True to save filter choices to profile settings.
-    Warning: this will reset them to defaults if the form doesn't
-    provide any values for filter choices.
+    Set do_filter=True to process with radius and trusted filters.
     """
     form = FeedFilterForm(
         request.GET, request.profile, request.location, item_type,

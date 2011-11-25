@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django import forms
+from django.conf import settings
 
 from cc.feed.models import FeedItem
 
@@ -15,7 +16,8 @@ RADIUS_CHOICES = (
     (INFINITE_RADIUS, 'Anywhere'),
 )
 
-DEFAULT_RADIUS = INFINITE_RADIUS
+RADII = [rc[0] for rc in RADIUS_CHOICES]
+DEFAULT_RADIUS = 5000
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
 class FeedFilterForm(forms.Form):
@@ -34,10 +36,13 @@ class FeedFilterForm(forms.Form):
             profile, location, item_type)
         self.poster, self.recipient = poster, recipient
         data = data.copy()
-        if do_filter:
+        if do_filter and 'radius' not in data:
             default_radius = (profile and profile.settings.feed_radius
                               or DEFAULT_RADIUS)
-            data.setdefault('radius', default_radius)
+            data['radius'] = default_radius
+            self._explicit_radius = False
+        else:
+            self._explicit_radius = True
         if do_filter and 'q' not in data:  # Fresh load, no search/filter.
             # Set trusted checkbox to the profile sticky setting.
             # Can't just check for presence of 'trusted' in data, because
@@ -59,11 +64,29 @@ class FeedFilterForm(forms.Form):
         if radius == INFINITE_RADIUS:
             query_radius = None
         trusted = data['trusted']
-        return FeedItem.objects.get_feed_and_remaining(
-            self.profile, location=self.location, tsearch=tsearch,
-            radius=query_radius, item_type=self.item_type,
-            trusted_only=trusted, up_to_date=date,
-            poster=self.poster, recipient=self.recipient)
+
+        while True:
+            items, count = FeedItem.objects.get_feed_and_remaining(
+                self.profile, location=self.location, tsearch=tsearch,
+                radius=query_radius, item_type=self.item_type,
+                trusted_only=trusted, up_to_date=date,
+                poster=self.poster, recipient=self.recipient)
+            # On first or anonymous visits without explicit radius, expand radius
+            # until there are a bunch of items or until we're at max radius.
+
+            # TODO, WORKING ON: Test this out... *************************
+            
+            if (not (self.profile and self.profile.settings.feed_radius) and
+                not self._explicit_radius and
+                len(items) < settings.FEED_ITEMS_PER_PAGE and
+                query_radius != None):
+                query_radius = next_query_radius(query_radius)
+                self.data['radius'] = query_radius
+                if query_radius == INFINITE_RADIUS:
+                    query_radius = None
+                continue
+            break
+        return items, count
         
     def update_sticky_filter_prefs(self):
         """
@@ -85,3 +108,6 @@ class FeedFilterForm(forms.Form):
         if save_settings:
             self.profile.settings.save()
     
+def next_query_radius(radius):
+    i = RADII.index(radius)
+    return RADII[i + 1]
