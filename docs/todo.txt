@@ -1,7 +1,12 @@
 Critical Path
 -------------
 
-Tranlate-to link to google translate for different languages on static pages
+Invite by paying/pay any email address
+- lets buyers bring sellers into system at transaction time!
+
+Fix Perrier - no location displayed (Trans-Canada Hwy, BC, Canada)
+
+No more invitation requests on share page.
 
 First newsletter to users
 - i'm stoked about the site and am serious about wanting to set up an economic
@@ -62,6 +67,7 @@ Design
 Translations
 - strings file
 - Jorge Timon can do Spanish and maybe Portuguese
+- French: Serge Bibauw <inyarr@gmail.com>
 
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
@@ -194,6 +200,12 @@ balance is zero
 
 Load jquery locally rather than from google
 - mix into js bundle
+
+Use OpenStreetMaps instead of Google Maps:
+- http://www.openstreetmap.org/
+- http://highearthorbit.com/geocommons-open-sourced-geocoder/
+- http://leaflet.cloudmade.com/
+- https://plus.google.com/u/0/118383351194421484817/posts/foj5A1fURGt
 
 
 Ideas
