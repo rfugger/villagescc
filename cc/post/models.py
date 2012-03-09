@@ -17,7 +17,7 @@ class Post(models.Model):
     user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
-    title = VarCharField()
+    title = VarCharField(max_length=100)
     text = models.TextField()
     image = models.ImageField(
         upload_to='post/%Y/%m', max_length=256, blank=True)
