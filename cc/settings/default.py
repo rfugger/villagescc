@@ -59,8 +59,9 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, '../uploads/')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/uploads/'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'uhgdro=&vs^nml1u$9k!159rq3u^bp(wd)_8nax-d^2%=9ndrp'
+# Put secret key in file SECRET_KEY.txt in project directory.
+with open(os.path.join(ROOT_PATH, 'SECRET_KEY.txt')) as secret_key_file:
+    SECRET_KEY = secret_key_file.read().strip()
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

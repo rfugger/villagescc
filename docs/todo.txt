@@ -68,6 +68,7 @@ Translations
 - strings file
 - Jorge Timon can do Spanish and maybe Portuguese
 - French: Serge Bibauw <inyarr@gmail.com>
+- Felix Kona <felix@lingva.pro> from lingva.pro offered to help
 
 Request (claim?) acknowledgement
 - have user setting to auto-acknowledge after N days?
