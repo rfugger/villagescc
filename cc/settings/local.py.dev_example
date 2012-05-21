@@ -1,0 +1,40 @@
+# Local settings.
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+MEDIA_DEV_MODE = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'villages',                      # Or path to database file if using sqlite3.
+        'USER': 'ryan',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    },
+    # Store Ripple account and payment data in a separate db that
+    # can be farmed out to a different server for scaling up.
+    'ripple': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ripple',
+        'USER': 'ryan',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+# Testing email settings.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Don't conflict with other local django servers.
+SESSION_COOKIE_NAME = 'villages_session_id'
+
+SESSION_COOKIE_SECURE = False
