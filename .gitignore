@@ -3,10 +3,11 @@
 \#*\#
 .\#*
 
-local.py
+/cc/settings/local.py
 /develop.sh
 /django
 /mediagenerator
 /south
 uploads
 /data
+/cc/settings/secret_key.py
