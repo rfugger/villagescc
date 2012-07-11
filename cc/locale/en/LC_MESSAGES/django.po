@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 23:10+0600\n"
+"POT-Creation-Date: 2012-07-11 23:22+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,26 @@ msgstr ""
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
+msgstr ""
+
+#: pages/templates/about_base.html:8
+msgid "Motivation"
+msgstr ""
+
+#: pages/templates/about_base.html:9
+msgid "How It Works"
+msgstr ""
+
+#: pages/templates/about_base.html:10
+msgid "Privacy"
+msgstr ""
+
+#: pages/templates/about_base.html:11
+msgid "Developers"
+msgstr ""
+
+#: pages/templates/about_base.html:12
+msgid "Donate"
 msgstr ""
 
 #: pages/templates/feedback.html:4 pages/templates/feedback.html.py:7
