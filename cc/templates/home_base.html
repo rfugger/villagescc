@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load media profile number %}
 
 {% block subnav_image %}
@@ -10,27 +11,27 @@
 {% block subnav_title %}
 	{% if request.profile %}
 		<a href="{{ request.profile.get_absolute_url }}">{{ request.profile }}</a>
-	{% else %}Guest Visitor{% endif %}
+	{% else %}{% trans 'Guest Visitor' %}{% endif %}
 {% endblock %}
 
 {% block subnav %}
 	<li class="{% block nav_feed_class %}{% endblock %}">
-		<a href="{% url feed %}">Feed</a></li>
+		<a href="{% url feed %}">{% trans 'Feed' %}</a></li>
 	{% if request.profile %}
 		<li class="{% block nav_info_class %}{% endblock %}">
-			<a href="{{ request.profile.get_absolute_url }}">Info</a></li>
+			<a href="{{ request.profile.get_absolute_url }}">{% trans 'Info' %}</a></li>
 		<li class="{% block nav_posts_class %}{% endblock %}">
 			<a href="{% url profile_posts request.profile.username %}"
-			   >Posts</a></li>
+			   >{% trans 'Posts' %}</a></li>
 		<li class="{% block nav_relationships_class %}{% endblock %}"
-			><a href="{% url relationships %}">Relationships</a></li>
+			><a href="{% url relationships %}">{% trans 'Relationships' %}</a></li>
 		<hr>
 		<li class="{% block nav_edit_profile_class %}{% endblock %}">
-			<a href="{% url edit_profile %}">Edit My Profile</a></li>
+			<a href="{% url edit_profile %}">{% trans 'Edit My Profile' %}</a></li>
 	{% else %}
 		<li class="{% block nav_register_class %}{% endblock %}">
-			<a href="{% url check_invitation %}">Join</a></li>
+			<a href="{% url check_invitation %}">{% trans 'Join' %}</a></li>
 		<li class="{% block nav_login_class %}{% endblock %}">
-			<a href="{% url login %}">Login</a></li>
+			<a href="{% url login %}">{% trans 'Login' %}</a></li>
 	{% endif %}
 {% endblock %}

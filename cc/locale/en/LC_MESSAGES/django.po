@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 23:22+0600\n"
+"POT-Creation-Date: 2012-07-11 23:45+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,69 @@ msgstr ""
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
+msgstr ""
+
+#: geo/templates/locator.html:6
+msgid "Set Your Location"
+msgstr ""
+
+#: geo/templates/locator.html:8
+msgid "selected"
+msgstr ""
+
+#: geo/templates/locator.html:22
+msgid "Please correct the errors in the form below."
+msgstr ""
+
+#: geo/templates/locator.html:26
+msgid ""
+"To show you relevant posts in your neighbourhood, and \n"
+"\t\tto know who should see your posts, Villages \n"
+"\t\tneeds to know your approximate location."
+msgstr ""
+
+#: geo/templates/locator.html:29
+msgid ""
+"Your coordinates won't be shown to other users, but the neighbourhood\n"
+"\t\tand city you submit below will."
+msgstr ""
+
+#: geo/templates/locator.html:34
+msgid "1."
+msgstr ""
+
+#: geo/templates/locator.html:35
+msgid ""
+"First, select your location on the map by typing your \n"
+"\tapproximate location or dragging the map pointer."
+msgstr ""
+
+#: geo/templates/locator.html:40
+msgid "Neighbourhood, Address, Intersection, or City"
+msgstr ""
+
+#: geo/templates/locator.html:49
+msgid "2."
+msgstr ""
+
+#: geo/templates/locator.html:50
+msgid ""
+"The map above shows the location you are choosing.\n"
+"\t\tPlease check that its name is correct before submitting."
+msgstr ""
+
+#: geo/templates/locator.html:60
+msgid "Set Location"
+msgstr ""
+
+#: geo/templates/locator.html:65
+msgid "Reset to Home"
+msgstr ""
+
+#: geo/templates/locator.html:71
+msgid ""
+"Neighbourhood, city, and state are optional fields if they're\n"
+"\t\tnot appropriate for your location."
 msgstr ""
 
 #: pages/templates/about_base.html:8

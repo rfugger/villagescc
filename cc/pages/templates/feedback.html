@@ -1,14 +1,15 @@
 {% extends "no_subnav_base.html" %}
+{% load i18n %}
 
-{% block title %}Feedback{% endblock %}
+{% block title %}{% trans 'Feedback' %}{% endblock %}
 
 {% block content %}
-<h2>Feedback</h2>
+<h2>{% trans 'Feedback' %}</h2>
 
 <div class="feature">
-	<p>Please let us know any comments or questions you have about Villages.</p>
-	<p>You can also email <a href="mailto:info@villages.cc">info@villages.cc.</a>
-			Thanks!</p>
+	<p>{% trans 'Please let us know any comments or questions you have about Villages.' %}</p>
+	<p>{% trans 'You can also email' %} <a href="mailto:info@villages.cc">info@villages.cc.</a>
+			{% trans 'Thanks!' %}</p>
 </div>
 
 <form action="" method="post">

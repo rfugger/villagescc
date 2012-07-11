@@ -1,13 +1,14 @@
 {% extends "no_subnav_base.html" %}
+{% load i18n %}
 
 {% block content %}
 <h2>About Villages</h2>
 
 <ul>
-	<li><a href="{% url motivation %}">Motivation</a></li>
-	<li><a href="{% url how_it_works %}">How It Works</a></li>
-	<li><a href="{% url privacy %}">Privacy</a></li>
-	<li><a href="{% url developers %}">Developers</a></li>
-	<li><a href="{% url donate %}">Donate</a></li>
+	<li><a href="{% url motivation %}">{% trans 'Motivation' %}</a></li>
+	<li><a href="{% url how_it_works %}">{% trans 'How It Works' %}</a></li>
+	<li><a href="{% url privacy %}">{% trans 'Privacy' %}</a></li>
+	<li><a href="{% url developers %}">{% trans 'Developers' %}</a></li>
+	<li><a href="{% url donate %}">{% trans 'Donate' %}</a></li>
 </ul>
 {% endblock %}
