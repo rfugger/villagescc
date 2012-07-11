@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 22:39+0600\n"
+"POT-Creation-Date: 2012-07-11 23:10+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,23 @@ msgstr ""
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
+msgstr ""
+
+#: pages/templates/feedback.html:4 pages/templates/feedback.html.py:7
+#: templates/base.html:42
+msgid "Feedback"
+msgstr ""
+
+#: pages/templates/feedback.html:10
+msgid "Please let us know any comments or questions you have about Villages."
+msgstr ""
+
+#: pages/templates/feedback.html:11
+msgid "You can also email"
+msgstr ""
+
+#: pages/templates/feedback.html:12
+msgid "Thanks!"
 msgstr ""
 
 #: pages/templates/intro.html:4
@@ -132,10 +149,6 @@ msgstr ""
 
 #: templates/base.html:41
 msgid "About"
-msgstr ""
-
-#: templates/base.html:42
-msgid "Feedback"
 msgstr ""
 
 #: templates/base.html:95
