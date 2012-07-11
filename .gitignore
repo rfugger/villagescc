@@ -11,3 +11,6 @@
 uploads
 /data
 /cc/settings/secret_key.py
+/cc/SECRET_KEY.txt
+_generated_media
+_generated_media_names.py

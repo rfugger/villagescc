@@ -84,6 +84,7 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     # Media middleware has to come first (serves dev media).
     'mediagenerator.middleware.MediaMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

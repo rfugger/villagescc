@@ -1,4 +1,5 @@
 {% load media %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +25,10 @@
 	<div class="logo_nav_line extend"><div class="line page">
 		<h1 class="logo">
 			<a href="{% url home %}?logo"
-			   title="Villages Cooperative Community">Villages.cc</a>
+			   title="Villages {% trans 'Cooperative Community' %}">Villages.cc</a>
 		</h1>
 		<span class="site_nav nav">
-			<li><a href="{% url home %}">Home</a></li>
+			<li><a href="{% url home %}">{% trans 'Home' %}</a></li>
 			<li>
 				<form class="inline_form" action="{% url feed %}" method="get">
 					<input id="global_search_input" class="instruction_input"
@@ -37,8 +38,8 @@
 		</span>
 
 		<div class="right_nav">
-			<li><a href="{% url about %}">About</a></li>
-			<li><a href="{% url feedback %}">Feedback</a></li>
+			<li><a href="{% url about %}">{% trans 'About' %}</a></li>
+			<li><a href="{% url feedback %}">{% trans 'Feedback' %}</a></li>
 		</div>
 	</div></div>
 
@@ -91,18 +92,18 @@
 						<li><a href="{{ request.profile.get_absolute_url }}"
 							   >{{ request.profile }}</a></li>
 						<li class="{% block nav_settings_class %}{% endblock %}">
-							<a href="{% url settings %}">Account Settings</a></li>
-						<li><a href="{% url logout %}">Logout</a></li>
+							<a href="{% url settings %}">{% trans 'Account Settings' %}</a></li>
+						<li><a href="{% url logout %}">{% trans 'Logout' %}</a></li>
 						<hr>
 						<li class="{% block nav_new_post_class %}{% endblock %}">
-							<a href="{% url new_post %}">New Post</a></li>
+							<a href="{% url new_post %}">{% trans 'New Post' %}</a></li>
 						<li class="{% block nav_invite_class %}{% endblock %}">
-							<a href="{% url invite %}">Invite A Friend</a></li>
+							<a href="{% url invite %}">{% trans 'Invite A Friend' %}</a></li>
 						<li class="{% block nav_share_class %}{% endblock %}">
-							<a href="{% url share %}">Share</a></li>
+							<a href="{% url share %}">{% trans 'Share' %}</a></li>
 					{% else %}
-						<li><a href="{% url check_invitation %}">Join</a></li>
-						<li><a href="{% url login %}?next={{ request.path }}">Login</a></li>
+						<li><a href="{% url check_invitation %}">{% trans 'Join' %}</a></li>
+						<li><a href="{% url login %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
 					{% endif %}
 				{% endblock %}
 			</div>
