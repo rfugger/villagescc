@@ -2,7 +2,8 @@
 *~
 \#*\#
 .\#*
-
+*.mo
+/cc/.txconfig
 /cc/settings/local.py
 /develop.sh
 /django

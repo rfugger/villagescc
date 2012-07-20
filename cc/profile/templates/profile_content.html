@@ -1,12 +1,13 @@
 {% load profile relate humanize %}
+{% load i18n %}
 <h2>{{ profile }}</h2>
 
 {% if profile == request.profile %}
-	<p><a href="{% url edit_profile %}">Edit My Profile</a></p>
+	<p><a href="{% url edit_profile %}">{% trans 'Edit My Profile' %}</a></p>
 {% endif %}
 
 {% if my_endorsement %}
-	<p>You have endorsed this user with 
+	<p>{% trans 'You have endorsed this user with' %}
 		<strong>{{ my_endorsement.weight }}</strong>
 		heart{{ my_endorsement.weight|pluralize:"s" }}.
 		<a href="{% url endorse_user profile.username %}">Edit</a>
@@ -22,13 +23,13 @@
 	<div class="profile_fields unit lastUnit">
 		<table class="data">
 			<tr>
-				<th>Name</th>
+				<th>{% trans 'Name' %}</th>
 				<td>{{ profile.name }}</td>
 			</tr><tr>
-				<th>Username</th>
+				<th>{% trans 'Username' %}</th>
 				<td>{{ profile.username }}</td>
 			</tr><tr>
-				<th>Home Location</th>
+				<th>{% trans 'Home Location' %}</th>
 				<td>
 					{% if profile == request.profile %}
 						<a href="{% url locator %}?next={{ request.path }}">
@@ -41,12 +42,12 @@
 
 			{% if request.profile %}
 				<tr>
-					<th>Registered</th>
+					<th>{% trans 'Registered' %}</th>
 					<td>{{ profile.user.date_joined|naturalday }}</td>
 				</tr>
 				{% comment - TODO: last_login != last online time %}
 				<tr>
-					<th>Last Online</th>
+					<th>{% trans 'Last Online' %}</th>
 					<td>{{ profile.user.last_login|naturalday }}</td>
 				</tr>
 				{% endcomment %}
@@ -58,33 +59,33 @@
 </div>
 
 {% if request.profile %}
-	<h3>Relationships Summary</h3>
+	<h3>{% trans 'Relationships Summary' %}</h3>
 	{% if profile == request.profile %}
 		{% include "relationships_summary.html" %}
-		<p><a href="{% url relationships %}">More</a></p>
+		<p><a href="{% url relationships %}">{% trans 'More' %}</a></p>
 	{% else %}
 		<table class="data">
-			<tr title="Max. trusted acknowledgements I would accept from this user">
+			<tr title="{% trans 'Max. trusted acknowledgements I would accept from this user' %}">
 				<th><a href="{% url profile_endorsements profile.username %}"
-					   >Reputation</a></th>
+					   >{% trans 'Reputation' %}</a></th>
 				<td>{% reputation profile request.profile %}</td>
 			</tr>
-			<tr title="Sum of all acknowledgements sent and received">
-				<th>Overall Balance</th>
-				<td>{{ profile.overall_balance }} hours</td>
+			<tr title="{% trans 'Sum of all acknowledgements sent and received' %}">
+				<th>{% trans 'Overall Balance' %}</th>
+				<td>{{ profile.overall_balance }} {% trans 'hours'}</td>
 			</tr>
 			<tr title="Sum of all acknowledgements sent and received, but only from trusted partners">
-				<th>Trusted Balance</th>
-				<td>{{ profile.trusted_balance }} hours</td>
+				<th>{% trans 'Trusted Balance' %}</th>
+				<td>{{ profile.trusted_balance }} {% trans 'hours' %}</td>
 			</tr>
 			{% if account %}
 				<tr>
 					<th><a href="{% url relationship profile.username %}"
-						   >Balance with Me</a></th>
-					<td>{{ account.balance }} hours</td>
+						   >{%trans 'Balance with Me' %}</a></th>
+					<td>{{ account.balance }} {% trans 'hours' %}</td>
 				</tr>
 			{% endif %}
 		</table>
-		<p><a href="{% url profile_endorsements profile.username %}">More</a></p>	
+		<p><a href="{% url profile_endorsements profile.username %}">{% trans 'More' %}</a></p>	
 	{% endif %}
 {% endif %}

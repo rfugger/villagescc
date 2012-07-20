@@ -1,5 +1,6 @@
 {% extends "home_base.html" %}
 {% load media %}
+{% load i18n %}
 
 {% block ready_js %}
 	{{ block.super }}
@@ -13,16 +14,16 @@
 		<li class="{% block feed_all_class %}{% endblock %}">
 			<a href="{% url feed %}?{{ url_param_str }}">All</a></li>
 		<li class="{% block feed_people_class %}{% endblock %}">
-			<a href="{% url profiles %}?{{ url_param_str }}">People</a></li>
+			<a href="{% url profiles %}?{{ url_param_str }}">{% trans 'People' %}</a></li>
 		<li class="{% block feed_posts_class %}{% endblock %}">
-			<a href="{% url posts %}?{{ url_param_str }}">Posts</a></li>
+			<a href="{% url posts %}?{{ url_param_str }}">{% trans 'Posts' %}</a></li>
 		{% if user.is_authenticated %}
 			<li class="{% block feed_endorsements_class %}{% endblock %}">
 				<a href="{% url endorsements %}?{{ url_param_str }}"
-				   >Endorsements</a></li>
+				   >{% trans 'Endorsements' %}</a></li>
 			<li class="{% block feed_acknowledgements_class %}{% endblock %}">
 				<a href="{% url acknowledgements %}?{{ url_param_str }}"
-				   >Acknowledgements</a></li>
+				   >{% trans 'Acknowledgements' %}</a></li>
 		{% endif %}
 	</div>
 	<div class="feed_filter_form">
@@ -36,7 +37,7 @@
 				<li><label>{{ form.trusted }}
 						<img src="{% media_url 'img/heart_icon.png' %}" 
 							 alt="Heart icon = trusted user">
-						Trusted only
+						{% trans 'Trusted only' %}
 					</label>
 				</li>
 			{% endif %}

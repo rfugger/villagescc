@@ -1,23 +1,24 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 {% load profile %}
 
 {% block title %}
-	{{ endorsement.endorser }} Endorses {{ endorsement.recipient }}
+	{{ endorsement.endorser }} {% trans 'Endorses' %} {{ endorsement.recipient }}
 {% endblock %}
 
 {% block content %}
 	<h3>{% profile_display endorsement.endorser request endorsement.endorser %}
-		Endorses 
+		{% trans 'Endorses' %}
 		{% profile_display endorsement.recipient request endorsement.recipient %}
 	</h3>
 	
 	<div class="feature">
 		<table class="data">
 			<tr>
-				<th>Date</th> 
+				<th>{% trans 'Date' %}</th> 
 				<td>{{ endorsement.updated }}</td>
 			</tr><tr>
-				<th>Hearts</th>
+				<th>{% trans 'Hearts' %}</th>
 				<td>{{ endorsement.weight }}</td>
 			</tr>
 		</table>
@@ -27,7 +28,7 @@
 
 	{% if request.profile == endorsement.endorser %}
 		<p><a href="{% url endorse_user endorsement.recipient.username %}"
-			  >Edit</a></p>
+			  >{% trans 'Edit' %}</a></p>
 	{% endif %}
 
 {% endblock %}

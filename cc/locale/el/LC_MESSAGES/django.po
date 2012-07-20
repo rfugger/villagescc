@@ -1,26 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+#   <xekoukou@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Villages.cc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 21:30+0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-07-11 23:45+0600\n"
+"PO-Revision-Date: 2012-07-17 01:32+0000\n"
+"Last-Translator: xekoukou <xekoukou@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: admin/templates/email_users.html:13 templates/base.html:31
 msgid "Home"
-msgstr ""
+msgstr "Αρχική σελίδα"
 
 #: admin/templates/admin/index.html:31
 #, python-format
@@ -34,47 +34,147 @@ msgstr ""
 
 #: admin/templates/admin/index.html:42
 msgid "Add"
-msgstr ""
+msgstr "Πρόσθεσε"
 
 #: admin/templates/admin/index.html:48
 msgid "Change"
-msgstr ""
+msgstr "Άλλαξε"
 
 #: admin/templates/admin/index.html:58
 msgid "You don't have permission to edit anything."
-msgstr ""
+msgstr "Δεν έχεις τα κατάλληλα δικαιώματα για την επεξεργασία του κειμένου."
 
 #: admin/templates/admin/index.html:66
 msgid "Recent Actions"
-msgstr ""
+msgstr "Πρόσφατη δραστηριότητα"
 
 #: admin/templates/admin/index.html:67
 msgid "My Actions"
-msgstr ""
+msgstr "Οι πράξεις μου"
 
 #: admin/templates/admin/index.html:71
 msgid "None available"
-msgstr ""
+msgstr "μη υπαρκτό"
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
+msgstr "αγνώστου περιεχομένου"
+
+#: geo/templates/locator.html:6
+msgid "Set Your Location"
+msgstr "Ορίστε την τοποθεσία σας"
+
+#: geo/templates/locator.html:8
+msgid "selected"
+msgstr "επιλεγμένα"
+
+#: geo/templates/locator.html:22
+msgid "Please correct the errors in the form below."
+msgstr "Παρακαλώ, διόρθωσε τα λάθη αυτής της φόρμας"
+
+#: geo/templates/locator.html:26
+msgid ""
+"To show you relevant posts in your neighbourhood, and \n"
+"\t\tto know who should see your posts, Villages \n"
+"\t\tneeds to know your approximate location."
 msgstr ""
+
+#: geo/templates/locator.html:29
+msgid ""
+"Your coordinates won't be shown to other users, but the neighbourhood\n"
+"\t\tand city you submit below will."
+msgstr ""
+
+#: geo/templates/locator.html:34
+msgid "1."
+msgstr "1."
+
+#: geo/templates/locator.html:35
+msgid ""
+"First, select your location on the map by typing your \n"
+"\tapproximate location or dragging the map pointer."
+msgstr "Κατα"
+
+#: geo/templates/locator.html:40
+msgid "Neighbourhood, Address, Intersection, or City"
+msgstr "Γειτονιά, Οδός, διαστάυρωση ή Πόλη"
+
+#: geo/templates/locator.html:49
+msgid "2."
+msgstr "2."
+
+#: geo/templates/locator.html:50
+msgid ""
+"The map above shows the location you are choosing.\n"
+"\t\tPlease check that its name is correct before submitting."
+msgstr "Ο παραπάνω χάρτης δείχνει τη περιοχή που επιλέγεις.\nΠαρακαλώ, έλενξε οτι είναι η σωστή πριν την αποστείλεις."
+
+#: geo/templates/locator.html:60
+msgid "Set Location"
+msgstr "Ορίστε τοποθεσία"
+
+#: geo/templates/locator.html:65
+msgid "Reset to Home"
+msgstr "Επαναφορά στην Αρχική Σελίδα"
+
+#: geo/templates/locator.html:71
+msgid ""
+"Neighbourhood, city, and state are optional fields if they're\n"
+"\t\tnot appropriate for your location."
+msgstr ""
+
+#: pages/templates/about_base.html:8
+msgid "Motivation"
+msgstr "Κίνητρο"
+
+#: pages/templates/about_base.html:9
+msgid "How It Works"
+msgstr "Πώς λειτουργεί"
+
+#: pages/templates/about_base.html:10
+msgid "Privacy"
+msgstr ""
+
+#: pages/templates/about_base.html:11
+msgid "Developers"
+msgstr ""
+
+#: pages/templates/about_base.html:12
+msgid "Donate"
+msgstr ""
+
+#: pages/templates/feedback.html:4 pages/templates/feedback.html.py:7
+#: templates/base.html:42
+msgid "Feedback"
+msgstr ""
+
+#: pages/templates/feedback.html:10
+msgid "Please let us know any comments or questions you have about Villages."
+msgstr ""
+
+#: pages/templates/feedback.html:11
+msgid "You can also email"
+msgstr "Μπορείς επίσης να στείλεις ηλεκτρονικό γράμμα(email)"
+
+#: pages/templates/feedback.html:12
+msgid "Thanks!"
+msgstr "Ευχαριστώ"
 
 #: pages/templates/intro.html:4
 msgid "A Cooperative Community Of Overlapping Villages"
-msgstr ""
+msgstr "Μία Συνεργατική  Ομάδα Eπικαλυπτόμενων Κοινοτήτων"
 
 #: pages/templates/intro.html:7 templates/base.html:28
 msgid "Cooperative Community"
-msgstr ""
+msgstr "Συνεργατική Κοινότητα"
 
 #: pages/templates/intro.html:7
 msgid "The New Local Economy"
-msgstr ""
+msgstr "Η Νέα Τοπική Οικονομία"
 
 #: pages/templates/intro.html:9
 msgid "Discover Nearby People You Can Trust"
-msgstr ""
+msgstr "Βρες δίπλα σου ανθρώπους που εμπιστευεσαι"
 
 #: pages/templates/intro.html:11
 msgid ""
@@ -82,26 +182,25 @@ msgid ""
 "\t\tby endorsing friends who have something to contribute to the\n"
 "\t\tcommunity.  Find friends-of-friends that have the skills you need,\n"
 "\t\tor interesting projects you can help with."
-msgstr ""
+msgstr "Η βασική αρχή λειτουργίας των Κοινοτήτων είναι η ύπαρξη ενός δικτύου εμπιστοσύνης το οποιο βοηθας να δημιουργηθεί με το να εγκρίνεις φίλους οι οποίοι μπορούν να προσφέρουν στην κοινότητα. Βρες φίλους - φίλων που που έχουν αυτά που χρειάζεσαι ή βρες ενδιαφέροντα προγράμματα τα οποία μπορείς να βοηθήσεις."
 
 #: pages/templates/intro.html:17
 msgid "Help Each Other Out"
-msgstr ""
+msgstr "Ας βοηθήσουμε ο ένας τον άλλο"
 
 #: pages/templates/intro.html:19
 msgid ""
 "Search for what you want.  Post what you have.\n"
 "\t\tWhen someone helps you, acknowledge the help.  When you help someone,\n"
 "\t\treceive acknowledgement.\n"
-"\t\tVillages uses <a href=\"http://ripple-project.org/\">Ripple technology</"
-"a>\n"
+"\t\tVillages uses <a href=\"http://ripple-project.org/\">Ripple technology</a>\n"
 "\t\tto allow acknowledgements to be received through trusted friends,\n"
 "\t\tmaking them more meaningful.''' "
 msgstr ""
 
 #: pages/templates/intro.html:27
 msgid "Change The World"
-msgstr ""
+msgstr "Άλλαξε τον κόσμο"
 
 #: pages/templates/intro.html:29
 msgid ""
@@ -113,56 +212,76 @@ msgstr ""
 
 #: pages/templates/intro.html:35
 msgid "Read More"
-msgstr ""
+msgstr "Διάβασε περισσότερα"
 
 #: pages/templates/intro.html:38
 msgid "Browse the marketplace"
-msgstr ""
+msgstr "Περιηγήσου την αγορά"
 
 #: pages/templates/intro.html:39
 msgid "OR"
-msgstr ""
+msgstr "ή"
 
 #: pages/templates/intro.html:40
 msgid "Sign up now!"
-msgstr ""
+msgstr "Εγγραφείτε τώρα"
 
 #: profile/forms.py:50
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "Υπάρχει ήδη χρήστης  με το ίδιο ψευδώνυμο"
 
 #: templates/base.html:41
 msgid "About"
-msgstr ""
-
-#: templates/base.html:42
-msgid "Feedback"
-msgstr ""
+msgstr "Περί"
 
 #: templates/base.html:95
 msgid "Account Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Λογαριασμού"
 
 #: templates/base.html:96
 msgid "Logout"
-msgstr ""
+msgstr "Αποσύνδεση"
 
 #: templates/base.html:99
 msgid "New Post"
-msgstr ""
+msgstr "Νέα δημοσίευση"
 
 #: templates/base.html:101
 msgid "Invite A Friend"
-msgstr ""
+msgstr "Προσκάλεσε ένα φίλο"
 
 #: templates/base.html:103
 msgid "Share"
-msgstr ""
+msgstr "Μοιράσου"
 
-#: templates/base.html:105
+#: templates/base.html:105 templates/home_base.html:33
 msgid "Join"
+msgstr "Γίνε μέλος"
+
+#: templates/base.html:106 templates/home_base.html:35
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: templates/home_base.html:14
+msgid "Guest Visitor"
+msgstr "Επισκέπτης"
+
+#: templates/home_base.html:19
+msgid "Feed"
 msgstr ""
 
-#: templates/base.html:106
-msgid "Login"
-msgstr ""
+#: templates/home_base.html:22
+msgid "Info"
+msgstr "πληροφορίες"
+
+#: templates/home_base.html:25
+msgid "Posts"
+msgstr "δημοσιεύσεις"
+
+#: templates/home_base.html:27
+msgid "Relationships"
+msgstr "Σχέσεις"
+
+#: templates/home_base.html:30
+msgid "Edit My Profile"
+msgstr "Άλλαξε το προφίλ μου"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 23:45+0600\n"
+"POT-Creation-Date: 2012-07-20 23:45+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,36 @@ msgstr ""
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
+msgstr ""
+
+#: feed/templates/feed_base.html:17
+msgid "People"
+msgstr ""
+
+#: feed/templates/feed_base.html:19 templates/home_base.html:25
+msgid "Posts"
+msgstr ""
+
+#: feed/templates/feed_base.html:23
+msgid "Endorsements"
+msgstr ""
+
+#: feed/templates/feed_base.html:26
+msgid "Acknowledgements"
+msgstr ""
+
+#: feed/templates/feed_base.html:40
+msgid "Trusted only"
+msgstr ""
+
+#: feed/templates/feed_item_list.html:3
+msgid "No activity."
+msgstr ""
+
+#: feed/templates/feed_item_list.html:20
+#: profile/templates/profile_content.html:65
+#: profile/templates/profile_content.html:89
+msgid "More"
 msgstr ""
 
 #: geo/templates/locator.html:6
@@ -230,6 +260,83 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
+#: profile/templates/profile_content.html:6 templates/home_base.html:30
+msgid "Edit My Profile"
+msgstr ""
+
+#: profile/templates/profile_content.html:10
+msgid "You have endorsed this user with"
+msgstr ""
+
+#: profile/templates/profile_content.html:26
+msgid "Name"
+msgstr ""
+
+#: profile/templates/profile_content.html:29
+msgid "Username"
+msgstr ""
+
+#: profile/templates/profile_content.html:32
+msgid "Home Location"
+msgstr ""
+
+#: profile/templates/profile_content.html:45
+msgid "Registered"
+msgstr ""
+
+#: profile/templates/profile_content.html:50
+msgid "Last Online"
+msgstr ""
+
+#: profile/templates/profile_content.html:62
+msgid "Relationships Summary"
+msgstr ""
+
+#: profile/templates/profile_content.html:68
+msgid "Max. trusted acknowledgements I would accept from this user"
+msgstr ""
+
+#: profile/templates/profile_content.html:70
+msgid "Reputation"
+msgstr ""
+
+#: profile/templates/profile_content.html:73
+msgid "Sum of all acknowledgements sent and received"
+msgstr ""
+
+#: profile/templates/profile_content.html:74
+msgid "Overall Balance"
+msgstr ""
+
+#: profile/templates/profile_content.html:78
+msgid "Trusted Balance"
+msgstr ""
+
+#: profile/templates/profile_content.html:79
+#: profile/templates/profile_content.html:85
+msgid "hours"
+msgstr ""
+
+#: profile/templates/profile_content.html:84
+msgid "Balance with Me"
+msgstr ""
+
+#: relate/templates/endorsement.html:6 relate/templates/endorsement.html:11
+msgid "Endorses"
+msgstr ""
+
+#: relate/templates/endorsement.html:18
+msgid "Date"
+msgstr ""
+
+#: relate/templates/endorsement.html:21
+msgid "Hearts"
+msgstr ""
+
+#: relate/templates/endorsement.html:31
+msgid "Edit"
+msgstr ""
+
 #: templates/base.html:41
 msgid "About"
 msgstr ""
@@ -274,14 +381,6 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: templates/home_base.html:25
-msgid "Posts"
-msgstr ""
-
 #: templates/home_base.html:27
 msgid "Relationships"
-msgstr ""
-
-#: templates/home_base.html:30
-msgid "Edit My Profile"
 msgstr ""
