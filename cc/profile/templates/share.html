@@ -1,15 +1,16 @@
 {% extends "home_base.html" %}
 {% load profile %}
+{% load i18n %}
 
-{% block title %}Share Villages{% endblock %}
+{% block title %}{% trans 'Share Villages' %}{% endblock %}
 
 {% block nav_share_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Share Villages</h2>
+<h2>{% trans 'Share Villages' %}</h2>
 
-<p>To share Villages with a group of friends, and have their invitation requests
-	come to you, share this link:</p>
+<p>{% blocktrans %}To share Villages with a group of friends, and have their invitation requests
+	come to you, share this link:{% endblocktrans %}</p>
 <p class="share_link feature">
 	<a href="{% share_link request.profile %}"
 	   >{% share_link request.profile %}</a>
@@ -26,7 +27,7 @@
 		<a href="https://twitter.com/share" class="twitter-share-button" 
 		   data-url="{% share_link request.profile %}"
 		   data-text="{% share_link request.profile %}" data-count="none"
-		   >Tweet</a>
+		   >{% trans 'Tweet' %}</a>
 		<script type="text/javascript" src="//platform.twitter.com/widgets.js">
 		</script>
 	</div>

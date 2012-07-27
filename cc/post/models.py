@@ -7,6 +7,8 @@ from django.db import models
 from cc.profile.models import Profile
 from cc.general.models import VarCharField
 from cc.geo.models import Location
+from django.utils.translation import ugettext as _
+
 
 class UndeletedPostManager(models.Manager):
     def get_query_set(self):
@@ -22,7 +24,7 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='post/%Y/%m', max_length=256, blank=True)
     want = models.BooleanField(
-        default=False, help_text="Leave unchecked if your post is an offer.")
+        default=False, help_text=_("Leave unchecked if your post is an offer."))
     location = models.ForeignKey(Location)
 
     objects = UndeletedPostManager()

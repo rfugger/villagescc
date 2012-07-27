@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.db import models, connection, transaction
+from django.utils.translation import ugettext as _
 
 from cc.profile.models import Profile
 import cc.ripple.api as ripple
@@ -18,10 +19,10 @@ class Endorsement(models.Model):
     endorser = models.ForeignKey(Profile, related_name='endorsements_made')
     recipient = models.ForeignKey(
         Profile, related_name='endorsements_received')
-    weight = models.PositiveIntegerField("Hearts", help_text=(
+    weight = models.PositiveIntegerField(_("Hearts"), help_text=_(
             "Each heart represents an hour of value you'd provide "
             "in exchange for acknowledgements."))
-    text = models.TextField("Testimonial", blank=True)
+    text = models.TextField(_("Testimonial"), blank=True)
     updated = models.DateTimeField(auto_now=True)
 
     objects = EndorsementManager()

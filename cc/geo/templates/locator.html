@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<h2>Set Your Location</h2>
+<h2>{% trans 'Set Your Location' %}</h2>
 
 {% if form.errors %}
 	<p class="errorlist">{% trans 'Please correct the errors in the form below.' %}</p>
@@ -38,7 +38,7 @@
 <form id="loc_search_form" class="loc_search_form">
 	<input id="loc_search" class="instruction_input" type="text" 
 		   help="{% trans 'Neighbourhood, Address, Intersection, or City' %}"/>
-	<input type="submit" value="Locate on Map" />
+	<input type="submit" value="{% trans 'Locate on Map' %}" />
 </form>
 
 <div class="map_container">

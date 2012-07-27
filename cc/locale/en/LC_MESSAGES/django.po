@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-27 19:59+0600\n"
+"POT-Creation-Date: 2012-07-27 20:59+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: geo/templates/locator.html:6
+#: geo/templates/locator.html:6 geo/templates/locator.html.py:19
 msgid "Set Your Location"
 msgstr ""
 
@@ -167,6 +167,10 @@ msgstr ""
 msgid "Neighbourhood, Address, Intersection, or City"
 msgstr ""
 
+#: geo/templates/locator.html:41
+msgid "Locate on Map"
+msgstr ""
+
 #: geo/templates/locator.html:49
 msgid "2."
 msgstr ""
@@ -191,7 +195,8 @@ msgid ""
 "\t\tnot appropriate for your location."
 msgstr ""
 
-#: pages/templates/about_base.html:8
+#: pages/templates/about_base.html:8 pages/templates/motivation.html:4
+#: pages/templates/motivation.html.py:9
 msgid "Motivation"
 msgstr ""
 
@@ -321,6 +326,173 @@ msgstr ""
 
 #: pages/templates/intro.html:40
 msgid "Sign up now!"
+msgstr ""
+
+#: pages/templates/motivation.html:11
+msgid ""
+"The goal of Villages is to help people do what they love, rather than what\n"
+"\tthey fear they must."
+msgstr ""
+
+#: pages/templates/motivation.html:15
+msgid ""
+"Many of us struggle with the contradiction between what we want to do, and\n"
+"\tand what we need to do to earn money to live.\n"
+"\tRather than change our hearts to suit what money asks of us, we want to \n"
+"\tchange money to suit what is in our hearts."
+msgstr ""
+
+#: pages/templates/motivation.html:21
+msgid ""
+"We want to create a system of interconnected, overlapping economic "
+"villages,\n"
+"\twhere personal relationships take precedence over numbers, and each "
+"person \n"
+"\tis supported in following their passion."
+msgstr ""
+
+#: pages/templates/motivation.html:26
+msgid "The Problem With Money"
+msgstr ""
+
+#: pages/templates/motivation.html:28
+msgid ""
+"When we use regular money, we are participating in a system of tokens whose\n"
+"\tsupply is centrally managed for the purposes of:"
+msgstr ""
+
+#: pages/templates/motivation.html:33
+msgid "Price stability"
+msgstr ""
+
+#: pages/templates/motivation.html:34
+msgid "Low unemployment"
+msgstr ""
+
+#: pages/templates/motivation.html:35
+msgid "Foreign trade"
+msgstr ""
+
+#: pages/templates/motivation.html:36
+msgid "Steady growth in transaction volume (GDP)"
+msgstr ""
+
+#: pages/templates/motivation.html:39
+msgid ""
+"In other words, those who issue the money work to ensure that it finds its \n"
+"\tway into hands that are going to accomplish these goals.\n"
+"\tNotably absent are goals that actually matter to most of us, such as:"
+msgstr ""
+
+#: pages/templates/motivation.html:45
+msgid "Happiness"
+msgstr ""
+
+#: pages/templates/motivation.html:46
+msgid "Love"
+msgstr ""
+
+#: pages/templates/motivation.html:47
+msgid "Peace"
+msgstr ""
+
+#: pages/templates/motivation.html:48
+msgid "Building relationships"
+msgstr ""
+
+#: pages/templates/motivation.html:49
+msgid "Strong local communities"
+msgstr ""
+
+#: pages/templates/motivation.html:50 relate/templates/relationships.html:43
+#: relate/templates/relationships.html:54
+msgid "Health"
+msgstr ""
+
+#: pages/templates/motivation.html:51
+msgid "Maintaining a clean environment"
+msgstr ""
+
+#: pages/templates/motivation.html:52
+msgid "Fun!"
+msgstr ""
+
+#: pages/templates/motivation.html:55
+msgid ""
+"Of course, these goals are subjective, messy, often political, and not\n"
+"\tfitting aims for a central bank committee to be pursuing on our behalf.\n"
+"\tBut why must we settle for a system of money whose values are not our own\n"
+"\tjust so it can be managed appropriately by a central committee?"
+msgstr ""
+
+#: pages/templates/motivation.html:61
+msgid ""
+"Before banks, countries, and central committees, in villages where everyone\n"
+"\tknew everyone else, people didn't need money &ndash; they just offered "
+"what\n"
+"\twas needed, and kept track in their heads, in"
+msgstr ""
+
+#: pages/templates/motivation.html:65
+msgid "a system of gifts and obligations"
+msgstr ""
+
+#: pages/templates/motivation.html:66
+msgid ""
+"Because they could keep track amongst themselves, they never had to worry \n"
+"\tabout the abstract values of their economic system trumping their values \n"
+"\tas human beings."
+msgstr ""
+
+#: pages/templates/motivation.html:69
+msgid "They"
+msgstr ""
+
+#: pages/templates/motivation.html:69
+msgid "were"
+msgstr ""
+
+#: pages/templates/motivation.html:70
+msgid "their own economic system, and their values were its values"
+msgstr ""
+
+#: pages/templates/motivation.html:73
+msgid ""
+"Once economies became larger, and trade grew to involve more and more \n"
+"\tstrangers, more abstract systems of keeping score developed.\n"
+"\tMany of us became materially richer, but we lost some of our autonomy, "
+"and \n"
+"\tmuch of our connection to the people around us.  We need systems that\n"
+"\tnot only allow us to cooperate in creating material abundance, but "
+"support\n"
+"\tour individual dreams and collective ties as well. "
+msgstr ""
+
+#: pages/templates/motivation.html:81
+msgid "Money For People"
+msgstr ""
+
+#: pages/templates/motivation.html:83
+msgid ""
+"We are all connected.  \n"
+"\tAny two people on the planet are bound to be linked by a web of personal \n"
+"\trelationships.  \n"
+"\tInstead of using money to cooperate with each other, two strangers can\n"
+"\tgive to each other like friends, and have the resulting obligations \n"
+"\tborne by the web of personal relationships connecting them.\n"
+"\tAll we really need is a system for finding these connections."
+msgstr ""
+
+#: pages/templates/motivation.html:92
+msgid "That system is called"
+msgstr ""
+
+#: pages/templates/motivation.html:92
+msgid "Ripple"
+msgstr ""
+
+#: pages/templates/motivation.html:93
+msgid "the technology that powers the Villages marketplace"
 msgstr ""
 
 #: pages/templates/privacy.html:11
@@ -459,6 +631,10 @@ msgstr ""
 msgid "send us feedback"
 msgstr ""
 
+#: post/models.py:27
+msgid "Leave unchecked if your post is an offer."
+msgstr ""
+
 #: post/templates/my_post.html:11 post/templates/post_form.html:4
 #: post/templates/post_form.html.py:12 relate/templates/endorsement.html:31
 msgid "Edit"
@@ -532,6 +708,78 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
+#: profile/models.py:178
+msgid "Limited hearts"
+msgstr ""
+
+#: profile/models.py:179
+msgid ""
+"Uncheck this if you know what you're doing and want to give out more hearts."
+msgstr ""
+
+#: profile/models.py:182
+msgid "Receive notifications"
+msgstr ""
+
+#: profile/models.py:183
+msgid "Receive email whenever someone endorses or acknowledges you."
+msgstr ""
+
+#: profile/models.py:185
+msgid "Receive updates"
+msgstr ""
+
+#: profile/models.py:186
+msgid "Receive occasional news about the Villages community."
+msgstr ""
+
+#: profile/models.py:193
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: profile/models.py:197
+msgid "Friend's email"
+msgstr ""
+
+#: profile/models.py:198 profile/templates/invitations_sent.html:19
+#: relate/models.py:22 relate/templates/endorsement.html:21
+#: relate/templates/relationships.html:40
+msgid "Hearts"
+msgstr ""
+
+#: profile/models.py:199 relate/models.py:23
+msgid ""
+"Each heart represents an hour of value you'd provide in exchange for "
+"acknowledgements."
+msgstr ""
+
+#: profile/models.py:201 relate/models.py:25
+msgid "Testimonial"
+msgstr ""
+
+#: profile/models.py:203
+msgid "Private message"
+msgstr ""
+
+#: profile/models.py:204
+msgid "Sent with the invitation email only. Not public."
+msgstr ""
+
+#: profile/models.py:221
+#, python-format
+msgid "%s Has Invited You To Villages.cc"
+msgstr ""
+
+#: profile/models.py:242
+#, python-format
+msgid "Password reset link for %s"
+msgstr ""
+
+#: profile/models.py:249
+msgid "Villages.cc Password Reset Link"
+msgstr ""
+
 #: profile/templates/bad_invite_code.html:4
 #: profile/templates/bad_invite_code.html:7
 msgid "Unknown or Expired Invitation"
@@ -602,11 +850,6 @@ msgstr ""
 
 #: profile/templates/invitations_sent.html:18
 msgid "Friend's Email"
-msgstr ""
-
-#: profile/templates/invitations_sent.html:19
-#: relate/templates/endorsement.html:21 relate/templates/relationships.html:40
-msgid "Hearts"
 msgstr ""
 
 #: profile/templates/invitations_sent.html:20
@@ -817,7 +1060,8 @@ msgstr ""
 msgid "Please create a new password"
 msgstr ""
 
-#: profile/templates/settings.html:4 templates/base.html:95
+#: profile/templates/settings.html:4 profile/templates/settings.html.py:9
+#: templates/base.html:95
 msgid "Account Settings"
 msgstr ""
 
@@ -825,8 +1069,23 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: profile/templates/settings.html:30
+#: profile/templates/settings.html:23 profile/templates/settings.html.py:30
 msgid "Change Password"
+msgstr ""
+
+#: profile/templates/share.html:5 profile/templates/share.html.py:10
+msgid "Share Villages"
+msgstr ""
+
+#: profile/templates/share.html:12
+msgid ""
+"To share Villages with a group of friends, and have their invitation "
+"requests\n"
+"\tcome to you, share this link:"
+msgstr ""
+
+#: profile/templates/share.html:30
+msgid "Tweet"
 msgstr ""
 
 #: relate/views.py:17
@@ -1115,11 +1374,6 @@ msgstr ""
 
 #: relate/templates/relationships.html:41
 msgid "in either direction"
-msgstr ""
-
-#: relate/templates/relationships.html:43
-#: relate/templates/relationships.html:54
-msgid "Health"
 msgstr ""
 
 #: relate/templates/relationships.html:43

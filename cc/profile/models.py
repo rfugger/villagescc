@@ -12,6 +12,7 @@ from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
 from cc.general.mail import send_mail, email_str, send_mail_from_system
+from django.utils.translation import ugettext as _
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -174,14 +175,14 @@ class Settings(models.Model):
     profile = models.OneToOneField(Profile, related_name='settings')
     email = EmailField(blank=True)
     endorsement_limited = models.BooleanField(
-        "Limited hearts", default=True, help_text=(
+        _("Limited hearts"), default=True, help_text=_(
             "Uncheck this if you know what you're doing and want to give "
             "out more hearts."))
     send_notifications = models.BooleanField(
-        "Receive notifications", default=True, help_text=(
+        _("Receive notifications"), default=True, help_text=_(
             "Receive email whenever someone endorses or acknowledges you."))
     send_newsletter = models.BooleanField(
-        "Receive updates", default=True, help_text=(
+        _("Receive updates"), default=True, help_text=_(
             "Receive occasional news about the Villages community."))
     
     # Sticky form settings.
@@ -189,18 +190,18 @@ class Settings(models.Model):
     feed_trusted = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return u"Settings for %s" % self.profile
+        return _(u"Settings for %s") % self.profile
 
 class Invitation(models.Model):
     from_profile = models.ForeignKey(Profile, related_name='invitations_sent')
-    to_email = EmailField("Friend's email")
-    endorsement_weight = models.PositiveIntegerField("Hearts", help_text=(
+    to_email = EmailField(_("Friend's email"))
+    endorsement_weight = models.PositiveIntegerField(_("Hearts"), help_text=_(
             "Each heart represents an hour of value you'd provide "
             "in exchange for acknowledgements."))
-    endorsement_text = models.TextField("Testimonial", blank=True)
+    endorsement_text = models.TextField(_("Testimonial"), blank=True)
     message = models.TextField(
-        "Private message", blank=True,
-        help_text="Sent with the invitation email only. Not public.")
+        _("Private message"), blank=True,
+        help_text=_("Sent with the invitation email only. Not public."))
     
     date = models.DateTimeField(auto_now_add=True)
     code = VarCharField(unique=True)
@@ -217,7 +218,7 @@ class Invitation(models.Model):
         return 'invitation', (self.code,)
 
     def send(self):
-        send_mail("%s Has Invited You To Villages.cc" % self.from_profile,
+        send_mail(_("%s Has Invited You To Villages.cc") % self.from_profile,
                   self.from_profile, self.to_email, 'invitation_email.txt',
                   {'invitation': self})
         self.date = datetime.now()
@@ -238,14 +239,14 @@ class PasswordResetLink(models.Model):
     expires = models.DateTimeField()
 
     def __unicode__(self):
-        return "Password reset link for %s" % self.profile
+        return _("Password reset link for %s") % self.profile
 
     @models.permalink
     def get_absolute_url(self):
         return 'reset_password', (self.code,)
 
     def send(self):
-        subject = "Villages.cc Password Reset Link"
+        subject = _("Villages.cc Password Reset Link")
         send_mail_from_system(subject, self.profile, 'password_reset_email.txt',
                               {'link': self})
 
