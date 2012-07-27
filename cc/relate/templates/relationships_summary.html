@@ -1,10 +1,11 @@
+{% load i18n %}
 <table class="data">
-	<tr title="Sum of all acknowledgements sent and received">
-		<th>Overall Balance</th>
-		<td>{{ request.profile.overall_balance }} hours</td>
+	<tr title="{% trans 'Sum of all acknowledgements sent and received' %}">
+		<th>{% trans 'Overall Balance' %}</th>
+		<td>{{ request.profile.overall_balance }} {% trans 'hours' %}</td>
 	</tr>
-	<tr title="Sum of all *trusted* acknowledgements sent and received">
-		<th>Trusted Balance</th>
-		<td><strong>{{ request.profile.trusted_balance }} hours</strong></td>
+	<tr title="{% trans 'Sum of all *trusted* acknowledgements sent and received' %}">
+		<th>{% trans 'Trusted Balance' %}</th>
+		<td><strong>{{ request.profile.trusted_balance }} {% trans 'hours' %}</strong></td>
 	</tr>
 </table>

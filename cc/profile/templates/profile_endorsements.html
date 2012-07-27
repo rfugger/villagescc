@@ -1,29 +1,30 @@
 {% extends "profile_base.html" %}
+{% load i18n %}
 {% load relate %}
 
-{% block title %}Endorsements for {{ profile }}{% endblock %}
+{% block title %}{% trans 'Endorsements For' %} {{ profile }}{% endblock %}
 
 {% block nav_endorsements_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Endorsements For {{ profile }}</h2>
+<h2>{% trans 'Endorsements For' %} {{ profile }}</h2>
 
 <div class="feature">
 	<table class="data">
 		<tr>
-			<th>Reputation</th>
+			<th>{% trans 'Reputation' %}</th>
 			<td>{% reputation profile request.profile %}</td>
 		</tr>
 		<tr>
-			<th>Total Hearts</th>
+			<th>{% trans 'Total Hearts' %}</th>
 			<td>{{ profile.endorsement_sum }}</td>
 		</tr>
 	</table>
-	<p>Reputation is how much trust I have in someone, directly, as well as
+	<p>{% blocktrans %}Reputation is how much trust I have in someone, directly, as well as
 		indirectly through the network.
 		It is equal to the maximum number of acknowledgement hours they could
 		send me if all outstanding acknowledgements were wiped away and we 
-		started from zero.
+		started from zero.{% endblocktrans %}
 	</p>
 </div>
 

@@ -1,23 +1,25 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}{% if form.instance.id %}Edit{% else %}New{% endif %} Post{% endblock %}
+{% block title %}{% if form.instance.id %}{% trans 'Edit' %}{% else %}{% trans 'New' %}{% endif %}
+{% trans 'Post' %}{% endblock %}
 
 {% block nav_new_post_class %}
 	{% if not form.instance.id %}selected{% endif %}
 {% endblock %}
 
 {% block content %}
-<h2>{% if form.instance.id %}Edit{% else %}New{% endif %} Post</h2>
+<h2>{% if form.instance.id %}{% trans 'Edit' %}{% else %}{% trans 'New' %}{% endif %} {% trans 'Post' %}</h2>
 
 <div class="feature">
-	<p>Posts are temporary advertisements for items and services offered and
+	<p>{% blocktrans %}Posts are temporary advertisements for items and services offered and
 		wanted.  For permanent advertisements, such as skills you have to offer,
-		please use your profile description.</p>
-	<p>Any information you post will be <strong>public</strong>.</p>
+		please use your profile description.{% endblocktrans %}</p>
+	<p>{% trans 'Any information you post will be' %} <strong>{% trans 'public' %}</strong>.</p>
 </div>
 
 {% if form.instance.id %}
-	<p><a href="{{ post.get_absolute_url }}">View post</a></p>
+	<p><a href="{{ post.get_absolute_url }}">{% trans 'View post' %}</a></p>
 {% endif %}
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -26,9 +28,9 @@
 		<tr>
 			<th>{% if not form.instance.id %}
 					<a href="{% url locator %}?next={{ request.path }}">
-						Location</a>:
+						{% trans 'Location' %}</a>:
 				{% else %}
-					Location:
+					{%trans 'Location' %}:
 				{% endif %}
 			</th>
 			<td>{{ request.profile.location }}</td>
@@ -36,10 +38,10 @@
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Save Post">
+			<td><input type="submit" value="{% trans 'Save Post' %}">
 				{% if form.instance.id %}
-					<input type="submit" name="delete" value="Delete"
-						   onclick="return confirm('Delete post?')">
+					<input type="submit" name="delete" value="{% trans 'Delete' %}"
+						   onclick="return confirm('{% trans "Delete post?" %}')">
 				{% endif %}
 			</td>
 		</tr>

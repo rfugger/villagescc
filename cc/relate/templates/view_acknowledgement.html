@@ -1,30 +1,31 @@
 {% extends "home_base.html" %}
 {% load number %}
+{% load i18n %}
 
 {% block title %}
-	Acknowledgement
+	{% trans 'Acknowledgement' %}
 {% endblock %}
 
 {% block content %}
-	<h2>Acknowledgement</h2>
+	<h2>{% trans 'Acknowledgement' %}</h2>
 	<div class="feature">
 		<table class="data">
 				<tr>
-					<th>From</th>
+					<th>{% trans 'From' %}</th>
 					<td><a href="{{ payment.payer.get_absolute_url }}"
 						   >{{ payment.payer }}</a></td>
 				</tr>
 				<tr>
-					<th>To</th>
+					<th>{% trans 'To' %}</th>
 					<td><a href="{{ payment.recipient.get_absolute_url }}"
 						   >{{ payment.recipient }}</a></td>
 				</tr>
 				<tr>
-					<th>Hours</th>
+					<th>{% trans 'Hours' %}</th>
 					<td>{{ payment.amount|trim_zeroes }}</td>
 				</tr>
 			<tr>
-				<th>Time</th>
+				<th>{% trans 'Time' %}</th>
 				<td>{{ payment.date }}</td>
 			</tr>
 		</table>
@@ -33,9 +34,9 @@
 	</div>
 
 	{% if received_entries %}
-		<h3>Received</h3>
+		<h3>{% trans 'Received' %}</h3>
 		{% with received_entries as entries %}
-		{% with "From" as person_descriptor %}
+		{% with _("From") as person_descriptor %}
 			{% include "payment_entries.html" %}
 		{% endwith %}
 		{% endwith %}
@@ -44,7 +45,7 @@
 	{% if sent_entries %}
 		<h3>Sent</h3>
 		{% with sent_entries as entries %}
-		{% with "To" as person_descriptor %}
+		{% with _("To") as person_descriptor %}
 			{% include "payment_entries.html" %}
 		{% endwith %}
 		{% endwith %}

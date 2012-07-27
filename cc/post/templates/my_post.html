@@ -1,4 +1,5 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
 {% block title %}{{ post }}{% endblock %}
 
@@ -7,7 +8,7 @@
 	{% include "post_image.html" %}
 	<div class="unit lastUnit">
 		{% include "post_content.html" %}
-		<p><a href="{% url edit_post post.id %}">Edit</a></p>
+		<p><a href="{% url edit_post post.id %}">{% trans 'Edit' %}</a></p>
 	</div>
 </div>
 {% endblock %}

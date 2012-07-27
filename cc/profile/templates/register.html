@@ -1,15 +1,16 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{% trans 'Register' %}{% endblock %}
 
 {% block nav_register_class %}selected{% endblock %}
 
 {% block content %}
 <h2>Register</h2>
 
-<p class="feature">Please enter the name you'd like to use on the system,
+<p class="feature">{% blocktrans %}Please enter the name you'd like to use on the system,
 	your email address, and then the username and password you'd like to 
-	use to log in.
+	use to log in.{% endblocktrans %}
 </p>
 
 <form action="" method="post">
@@ -21,7 +22,7 @@
 		</script>
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Register" /></td>
+			<td><input type="submit" value="{% trans 'Register' %}" /></td>
 		</tr>
 	</table>
 </form>

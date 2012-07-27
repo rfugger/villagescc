@@ -1,47 +1,48 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}My Relationships{% endblock %}
+{% block title %}{% trans 'My Relationships' %}{% endblock %}
 
-{% block nav_relationships_class %}selected{% endblock %}
+{% block nav_relationships_class %}{% trans 'selected' %}{% endblock %}
 
 {% block content %}
-<h2>My Relationships</h2>
+<h2>{% trans 'My Relationships' %}</h2>
 
-<h3 class="first">Summary</h3>
+<h3 class="first">{% trans 'Summary' %}</h3>
 
 <div class="feature">
-	<p>Your balances lets you know how balanced your participation
-		in Villages is.</p>
+	<p>{% blocktrans %}Your balances lets you know how balanced your participation
+		in Villages is.{% endblocktrans %}</p>
 	<ul>
-		<li>Your <strong>overall balance</strong> adds all of the acknowledgements
-			you have received, and subtracts all the acknowledgements you have sent.
+		<li>{% trans 'Your' %} <strong>{% trans 'overall balance' %}</strong> {% blocktrans %} adds all of the acknowledgements
+			you have received, and subtracts all the acknowledgements you have sent. {% endblocktrans %}
 		</li>
-		<li>Your <strong>trusted balance</strong> is more important &ndash; 
+		<li>{% trans 'Your' %} <strong>{% trans 'trusted balance' %}</strong> {% blocktrans %}is more important &ndash; 
 			it is the same as your overall balance, but excludes acknowledgements
-			beyond those you have indicated by your endorsements that you trust.
+			beyond those you have indicated by your endorsements that you trust.{% endblocktrans %}
 		</li>
 	</ul>
-	<p>If your balance is negative, you should focus on what you can give,
+	<p>{% blocktrans %}If your balance is negative, you should focus on what you can give,
 		and if your balance is positive, you should see what others have to
-		offer you.</p>
+		offer you. {% endblocktrans %}</p>
 </div>
 
 {% include "relationships_summary.html" %}
 
 {% if accounts %}
-<h3>Details</h3>
+<h3>{% trans 'Details' %}</h3>
 
 <div class="feature">
-	<p>This table summarizes your endorsements (<strong>hearts</strong>) 
-		and outstanding acknowledgements (<strong>hours</strong>)
-		with other people.</p>
+	<p>{% trans 'This table summarizes your endorsements' %} (<strong>{% trans 'hearts' %}</strong>) 
+		{% trans 'and outstanding acknowledgements' %} (<strong>{% trans 'hours' %}</strong>)
+		{% trans 'with other people' %}.</p>
 	<ul>
-		<li><strong>Hearts</strong> provide an upper limit on trusted 
-			<strong>hours</strong> in either direction.
+		<li><strong>{% trans 'Hearts' %}</strong> {% trans 'provide an upper limit on trusted' %}
+			<strong>{% trans 'hours' %}</strong> {% trans 'in either direction' %}.
 		</li>
-		<li><strong>Health</strong> is an indicator out of 100 reflecting how
+		<li><strong>{% trans 'Health' %}</strong> {% blocktrans %}is an indicator out of 100 reflecting how
 			much room is remaining for further acknowledgements before the edge
-			of trust is reached on the relationship.</li>
+			of trust is reached on the relationship.{% endblocktrans %}</li>
 	</ul>
 </div>
 
@@ -49,41 +50,41 @@
 
 <table class="data">
 	<tr>
-		<th>Name</th>
-		<th class="number_header">Health</th>
-		<th class="number_header">Hearts from you</th>
-		<th class="number_header">Hours from them</th>
-		<th class="number_header">Hours from you</th>
-		<th class="number_header">Hearts from them</th>
+		<th>{%trans 'Name' %}</th>
+		<th class="number_header">{% trans 'Health' %}</th>
+		<th class="number_header">{% trans 'Hearts from you' %}</th>
+		<th class="number_header">{% trans 'Hours from them' %}</th>
+		<th class="number_header">{% trans 'Hours from you' %}</th>
+		<th class="number_header">{% trans 'Hearts from them' %}</th>
 	</tr>
 	{% for account in accounts %}
 		<tr>
 			<td><a href="{{ account.partner.get_absolute_url }}"
-				   title="View Profile for {{ account.partner }}"
+				   title="{% trans 'View Profile for {{ account.partner }}' %}"
 				   >{{ account.partner }}</a></td>
 			<td class="number">{{ account.health|default:"X" }}</td>
 			<td class="number">
 				{% if account.endorsement %}
 					<a href="{{ account.endorsement.get_absolute_url }}"
-					   title="View Your Endorsement of {{ account.partner }}"
+					   title="{% trans 'View Your Endorsement of' %} {{ account.partner }}"
 					   >{{ account.in_limit }}</a>
 				{% else %}
 					<a href="{% url endorse_user account.partner.username %}"
-					   title="Endorse {{ account.partner }}">0</a>
+					   title="{% trans 'Endorse' %} {{ account.partner }}">0</a>
 				{% endif %}
 			</td>
 			<td class="number">
 				<a href="{% url relationship account.partner.username %}"
-				   title="View Relationship with {{ account.partner }}"
+				   title="{% trans 'View Relationship with' %} {{ account.partner }}"
 				   >{{ account.owed_to_you|default_if_none:"" }}</a></td>
 			<td class="number">
 				<a href="{% url relationship account.partner.username %}"
-				   title="View Relationship with {{ account.partner }}"
+				   title="{% trans 'View Relationship with' %} {{ account.partner }}"
 				   >{{ account.owed_to_them|default_if_none:"" }}</a></td>
 			<td class="number">
 				{% if account.partner_endorsement %}
 					<a href="{{ account.partner_endorsement.get_absolute_url }}"
-					   title="View Endorsement from {{ account.partner }}"
+					   title="{% trans 'View Endorsement from' %} {{ account.partner }}"
 					   >{{ account.out_limit }}</a>
 				{% endif %}
 			</td>
@@ -91,7 +92,7 @@
 	{% endfor %}
 </table>
 {% else %}
-	<p><em>No relationships yet.</em></p>
+	<p><em>{% trans 'No relationships yet.' %}</em></p>
 {% endif %}
 
 {% endblock %}

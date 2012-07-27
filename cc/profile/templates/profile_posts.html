@@ -1,11 +1,12 @@
 {% extends "profile_base.html" %}
+{% load i18n %}
 
-{% block title %}Posts by {{ profile }}{% endblock %}
+{% block title %}{% trans 'Posts by' %} {{ profile }}{% endblock %}
 
 {% block nav_posts_class %}selected{% endblock %}
 
 {% block content %}
-	<h2>Posts by {{ profile }}</h2>
+	<h2>{% trans 'Posts by' %} {{ profile }}</h2>
 
 	{% include "feed_item_list.html" %}
 {% endblock %}

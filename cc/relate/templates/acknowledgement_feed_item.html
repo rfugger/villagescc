@@ -1,9 +1,10 @@
 {% extends "feed_item.html" %}
+{% load i18n %}
 {% load profile number %}
 
 {% block title %}
-	{% profile_display item.payer request "You" item.payer %}
-	acknowledged 
-	{% profile_display item.recipient request "you" item.recipient %}
-	with {{ item.amount|trim_zeroes }} hours promised
+	{% profile_display item.payer request _("You") item.payer %}
+	{% trans 'acknowledged' %}
+	{% profile_display item.recipient request _("you") item.recipient %}
+	{% trans 'with' %} {{ item.amount|trim_zeroes }} {% trans 'hours promised' %}
 {% endblock %}

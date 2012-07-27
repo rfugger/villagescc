@@ -1,13 +1,14 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}My Posts{% endblock %}
+{% block title %}{% trans 'My Posts' %}{% endblock %}
 
 {% block nav_posts_class %}selected{% endblock %}
 
 {% block content %}
-	<h2>My Posts</h2>
+	<h2>{% trans 'My Posts' %}</h2>
 
-	<p><a href="{% url new_post %}">New Post</a></p>
+	<p><a href="{% url new_post %}">{% trans 'New Post' %}</a></p>
 
 	{% include "feed_item_list.html" %}
 {% endblock %}

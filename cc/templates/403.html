@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Forbidden{% endblock %}
+{% block title %}{% trans 'Forbidden' %}{% endblock %}
 
 {% block page %}
-<h2>Forbidden</h2>
+<h2>{% trans 'Forbidden' %}</h2>
 
-<p>You are not permitted to access this page.</p>
+<p>{% trans 'You are not permitted to access this page'%}.</p>
 
-<p><a href="{% url home %}">Return Home</a></p>
+<p><a href="{% url home %}">{% trans 'Return Home' %}</a></p>
 {% endblock %}

@@ -3,29 +3,29 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-#   <jtimonmv@gmail.com>, 2012.
+#   <inyarr@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Villages.cc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-20 23:45+0600\n"
-"PO-Revision-Date: 2012-07-21 08:24+0000\n"
-"Last-Translator: szoth <szoth@ubertechnique.com>\n"
+"PO-Revision-Date: 2012-07-25 03:49+0000\n"
+"Last-Translator: iNyar <inyarr@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: admin/templates/email_users.html:13 templates/base.html:31
 msgid "Home"
-msgstr "Inicio"
+msgstr "Accueil"
 
 #: admin/templates/admin/index.html:31
 #, python-format
 msgid "Models available in the %(name)s application."
-msgstr "Models available in the %(name)s application."
+msgstr "Modèles disponibles dans l'application de %(name)s."
 
 #: admin/templates/admin/index.html:32
 #, python-format
@@ -34,177 +34,177 @@ msgstr "%(name)s"
 
 #: admin/templates/admin/index.html:42
 msgid "Add"
-msgstr "Añadir"
+msgstr "Ajouter"
 
 #: admin/templates/admin/index.html:48
 msgid "Change"
-msgstr "Cambiar"
+msgstr "Changer"
 
 #: admin/templates/admin/index.html:58
 msgid "You don't have permission to edit anything."
-msgstr "No tienes permisos para editar nada."
+msgstr "Vous n'avez pas l'autorisation de modifier quoi que ce soit."
 
 #: admin/templates/admin/index.html:66
 msgid "Recent Actions"
-msgstr "Acciones recientes"
+msgstr "Actions récentes"
 
 #: admin/templates/admin/index.html:67
 msgid "My Actions"
-msgstr "Mis acciones"
+msgstr "Mes actions"
 
 #: admin/templates/admin/index.html:71
 msgid "None available"
-msgstr "Ninguno disponible"
+msgstr "Aucun disponible"
 
 #: admin/templates/admin/index.html:85
 msgid "Unknown content"
-msgstr "Contenido desconocido"
+msgstr "Contenu inconnu"
 
 #: feed/templates/feed_base.html:17
 msgid "People"
-msgstr ""
+msgstr "Personnes"
 
 #: feed/templates/feed_base.html:19 templates/home_base.html:25
 msgid "Posts"
-msgstr "Anuncios"
+msgstr "Messages"
 
 #: feed/templates/feed_base.html:23
 msgid "Endorsements"
-msgstr ""
+msgstr "Soutiens"
 
 #: feed/templates/feed_base.html:26
 msgid "Acknowledgements"
-msgstr ""
+msgstr "Reconnaissances"
 
 #: feed/templates/feed_base.html:40
 msgid "Trusted only"
-msgstr ""
+msgstr "Seulement de confiance"
 
 #: feed/templates/feed_item_list.html:3
 msgid "No activity."
-msgstr ""
+msgstr "Pas d'activité."
 
 #: feed/templates/feed_item_list.html:20
 #: profile/templates/profile_content.html:65
 #: profile/templates/profile_content.html:89
 msgid "More"
-msgstr ""
+msgstr "Plus"
 
 #: geo/templates/locator.html:6
 msgid "Set Your Location"
-msgstr ""
+msgstr "Indiquez votre localisation"
 
 #: geo/templates/locator.html:8
 msgid "selected"
-msgstr ""
+msgstr "sélectionné"
 
 #: geo/templates/locator.html:22
 msgid "Please correct the errors in the form below."
-msgstr ""
+msgstr "Veuillez corriger les erreurs dans le formulaire ci-dessous."
 
 #: geo/templates/locator.html:26
 msgid ""
 "To show you relevant posts in your neighbourhood, and \n"
 "\t\tto know who should see your posts, Villages \n"
 "\t\tneeds to know your approximate location."
-msgstr ""
+msgstr "Pour montrer vos messages dans votre voisinage et pour savoir\n\t\tqui devrait voir vos messages, Villages a besoin de connaitre\n\t\tvotre localisation approximative."
 
 #: geo/templates/locator.html:29
 msgid ""
 "Your coordinates won't be shown to other users, but the neighbourhood\n"
 "\t\tand city you submit below will."
-msgstr ""
+msgstr "Vos coordonnées ne seront pas montrées aux autres utilisateurs, mais\n\t\tbien le quartier et la ville que vous renseignez."
 
 #: geo/templates/locator.html:34
 msgid "1."
-msgstr ""
+msgstr "1."
 
 #: geo/templates/locator.html:35
 msgid ""
 "First, select your location on the map by typing your \n"
 "\tapproximate location or dragging the map pointer."
-msgstr ""
+msgstr "D'abord, sélectionnez votre localisation sur la carte en écrivant votre adresse\n\tapproximative ou en déplaçant le marqueur de la carte."
 
 #: geo/templates/locator.html:40
 msgid "Neighbourhood, Address, Intersection, or City"
-msgstr ""
+msgstr "Quartier, adresse, intersection ou ville"
 
 #: geo/templates/locator.html:49
 msgid "2."
-msgstr ""
+msgstr "2."
 
 #: geo/templates/locator.html:50
 msgid ""
 "The map above shows the location you are choosing.\n"
 "\t\tPlease check that its name is correct before submitting."
-msgstr ""
+msgstr "La carte ci-dessus montre le lieu que vous avez choisi.\n\t\tVeuillez vérifier si les informations sont correctes."
 
 #: geo/templates/locator.html:60
 msgid "Set Location"
-msgstr ""
+msgstr "Définir cette localisation"
 
 #: geo/templates/locator.html:65
 msgid "Reset to Home"
-msgstr ""
+msgstr "Retour à l'accueil"
 
 #: geo/templates/locator.html:71
 msgid ""
 "Neighbourhood, city, and state are optional fields if they're\n"
 "\t\tnot appropriate for your location."
-msgstr ""
+msgstr "Quartier, Ville et État sont des champs optionnels s'ils ne sont pas\n\t\tappropriés pour votre localisation."
 
 #: pages/templates/about_base.html:8
 msgid "Motivation"
-msgstr ""
+msgstr "Motivation"
 
 #: pages/templates/about_base.html:9
 msgid "How It Works"
-msgstr ""
+msgstr "Comment ça fonctionne"
 
 #: pages/templates/about_base.html:10
 msgid "Privacy"
-msgstr ""
+msgstr "Confidentialité"
 
 #: pages/templates/about_base.html:11
 msgid "Developers"
-msgstr ""
+msgstr "Développeurs"
 
 #: pages/templates/about_base.html:12
 msgid "Donate"
-msgstr ""
+msgstr "Faire un don"
 
 #: pages/templates/feedback.html:4 pages/templates/feedback.html.py:7
 #: templates/base.html:42
 msgid "Feedback"
-msgstr "Sugerencias"
+msgstr "Feedback"
 
 #: pages/templates/feedback.html:10
 msgid "Please let us know any comments or questions you have about Villages."
-msgstr ""
+msgstr "N'hésitez pas à nous faire part de vos commentaires ou questions à propos de Villages."
 
 #: pages/templates/feedback.html:11
 msgid "You can also email"
-msgstr ""
+msgstr "Vous pouvez aussi nous écrire par courriel"
 
 #: pages/templates/feedback.html:12
 msgid "Thanks!"
-msgstr ""
+msgstr "Merci !"
 
 #: pages/templates/intro.html:4
 msgid "A Cooperative Community Of Overlapping Villages"
-msgstr "Una comunidad cooperativa de aldeas solapadas"
+msgstr "Une communauté coopérative de villages en contact"
 
 #: pages/templates/intro.html:7 templates/base.html:28
 msgid "Cooperative Community"
-msgstr "Comunidad cooperativa"
+msgstr "Communauté coopérative"
 
 #: pages/templates/intro.html:7
 msgid "The New Local Economy"
-msgstr "La Nueva Economía Local"
+msgstr "La nouvelle économie locale"
 
 #: pages/templates/intro.html:9
 msgid "Discover Nearby People You Can Trust"
-msgstr "Descubre gente cercana en la que confías"
+msgstr "Découvrez des gens proches en qui vous pouvez avoir confiance "
 
 #: pages/templates/intro.html:11
 msgid ""
@@ -212,11 +212,11 @@ msgid ""
 "\t\tby endorsing friends who have something to contribute to the\n"
 "\t\tcommunity.  Find friends-of-friends that have the skills you need,\n"
 "\t\tor interesting projects you can help with."
-msgstr ""
+msgstr "Le fondement de Villages est un réseau de confiance que vous aidez à créer\n\t\ten soutenant des amis qui ont quelque chose à apporter à la\n\t\tcommunauté.  Trouver des amis d'amis qui ont les compétences\n\t\tque vous cherchez ou des projets intéressants auxquels\n\t\tvous pouvez contribuer."
 
 #: pages/templates/intro.html:17
 msgid "Help Each Other Out"
-msgstr "Ayudarse mutuamente"
+msgstr "S'entraider"
 
 #: pages/templates/intro.html:19
 msgid ""
@@ -226,11 +226,11 @@ msgid ""
 "\t\tVillages uses <a href=\"http://ripple-project.org/\">Ripple technology</a>\n"
 "\t\tto allow acknowledgements to be received through trusted friends,\n"
 "\t\tmaking them more meaningful.''' "
-msgstr ""
+msgstr "Cherchez ce que vous voulez.  Proposez ce que vous avez.\n\t\tQuand quelqu'un vous aide, reconnaissez son aide.\n\t\tQuand vous aidez quelqu'un, recevez sa reconnaissance.\n\t\tVillages utilise la <a href=\"http://ripple-project.org/\">technologie Ripple</a>\n\t\tpour permettre de recevoir les reconnaissances à travers des amis de confiance,\n\t\tles rendant ainsi plus significatives.''' "
 
 #: pages/templates/intro.html:27
 msgid "Change The World"
-msgstr "Cambia el mundo"
+msgstr "Changer le monde"
 
 #: pages/templates/intro.html:29
 msgid ""
@@ -238,149 +238,149 @@ msgid ""
 "\t\tthan for banks and corporations, and issuing our own acknowledgements\n"
 "\t\trather than using their money, we take control of our own economic \n"
 "\t\tdestiny."
-msgstr "Trabajando para amigos y vecinos en nuestra comunidad, en lugar de para bancos y corporaciones, y generando nuestras propios pagarés en vez de usando dinero, tomamos control de nuestro destino económico."
+msgstr "En travaillant avec des amis et des voisins dans notre communauté, plutôt\n\t\tque pour des banques et des corporations, et en créant nos propres\n\t\treconnaissances plutôt que d'utiliser leur argent, nous prenons le contrôle\n\t\tde notre destin économique."
 
 #: pages/templates/intro.html:35
 msgid "Read More"
-msgstr "Leer más"
+msgstr "Lire la suite"
 
 #: pages/templates/intro.html:38
 msgid "Browse the marketplace"
-msgstr "Navega en el mercado"
+msgstr "Parcourir le marché"
 
 #: pages/templates/intro.html:39
 msgid "OR"
-msgstr "o"
+msgstr "OU"
 
 #: pages/templates/intro.html:40
 msgid "Sign up now!"
-msgstr "¡Registrate ahora!"
+msgstr "Inscrivez-vous maintenant !"
 
 #: profile/forms.py:50
 msgid "A user with that username already exists."
-msgstr "Ya existe un usuario con ese nombre."
+msgstr "Un utilisateur avec ce nom d'utilisateur existe déjà."
 
 #: profile/templates/profile_content.html:6 templates/home_base.html:30
 msgid "Edit My Profile"
-msgstr "Editar perfil"
+msgstr "Modifier mon profil"
 
 #: profile/templates/profile_content.html:10
 msgid "You have endorsed this user with"
-msgstr ""
+msgstr "Vous avez donné votre soutien à cet utilisateur avec"
 
 #: profile/templates/profile_content.html:26
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: profile/templates/profile_content.html:29
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #: profile/templates/profile_content.html:32
 msgid "Home Location"
-msgstr ""
+msgstr "Lieu de résidence"
 
 #: profile/templates/profile_content.html:45
 msgid "Registered"
-msgstr ""
+msgstr "Enregistré"
 
 #: profile/templates/profile_content.html:50
 msgid "Last Online"
-msgstr ""
+msgstr "Connecté pour la dernière fois"
 
 #: profile/templates/profile_content.html:62
 msgid "Relationships Summary"
-msgstr ""
+msgstr "Résumé des relations"
 
 #: profile/templates/profile_content.html:68
 msgid "Max. trusted acknowledgements I would accept from this user"
-msgstr ""
+msgstr "Maximum de reconnaissances de confiance que j'accepterais de cet utilisateur"
 
 #: profile/templates/profile_content.html:70
 msgid "Reputation"
-msgstr ""
+msgstr "Réputation"
 
 #: profile/templates/profile_content.html:73
 msgid "Sum of all acknowledgements sent and received"
-msgstr ""
+msgstr "Somme de toutes les reconnaissances d'heures envoyées et reçues"
 
 #: profile/templates/profile_content.html:74
 msgid "Overall Balance"
-msgstr ""
+msgstr "Solde global"
 
 #: profile/templates/profile_content.html:78
 msgid "Trusted Balance"
-msgstr ""
+msgstr "Solde de confiance"
 
 #: profile/templates/profile_content.html:79
 #: profile/templates/profile_content.html:85
 msgid "hours"
-msgstr ""
+msgstr "heures"
 
 #: profile/templates/profile_content.html:84
 msgid "Balance with Me"
-msgstr ""
+msgstr "Solde vis-à-vis de moi"
 
 #: relate/templates/endorsement.html:6 relate/templates/endorsement.html:11
 msgid "Endorses"
-msgstr ""
+msgstr "Soutient"
 
 #: relate/templates/endorsement.html:18
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: relate/templates/endorsement.html:21
 msgid "Hearts"
-msgstr ""
+msgstr "Cœurs"
 
 #: relate/templates/endorsement.html:31
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: templates/base.html:41
 msgid "About"
-msgstr "Acerca de"
+msgstr "À propos"
 
 #: templates/base.html:95
 msgid "Account Settings"
-msgstr "Configuración"
+msgstr "Paramètres du compte"
 
 #: templates/base.html:96
 msgid "Logout"
-msgstr "Salir"
+msgstr "Se déconnecter"
 
 #: templates/base.html:99
 msgid "New Post"
-msgstr "Nuevo anuncio"
+msgstr "Nouveau message"
 
 #: templates/base.html:101
 msgid "Invite A Friend"
-msgstr "Invita a un amigo"
+msgstr "Inviter un ami"
 
 #: templates/base.html:103
 msgid "Share"
-msgstr "Compartir"
+msgstr "Partager"
 
 #: templates/base.html:105 templates/home_base.html:33
 msgid "Join"
-msgstr "Unirse"
+msgstr "S'inscrire"
 
 #: templates/base.html:106 templates/home_base.html:35
 msgid "Login"
-msgstr "Entrar"
+msgstr "Se connecter"
 
 #: templates/home_base.html:14
 msgid "Guest Visitor"
-msgstr "Visitante"
+msgstr "Visiteur invité"
 
 #: templates/home_base.html:19
 msgid "Feed"
-msgstr ""
+msgstr "Flux"
 
 #: templates/home_base.html:22
 msgid "Info"
-msgstr "Información"
+msgstr "Info"
 
 #: templates/home_base.html:27
 msgid "Relationships"
-msgstr "Relaciones"
+msgstr "Relations"

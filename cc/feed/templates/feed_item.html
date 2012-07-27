@@ -1,4 +1,5 @@
 {% load profile location humanize media %}
+{% load i18n %}
 <div class="feed_item_user unit">
 	{% block user %}
 		<a href="{{ item.feed_poster.get_absolute_url }}"
@@ -8,8 +9,8 @@
 <div class="feed_item_content unit lastUnit">
 	<h3 class="feed_item_title">
 			{% if item.trusted %}
-				<img src="{% media_url 'img/heart_icon.png' %}" title="Trusted User"
-					 alt="Heart icon = trusted user">
+				<img src="{% media_url 'img/heart_icon.png' %}" title="%{ trans 'Trusted User' %}"
+					 alt="{% trans 'Heart icon = trusted user' %}">
 			{% endif %}
 			{% block title %}{% endblock %}
 	</h3>

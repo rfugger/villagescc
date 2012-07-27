@@ -1,6 +1,7 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block nav_login_class %}selected{% endblock %}
 
@@ -15,9 +16,9 @@
 		</script>
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Login" /></td>
+			<td><input type="submit" value="{% trans 'Login' %}" /></td>
 		</tr>
 	</table>
 </form>
-<p><a href="{% url forgot_password %}">Forgot username or password?</a></p>
+<p><a href="{% url forgot_password %}">{% trans 'Forgot username or password?' %}</a></p>
 {% endblock %}

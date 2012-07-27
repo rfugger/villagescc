@@ -1,39 +1,40 @@
 {% extends "profile_base.html" %}
+{% load i18n %}
 
-{% block title %}Acknowledge {{ recipient }}{% endblock %}
+{% block title %}{% trans 'Acknowledge' %} {{ recipient }}{% endblock %}
 
 {% block nav_acknowledge_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Acknowledge {{ recipient }}</h2>
+<h2>{% trans 'Acknowledge' %} {{ recipient }}</h2>
 
 <div class="feature">
-	<p>There are two ways to send acknowledgement:
+	<p>{% trans 'There are two ways to send acknowledgement' %}:
 	<ol>
-		<li><strong>Send a trusted acknowledgement</strong> through
-			the trust network so the recipient receives it only from
-			people they have endorsed, and only up to the number of
-			hearts they have given to each.
+		<li><strong>{% trans 'Send a trusted acknowledgement' %}</strong>
+                        {% blocktrans %}through the trust network so the recipient receives it
+                        only from people they have endorsed, and only up to the
+                        number of hearts they have given to each.{% endblocktrans %}
 		</li>
-		<li><strong>Send a direct acknowledgement</strong> of any
-			number of hours directly to the recipient, even if they
-			haven't endorsed you.
+		<li><strong>{% trans 'Send a direct acknowledgement' %}</strong> 
+                        {% blocktrans %}of any number of hours directly to the recipient, even
+                        if they haven't endorsed you.{% endblocktrans %}
 		</li>
 	</ol>
-	<p><a href="{% url how_it_works %}">Read more</a></p>
-	<p>Acknowledgements are only visible to you, the recipient, and for
+	<p><a href="{% url how_it_works %}">{% trans 'Read more' %}</a></p>
+	<p>{% blocktrans %}Acknowledgements are only visible to you, the recipient, and for
 		trusted acknowledgements, anyone on the path the acknowlegdement 
-		takes between you and the recipient.
+		takes between you and the recipient.{% endblocktrans %}
 	</p>
 </div>
 {% if can_ripple %}
-	<p>You can send a trusted acknowledgement of up to {{ max_amount }} 
+	<p>{% blocktrans %}You can send a trusted acknowledgement of up to {{ max_amount }} 
 		hour{{ max_amount|pluralize:"s" }}, or a direct
-		acknowledgement of any amount.
+		acknowledgement of any amount.{% endblocktrans %}
 	</p>
 {% else %}
-	<p>There are no available paths through the trust network to {{ recipient }},
-		so you can only send direct acknowledgement.
+	<p>{% blocktrans %}There are no available paths through the trust network to {{ recipient }},
+		so you can only send direct acknowledgement.{% endblocktrans %}
 	</p>
 {% endif %}
 		
@@ -43,7 +44,7 @@
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Send Acknowledgement"
+			<td><input type="submit" value="{% trans 'Send Acknowledgement' %}"
 					   onclick="return confirm(confirm_text());"></td>
 		</tr>
 	</table>
@@ -62,8 +63,8 @@
 				ack_type = "trusted";
 			} 
 		}
-		return "Send a " + ack_type + " acknowledgement of " + hours + 
-			" hours?";
+		return "{% trans 'Send a' %} " + ack_type + " {% trans 'acknowledgement of' %} " + hours + 
+			" {% trans 'hours' %}?";
 	}
 </script>
 {% endblock %}

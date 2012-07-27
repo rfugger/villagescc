@@ -1,6 +1,7 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}Invite A Friend{% endblock %}
+{% block title %}{% trans 'Invite A Friend' %}{% endblock %}
 
 {% block extrahead %}
 	{{ block.super }}
@@ -13,22 +14,22 @@
 <h2>Invite A Friend</h2>
 
 <div class="feature">
-	<p>If you know someone who would love to participate in Villages.cc and
+	<p>{% blocktrans %}If you know someone who would love to participate in Villages.cc and
 		has something to contribute to the community, please invite them by
-		endorsing them.</p>
-	<p>Each heart represents an hour of value you are willing to
+		endorsing them.{% endblocktrans %}</p>
+	<p>{% blocktrans %}Each heart represents an hour of value you are willing to
 		provide for your friend, trusting that by acknowledging
-		your gift, they will return the favour eventually.
+		your gift, they will return the favour eventually.{% endblocktrans %}
 	</p>
-	<p><a href="{% url how_it_works %}">Read more</a></p>
-	<p>If your friend accepts your invitation, this endorsement will 
-		be <strong>public</strong>.</p>
+	<p><a href="{% url how_it_works %}">{% trans 'Read more' %}</a></p>
+	<p>{% trans 'If your friend accepts your invitation, this endorsement will be' %}
+            <strong>{% trans 'public' %}</strong>.</p>
 </div>
 
 {% if request.profile.endorsement_limited %}
-	<p>You have <strong>{{ request.profile.endorsements_remaining }}</strong> 
-		heart{{ request.profile.endorsements_remaining|pluralize:"s" }} 
-		remaining to give out.</p>
+	<p>{% trans 'You have' %} <strong>{{ request.profile.endorsements_remaining }}</strong> 
+		{% trans 'heart' %}{{ request.profile.endorsements_remaining|pluralize:"s" }} 
+		{% trans 'remaining to give out' %}.</p>
 {% endif %}
 
 {% if request.profile.can_endorse %}
@@ -38,15 +39,15 @@
 			{{ form }}
 			<tr>
 				<th></th>
-				<td><input type="submit" value="Invite"></td>
+				<td><input type="submit" value="{% trans 'Invite' %}"></td>
 			</tr>
 		</table>
 	</form>
 {% else %}
-	<p>You need more hearts to invite a friend.
-		You get 5 hearts for each endorsement you receive.</p>
+	<p>{% blocktrans %}You need more hearts to invite a friend.
+		You get 5 hearts for each endorsement you receive.{% endblocktrans %}</p>
 {% endif %}
 
-<p><a href="{% url invitations_sent %}">View pending sent invitations</a></p>
+<p><a href="{% url invitations_sent %}">{% trans 'View pending sent invitations' %}</a></p>
 
 {% endblock %}

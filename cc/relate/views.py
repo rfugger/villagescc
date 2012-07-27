@@ -11,11 +11,12 @@ from cc.relate.forms import EndorseForm, AcknowledgementForm
 from cc.relate.models import Endorsement
 from cc.feed.models import FeedItem
 from cc.general.mail import send_notification
+from django.utils.translation import ugettext as _
 
 MESSAGES = {
-    'endorsement_saved': "Endorsement saved.",
-    'endorsement_deleted': "Endorsement deleted.",
-    'acknowledgement_sent': "Acknowledgement sent.",
+    'endorsement_saved': _("Endorsement saved."),
+    'endorsement_deleted': _("Endorsement deleted."),
+    'acknowledgement_sent': _("Acknowledgement sent."),
 }
 
 @login_required

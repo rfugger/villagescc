@@ -1,22 +1,23 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}Edit My Profile{% endblock %}
+{% block title %}{% trans 'Edit My Profile' %}{% endblock %}
 
 {% block nav_edit_profile_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Edit My Profile</h2>
+<h2>{% trans 'Edit My Profile' %}</h2>
 
 <div class="feature">
-	<p>Your profile tells other community members about you, and lets
+	<p>{% blocktrans %}Your profile tells other community members about you, and lets
 		them find you based on your interests and skills.  Please mention
 		anything that you wish to offer or bring to the community generally,
-		so others will find you when they search for those things.
+		so others will find you when they search for those things.{% endblocktrans %}
 	</p>
-	<p>Your profile data is <strong>public</strong>.</p>
+	<p>{% trans 'Your profile data is' %} <strong>{% trans 'public' %}</strong>.</p>
 </div>
 
-<p><a href="{{ form.instance.get_absolute_url }}">View my profile</a></p>
+<p><a href="{{ form.instance.get_absolute_url }}">{% trans 'View my profile' %}</a></p>
 
 <form action="" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
@@ -24,7 +25,7 @@
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="Save Changes" /></td>
+			<td><input type="submit" value="{% trans 'Save Changes' %}" /></td>
 		</tr>
 	</table>
 </form>

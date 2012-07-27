@@ -1,36 +1,37 @@
 {% extends "profile_base.html" %}
+{% load i18n %}
 {% load relate %}
 
-{% block title %}Relationship With {{ profile }}{% endblock %}
+{% block title %}{% trans 'Relationship With' %} {{ profile }}{% endblock %}
 
 {% block nav_relationship_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Relationship With {{ partner }}</h2>
+<h2>{% trans 'Relationship With' %} {{ partner }}</h2>
 
 <div class="feature">
 	<table class="data">
 		<tr>
-			<th>Current Balance</th>
-			<td>{{ balance }} hours</td>
+			<th>{% trans 'Current Balance' %}</th>
+			<td>{{ balance }} {% trans 'hours' %}</td>
 		</tr>
 		{% if account.partner_endorsement %}
 			<tr>
 				<th><a href="{{ account.partner_endorsement.get_absolute_url }}"
-					  >{{ partner }}'s endorsement of you</a></th>
+					  >{% trans '{{ partner }}'s endorsement of you' %}</a></th>
 				<td>{{ account.partner_endorsement.weight }}
-					heart{{ account.partner_endorsement.weight|pluralize:"s" }}</td>
+					{% trans 'heart' %}{{ account.partner_endorsement.weight|pluralize:"s" }}</td>
 			</tr>
 		{% endif %}
 		<tr>
 			{% if account.endorsement %}
 				<th><a href="{{ account.endorsement.get_absolute_url }}"
-					  >Your endorsement of {{ partner }}</a></th>
+					  >{% trans 'Your endorsement of' %} {{ partner }}</a></th>
 				<td>{{ account.endorsement.weight }}
-					heart{{ account.endorsement.weight|pluralize:"s" }}</td>
+					{% trans 'heart' %}{{ account.endorsement.weight|pluralize:"s" }}</td>
 			{% else %}
 				<th><a href="{% url endorse_user partner.username %}"
-					   >Endorse {{ partner }}</a></th>
+					   >{% trans 'Endorse' %} {{ partner }}</a></th>
 			{% endif %}
 		</tr>
 	</table>
@@ -40,11 +41,11 @@
 {% if entries %}
 	<table class="data">
 		<tr>
-			<th>Date</th>
-			<th>Description</th>
-			<th class="number_header">Received</th>
-			<th class="number_header">Sent</th>
-			<th class="number_header">Balance</th>
+			<th>{% trans 'Date' %}</th>
+			<th>{% trans 'Description' %}</th>
+			<th class="number_header">{% trans 'Received' %}</th>
+			<th class="number_header">{% trans 'Sent' %}</th>
+			<th class="number_header">{% trans 'Balance' %}</th>
 		</tr>
 		{% for entry in entries %}
 			<tr>
@@ -58,6 +59,6 @@
 		{% endfor %}
 	</table>
 {% else %}
-	<p><em>No entries.</em></p>
+	<p><em>{% trans 'No entries.' %}</em></p>
 {% endif %}
 {% endblock %}

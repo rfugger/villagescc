@@ -1,9 +1,10 @@
 {% extends "feed_item.html" %}
 {% load profile %}
+{% load i18n %}
 
 {% block title %}
-	{% profile_display item.endorser request "You" item.endorser %}
-	endorsed 
-	{% profile_display item.recipient request "you" item.recipient %}
-	with {{ item.weight }} heart{{ item.weight|pluralize:"s" }}.
+	{% profile_display item.endorser request _("You") item.endorser %}
+	{% trans 'endorsed' %}
+	{% profile_display item.recipient request _("you") item.recipient %}
+	{% blocktrans %}with {{ item.weight }} heart{{ item.weight|pluralize:"s" }}{% endblocktrans %}.
 {% endblock %}

@@ -1,9 +1,10 @@
 {% load number %}
+{% load i18n %}
 
 <table class="entries data">
 	<tr>
 		<th>{{ person_descriptor }}</th>
-		<th class="number_header">Hours</th>
+		<th class="number_header">{% trans 'Hours' %}</th>
 	{% for entry in entries %}
 		<tr>
 			<td><a href="{% url relationship entry.account.partner.username %}"

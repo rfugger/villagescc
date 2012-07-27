@@ -82,11 +82,11 @@
 			<div class="actions">
 				{% block actions %}
 					{% if not request.profile %}
-						<li><a href="{% url feed %}">Browse Marketplace</a></li>
+						<li><a href="{% url feed %}">{% trans 'Browse Marketplace' %}</a></li>
 					{% endif %}
 					<li class="{% block nav_location_class %}{% endblock %}">
 						<a href="{% url locator %}?next={{ request.path }}"
-						   >{{ request.location|default:"Location" }}</a></li>
+						   >{{ request.location|default:_('Location') }}</a></li>
 					<hr>
 					{% if request.profile %}
 						<li><a href="{{ request.profile.get_absolute_url }}"

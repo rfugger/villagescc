@@ -4,16 +4,17 @@ from django import forms
 from django.conf import settings
 
 from cc.feed.models import FeedItem
+from django.utils.translation import ugettext as _
 
 # Passing no radius => use default, so need a code for infinite.
 INFINITE_RADIUS = -1
 
 RADIUS_CHOICES = (
-    (1000, 'Within 1 km'),
-    (5000, 'Within 5 km'),
-    (10000, 'Within 10 km'),
-    (50000, 'Within 50 km'),
-    (INFINITE_RADIUS, 'Anywhere'),
+    (1000, _('Within 1 km')),
+    (5000, _('Within 5 km')),
+    (10000, _('Within 10 km')),
+    (50000, _('Within 50 km')),
+    (INFINITE_RADIUS, _('Anywhere')),
 )
 
 RADII = [rc[0] for rc in RADIUS_CHOICES]

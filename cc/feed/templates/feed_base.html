@@ -30,7 +30,7 @@
 		<form class="inline_form nav" action="" method="get">
 			<li class="first">
 				{{ form.q }}
-				<a id="id_clear" href="javascript:void(0)">Clear</a>
+				<a id="id_clear" href="javascript:void(0)">{% trans 'Clear' %}</a>
 			</li>
 			<li>{{ form.radius }}</li>
 			{% if request.profile %}

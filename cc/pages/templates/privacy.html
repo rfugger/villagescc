@@ -1,86 +1,87 @@
 {% extends "about_base.html" %}
+{% load i18n %}
 
-{% block title %}Privacy{% endblock %}
+{% block title %}{% trans 'Privacy' %}{% endblock %}
 
 {% block content %}
 {{ block.super }}
 
-<h3>Privacy</h3>
+<h3>{% trans 'Privacy' %}</h3>
 
-<p>Since Villages is meant for discovering people in your area, 
-	most information you give is <strong>not private</strong>.
-	This includes:
+<p>{% blocktrans %}Since Villages is meant for discovering people in your area, 
+	most information you give is{% endblocktrans %} <strong>{% trans 'not private' %}</strong>.
+	{% trans 'This includes:' %}
 </p>
 
 <ul>
-	<li>Your profile information</li>
-	<li>Your posts</li>
-	<li>Endorsements given and received (these are only available to registered users)</li>
-	<li>You overall acknowledgement balance</li>
+	<li>{% trans 'Your profile information' %}</li>
+	<li>{% trans 'Your posts' %}</li>
+	<li>{% trans 'Endorsements given and received (these are only available to registered users)' %}</li>
+	<li>{% trans 'Your overall acknowledgement balance' %}</li>
 </ul>
 
-<p>Things that are completely or relatively private:</p>
+<p>{% trans 'Things that are completely or relatively private:' %}</p>
 
 <ul>
-	<li>Your email address</li>
-	<li>The contents of any messages sent to other users</li>
-	<li>Individual acknowledgement balances with other users</li>
-	<li>Details of acknowledgements given and received
+	<li>{% trans 'Your email address' %}</li>
+	<li>{% trans 'The contents of any messages sent to other users' %}</li>
+	<li>{% trans 'Individual acknowledgement balances with other users' %}</li>
+	<li>{% trans 'Details of acknowledgements given and received' %}
 		<ul>
-			<li>When you send an acknowledgement through the network,
+			<li>{% blocktrans %}When you send an acknowledgement through the network,
 				the details are shared with users who are on the path
-				travelled by the acknowledgement from sender to recipient
+				travelled by the acknowledgement from sender to recipient{% endblocktrans %}
 			</li>
-			<li>Acknowledgement details may be available to more users in the 
-				future due to upcoming features.
+			<li>{% blocktrans %}Acknowledgement details may be available to more users in the 
+				future due to upcoming features.{% endblocktrans %}
 			</li>
 		</ul>
 	</li>
 </ul>
 
-<p>Please do not use Villages thinking that other users will not be able to
+<p>{% blocktrans %}Please do not use Villages thinking that other users will not be able to
 	see details of your activities.  
 	Once Villages has grown to a certain number of users, we may add the option
 	to keep more of your details private.  
 	However, to start with, we're building a service for people who want to 
-	put themselves out there and connect with others in their community.
+	put themselves out there and connect with others in their community.{% endblocktrans %}
 </p>
-<p>If you want to try a Ripple system with more privacy, please check out
+<p>{% blocktrans %}If you want to try a Ripple system with more privacy, please check out {% endblocktrans %}
 	<a href="http://ripplepay.com/">Ripplepay</a>.
-	You may find it difficult to meet anybody there though :)
+	{% blocktrans %} You may find it difficult to meet anybody there though{% endblocktrans %} :)
 </p>
 
-<h3>Anonymous Visitors</h3>
+<h3>{% trans 'Anonymous Visitors' %}</h3>
 
-<p>Anonymous visitors to the site, who are not registered or logged
+<p>{% blocktrans %}Anonymous visitors to the site, who are not registered or logged
 	in, can see your profile and your posts, but not your endorsements
-	or acknowledgements.
+	or acknowledgements. {% endblocktrans %}
 </p>
 
-<h3>Search Engines</h3>
+<h3>{% trans 'Search Engines' %}</h3>
 
-<p>Villages requests that search engines not index any of your personal
+<p>{% blocktrans %}Villages requests that search engines not index any of your personal
 	data, such as your profile or your posts, so it won't show up on Google
 	or any other respectable search engine, even if anonymous visitors to the
-	site can view it.
+	site can view it.{% endblocktrans %}
 </p>
 
-<h3>Real Names &amp; Handles</h3>
+<h3>{% trans 'Real Names &amp; Handles' %}</h3>
 
-<p>Villages does <strong>not</strong> require you to use your real name or
+<p>{% blocktrans %}Villages does <strong>not</strong> require you to use your real name or
 	reveal your real-world identity in any way, so feel free to use any 
-	handle that your friends can recognize.
+	handle that your friends can recognize.{% endblocktrans %}
 </p>
 
-<h3>Tracking</h3>
+<h3>{% trans 'Tracking' %}</h3>
 
-<p>Villages will not do creepy things like track your every click or sell your
-	data to third parties.  That isn't who we are.
+<p>{% blocktrans %}Villages will not do creepy things like track your every click or sell your
+	data to third parties.  That isn't who we are.{% endblocktrans %}
 </p>
 <hr>
 
-<p>If you have any concerns about privacy, please <a href="{% url feedback %}">
-		send us feedback</a>
+<p>{% trans 'If you have any concerns about privacy, please' %} <a href="{% url feedback %}">
+		{% trans 'send us feedback' %}</a>
 </p>
 
 {% endblock %}

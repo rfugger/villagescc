@@ -1,6 +1,7 @@
 {% extends "profile_base.html" %}
+{% load i18n %}
 
-{% block title %}Endorse {{ recipient }}{% endblock %}
+{% block title %}{% trans 'Endorse' %} {{ recipient }}{% endblock %}
 
 {% block extrahead %}
 	{{ block.super }}
@@ -13,27 +14,27 @@
 <h2>Endorse {{ recipient }}</h2>
 
 <div class="feature">
-	<p>If you trust {{ recipient }} to provide value to the community,
-		please fill out the form below.  
+	<p>{% blocktrans %} If you trust {{ recipient }} to provide value to the community,
+		please fill out the form below.{% endblocktrans %}
 	</p>
-	<p>Each heart represents an hour of value you are willing to
+	<p>{% blocktrans %} Each heart represents an hour of value you are willing to
 		provide for {{ recipient }}, trusting that by acknowledging
-		your gift, they will return the favour eventually.
+		your gift, they will return the favour eventually.{% endblocktrans %}
 	</p>
-	<p><a href="{% url how_it_works %}">Read more</a></p>
-	<p>This endorsement will be <strong>public</strong>.</p>
+	<p><a href="{% url how_it_works %}">{% trans 'Read more' %}</a></p>
+	<p>{% trans 'This endorsement will be <strong>public</strong>' %}.</p>
 </div>
 
 {% if form.instance.id %}
-	<p>You have already endorsed {{ recipient }} with 
+	<p>{% blocktrans %}You have already endorsed {{ recipient }} with 
 		<strong>{{ form.instance.weight }}</strong>
-		heart{{ form.instance.weight|pluralize:"s" }}.</p>
+		heart{{ form.instance.weight|pluralize:"s" }}.{% endblocktrans %}</p>
 {% endif %}
 
 {% if request.profile.endorsement_limited %}
-	<p>You have <strong>{{ request.profile.endorsements_remaining }}</strong> 
+	<p>{% blocktrans %}You have <strong>{{ request.profile.endorsements_remaining }}</strong> 
 		heart{{ request.profile.endorsements_remaining|pluralize:"s" }} 
-		remaining to give out.</p>
+		remaining to give out.{% endblocktrans %}</p>
 {% endif %}
 
 {% if form.instance.id or request.profile.can_endorse %}
@@ -44,20 +45,20 @@
 			<tr>
 				<th></th>
 				<td>
-					<input type="submit" value="Save Endorsement">
+					<input type="submit" value="{% trans 'Save Endorsement' %}">
 					{% if form.instance.id %}
 						<input type="submit" name="delete" 
-							   value="Delete"
-							   onclick="return confirm('Delete endorsement?')">
+							   value="{% trans 'Delete' %}"
+							   onclick="return confirm('{% trans "Delete endorsement?" %}')">
 					{% endif %}
 				</td>
 			</tr>
 		</table>
 	</form>
 {% else %}
-	<p>You need more hearts to endorse {{ recipient }}.
+	<p>{% blocktrans %}You need more hearts to endorse {{ recipient }}.
 		You get five hearts for every endorsement you receive from
-		another user.
+		another user.{% endblocktrans %}
 	</p>
 {% endif %}
 

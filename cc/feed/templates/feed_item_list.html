@@ -1,6 +1,5 @@
 {% load feed %}
 {% load i18n %}
-{% trans 'No activity.' as no_activity %}
 {% if form.continued %}
 	<p><a href="?{{ url_param_str }}">&laquo; Back to start</a></p>
 {% endif %}
@@ -12,7 +11,7 @@
 			{% render_in_feed feed_item %}
 		</div>
 	{% empty %}
-		<p><em>{{ empty_string|default:no_activity }}</em></p>
+		<p><em>{{ empty_string|default:_('No activity.') }}</em></p>
 	{% endfor %}
 </div>
 

@@ -1,9 +1,10 @@
 {% extends "feed_base.html" %}
+{% load i18n %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}{% trans 'Posts' %}{% endblock %}
 
 {% block feed_posts_class %}selected{% endblock %}
 
 {% block pre_feed %}
-	<p><a href="{% url new_post %}">New Post</a></p>
+	<p><a href="{% url new_post %}">{% trans 'New Post' %}</a></p>
 {% endblock %}

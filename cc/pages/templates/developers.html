@@ -1,18 +1,19 @@
 {% extends "about_base.html" %}
+{% load i18n %}
 
-{% block title %}Developers{% endblock %}
+{% block title %}{% trans 'Developers' %}{% endblock %}
 
 {% block content %}
 {{ block.super }}
 
 <h3>Developers</h3>
 
-<p>Villages is developed by <a href="{% url profile 'ryan' %}">Ryan Fugger</a>,
-	founder of the <a href="http://ripple-project.org/">Ripple Project</a>.
+<p>{% trans 'Villages is developed by' %} <a href="{% url profile 'ryan' %}">Ryan Fugger</a>,
+	{% blocktrans %}founder of the <a href="http://ripple-project.org/">Ripple Project</a>{% endblocktrans %}.
 </p>
-<p>If have coding, web development, or other applicable skills, 
-	believe in the concept, and would like to help out, please
-	<a href="{% url feedback %}">send a message</a>.
-	Thanks.
+<p>{% blocktrans %}If have coding, web development, or other applicable skills, 
+	believe in the concept, and would like to help out, please{% endblocktrans %}
+	<a href="{% url feedback %}">{% trans 'send a message' %}</a>.
+	{% trans 'Thanks.' %}
 </p>
 {% endblock %}
