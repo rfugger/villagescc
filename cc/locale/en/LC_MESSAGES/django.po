@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-27 19:45+0600\n"
+"POT-Creation-Date: 2012-07-27 19:59+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "New Post"
 msgstr ""
 
-#: feed/templates/feed_base.html:17
+#: feed/templates/feed_base.html:17 profile/templates/profiles.html:4
 msgid "People"
 msgstr ""
 
@@ -519,7 +519,8 @@ msgstr ""
 msgid "Save Post"
 msgstr ""
 
-#: post/templates/post_form.html:43 relate/templates/endorse_user.html:51
+#: post/templates/post_form.html:43 profile/templates/invitations_sent.html:32
+#: relate/templates/endorse_user.html:51
 msgid "Delete"
 msgstr ""
 
@@ -529,6 +530,21 @@ msgstr ""
 
 #: profile/forms.py:50
 msgid "A user with that username already exists."
+msgstr ""
+
+#: profile/templates/bad_invite_code.html:4
+#: profile/templates/bad_invite_code.html:7
+msgid "Unknown or Expired Invitation"
+msgstr ""
+
+#: profile/templates/bad_invite_code.html:9
+msgid ""
+"Please contact the person who invited you to see if they can invite you "
+"again."
+msgstr ""
+
+#: profile/templates/bad_invite_code.html:11 templates/403.html:11
+msgid "Return Home"
 msgstr ""
 
 #: profile/templates/contact.html:10
@@ -573,6 +589,36 @@ msgstr ""
 
 #: profile/templates/forgot_password.html:19
 msgid "Submit"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:4
+#: profile/templates/invitations_sent.html:9
+msgid "Invitations Sent"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:11
+msgid "Back to invitation form"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:18
+msgid "Friend's Email"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:19
+#: relate/templates/endorsement.html:21 relate/templates/relationships.html:40
+msgid "Hearts"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:20
+msgid "Date Sent"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:30
+msgid "Resend"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:39
+msgid "You have no pending sent invitations"
 msgstr ""
 
 #: profile/templates/invite.html:4 templates/base.html:101
@@ -771,6 +817,18 @@ msgstr ""
 msgid "Please create a new password"
 msgstr ""
 
+#: profile/templates/settings.html:4 templates/base.html:95
+msgid "Account Settings"
+msgstr ""
+
+#: profile/templates/settings.html:17
+msgid "Save Settings"
+msgstr ""
+
+#: profile/templates/settings.html:30
+msgid "Change Password"
+msgstr ""
+
 #: relate/views.py:17
 msgid "Endorsement saved."
 msgstr ""
@@ -922,10 +980,6 @@ msgstr ""
 
 #: relate/templates/endorsement.html:18 relate/templates/relationship.html:44
 msgid "Date"
-msgstr ""
-
-#: relate/templates/endorsement.html:21 relate/templates/relationships.html:40
-msgid "Hearts"
 msgstr ""
 
 #: relate/templates/endorsement_feed_item.html:7
@@ -1143,10 +1197,6 @@ msgstr ""
 msgid "You are not permitted to access this page"
 msgstr ""
 
-#: templates/403.html:11
-msgid "Return Home"
-msgstr ""
-
 #: templates/404.html:4 templates/404.html.py:7
 msgid "Page Not Found"
 msgstr ""
@@ -1188,10 +1238,6 @@ msgstr ""
 
 #: templates/base.html:85
 msgid "Browse Marketplace"
-msgstr ""
-
-#: templates/base.html:95
-msgid "Account Settings"
 msgstr ""
 
 #: templates/base.html:96

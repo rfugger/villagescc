@@ -1,6 +1,7 @@
 {% extends "home_base.html" %}
+{% load i18n %}
 
-{% block title %}Account Settings{% endblock %}
+{% block title %}{% trans 'Account Settings' %}{% endblock %}
 
 {% block nav_settings_class %}selected{% endblock %}
 
@@ -13,7 +14,7 @@
 		{{ settings_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="change_settings" value="Save Settings"></td>
+			<td><input type="submit" name="change_settings" value="{% trans 'Save Settings' %}"></td>
 		</tr>
 	</table>
 </form>
@@ -26,7 +27,7 @@
 		{{ password_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="change_password" value="Change Password"></td>
+			<td><input type="submit" name="change_password" value="{% trans 'Change Password' %}"></td>
 		</tr>
 	</table>
 </form>
