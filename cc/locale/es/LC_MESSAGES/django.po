@@ -1450,7 +1450,7 @@ msgid ""
 "We're sorry to disrupt your browsing experience.  A programmer \n"
 "\thas been informed of the broken link and if it was on our site,\n"
 "\tit will be fixed as soon as possible."
-msgstr "Sentimos perjudicar tu experiencia de navegación.    Un programador ⏎ ha sido informado sobre el link roto y si era dentro de nuestra página,⏎ »será arreglado lo antes posible."
+msgstr "Sentimos perjudicar tu experiencia de navegación.    Un programador ha sido informado sobre el link roto y si era dentro de nuestra página, será arreglado lo antes posible."
 
 #: templates/404.html:11
 msgid "Please"
