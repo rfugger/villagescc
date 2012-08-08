@@ -4,13 +4,14 @@
 # 
 # Translators:
 #   <inyarr@gmail.com>, 2012.
+# jeff cliff <>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Villages.cc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-20 23:45+0600\n"
-"PO-Revision-Date: 2012-07-25 03:49+0000\n"
-"Last-Translator: iNyar <inyarr@gmail.com>\n"
+"POT-Creation-Date: 2012-07-27 20:59+0600\n"
+"PO-Revision-Date: 2012-08-06 02:20+0000\n"
+"Last-Translator: jeff cliff <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,41 +61,80 @@ msgstr "Aucun disponible"
 msgid "Unknown content"
 msgstr "Contenu inconnu"
 
-#: feed/templates/feed_base.html:17
+#: feed/forms.py:13
+msgid "Within 1 km"
+msgstr "À moins d'1 Km"
+
+#: feed/forms.py:14
+msgid "Within 5 km"
+msgstr "À moins de 5 Km"
+
+#: feed/forms.py:15
+msgid "Within 10 km"
+msgstr "À moins de 10 Km"
+
+#: feed/forms.py:16
+msgid "Within 50 km"
+msgstr "À moins de 50 Km"
+
+#: feed/forms.py:17
+msgid "Anywhere"
+msgstr "N'importe où"
+
+#: feed/templates/feed.html:4 templates/home_base.html:19
+msgid "Feed"
+msgstr "Flux"
+
+#: feed/templates/feed.html:9 post/templates/my_posts.html:11
+#: post/templates/posts.html:9 templates/base.html:99
+msgid "New Post"
+msgstr "Nouvelle proposition"
+
+#: feed/templates/feed_base.html:17 profile/templates/profiles.html:4
 msgid "People"
 msgstr "Personnes"
 
-#: feed/templates/feed_base.html:19 templates/home_base.html:25
+#: feed/templates/feed_base.html:19 post/templates/posts.html:4
+#: profile/templates/profile_base.html:18 templates/home_base.html:25
 msgid "Posts"
-msgstr "Messages"
+msgstr "Propositions"
 
-#: feed/templates/feed_base.html:23
+#: feed/templates/feed_base.html:23 profile/templates/profile_base.html:22
+#: relate/templates/endorsements.html:4
 msgid "Endorsements"
 msgstr "Soutiens"
 
-#: feed/templates/feed_base.html:26
+#: feed/templates/feed_base.html:26 relate/templates/acknowledgements.html:4
 msgid "Acknowledgements"
 msgstr "Reconnaissances"
+
+#: feed/templates/feed_base.html:33
+msgid "Clear"
+msgstr "Effacer"
 
 #: feed/templates/feed_base.html:40
 msgid "Trusted only"
 msgstr "Seulement de confiance"
 
-#: feed/templates/feed_item_list.html:3
+#: feed/templates/feed_item.html:13
+msgid "Heart icon = trusted user"
+msgstr "Coeur = utilisateur de confiance"
+
+#: feed/templates/feed_item_list.html:14
 msgid "No activity."
 msgstr "Pas d'activité."
 
-#: feed/templates/feed_item_list.html:20
+#: feed/templates/feed_item_list.html:19
 #: profile/templates/profile_content.html:65
 #: profile/templates/profile_content.html:89
 msgid "More"
 msgstr "Plus"
 
-#: geo/templates/locator.html:6
+#: geo/templates/locator.html:6 geo/templates/locator.html.py:19
 msgid "Set Your Location"
 msgstr "Indiquez votre localisation"
 
-#: geo/templates/locator.html:8
+#: geo/templates/locator.html:8 relate/templates/relationships.html:6
 msgid "selected"
 msgstr "sélectionné"
 
@@ -107,7 +147,7 @@ msgid ""
 "To show you relevant posts in your neighbourhood, and \n"
 "\t\tto know who should see your posts, Villages \n"
 "\t\tneeds to know your approximate location."
-msgstr "Pour montrer vos messages dans votre voisinage et pour savoir\n\t\tqui devrait voir vos messages, Villages a besoin de connaitre\n\t\tvotre localisation approximative."
+msgstr "Pour montrer vos propositions dans votre voisinage et pour savoir qui\n\t\tdevrait voir vos propositions, Villages a besoin de connaitre\n\t\tvotre localisation approximative."
 
 #: geo/templates/locator.html:29
 msgid ""
@@ -128,6 +168,10 @@ msgstr "D'abord, sélectionnez votre localisation sur la carte en écrivant votr
 #: geo/templates/locator.html:40
 msgid "Neighbourhood, Address, Intersection, or City"
 msgstr "Quartier, adresse, intersection ou ville"
+
+#: geo/templates/locator.html:41
+msgid "Locate on Map"
+msgstr "placer pour un carte"
 
 #: geo/templates/locator.html:49
 msgid "2."
@@ -153,7 +197,8 @@ msgid ""
 "\t\tnot appropriate for your location."
 msgstr "Quartier, Ville et État sont des champs optionnels s'ils ne sont pas\n\t\tappropriés pour votre localisation."
 
-#: pages/templates/about_base.html:8
+#: pages/templates/about_base.html:8 pages/templates/motivation.html:4
+#: pages/templates/motivation.html.py:9
 msgid "Motivation"
 msgstr "Motivation"
 
@@ -161,17 +206,40 @@ msgstr "Motivation"
 msgid "How It Works"
 msgstr "Comment ça fonctionne"
 
-#: pages/templates/about_base.html:10
+#: pages/templates/about_base.html:10 pages/templates/privacy.html:4
+#: pages/templates/privacy.html.py:9
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: pages/templates/about_base.html:11
+#: pages/templates/about_base.html:11 pages/templates/developers.html:4
 msgid "Developers"
 msgstr "Développeurs"
 
 #: pages/templates/about_base.html:12
 msgid "Donate"
 msgstr "Faire un don"
+
+#: pages/templates/developers.html:11
+msgid "Villages is developed by"
+msgstr "Villages est développé par"
+
+#: pages/templates/developers.html:12
+msgid "founder of the <a href=\"http://ripple-project.org/\">Ripple Project</a>"
+msgstr "fondateur du <a href=\"http://ripple-project.org/\">Projet Ripple</a>"
+
+#: pages/templates/developers.html:14
+msgid ""
+"If have coding, web development, or other applicable skills, \n"
+"\tbelieve in the concept, and would like to help out, please"
+msgstr "Si vous avez des compétences en programmation, développement web ou n'importe quoi d'autre qui puisse être utile, que vous croyez dans ce projet et que vous voudriez aider, veuillez"
+
+#: pages/templates/developers.html:16
+msgid "send a message"
+msgstr "envoyer un message"
+
+#: pages/templates/developers.html:17
+msgid "Thanks."
+msgstr "Merci."
 
 #: pages/templates/feedback.html:4 pages/templates/feedback.html.py:7
 #: templates/base.html:42
@@ -189,6 +257,10 @@ msgstr "Vous pouvez aussi nous écrire par courriel"
 #: pages/templates/feedback.html:12
 msgid "Thanks!"
 msgstr "Merci !"
+
+#: pages/templates/feedback.html:28
+msgid "Send Feedback"
+msgstr "Envoyer un feedback"
 
 #: pages/templates/intro.html:4
 msgid "A Cooperative Community Of Overlapping Villages"
@@ -256,19 +328,625 @@ msgstr "OU"
 msgid "Sign up now!"
 msgstr "Inscrivez-vous maintenant !"
 
+#: pages/templates/motivation.html:11
+msgid ""
+"The goal of Villages is to help people do what they love, rather than what\n"
+"\tthey fear they must."
+msgstr ""
+
+#: pages/templates/motivation.html:15
+msgid ""
+"Many of us struggle with the contradiction between what we want to do, and\n"
+"\tand what we need to do to earn money to live.\n"
+"\tRather than change our hearts to suit what money asks of us, we want to \n"
+"\tchange money to suit what is in our hearts."
+msgstr ""
+
+#: pages/templates/motivation.html:21
+msgid ""
+"We want to create a system of interconnected, overlapping economic villages,\n"
+"\twhere personal relationships take precedence over numbers, and each person \n"
+"\tis supported in following their passion."
+msgstr ""
+
+#: pages/templates/motivation.html:26
+msgid "The Problem With Money"
+msgstr ""
+
+#: pages/templates/motivation.html:28
+msgid ""
+"When we use regular money, we are participating in a system of tokens whose\n"
+"\tsupply is centrally managed for the purposes of:"
+msgstr ""
+
+#: pages/templates/motivation.html:33
+msgid "Price stability"
+msgstr "la stabilité pour les prix"
+
+#: pages/templates/motivation.html:34
+msgid "Low unemployment"
+msgstr "les chaumage"
+
+#: pages/templates/motivation.html:35
+msgid "Foreign trade"
+msgstr "l’échange avec les nations internationale"
+
+#: pages/templates/motivation.html:36
+msgid "Steady growth in transaction volume (GDP)"
+msgstr "beacoup des GDP"
+
+#: pages/templates/motivation.html:39
+msgid ""
+"In other words, those who issue the money work to ensure that it finds its \n"
+"\tway into hands that are going to accomplish these goals.\n"
+"\tNotably absent are goals that actually matter to most of us, such as:"
+msgstr ""
+
+#: pages/templates/motivation.html:45
+msgid "Happiness"
+msgstr ""
+
+#: pages/templates/motivation.html:46
+msgid "Love"
+msgstr "aimez"
+
+#: pages/templates/motivation.html:47
+msgid "Peace"
+msgstr "paix"
+
+#: pages/templates/motivation.html:48
+msgid "Building relationships"
+msgstr "créer les bien relation"
+
+#: pages/templates/motivation.html:49
+msgid "Strong local communities"
+msgstr "la solidarité "
+
+#: pages/templates/motivation.html:50 relate/templates/relationships.html:43
+#: relate/templates/relationships.html:54
+msgid "Health"
+msgstr "degré de liberté"
+
+#: pages/templates/motivation.html:51
+msgid "Maintaining a clean environment"
+msgstr ""
+
+#: pages/templates/motivation.html:52
+msgid "Fun!"
+msgstr ""
+
+#: pages/templates/motivation.html:55
+msgid ""
+"Of course, these goals are subjective, messy, often political, and not\n"
+"\tfitting aims for a central bank committee to be pursuing on our behalf.\n"
+"\tBut why must we settle for a system of money whose values are not our own\n"
+"\tjust so it can be managed appropriately by a central committee?"
+msgstr ""
+
+#: pages/templates/motivation.html:61
+msgid ""
+"Before banks, countries, and central committees, in villages where everyone\n"
+"\tknew everyone else, people didn't need money &ndash; they just offered what\n"
+"\twas needed, and kept track in their heads, in"
+msgstr ""
+
+#: pages/templates/motivation.html:65
+msgid "a system of gifts and obligations"
+msgstr "un système pour les don et les obligations"
+
+#: pages/templates/motivation.html:66
+msgid ""
+"Because they could keep track amongst themselves, they never had to worry \n"
+"\tabout the abstract values of their economic system trumping their values \n"
+"\tas human beings."
+msgstr ""
+
+#: pages/templates/motivation.html:69
+msgid "They"
+msgstr "ils"
+
+#: pages/templates/motivation.html:69
+msgid "were"
+msgstr ""
+
+#: pages/templates/motivation.html:70
+msgid "their own economic system, and their values were its values"
+msgstr ""
+
+#: pages/templates/motivation.html:73
+msgid ""
+"Once economies became larger, and trade grew to involve more and more \n"
+"\tstrangers, more abstract systems of keeping score developed.\n"
+"\tMany of us became materially richer, but we lost some of our autonomy, and \n"
+"\tmuch of our connection to the people around us.  We need systems that\n"
+"\tnot only allow us to cooperate in creating material abundance, but support\n"
+"\tour individual dreams and collective ties as well. "
+msgstr ""
+
+#: pages/templates/motivation.html:81
+msgid "Money For People"
+msgstr "argent pour les gens"
+
+#: pages/templates/motivation.html:83
+msgid ""
+"We are all connected.  \n"
+"\tAny two people on the planet are bound to be linked by a web of personal \n"
+"\trelationships.  \n"
+"\tInstead of using money to cooperate with each other, two strangers can\n"
+"\tgive to each other like friends, and have the resulting obligations \n"
+"\tborne by the web of personal relationships connecting them.\n"
+"\tAll we really need is a system for finding these connections."
+msgstr ""
+
+#: pages/templates/motivation.html:92
+msgid "That system is called"
+msgstr "la système est "
+
+#: pages/templates/motivation.html:92
+msgid "Ripple"
+msgstr "Ripple"
+
+#: pages/templates/motivation.html:93
+msgid "the technology that powers the Villages marketplace"
+msgstr "la logiciels qui sous la place l’échange villages "
+
+#: pages/templates/privacy.html:11
+msgid ""
+"Since Villages is meant for discovering people in your area, \n"
+"\tmost information you give is"
+msgstr "Étant donné que Villages est fait pour découvrir d'autres personnes dans votre voisinage, la plupart des informations que vous donnez n'est"
+
+#: pages/templates/privacy.html:12
+msgid "not private"
+msgstr "pas confidentielle"
+
+#: pages/templates/privacy.html:13
+msgid "This includes:"
+msgstr "Ceci comprend :"
+
+#: pages/templates/privacy.html:17
+msgid "Your profile information"
+msgstr "Votre information de profil"
+
+#: pages/templates/privacy.html:18
+msgid "Your posts"
+msgstr "Vos propositions"
+
+#: pages/templates/privacy.html:19
+msgid ""
+"Endorsements given and received (these are only available to registered "
+"users)"
+msgstr "Les soutiens donnés et reçus (seulement visibles par les utilisateurs enregistrés)"
+
+#: pages/templates/privacy.html:20
+msgid "Your overall acknowledgement balance"
+msgstr "Votre solde global de reconnaissance"
+
+#: pages/templates/privacy.html:23
+msgid "Things that are completely or relatively private:"
+msgstr "Ce qui est complètement ou relativement confidentiel :"
+
+#: pages/templates/privacy.html:26
+msgid "Your email address"
+msgstr "Votre adresse de courriel"
+
+#: pages/templates/privacy.html:27
+msgid "The contents of any messages sent to other users"
+msgstr "Le contenu des messages envoyés aux autres utilisateurs"
+
+#: pages/templates/privacy.html:28
+msgid "Individual acknowledgement balances with other users"
+msgstr "Les soldes de reconnaissance spécifiques vis-à-vis d'autres utilisateurs"
+
+#: pages/templates/privacy.html:29
+msgid "Details of acknowledgements given and received"
+msgstr "Les détails des reconnaissances reçues et données"
+
+#: pages/templates/privacy.html:31
+msgid ""
+"When you send an acknowledgement through the network,\n"
+"\t\t\t\tthe details are shared with users who are on the path\n"
+"\t\t\t\ttravelled by the acknowledgement from sender to recipient"
+msgstr "Quand vous envoyez une reconnaissance à travers le réseau,\n\t\t\t\tles détails sont partagés avec les utilisateurs qui sont sur le trajet\n\t\t\t\teffectué par la reconnaissance entre l'émetteur et le destinataire."
+
+#: pages/templates/privacy.html:35
+msgid ""
+"Acknowledgement details may be available to more users in the \n"
+"\t\t\t\tfuture due to upcoming features."
+msgstr "Les détails de reconnaissance pourront peut-être être visibles pour les autres \n\t\t\t\tutilisateurs dans le futur, en raison de nouvelles fonctionnalités."
+
+#: pages/templates/privacy.html:42
+msgid ""
+"Please do not use Villages thinking that other users will not be able to\n"
+"\tsee details of your activities.  \n"
+"\tOnce Villages has grown to a certain number of users, we may add the option\n"
+"\tto keep more of your details private.  \n"
+"\tHowever, to start with, we're building a service for people who want to \n"
+"\tput themselves out there and connect with others in their community."
+msgstr "Veuillez ne pas utiliser Villages en pensant que d'autres utilisateurs ne sont \n\tpas capables de voir les détails de vos activités.\n\tUne fois que Villages aura atteint un certain nombre d'utilisateurs, il est\n\tpossible que nous donnions l'option de maintenir plus de détails confidientiels.  \n\tNéanmoins, pour commencer, nous construisons un service pour les gens\n\tqui acceptent de s'exposer pour entrer en contact avec les autres membres \n\tde leur communauté."
+
+#: pages/templates/privacy.html:49
+msgid ""
+"If you want to try a Ripple system with more privacy, please check out "
+msgstr "Si vous voulez utiliser un système Ripple avec plus de confidentialité, veuillez consulter"
+
+#: pages/templates/privacy.html:51
+msgid " You may find it difficult to meet anybody there though"
+msgstr "Il est cependant possible que vous ayez du mal à trouver des personnes avec qui échanger par ce biais."
+
+#: pages/templates/privacy.html:54
+msgid "Anonymous Visitors"
+msgstr "Visiteurs anonymes"
+
+#: pages/templates/privacy.html:56
+msgid ""
+"Anonymous visitors to the site, who are not registered or logged\n"
+"\tin, can see your profile and your posts, but not your endorsements\n"
+"\tor acknowledgements. "
+msgstr "Les visiteurs anonymes de ce site, non enregistrés ou connectés, peuvent \n\tvoir votre profil et vos propositions, mais pas vos soutiens ou reconnaissance. "
+
+#: pages/templates/privacy.html:61
+msgid "Search Engines"
+msgstr "Moteurs de recherche"
+
+#: pages/templates/privacy.html:63
+msgid ""
+"Villages requests that search engines not index any of your personal\n"
+"\tdata, such as your profile or your posts, so it won't show up on Google\n"
+"\tor any other respectable search engine, even if anonymous visitors to the\n"
+"\tsite can view it."
+msgstr "Villages demandent aux moteurs de recherche de ne pas indexer vos \n\tinformations personnelles, comme votre profil ou vos propositions, donc\n\tceci n'apparaitra pas sur Google ou n'importe quel autre moteur de\n\trecherche digne de ce nom, même si les visiteurs anonymes peuvent\n\tle voir."
+
+#: pages/templates/privacy.html:69
+msgid "Real Names &amp; Handles"
+msgstr "Pseudonymes et identités réelles"
+
+#: pages/templates/privacy.html:71
+msgid ""
+"Villages does <strong>not</strong> require you to use your real name or\n"
+"\treveal your real-world identity in any way, so feel free to use any \n"
+"\thandle that your friends can recognize."
+msgstr "Villages <strong>ne</strong> requiert <strong>pas</strong> que vous utilisiez votre vrai nom\n\tou que vous révéliez votre véritable identité de quelconque façon. N'hésitez\n\tdonc pas à utiliser n'importe quel pseudonyme que vos amis reconnaissent."
+
+#: pages/templates/privacy.html:76
+msgid "Tracking"
+msgstr "Suivi"
+
+#: pages/templates/privacy.html:78
+msgid ""
+"Villages will not do creepy things like track your every click or sell your\n"
+"\tdata to third parties.  That isn't who we are."
+msgstr "Villages ne fera rien de louche, comme suivre chacun de vos clics ou\n\tvendre vos informations à des tiers. Ce n'est vraiment pas notre genre."
+
+#: pages/templates/privacy.html:83
+msgid "If you have any concerns about privacy, please"
+msgstr "Si vous avez d'autres préoccupations à propos de la confidentialité, veuillez"
+
+#: pages/templates/privacy.html:84
+msgid "send us feedback"
+msgstr "nous envoyer vos observations"
+
+#: post/models.py:27
+msgid "Leave unchecked if your post is an offer."
+msgstr "Ne pas cocher si votre proposition est une offre."
+
+#: post/templates/my_post.html:11 post/templates/post_form.html:4
+#: post/templates/post_form.html.py:12 relate/templates/endorsement.html:31
+msgid "Edit"
+msgstr "Modifier"
+
+#: post/templates/my_posts.html:4 post/templates/my_posts.html.py:9
+msgid "My Posts"
+msgstr "Mes propositions"
+
+#: post/templates/post.html:13 profile/templates/contact.html:4
+#: profile/templates/profile_base.html:33
+msgid "Contact"
+msgstr "Contact"
+
+#: post/templates/post.html:14
+msgid "Send a message to {{ post.user }} about this post:"
+msgstr "Répondre à {{post.user}} à propos de cette proposition :"
+
+#: post/templates/post.html:23 profile/templates/contact.html:18
+msgid "Send"
+msgstr "Envoyer"
+
+#: post/templates/post_form.html:4 post/templates/post_form.html.py:12
+msgid "New"
+msgstr "Nouveau"
+
+#: post/templates/post_form.html:5 post/templates/post_form.html.py:12
+msgid "Post"
+msgstr "Proposition"
+
+#: post/templates/post_form.html:15
+msgid ""
+"Posts are temporary advertisements for items and services offered and\n"
+"\t\twanted.  For permanent advertisements, such as skills you have to offer,\n"
+"\t\tplease use your profile description."
+msgstr "Les propositions sont des publicités temporaires pour des biens et services\n\tofferts ou recherchés.\nPour une diffusion permanente, comme par exemple des compétences que\n\tvous offrez, veuillez utiliser la description de votre profil."
+
+#: post/templates/post_form.html:18
+msgid "Any information you post will be"
+msgstr "Toute information sera"
+
+#: post/templates/post_form.html:18 profile/templates/edit_profile.html:17
+#: profile/templates/invite.html:26
+msgid "public"
+msgstr "publique"
+
+#: post/templates/post_form.html:22
+msgid "View post"
+msgstr "Voir la proposition"
+
+#: post/templates/post_form.html:31 post/templates/post_form.html.py:33
+#: templates/base.html:89
+msgid "Location"
+msgstr "Localisation"
+
+#: post/templates/post_form.html:41
+msgid "Save Post"
+msgstr "Enregistrer la proposition"
+
+#: post/templates/post_form.html:43 profile/templates/invitations_sent.html:32
+#: relate/templates/endorse_user.html:51
+msgid "Delete"
+msgstr "Supprimer"
+
+#: post/templates/post_form.html:44
+msgid "Delete post?"
+msgstr "Supprimer la proposition ?"
+
 #: profile/forms.py:50
 msgid "A user with that username already exists."
 msgstr "Un utilisateur avec ce nom d'utilisateur existe déjà."
 
+#: profile/models.py:178
+msgid "Limited hearts"
+msgstr "cœur limiter"
+
+#: profile/models.py:179
+msgid ""
+"Uncheck this if you know what you're doing and want to give out more hearts."
+msgstr ""
+
+#: profile/models.py:182
+msgid "Receive notifications"
+msgstr "recevoir les notifications"
+
+#: profile/models.py:183
+msgid "Receive email whenever someone endorses or acknowledges you."
+msgstr "recevoir l'email que un personne approuver ou reconnaître tu."
+
+#: profile/models.py:185
+msgid "Receive updates"
+msgstr "recevoir les mises a jour."
+
+#: profile/models.py:186
+msgid "Receive occasional news about the Villages community."
+msgstr "retriever la actualités a les commune villages. "
+
+#: profile/models.py:193
+#, python-format
+msgid "Settings for %s"
+msgstr "choisi pour %s"
+
+#: profile/models.py:197
+msgid "Friend's email"
+msgstr "l'email pour ton amis"
+
+#: profile/models.py:198 profile/templates/invitations_sent.html:19
+#: relate/models.py:22 relate/templates/endorsement.html:21
+#: relate/templates/relationships.html:40
+msgid "Hearts"
+msgstr "Cœurs"
+
+#: profile/models.py:199 relate/models.py:23
+msgid ""
+"Each heart represents an hour of value you'd provide in exchange for "
+"acknowledgements."
+msgstr "La cœur représenté un heure pour ton mérite, qui tu donner pour les reconnaissances au l'échange."
+
+#: profile/models.py:201 relate/models.py:25
+msgid "Testimonial"
+msgstr "bien mots"
+
+#: profile/models.py:203
+msgid "Private message"
+msgstr "message privée "
+
+#: profile/models.py:204
+msgid "Sent with the invitation email only. Not public."
+msgstr "seul envoyée a la email.  n'est pas public?"
+
+#: profile/models.py:221
+#, python-format
+msgid "%s Has Invited You To Villages.cc"
+msgstr "%s a inviter tu au villages"
+
+#: profile/models.py:242
+#, python-format
+msgid "Password reset link for %s"
+msgstr "lien pour réinitialisation la mot de passe pour %s "
+
+#: profile/models.py:249
+msgid "Villages.cc Password Reset Link"
+msgstr "lien au villages mot de passe réinitialisation "
+
+#: profile/templates/bad_invite_code.html:4
+#: profile/templates/bad_invite_code.html:7
+msgid "Unknown or Expired Invitation"
+msgstr ""
+
+#: profile/templates/bad_invite_code.html:9
+msgid ""
+"Please contact the person who invited you to see if they can invite you "
+"again."
+msgstr ""
+
+#: profile/templates/bad_invite_code.html:11 templates/403.html:11
+msgid "Return Home"
+msgstr "partir a la maison"
+
+#: profile/templates/contact.html:10
+msgid "Your message will be forwarded to {{ profile }} by email"
+msgstr "Votre message sera transféré à {{profile}} par courriel"
+
+#: profile/templates/edit_profile.html:4 profile/templates/edit_profile.html:9
 #: profile/templates/profile_content.html:6 templates/home_base.html:30
 msgid "Edit My Profile"
 msgstr "Modifier mon profil"
+
+#: profile/templates/edit_profile.html:12
+msgid ""
+"Your profile tells other community members about you, and lets\n"
+"\t\tthem find you based on your interests and skills.  Please mention\n"
+"\t\tanything that you wish to offer or bring to the community generally,\n"
+"\t\tso others will find you when they search for those things."
+msgstr "ta profil tacher autre commune pour toi, et laisser elles percevoir tu base sur ton intérêts et ton ?, quelque a tu desirir a offrir a la commune en général, qui autres vont l'utiliser pour tu trouver, quand ils chercher pour ça, svp"
+
+#: profile/templates/edit_profile.html:17
+msgid "Your profile data is"
+msgstr "ton profil est"
+
+#: profile/templates/edit_profile.html:20
+msgid "View my profile"
+msgstr "viewer ma profil"
+
+#: profile/templates/edit_profile.html:28
+msgid "Save Changes"
+msgstr "sauvegarder les changement"
+
+#: profile/templates/forgot_password.html:4
+#: profile/templates/forgot_password.html:7
+msgid "Forgot Username Or Password"
+msgstr "oublier le mot du passe, ou nom de utiliser"
+
+#: profile/templates/forgot_password.html:9
+msgid ""
+"Please submit your username or email address to receive\n"
+"\ta password reset link and a reminder of your username."
+msgstr "soumettre a nom d'utilisateur ou adresse pour ecrire a de mot de passe reinitilization et un ? a ta nom d'utilisateur"
+
+#: profile/templates/forgot_password.html:19
+msgid "Submit"
+msgstr "publier"
+
+#: profile/templates/invitations_sent.html:4
+#: profile/templates/invitations_sent.html:9
+msgid "Invitations Sent"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:11
+msgid "Back to invitation form"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:18
+msgid "Friend's Email"
+msgstr "l'email a ces amis"
+
+#: profile/templates/invitations_sent.html:20
+msgid "Date Sent"
+msgstr ""
+
+#: profile/templates/invitations_sent.html:30
+msgid "Resend"
+msgstr "transféré beaucoup"
+
+#: profile/templates/invitations_sent.html:39
+msgid "You have no pending sent invitations"
+msgstr ""
+
+#: profile/templates/invite.html:4 templates/base.html:101
+msgid "Invite A Friend"
+msgstr "Inviter un ami"
+
+#: profile/templates/invite.html:17
+msgid ""
+"If you know someone who would love to participate in Villages.cc and\n"
+"\t\thas something to contribute to the community, please invite them by\n"
+"\t\tendorsing them."
+msgstr "que tu savoir qui a se pencher a participé au villages, et qui a quelque a contribuer pour la commune, inviter ils a 'approuver' ça"
+
+#: profile/templates/invite.html:20
+msgid ""
+"Each heart represents an hour of value you are willing to\n"
+"\t\tprovide for your friend, trusting that by acknowledging\n"
+"\t\tyour gift, they will return the favour eventually."
+msgstr "ces cœur représentation un heure pour ta mérite qui tu a intéressée pour conféré a ton amis, propos a par utiliser la roger, ta don, elles ça retourner la faveur."
+
+#: profile/templates/invite.html:24 relate/templates/acknowledge_user.html:24
+#: relate/templates/endorse_user.html:24
+msgid "Read more"
+msgstr "lire en plus"
+
+#: profile/templates/invite.html:25
+msgid "If your friend accepts your invitation, this endorsement will be"
+msgstr "que ton amis accepter ta invitation, les approbation déterminer ça"
+
+#: profile/templates/invite.html:30
+msgid "You have"
+msgstr "tu a "
+
+#: profile/templates/invite.html:31 relate/templates/relationship.html:23
+#: relate/templates/relationship.html:31
+msgid "heart"
+msgstr "cœur."
+
+#: profile/templates/invite.html:32
+msgid "remaining to give out"
+msgstr "sont laisses"
+
+#: profile/templates/invite.html:42
+msgid "Invite"
+msgstr "inviter"
+
+#: profile/templates/invite.html:47
+msgid ""
+"You need more hearts to invite a friend.\n"
+"\t\tYou get 5 hearts for each endorsement you receive."
+msgstr ""
+
+#: profile/templates/invite.html:51
+msgid "View pending sent invitations"
+msgstr "l'invitation qui est attendant viewer"
+
+#: profile/templates/login.html:4 profile/templates/login.html.py:19
+#: templates/base.html:106 templates/home_base.html:35
+msgid "Login"
+msgstr "Se connecter"
+
+#: profile/templates/login.html:23
+msgid "Forgot username or password?"
+msgstr "oublier ta nom de utiliser, ou les mot de passe?"
+
+#: profile/templates/profile_base.html:15 templates/home_base.html:22
+msgid "Info"
+msgstr "Info"
+
+#: profile/templates/profile_base.html:25
+msgid "Relationship"
+msgstr "relation"
+
+#: profile/templates/profile_base.html:28 relate/templates/endorse_user.html:4
+#: relate/templates/relationship.html:34
+#: relate/templates/relationships.html:73
+msgid "Endorse"
+msgstr "approuver "
+
+#: profile/templates/profile_base.html:31
+#: relate/templates/acknowledge_user.html:4
+#: relate/templates/acknowledge_user.html:9
+msgid "Acknowledge"
+msgstr "roger"
 
 #: profile/templates/profile_content.html:10
 msgid "You have endorsed this user with"
 msgstr "Vous avez donné votre soutien à cet utilisateur avec"
 
 #: profile/templates/profile_content.html:26
+#: relate/templates/relationships.html:53
 msgid "Name"
 msgstr "Nom"
 
@@ -297,65 +975,519 @@ msgid "Max. trusted acknowledgements I would accept from this user"
 msgstr "Maximum de reconnaissances de confiance que j'accepterais de cet utilisateur"
 
 #: profile/templates/profile_content.html:70
+#: profile/templates/profile_endorsements.html:15
 msgid "Reputation"
 msgstr "Réputation"
 
 #: profile/templates/profile_content.html:73
+#: relate/templates/relationships_summary.html:3
 msgid "Sum of all acknowledgements sent and received"
 msgstr "Somme de toutes les reconnaissances d'heures envoyées et reçues"
 
 #: profile/templates/profile_content.html:74
+#: relate/templates/relationships_summary.html:4
 msgid "Overall Balance"
 msgstr "Solde global"
 
-#: profile/templates/profile_content.html:78
-msgid "Trusted Balance"
-msgstr "Solde de confiance"
-
+#: profile/templates/profile_content.html:75
 #: profile/templates/profile_content.html:79
 #: profile/templates/profile_content.html:85
+#: relate/templates/acknowledge_user.html:67
+#: relate/templates/relationship.html:16
+#: relate/templates/relationships.html:37
+#: relate/templates/relationships.html:41
+#: relate/templates/relationships_summary.html:5
+#: relate/templates/relationships_summary.html:9
 msgid "hours"
 msgstr "heures"
+
+#: profile/templates/profile_content.html:78
+#: relate/templates/relationships_summary.html:8
+msgid "Trusted Balance"
+msgstr "Solde de confiance"
 
 #: profile/templates/profile_content.html:84
 msgid "Balance with Me"
 msgstr "Solde vis-à-vis de moi"
 
+#: profile/templates/profile_endorsements.html:5
+#: profile/templates/profile_endorsements.html:10
+msgid "Endorsements For"
+msgstr "approbation pour"
+
+#: profile/templates/profile_endorsements.html:19
+msgid "Total Hearts"
+msgstr "cœur tout"
+
+#: profile/templates/profile_endorsements.html:23
+msgid ""
+"Reputation is how much trust I have in someone, directly, as well as\n"
+"\t\tindirectly through the network.\n"
+"\t\tIt is equal to the maximum number of acknowledgement hours they could\n"
+"\t\tsend me if all outstanding acknowledgements were wiped away and we \n"
+"\t\tstarted from zero."
+msgstr ""
+
+#: profile/templates/profile_posts.html:4
+#: profile/templates/profile_posts.html:9
+msgid "Posts by"
+msgstr "Propositions de"
+
+#: profile/templates/register.html:4 profile/templates/register.html.py:25
+msgid "Register"
+msgstr "registre "
+
+#: profile/templates/register.html:11
+msgid ""
+"Please enter the name you'd like to use on the system,\n"
+"\tyour email address, and then the username and password you'd like to \n"
+"\tuse to log in."
+msgstr "entrer un nom de utiliser qui tu pencher a utiliser par les villages.  Entrer aussi un nom et mot de passe qui tu pencher a utiliser a login."
+
+#: profile/templates/reset_password.html:4
+#: profile/templates/reset_password.html:7
+#: profile/templates/reset_password.html:18
+msgid "Reset Password"
+msgstr "initializer ton mot de passe"
+
+#: profile/templates/reset_password.html:9
+msgid "Please create a new password"
+msgstr "creer un mot de passe"
+
+#: profile/templates/settings.html:4 profile/templates/settings.html.py:9
+#: templates/base.html:95
+msgid "Account Settings"
+msgstr "Paramètres du compte"
+
+#: profile/templates/settings.html:17
+msgid "Save Settings"
+msgstr "sauvegarder la choisi"
+
+#: profile/templates/settings.html:23 profile/templates/settings.html.py:30
+msgid "Change Password"
+msgstr "changer les mot de passe"
+
+#: profile/templates/share.html:5 profile/templates/share.html.py:10
+msgid "Share Villages"
+msgstr "transférer villages"
+
+#: profile/templates/share.html:12
+msgid ""
+"To share Villages with a group of friends, and have their invitation requests\n"
+"\tcome to you, share this link:"
+msgstr "a participer avec tes amis, et a ça requêtes par inviter, transférer ces lien a ça. "
+
+#: profile/templates/share.html:30
+msgid "Tweet"
+msgstr "tweet"
+
+#: relate/views.py:17
+msgid "Endorsement saved."
+msgstr "approbation est sauvegardé"
+
+#: relate/views.py:18
+msgid "Endorsement deleted."
+msgstr "approbation est remover"
+
+#: relate/views.py:19
+msgid "Acknowledgement sent."
+msgstr "roger et transféré"
+
+#: relate/templates/acknowledge_user.html:12
+msgid "There are two ways to send acknowledgement"
+msgstr "il y a 2 "
+
+#: relate/templates/acknowledge_user.html:14
+msgid "Send a trusted acknowledgement"
+msgstr "transféré un roger bien"
+
+#: relate/templates/acknowledge_user.html:15
+msgid ""
+"through the trust network so the recipient receives it\n"
+"                        only from people they have endorsed, and only up to the\n"
+"                        number of hearts they have given to each."
+msgstr ""
+
+#: relate/templates/acknowledge_user.html:19
+msgid "Send a direct acknowledgement"
+msgstr "transféré un roger "
+
+#: relate/templates/acknowledge_user.html:20
+msgid ""
+"of any number of hours directly to the recipient, even\n"
+"                        if they haven't endorsed you."
+msgstr ""
+
+#: relate/templates/acknowledge_user.html:25
+msgid ""
+"Acknowledgements are only visible to you, the recipient, and for\n"
+"\t\ttrusted acknowledgements, anyone on the path the acknowlegdement \n"
+"\t\ttakes between you and the recipient."
+msgstr ""
+
+#: relate/templates/acknowledge_user.html:31
+#, python-format
+msgid ""
+"You can send a trusted acknowledgement of up to %(max_amount)s \n"
+"\t\thour%(max_amount|pluralize:\"s\")s, or a direct\n"
+"\t\tacknowledgement of any amount."
+msgstr ""
+
+#: relate/templates/acknowledge_user.html:36
+#, python-format
+msgid ""
+"There are no available paths through the trust network to %(recipient)s,\n"
+"\t\tso you can only send direct acknowledgement."
+msgstr ""
+
+#: relate/templates/acknowledge_user.html:47
+msgid "Send Acknowledgement"
+msgstr "transférer les roger"
+
+#: relate/templates/acknowledge_user.html:66
+msgid "Send a"
+msgstr "transférer"
+
+#: relate/templates/acknowledge_user.html:66
+msgid "acknowledgement of"
+msgstr "roger de"
+
+#: relate/templates/acknowledgement_feed_item.html:6
+#: relate/templates/endorsement_feed_item.html:6
+msgid "You"
+msgstr "vous"
+
+#: relate/templates/acknowledgement_feed_item.html:7
+msgid "acknowledged"
+msgstr "rogerez "
+
+#: relate/templates/acknowledgement_feed_item.html:8
+#: relate/templates/endorsement_feed_item.html:8
+msgid "you"
+msgstr "tu"
+
+#: relate/templates/acknowledgement_feed_item.html:9
+msgid "with"
+msgstr "avec"
+
+#: relate/templates/acknowledgement_feed_item.html:9
+msgid "hours promised"
+msgstr "heures du promesse"
+
+#: relate/templates/endorse_user.html:17
+#, python-format
+msgid ""
+" If you trust %(recipient)s to provide value to the community,\n"
+"\t\tplease fill out the form below."
+msgstr ""
+
+#: relate/templates/endorse_user.html:20
+#, python-format
+msgid ""
+" Each heart represents an hour of value you are willing to\n"
+"\t\tprovide for %(recipient)s, trusting that by acknowledging\n"
+"\t\tyour gift, they will return the favour eventually."
+msgstr ""
+
+#: relate/templates/endorse_user.html:25
+msgid "This endorsement will be <strong>public</strong>"
+msgstr ""
+
+#: relate/templates/endorse_user.html:29
+#, python-format
+msgid ""
+"You have already endorsed %(recipient)s with \n"
+"\t\t<strong>%(form.instance.weight)s</strong>\n"
+"\t\theart%(form.instance.weight|pluralize:\"s\")s."
+msgstr ""
+
+#: relate/templates/endorse_user.html:35
+#, python-format
+msgid ""
+"You have <strong>%(request.profile.endorsements_remaining)s</strong> \n"
+"\t\theart%(request.profile.endorsements_remaining|pluralize:\"s\")s \n"
+"\t\tremaining to give out."
+msgstr ""
+
+#: relate/templates/endorse_user.html:48
+msgid "Save Endorsement"
+msgstr "sauvegarder ta approbation"
+
+#: relate/templates/endorse_user.html:52
+msgid "Delete endorsement?"
+msgstr "effacer ta approbation?"
+
+#: relate/templates/endorse_user.html:59
+#, python-format
+msgid ""
+"You need more hearts to endorse %(recipient)s.\n"
+"\t\tYou get five hearts for every endorsement you receive from\n"
+"\t\tanother user."
+msgstr ""
+
 #: relate/templates/endorsement.html:6 relate/templates/endorsement.html:11
 msgid "Endorses"
 msgstr "Soutient"
 
-#: relate/templates/endorsement.html:18
+#: relate/templates/endorsement.html:18 relate/templates/relationship.html:44
 msgid "Date"
 msgstr "Date"
 
-#: relate/templates/endorsement.html:21
-msgid "Hearts"
-msgstr "Cœurs"
+#: relate/templates/endorsement_feed_item.html:7
+msgid "endorsed"
+msgstr ""
 
-#: relate/templates/endorsement.html:31
-msgid "Edit"
-msgstr "Modifier"
+#: relate/templates/endorsement_feed_item.html:9
+#, python-format
+msgid "with %(item.weight)s heart%(item.weight|pluralize:\"s\")s"
+msgstr ""
+
+#: relate/templates/endorsements.html:9
+msgid "Visit"
+msgstr ""
+
+#: relate/templates/endorsements.html:10
+msgid "for a more structured list of endorsements"
+msgstr ""
+
+#: relate/templates/payment_entries.html:7
+#: relate/templates/view_acknowledgement.html:24
+msgid "Hours"
+msgstr "les heures"
+
+#: relate/templates/relationship.html:5 relate/templates/relationship.html:10
+msgid "Relationship With"
+msgstr "relation avec"
+
+#: relate/templates/relationship.html:15
+msgid "Current Balance"
+msgstr "Solde actuel"
+
+#: relate/templates/relationship.html:21
+msgid "{{ partner }}"
+msgstr "{{ amis }}"
+
+#: relate/templates/relationship.html:29
+msgid "Your endorsement of"
+msgstr "ta approbation de"
+
+#: relate/templates/relationship.html:45
+msgid "Description"
+msgstr "décrit"
+
+#: relate/templates/relationship.html:46
+#: relate/templates/view_acknowledgement.html:37
+msgid "Received"
+msgstr ""
+
+#: relate/templates/relationship.html:47
+msgid "Sent"
+msgstr "transféré"
+
+#: relate/templates/relationship.html:48
+msgid "Balance"
+msgstr "Solde"
+
+#: relate/templates/relationship.html:62
+msgid "No entries."
+msgstr ""
+
+#: relate/templates/relationships.html:4 relate/templates/relationships.html:9
+msgid "My Relationships"
+msgstr "ma relations"
+
+#: relate/templates/relationships.html:11
+msgid "Summary"
+msgstr ""
+
+#: relate/templates/relationships.html:14
+msgid ""
+"Your balances lets you know how balanced your participation\n"
+"\t\tin Villages is."
+msgstr ""
+
+#: relate/templates/relationships.html:17
+#: relate/templates/relationships.html:20
+msgid "Your"
+msgstr "ton"
+
+#: relate/templates/relationships.html:17
+msgid "overall balance"
+msgstr "balance a tout"
+
+#: relate/templates/relationships.html:17
+msgid ""
+" adds all of the acknowledgements\n"
+"\t\t\tyou have received, and subtracts all the acknowledgements you have sent. "
+msgstr ""
+
+#: relate/templates/relationships.html:20
+msgid "trusted balance"
+msgstr "balance bien a tout."
+
+#: relate/templates/relationships.html:20
+msgid ""
+"is more important &ndash; \n"
+"\t\t\tit is the same as your overall balance, but excludes acknowledgements\n"
+"\t\t\tbeyond those you have indicated by your endorsements that you trust."
+msgstr ""
+
+#: relate/templates/relationships.html:25
+msgid ""
+"If your balance is negative, you should focus on what you can give,\n"
+"\t\tand if your balance is positive, you should see what others have to\n"
+"\t\toffer you. "
+msgstr ""
+
+#: relate/templates/relationships.html:33
+msgid "Details"
+msgstr "..."
+
+#: relate/templates/relationships.html:36
+msgid "This table summarizes your endorsements"
+msgstr ""
+
+#: relate/templates/relationships.html:36
+msgid "hearts"
+msgstr "les cœur"
+
+#: relate/templates/relationships.html:37
+msgid "and outstanding acknowledgements"
+msgstr ""
+
+#: relate/templates/relationships.html:38
+msgid "with other people"
+msgstr "avec ces autres"
+
+#: relate/templates/relationships.html:40
+msgid "provide an upper limit on trusted"
+msgstr ""
+
+#: relate/templates/relationships.html:41
+msgid "in either direction"
+msgstr "au les direction tout"
+
+#: relate/templates/relationships.html:43
+msgid ""
+"is an indicator out of 100 reflecting how\n"
+"\t\t\tmuch room is remaining for further acknowledgements before the edge\n"
+"\t\t\tof trust is reached on the relationship."
+msgstr ""
+
+#: relate/templates/relationships.html:55
+msgid "Hearts from you"
+msgstr "les cœur avec tu"
+
+#: relate/templates/relationships.html:56
+msgid "Hours from them"
+msgstr "l'heures avec ils"
+
+#: relate/templates/relationships.html:57
+msgid "Hours from you"
+msgstr "l'heures avec tu"
+
+#: relate/templates/relationships.html:58
+msgid "Hearts from them"
+msgstr "les cœur avec ils"
+
+#: relate/templates/relationships.html:63
+msgid "View Profile for {{ account.partner }}"
+msgstr "voir la profil pour {{ account.partner }}"
+
+#: relate/templates/relationships.html:69
+msgid "View Your Endorsement of"
+msgstr "voir les approbation avec"
+
+#: relate/templates/relationships.html:78
+#: relate/templates/relationships.html:82
+msgid "View Relationship with"
+msgstr "voir la relation avec"
+
+#: relate/templates/relationships.html:87
+msgid "View Endorsement from"
+msgstr "voir la approbation avec"
+
+#: relate/templates/relationships.html:95
+msgid "No relationships yet."
+msgstr "n'es pas des relations"
+
+#: relate/templates/relationships_summary.html:7
+msgid "Sum of all *trusted* acknowledgements sent and received"
+msgstr "tout reconnaissance transférer et reçu"
+
+#: relate/templates/view_acknowledgement.html:6
+#: relate/templates/view_acknowledgement.html:10
+msgid "Acknowledgement"
+msgstr "la reconnaissance"
+
+#: relate/templates/view_acknowledgement.html:14
+#: relate/templates/view_acknowledgement.html:39
+msgid "From"
+msgstr "a"
+
+#: relate/templates/view_acknowledgement.html:19
+#: relate/templates/view_acknowledgement.html:48
+msgid "To"
+msgstr "au"
+
+#: relate/templates/view_acknowledgement.html:28
+msgid "Time"
+msgstr "heure"
+
+#: templates/403.html:4 templates/403.html.py:7
+msgid "Forbidden"
+msgstr "ne pas a permission"
+
+#: templates/403.html:9
+msgid "You are not permitted to access this page"
+msgstr "tu ne permettez vous a voir la page."
+
+#: templates/404.html:4 templates/404.html.py:7
+msgid "Page Not Found"
+msgstr "La page n’existe pas"
+
+#: templates/404.html:8
+msgid ""
+"We're sorry to disrupt your browsing experience.  A programmer \n"
+"\thas been informed of the broken link and if it was on our site,\n"
+"\tit will be fixed as soon as possible."
+msgstr "vous le rompit, nous résoudre"
+
+#: templates/404.html:11
+msgid "Please"
+msgstr "SVP"
+
+#: templates/404.html:11
+msgid "keep using the site"
+msgstr "utiliser la site plus beaucoup."
+
+#: templates/404.html:11
+msgid "or"
+msgstr "ou"
+
+#: templates/404.html:12
+msgid "contact us"
+msgstr "nous reponder "
+
+#: templates/404.html:12
+msgid "if you need further assistance"
+msgstr "que tu avez besoin les assistants"
+
+#: templates/404.html:13
+msgid "Thank you!"
+msgstr "merci!"
 
 #: templates/base.html:41
 msgid "About"
 msgstr "À propos"
 
-#: templates/base.html:95
-msgid "Account Settings"
-msgstr "Paramètres du compte"
+#: templates/base.html:85
+msgid "Browse Marketplace"
+msgstr "Parcourir le marché"
 
 #: templates/base.html:96
 msgid "Logout"
 msgstr "Se déconnecter"
-
-#: templates/base.html:99
-msgid "New Post"
-msgstr "Nouveau message"
-
-#: templates/base.html:101
-msgid "Invite A Friend"
-msgstr "Inviter un ami"
 
 #: templates/base.html:103
 msgid "Share"
@@ -365,21 +1497,9 @@ msgstr "Partager"
 msgid "Join"
 msgstr "S'inscrire"
 
-#: templates/base.html:106 templates/home_base.html:35
-msgid "Login"
-msgstr "Se connecter"
-
 #: templates/home_base.html:14
 msgid "Guest Visitor"
 msgstr "Visiteur invité"
-
-#: templates/home_base.html:19
-msgid "Feed"
-msgstr "Flux"
-
-#: templates/home_base.html:22
-msgid "Info"
-msgstr "Info"
 
 #: templates/home_base.html:27
 msgid "Relationships"
