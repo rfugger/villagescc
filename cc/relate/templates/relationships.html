@@ -60,7 +60,7 @@
 	{% for account in accounts %}
 		<tr>
 			<td><a href="{{ account.partner.get_absolute_url }}"
-				   title="{% trans 'View Profile for {{ account.partner }}' %}"
+				   title="{% trans 'View Profile for' %} {{ account.partner }}"
 				   >{{ account.partner }}</a></td>
 			<td class="number">{{ account.health|default:"X" }}</td>
 			<td class="number">

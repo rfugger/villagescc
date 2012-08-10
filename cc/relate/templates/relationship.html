@@ -18,7 +18,7 @@
 		{% if account.partner_endorsement %}
 			<tr>
 				<th><a href="{{ account.partner_endorsement.get_absolute_url }}"
-					  >{% trans '{{ partner }}'s endorsement of you' %}</a></th>
+					  >{% blocktrans %}{{ partner }}'s endorsement of you{% endblocktrans %}</a></th>
 				<td>{{ account.partner_endorsement.weight }}
 					{% trans 'heart' %}{{ account.partner_endorsement.weight|pluralize:"s" }}</td>
 			</tr>
