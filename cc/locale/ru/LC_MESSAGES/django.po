@@ -643,8 +643,8 @@ msgid "Contact"
 msgstr "Контакт"
 
 #: post/templates/post.html:14
-msgid "Send a message to {{ post.user }} about this post:"
-msgstr "Отправить сообщение для {{ post.user }} об этой заметке:"
+msgid "Send a message to {{ post_user }} about this post:"
+msgstr "Отправить сообщение для {{ post_user }} об этой заметке:"
 
 #: post/templates/post.html:23 profile/templates/contact.html:18
 msgid "Send"

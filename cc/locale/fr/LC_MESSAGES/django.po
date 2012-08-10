@@ -645,8 +645,8 @@ msgid "Contact"
 msgstr "Contact"
 
 #: post/templates/post.html:14
-msgid "Send a message to {{ post.user }} about this post:"
-msgstr "Répondre à {{post.user}} à propos de cette proposition :"
+msgid "Send a message to {{ post_user }} about this post:"
+msgstr "Répondre à {{post_user}} à propos de cette proposition :"
 
 #: post/templates/post.html:23 profile/templates/contact.html:18
 msgid "Send"

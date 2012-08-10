@@ -650,7 +650,7 @@ msgid "Contact"
 msgstr ""
 
 #: post/templates/post.html:14
-msgid "Send a message to {{ post.user }} about this post:"
+msgid "Send a message to {{ post_user }} about this post:"
 msgstr ""
 
 #: post/templates/post.html:23 profile/templates/contact.html:18

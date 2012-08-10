@@ -11,7 +11,8 @@
 
 		{% if request.profile %}
 			<h4>{% trans 'Contact' %}</h4>
-			<p>{% trans 'Send a message to {{ post.user }} about this post:' %}</p>
+			<p>{% blocktrans with post_user=post.user %}
+				Send a message to {{ post_user }} about this post{% endblocktrans %}</p>
 			<form action="" method="post">
 				{% csrf_token %}
 				<table class="form_table">

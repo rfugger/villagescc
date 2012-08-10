@@ -644,8 +644,8 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: post/templates/post.html:14
-msgid "Send a message to {{ post.user }} about this post:"
-msgstr "Sende eine Nachricht an {{ post.user }} über diese Bekanntgabe:"
+msgid "Send a message to {{ post_user }} about this post:"
+msgstr "Sende eine Nachricht an {{ post_user }} über diese Bekanntgabe:"
 
 #: post/templates/post.html:23 profile/templates/contact.html:18
 msgid "Send"
