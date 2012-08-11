@@ -3,7 +3,7 @@ import random
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -167,9 +167,17 @@ class Profile(models.Model):
         if created:
             Settings.objects.create(profile=instance)
 
+    @classmethod
+    def post_delete(cls, sender, instance, **kwargs):
+        # Delete related records in Ripple backend.
+        ripple.delete_node(instance)
+
 post_save.connect(Profile.post_save, sender=Profile,
                   dispatch_uid='profile.models')
-    
+
+post_delete.connect(Profile.post_delete, sender=Profile,
+                    dispatch_uid='profile.models')
+
 class Settings(models.Model):
     "Profile settings."
     profile = models.OneToOneField(Profile, related_name='settings')

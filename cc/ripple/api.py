@@ -317,6 +317,13 @@ def trusted_balance(profile):
     node, _ = Node.objects.get_or_create(alias=profile.id)
     return node.trusted_balance()
 
+def delete_node(profile):
+    try:
+        node = Node.objects.get(alias=profile.id)
+    except Node.DoesNotExist:
+        return
+    node.delete()
+
 ##### Helpers #####
 
 def _reputation_cache_version():

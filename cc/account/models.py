@@ -2,6 +2,7 @@ from decimal import Decimal as D
 from datetime import datetime
 
 from django.db import models
+from django.db.models.signals import post_delete
 
 from south.modelsinspector import add_introspection_rules
 
@@ -173,3 +174,10 @@ class CreditLine(models.Model):
         "Max obligations node will accept from partner."
         return self.partner_creditline.limit
     
+    @classmethod
+    def post_delete(cls, sender, instance, **kwargs):
+        # Delete partner creditline and account itself.
+        instance.account.delete()
+
+post_delete.connect(CreditLine.post_delete, CreditLine,
+                    dispatch_uid='account.models')
