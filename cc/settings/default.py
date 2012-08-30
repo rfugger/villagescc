@@ -214,3 +214,4 @@ DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)
 # Testing.
 TEST_RUNNER = 'cc.general.tests.AdvancedTestSuiteRunner'
 TEST_PACKAGES = ['cc']
+SOUTH_TESTS_MIGRATE = False

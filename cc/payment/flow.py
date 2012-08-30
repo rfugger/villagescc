@@ -99,23 +99,14 @@ def build_graph(seed_node, ignore_balances=False):
     Flow graph nodes are node aliases.
     """
     graph = nx.MultiDiGraph()
-    visited_creditline_ids = {}  # Indexed by node id.
-    pending_creditlines = list(seed_node.out_creditlines())
-    while pending_creditlines:
-        curr_creditline = pending_creditlines.pop(0)
-
-        # Add creditline edge(s) to graph.
-        add_creditline_to_graph(graph, curr_creditline, ignore_balances)
-        visited_creditline_ids.setdefault(
-            curr_creditline.node_id, set()).add(curr_creditline.id)
-
-        # Add partner's unvisited outgoing credit lines to pending
-        # list for eventual visitation.
-        partner = curr_creditline.partner
-        next_creditlines = partner.out_creditlines().exclude(
-            pk__in=visited_creditline_ids.get(partner.id, []))
-        pending_creditlines += list(next_creditlines)
-    return graph
+    graph.add_node(seed_node.alias)
+    creditlines = CreditLine.objects.all().iterator()
+    for creditline in creditlines:
+        add_creditline_to_graph(graph, creditline, ignore_balances)
+    for component in nx.weakly_connected_component_subgraphs(graph):
+        if seed_node.alias in component:
+            return component
+    assert(False)  # Should never get here.
 
 def add_creditline_to_graph(graph, creditline, ignore_balances):
     src = creditline.node.alias
