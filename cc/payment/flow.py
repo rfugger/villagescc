@@ -100,7 +100,7 @@ def build_graph(seed_node, ignore_balances=False):
     """
     graph = nx.MultiDiGraph()
     graph.add_node(seed_node.alias)
-    creditlines = CreditLine.objects.all().iterator()
+    creditlines = CreditLine.objects.select_related(depth=1).iterator()
     for creditline in creditlines:
         add_creditline_to_graph(graph, creditline, ignore_balances)
     for component in nx.weakly_connected_component_subgraphs(graph):
