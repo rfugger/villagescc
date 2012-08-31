@@ -2,7 +2,7 @@ from decimal import Decimal as D
 from datetime import datetime
 
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_save
 
 from south.modelsinspector import add_introspection_rules
 
@@ -173,11 +173,28 @@ class CreditLine(models.Model):
     def in_limit(self):
         "Max obligations node will accept from partner."
         return self.partner_creditline.limit
-    
+
+    @classmethod
+    def post_save(cls, sender, instance, created, **kwargs):
+        from cc.payment import flow
+        
+        # TODO: Call from single external process -- not threadsafe!
+        
+        flow.update_creditline_in_cached_graphs(instance)
+        
     @classmethod
     def post_delete(cls, sender, instance, **kwargs):
         # Delete partner creditline and account itself.
         instance.account.delete()
 
+        # Remove from cached flow graph.
+        from cc.payment import flow
+
+        # TODO: Call from single external process -- not threadsafe!
+        
+        flow.update_creditline_in_cached_graphs(instance)
+
+post_save.connect(CreditLine.post_save, CreditLine,
+                  dispatch_uid='account.models')
 post_delete.connect(CreditLine.post_delete, CreditLine,
                     dispatch_uid='account.models')

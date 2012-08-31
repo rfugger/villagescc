@@ -2,6 +2,7 @@ from decimal import Decimal as D
 
 from django.test import TestCase
 from django.db import models
+from django.core.cache import cache
 
 from cc.account.models import Node, Account, CreditLine
 from cc.payment.models import Payment
@@ -38,6 +39,9 @@ class RippleTest(TestCase):
             self.assertEquals(payment.status, correct_status)
         self.failUnless(audit.all_accounts_check())
         self.failUnless(audit.all_payments_check())
+
+    def tearDown(self):
+        cache.clear()
         
 class BasicTest(RippleTest):
     """

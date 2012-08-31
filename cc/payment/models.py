@@ -4,7 +4,8 @@ from django.db import models, transaction
 from django.db.models import F
 
 from cc.account.models import AmountField, Node, CreditLine, Account
-from cc.payment.flow import FlowGraph, PaymentError
+from cc.payment.flow import (
+    FlowGraph, PaymentError, update_creditline_in_cached_graphs)
 
 
 STATUS_CHOICES = (
@@ -37,14 +38,17 @@ class Payment(models.Model):
         # Write attempted date now so if something happens we can see this
         # payment was interrupted.
         self.save()
+        changed_accounts = []
         try:
             flow_graph = FlowGraph(self.payer, self.recipient)
             flow_links = flow_graph.min_cost_flow(self.amount)
             with transaction.commit_on_success(using='ripple'):
-                for creditline, amount in flow_links:
+                for creditline_id, amount in flow_links:
+                    creditline = CreditLine.objects.get(pk=creditline_id)
                     Entry.objects.create_entry(
                         self, creditline.account, -amount * creditline.bal_mult,
                         creditline.limit)
+                    changed_accounts.append(creditline.account)
                 self.status = 'completed'
                 self.save()
         except BaseException as exc:
@@ -56,6 +60,11 @@ class Payment(models.Model):
             self.save()
             if not isinstance(exc, PaymentError):
                 raise
+
+        # Update cached graphs.
+        for account in changed_accounts:
+            for creditline in (account.pos_creditline, account.neg_creditline):
+                update_creditline_in_cached_graphs(creditline)
 
     @transaction.commit_on_success(using='ripple')
     def as_entry(self):
@@ -91,6 +100,9 @@ class EntryManager(models.Manager):
         rows = bal_upd_query.update(balance=F('balance') + amount)
         if rows != 1:
             raise PaymentError("Limit exceeded on account %d." % account.id)
+
+        # TODO: What if some other transaction alters the balance right here?
+        
         account = Account.objects.get(pk=account.id)  # Reload balance.
         new_balance = account.balance
         self.create(payment=payment, account=account, amount=amount,
