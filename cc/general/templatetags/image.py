@@ -36,7 +36,10 @@ def resize(file, size):
             os.makedirs(os.path.split(miniature_filename)[0])
         except OSError:
             pass
-        image = Image.open(filename)
+        try:
+            image = Image.open(filename)
+        except IOError:  # Couldn't open image.
+            return ''
         image.thumbnail([x, y], Image.ANTIALIAS)
         try:
             image.save(miniature_filename, image.format, quality=90, optimize=1)
