@@ -7,10 +7,11 @@ from cc.payment import flow
 
 def verify():
     for ignore_balances in (True, False):
+        graph = flow.build_graph(ignore_balances)
         cached = flow.get_cached_graph(ignore_balances)
         if not cached:
+            flow.set_cached_graph(graph, ignore_balances)
             continue
-        graph = flow.build_graph(ignore_balances)
         diff = compare(cached, graph)
         if diff:
             pp(diff)
