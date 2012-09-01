@@ -42,6 +42,10 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+LOCALE_PATHS = (
+    os.path.join(ROOT_PATH, 'locale/'),
+)
+
 # Absolute path to the directory that holds static files.
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(ROOT_PATH, '../static/')
