@@ -78,10 +78,13 @@ class AccountManager(models.Manager):
         Also creates the required CreditLine records.
         """
         acct = self.create()
-        CreditLine.objects.create(
+        pos_cl = CreditLine.objects.create(
             account=acct, node=node1, bal_mult=1)
-        CreditLine.objects.create(
+        net_cl = CreditLine.objects.create(
             account=acct, node=node2, bal_mult=-1)
+        # Manually update new creditlines in cached graphs.
+        flow.update_creditline_in_cached_graphs(pos_cl)
+        flow.update_creditline_in_cached_graphs(neg_cl)
         return acct
 
     def get_account(self, node1, node2):
@@ -176,8 +179,14 @@ class CreditLine(models.Model):
 
     @classmethod
     def post_save(cls, sender, instance, created, **kwargs):
+        if created:
+            # Newly-created creditlines may not have a partner yet,
+            # so updating them will blow up.  Update new creditlines
+            # manually.
+            return
+
         from cc.payment import flow
-        
+
         # TODO: Call from single external process -- not threadsafe!
         
         flow.update_creditline_in_cached_graphs(instance)
