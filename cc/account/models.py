@@ -80,9 +80,11 @@ class AccountManager(models.Manager):
         acct = self.create()
         pos_cl = CreditLine.objects.create(
             account=acct, node=node1, bal_mult=1)
-        net_cl = CreditLine.objects.create(
+        neg_cl = CreditLine.objects.create(
             account=acct, node=node2, bal_mult=-1)
+
         # Manually update new creditlines in cached graphs.
+        from cc.payment import flow
         flow.update_creditline_in_cached_graphs(pos_cl)
         flow.update_creditline_in_cached_graphs(neg_cl)
         return acct
