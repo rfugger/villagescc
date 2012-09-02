@@ -103,7 +103,7 @@ def acknowledge_user(request, recipient_username):
             messages.info(request, MESSAGES['acknowledgement_sent'])
             return HttpResponseRedirect(acknowledgement.get_absolute_url())
     else:
-        form = AcknowledgementForm(max_ripple=max_amount)
+        form = AcknowledgementForm(max_ripple=max_amount, initial=request.GET)
     can_ripple = max_amount > 0
     profile = recipient  # For profile_base.html.
     return locals()
