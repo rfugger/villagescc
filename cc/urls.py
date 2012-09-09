@@ -19,6 +19,7 @@ urlpatterns = patterns(
 
     (r'^admin/', include('cc.admin.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^i18n/', include('django.conf.urls.i18n')),
 )
 
 # Handle user-uploaded media for dev server.

@@ -88,9 +88,9 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     # Media middleware has to come first (serves dev media).
     'mediagenerator.middleware.MediaMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -219,3 +219,15 @@ DATABASE_ROUTERS = ('cc.ripple.router.RippleRouter',)
 TEST_RUNNER = 'cc.general.tests.AdvancedTestSuiteRunner'
 TEST_PACKAGES = ['cc']
 SOUTH_TESTS_MIGRATE = False
+
+_ = lambda s: s # dummy ugettext 
+
+LANGUAGES=[
+    ('en', _('English')),
+    ('fi', _('Finnish')),
+    ('ru', _('Russian')),
+    ('es', _('Spanish')),
+    ('de', _('German')),
+    ('it', _('Italian')),
+    ('fr', _('French'))]
+
