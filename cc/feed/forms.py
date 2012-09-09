@@ -4,7 +4,7 @@ from django import forms
 from django.conf import settings
 
 from cc.feed.models import FeedItem
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 # Passing no radius => use default, so need a code for infinite.
 INFINITE_RADIUS = -1
