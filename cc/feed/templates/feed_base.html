@@ -12,7 +12,7 @@
 {% block content %}
 	<div class="feed_type_filter nav">
 		<li class="{% block feed_all_class %}{% endblock %}">
-			<a href="{% url feed %}?{{ url_param_str }}">All</a></li>
+			<a href="{% url feed %}?{{ url_param_str }}">{% trans 'All' %}</a></li>
 		<li class="{% block feed_people_class %}{% endblock %}">
 			<a href="{% url profiles %}?{{ url_param_str }}">{% trans 'People' %}</a></li>
 		<li class="{% block feed_posts_class %}{% endblock %}">
@@ -36,7 +36,7 @@
 			{% if request.profile %}
 				<li><label>{{ form.trusted }}
 						<img src="{% media_url 'img/heart_icon.png' %}" 
-							 alt="Heart icon = trusted user">
+							 alt="{% trans 'Heart icon = trusted user' %}">
 						{% trans 'Trusted only' %}
 					</label>
 				</li>

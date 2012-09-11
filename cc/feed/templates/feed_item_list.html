@@ -1,7 +1,7 @@
 {% load feed %}
 {% load i18n %}
 {% if form.continued %}
-	<p><a href="?{{ url_param_str }}">&laquo; Back to start</a></p>
+	<p><a href="?{{ url_param_str }}">&laquo; {% trans 'Back to start' %}</a></p>
 {% endif %}
 
 <div class="feed_item_list">
