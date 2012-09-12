@@ -69,7 +69,7 @@ class FlowGraph(object):
         self.graph.node[self.recipient.alias]['demand'] = (
             scale_flow_amount(amount))
 
-def get_graph(seed_node, ignore_balances=False):
+def get_graph(seed_node, ignore_balances=False, rebuild_graph=False):
     """
     Get flow graph for performing payment computations.
 
@@ -97,13 +97,22 @@ def get_graph(seed_node, ignore_balances=False):
 
     Flow graph nodes are node aliases.
     """
-    graph = get_cached_graph(ignore_balances)
+    graph = None
+    rebuilt = False
+    if not rebuild_graph:
+        graph = get_cached_graph(ignore_balances)
     if not graph:
         graph = build_graph(ignore_balances)
         set_cached_graph(graph, ignore_balances)
+        rebuilt = True
+    # Get subgraph component containing seed_node.
     for component in nx.weakly_connected_component_subgraphs(graph):
         if seed_node.alias in component:
             return component
+    # Seed node not in cached graph - rebuild and try again.
+    if not rebuilt:
+        return get_graph(seed_node, ignore_balances, rebuild_graph=True)
+    # Something's not coded right...
     assert(False)  # Should never get here.
 
 def get_cached_graph(ignore_balances):
