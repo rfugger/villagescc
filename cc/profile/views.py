@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from cc.general.util import render, deflect_logged_in
@@ -202,6 +203,8 @@ def edit_settings(request):
                 request.POST, instance=request.profile.settings)
             if settings_form.is_valid():
                 settings_obj = settings_form.save()
+                translation.activate(settings_obj.language)
+                request.session['django_language'] = translation.get_language()
                 if settings_obj.email != old_email:
                     send_new_address_email(settings_obj)
                     messages.info(request, MESSAGES['email_updated'])
