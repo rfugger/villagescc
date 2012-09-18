@@ -101,7 +101,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            profile = form.save(request.location)
+            profile = form.save(request.location, request.LANGUAGE_CODE)
             if invitation:
                 # Turn invitation into endorsement.
                 Endorsement.objects.create(

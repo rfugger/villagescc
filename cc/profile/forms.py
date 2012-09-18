@@ -49,7 +49,7 @@ class RegistrationForm(UserCreationForm):
         raise forms.ValidationError(
             _("A user with that username already exists."))
     
-    def save(self, location):
+    def save(self, location, language):
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
         user.save()
@@ -59,6 +59,7 @@ class RegistrationForm(UserCreationForm):
         profile.location = location
         profile.save()
         profile.settings.email = data['email']
+        profile.settings.language = language
         profile.settings.save()
         return profile
 
