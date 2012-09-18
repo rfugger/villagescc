@@ -15,6 +15,7 @@ import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
 from cc.general.mail import send_mail, email_str, send_mail_from_system
 from django.utils import translation
+from django.utils.translation import get_language_info as lang_info
 from django.utils.translation import ugettext_lazy as _
 
 CODE_LENGTH = 20
@@ -195,9 +196,9 @@ class Settings(models.Model):
     send_newsletter = models.BooleanField(
         _("Receive updates"), default=True, help_text=_(
             "Receive occasional news about the Villages community."))
+    langs = [(l[0], lang_info(l[0])['name_local']) for l in settings.LANGUAGES]
     language = VarCharField(
-	_("Language"), default="en",
-	max_length=8, choices=settings.LANGUAGES, help_text=_(
+	_("Language"), default="en", max_length=8, choices=langs, help_text=_(
 	    "Villages shall use this language for interaction with you."))
     
     # Sticky form settings.
