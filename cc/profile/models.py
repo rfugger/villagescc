@@ -192,6 +192,10 @@ class Settings(models.Model):
     send_newsletter = models.BooleanField(
         _("Receive updates"), default=True, help_text=_(
             "Receive occasional news about the Villages community."))
+    language = VarCharField(
+	_("Language"), default="en",
+	max_length=8, choices=settings.LANGUAGES, help_text=_(
+	    "Villages shall use this language for interaction with you."))
     
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)
