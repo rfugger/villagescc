@@ -3,15 +3,18 @@ import random
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.dispatch import receiver
 
 from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
 from cc.general.mail import send_mail, email_str, send_mail_from_system
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 CODE_LENGTH = 20
@@ -277,4 +280,11 @@ pre_save.connect(PasswordResetLink.pre_save, sender=PasswordResetLink,
     
 def generate_code():
     return ''.join((random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
-    
+
+@receiver(user_logged_in)
+def setlang(sender, **kwargs):
+    try:
+	translation.activate(kwargs['user'].profile.settings.language)
+	kwargs['request'].session['django_language']=translation.get_language()
+    except:
+	pass
