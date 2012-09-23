@@ -12,18 +12,18 @@ from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
 from cc.general.mail import send_mail, email_str, send_mail_from_system
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    name = VarCharField(blank=True)
+    name = VarCharField(_("Name"), blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
-    photo = models.ImageField(
+    photo = models.ImageField(_("Photo"),
         upload_to='user/%Y/%m', max_length=256, blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(_("Description"), blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
