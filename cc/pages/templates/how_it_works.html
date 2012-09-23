@@ -1,98 +1,102 @@
 {% extends "about_base.html" %}
+{% load i18n %}
 
-{% block title %}How It Works{% endblock %}
+{% block title %}{% trans 'How It Works' %}{% endblock %}
 
 {% block content %}
 {{ block.super }}
 
-<h3>How It Works</h3>
+<h3>{% trans 'How It Works' %}</h3>
 
-<p>There are three main activities in Villages:</p>
+<p>{% blocktrans %}There are three main activities in
+	Villages:{% endblocktrans %}</p>
 
-<h4>1. Endorse</h4>
+<h4>{% trans '1. Endorse' %}</h4>
 
-<p>Endorse users you trust to build the trust network.
-	When you endorse someone, it indicates that you trust them
-	to provide value to the community.  
-</p>
-<p>You choose a number of hearts to endorse them with.
-	Each heart allows them and people they trust to send you
-	one hour's worth of acknowledgement (more on this below).
-	You can also leave a recommendation message for other users
-	to see.
-</p>
-<p>Starting out, you have a limited hearts to give out.  This helps
-	keep the value of your interactions with the system lower at first
-	so it's not too big a deal if you screw up.  You have five hearts to 
-	give for every person that endorses you.
-</p>
+<p>{% blocktrans %}Endorse users you trust to build the trust network.
+	When you endorse someone, it indicates that you trust them to
+	provide value to the community.{% endblocktrans %}</p>
 
-<h4>2. Interact</h4>
+<p>{% blocktrans %}You choose a number of hearts to endorse them with.
+	Each heart allows them and people they trust to send you one hour's
+	worth of acknowledgement (more on this below). You can also leave a
+	recommendation message for other users to see.{% endblocktrans %}</p>
 
-<p>Use the Villages feed to find people and posts that interest you.
-	Put your skills and interests in your profile so others can find you.
-	Post items and services you want or have to offer.
-	Meet up to help each other out.
-</p>
+<p>{% blocktrans %}Starting out, you have a limited hearts to give out.
+	This helps keep the value of your interactions with the system lower
+	at first so it's not too big a deal if you screw up. You have five
+	hearts to give for every person that endorses you.{% endblocktrans %}</p>
 
-<p>Villages helps you find people who have been endorsed by those you trust,
-	so you can feel secure in knowing you are dealing with good people.
-	Each user is given a reputation score that helps you know how trustworthy
-	they are based on how well they are connected to you in the network.
-	The more ways you are connected, and the more hearts that have been given
-	out as endorsements along those paths, the higher the reputation score.
-</p>
+<h4>{% trans '2. Interact' %}</h4>
 
-<h4>3. Acknowledge</h4>
+<p>{% blocktrans %}Use the Villages feed to find people and posts that
+	interest you. Put your skills and interests in your profile so others
+	can find you. Post items and services you want or have to offer. Meet
+	up to help each other out.{% endblocktrans %}</p>
 
-<p>When someone has helped you out, acknowledge that help on Villages.
-	Villages acknowledgements are a currency denominated in 
-	<a href="#hours">hours</a>, consisting of gentle promises made to
-	the person who helped you out to return the favour at some point
-	in the future.  When you have received acknowledgements, you can
-	spend them to acknowledge others without having to issue any
-	promises of your own.
-</p>
-<p>If there is a connection through the trust network from you to the
-	person you're acknowledging, Villages can transmit the
-	acknowledgement through the network using 
-	<a href="http://ripple-project.org/">Ripple</a>, so that the
-	person who helped you receives your acknowledgement as promises
-	from someone they have endorsed, and your promises go to someone
-	who has endorsed you.
-</p>
-<p>Sometimes you will be on a path connecting another person to
-	someone they're acknowledging.  For example, your friend Anne, who
-	you have endorsed, might want to acknowledge Bob, who has endorsed
-	you, but does not know Anne.  In this case, the system will find
-	the path from Anne to you to Bob, and record the acknowledgement
+<p>{% blocktrans %}Villages helps you find people who have been endorsed by
+	those you trust, so you can feel secure in knowing you are dealing with
+	good people. Each user is given a reputation score that helps you know
+	how trustworthy they are based on how well they are connected to you in
+	the network. The more ways you are connected, and the more hearts that
+	have been given out as endorsements along those paths, the higher the
+	reputation score.{% endblocktrans %}</p>
+
+<h4>{% trans '3. Acknowledge' %}</h4>
+
+<p>{% blocktrans %}When someone has helped you out, acknowledge that help
+	on Villages. Villages acknowledgements are a currency denominated in
+	<a href="#hours">hours</a>, consisting of gentle promises made to the
+	person who helped you out to return the favour at some point in the
+	future. When you have received acknowledgements, you can spend them
+	to acknowledge others without having to issue any promises of your
+	own.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}If there is a connection through the trust network from
+	you to the person you're acknowledging, Villages can transmit the
+	acknowledgement through the network using
+	<a href="http://ripple-project.org/">Ripple</a>, so that the person
+	who helped you receives your acknowledgement as promises from someone
+	they have endorsed, and your promises go to someone who has endorsed
+	you.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}Sometimes you will be on a path connecting another
+	person to someone they're acknowledging. For example, your friend
+	Anne, who you have endorsed, might want to acknowledge Bob, who has
+	endorsed you, but does not know Anne. In this case, the system will
+	find the path from Anne to you to Bob, and record the acknowledgement
 	as Anne acknoledging you, and you acknowledging Bob.
-</p>
-<p>Anne's acknowledgement might not have meant that much to Bob, since
-	he doesn't know her.  Anne's acknowledgement has meaning to you,
-	however, since you have endorsed her, and your acknowledgement has
-	meaning to Bob, since you have endorsed him.
-</p>
-<p>(If anyone want to make a nice picture here, please <a href="{% url feedback %}">
-		let me know</a>.)
-</p>
-<p>Acknowledgements are meant to represent that you have received a gift,
-	and would one day like to return the favour.  They are not a debt to
-	be collected, or an obligation that creates stress or worry.  They
-	are more like a reminder to yourself of something you would like to
-	do, and a way for the friendly exchange of gifts within a social circle
-	to extend beyond to encompass the entire community.
-</p>
+	{% endblocktrans %}</p>
+
+<p>{% blocktrans %}Anne's acknowledgement might not have meant that much to
+	Bob, since he doesn't know her. Anne's acknowledgement has meaning to
+	you, however, since you have endorsed her, and your acknowledgement
+	has meaning to Bob, since you have endorsed him.{% endblocktrans %}</p>
+
+{% url feedback as url_feedback %}
+<p>{% blocktrans %}(If anyone want to make a nice picture here, please
+	<a href="{{ url_feedback }}">let me know</a>.){% endblocktrans %}</p>
+
+<p>{% blocktrans %}Acknowledgements are meant to represent that you have
+	received a gift, and would one day like to return the favour.
+	They are not a debt to be collected, or an obligation that creates
+	stress or worry. They are more like a reminder to yourself of
+	something you would like to do, and a way for the friendly exchange
+	of gifts within a social circle to extend beyond to encompass the
+	entire community.{% endblocktrans %}</p>
 
 <a name="hours"></a>
-<h4>A Note About Hours</h4>
+<h4>{% trans 'A Note About Hours' %}</h4>
 
-<p>In Villages, one hour of acknowledgement is meant to represent one
-	hour of basic, unskilled labour, approximately equal in value to
-	minimum wage.  Those offering skills to the community that have
-	taken years of work to develop can and should be acknowledged with
-	multiple acknowledgement-hours for each hour of their time given, 
-	according to the value of what they have given in that time.
-</p>
-<p>If you need a dollar value for hours, $10 is a good guideline.</p>
+<p>{% blocktrans %}In Villages, one hour of acknowledgement is meant
+	to represent one hour of basic, unskilled labour, approximately
+	equal in value to minimum wage. Those offering skills to the
+	community that have taken years of work to develop can and should
+	be acknowledged with multiple acknowledgement-hours for each hour
+	of their time given, according to the value of what they have given
+	in that time.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}If you need a dollar value for hours, $10 is a good
+	guideline.{% endblocktrans %}</p>
+
 {% endblock %}

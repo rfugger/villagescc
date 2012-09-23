@@ -1,43 +1,47 @@
 {% extends "no_subnav_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans 'A Cooperative Community Of Overlapping Villages'%}{% endblock %}
+{% block title %}
+	{% trans 'A Cooperative Community Of Overlapping Villages'%}
+{% endblock %}
 
 {% block content %}
-	<h2>Villages {% trans 'Cooperative Community' %}: {% trans 'The New Local Economy' %}</h2>
 
-	<h3>{% trans 'Discover Nearby People You Can Trust' %}</h3>
+<h2>{% trans 'Villages Cooperative Community: The New Local Economy' %}</h2>
 
-	<p>{% blocktrans %}The foundation of Villages is a trust network that you help create
-		by endorsing friends who have something to contribute to the
-		community.  Find friends-of-friends that have the skills you need,
-		or interesting projects you can help with.{% endblocktrans %}
-	</p>
+<h3>{% trans 'Discover Nearby People You Can Trust' %}</h3>
 
-	<h3>{% trans 'Help Each Other Out' %}</h3>
+<p>{% blocktrans %}The foundation of Villages is a trust network that
+	you help create by endorsing friends who have something to contribute
+	to the community. Find friends-of-friends that have the skills you
+	need, or interesting projects you can help with.{% endblocktrans %}</p>
 
-	<p>{% blocktrans %}Search for what you want.  Post what you have.
-		When someone helps you, acknowledge the help.  When you help someone,
-		receive acknowledgement.
-		Villages uses <a href="http://ripple-project.org/">Ripple technology</a>
-		to allow acknowledgements to be received through trusted friends,
-		making them more meaningful.''' {% endblocktrans %}
-	</p>
+<h3>{% trans 'Help Each Other Out' %}</h3>
 
-	<h3>{% trans 'Change The World' %}</h3>
+<p>{% blocktrans %}Search for what you want. Post what you have. When
+	someone helps you, acknowledge the help. When you help someone,
+	receive acknowledgement. Villages uses
+	<a href="http://ripple-project.org/">Ripple technology</a>
+	to allow acknowledgements to be received through trusted
+	friends, making them more meaningful.{% endblocktrans %}</p>
 
-	<p>{% blocktrans %}By working for friends and neighbors in our community, rather
-		than for banks and corporations, and issuing our own acknowledgements
-		rather than using their money, we take control of our own economic 
-		destiny.{% endblocktrans %}
-	</p>
+<h3>{% trans 'Change The World' %}</h3>
 
-	<p><a href="{% url about %}">{% trans 'Read More' %}</a></p>
+<p>{% blocktrans %}By working for friends and neighbors in our community,
+	rather than for banks and corporations, and issuing our own
+	acknowledgements rather than using their money, we take control of
+	our own economic destiny.{% endblocktrans %}</p>
 
-	<div class="call">
-		<h2><a href="{% url feed %}">{% trans 'Browse the marketplace' %}</a></h2>
-		<p>{% trans 'OR' %}</p>
-		<h2><a href="{% url check_invitation %}">{% trans 'Sign up now!' %}</a></h2>
-	</div>
+<p><a href="{% url about %}">{% trans 'Read More' %}</a></p>
+
+<div class="call">
+	<h2>
+		<a href="{% url feed %}">{% trans 'Browse the marketplace' %}</a>
+	</h2>
+	<p>{% trans 'OR' %}</p>
+	<h2>
+		<a href="{% url check_invitation %}">{% trans 'Sign up now!' %}</a>
+	</h2>
+</div>
 
 {% endblock %}
