@@ -115,6 +115,8 @@
 		{% endif %}
 		</ul>
 
+		{% if not user.is_authenticated %}
+		<hr>
 		<ul>
 			<li><form method="post" action="/i18n/setlang/">{% csrf_token %}
 			<select name="language" onchange="submit();">
@@ -131,6 +133,7 @@
 			</select>
 			</form></li>
 		</ul>
+		{% endif %}
 
 	{% endblock %}
 	</div></div>
