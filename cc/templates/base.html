@@ -25,102 +25,115 @@
 	<div class="logo_nav_line extend"><div class="line page">
 		<h1 class="logo">
 			<a href="{% url home %}?logo"
-			   title="Villages {% trans 'Cooperative Community' %}">Villages.cc</a>
+				title="{% trans 'Villages Cooperative Community' %}"
+				>Villages.cc</a>
 		</h1>
-		<span class="site_nav nav">
+		<ul class="site_nav nav">
 			<li><a href="{% url home %}">{% trans 'Home' %}</a></li>
 			<li>
 				<form class="inline_form" action="{% url feed %}" method="get">
 					<input id="global_search_input" class="instruction_input"
-						   name="q" type="text" help="Search All">
+						name="q" type="text" help="{% trans 'Search All' %}">
 				</form>
 			</li>
-		</span>
-
-		<div class="right_nav">
+		</ul>
+		<ul class="right_nav">
 			<li><a href="{% url about %}">{% trans 'About' %}</a></li>
 			<li><a href="{% url feedback %}">{% trans 'Feedback' %}</a></li>
-		</div>
+		</ul>
 	</div></div>
 
-	{% if messages %}
-		<div class="message_line line page">
-			<div class="messages">
-			{% for message in messages %}
-				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}
-					  >{{ message|safe }}</li>
-			{% endfor %}
-			</div>
-		</div>
-	{% endif %}
+{% if messages %}
+	<div class="message_line line page">
+		<ul class="messages">
+	{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}
+				>{{ message|safe }}</li>
+	{% endfor %}
+		</ul>
+	</div>
+{% endif %}
 </div>
 
 <div class="page">
-	{% block page %}
-		{% block no_subnav_content %}
-			<div class="subnav_bar">
-				{% block subnav_box %}
-					<div class="subnav_image">
-						{% block subnav_image %}{% endblock %}
-					</div>
-					<h2 class="subnav_title">{% block subnav_title %}{% endblock %}</h2>
-					<div class="profile_summary">
-						{% block profile_summary %}{% endblock %}
-					</div>
-					<div class="subnav">
-						{% block subnav %}{% endblock %}
-					</div>
-				{% endblock %}
-			</div>
-
-			<div class="content_box">
-				{% block content %}{% endblock %}
-			</div>
-		{% endblock %}
-
-		<div class="context_bar">
-			<div class="actions">
-				{% block actions %}
-					{% if not request.profile %}
-						<li><a href="{% url feed %}">{% trans 'Browse Marketplace' %}</a></li>
-					{% endif %}
-					<li class="{% block nav_location_class %}{% endblock %}">
-						<a href="{% url locator %}?next={{ request.path }}"
-						   >{{ request.location|default:_('Location') }}</a></li>
-					<hr>
-					{% if request.profile %}
-						<li><a href="{{ request.profile.get_absolute_url }}"
-							   >{{ request.profile }}</a></li>
-						<li class="{% block nav_settings_class %}{% endblock %}">
-							<a href="{% url settings %}">{% trans 'Account Settings' %}</a></li>
-						<li><a href="{% url logout %}">{% trans 'Logout' %}</a></li>
-						<hr>
-						<li class="{% block nav_new_post_class %}{% endblock %}">
-							<a href="{% url new_post %}">{% trans 'New Post' %}</a></li>
-						<li class="{% block nav_invite_class %}{% endblock %}">
-							<a href="{% url invite %}">{% trans 'Invite A Friend' %}</a></li>
-						<li class="{% block nav_share_class %}{% endblock %}">
-							<a href="{% url share %}">{% trans 'Share' %}</a></li>
-					{% else %}
-						<li><a href="{% url check_invitation %}">{% trans 'Join' %}</a></li>
-						<li><a href="{% url login %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
-					{% endif %}
-                                                <li><form method="post" action="/i18n/setlang/">{% csrf_token %}
-                                                        <select name="language" onchange="submit();">
-                                                            {% get_language_info_list for LANGUAGES as languages %}
-                                                            {% for language in languages %}
-                                                            {% if language.code == request.LANGUAGE_CODE %}
-                                                            <option value="{{ language.code }}" selected>{{ language.name_local }} ({{ language.code }})</option>
-                                                            {% else %}
-                                                            <option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
-                                                            {% endif %}
-                                                            {% endfor %}
-                                                        </select>
-                                                    </form>
-                                                </li>
-				{% endblock %}
-			</div>
+{% block page %}
+	{% block no_subnav_content %}
+	<div class="subnav_bar">
+		{% block subnav_box %}
+		<div class="subnav_image">
+			{% block subnav_image %}{% endblock %}
 		</div>
+		<h2 class="subnav_title">{% block subnav_title %}{% endblock %}</h2>
+		<div class="profile_summary">
+			{% block profile_summary %}{% endblock %}
+		</div>
+		<div class="subnav">
+			{% block subnav %}{% endblock %}
+		</div>
+		{% endblock %}
+	</div>
+
+	<div class="content_box">
+		{% block content %}{% endblock %}
+	</div>
 	{% endblock %}
+
+	<div class="context_bar"><div class="actions">
+	{% block actions %}
+		<ul>
+			{% if not request.profile %}
+			<li><a href="{% url feed %}"
+				>{% trans 'Browse Marketplace' %}</a></li>
+			{% endif %}
+			<li class="{% block nav_location_class %}{% endblock %}">
+				<a href="{% url locator %}?next={{ request.path }}"
+					>{{ request.location|default:_('Location') }}</a></li>
+		</ul>
+		<hr>
+		<ul>
+		{% if request.profile %}
+			<li><a href="{{ request.profile.get_absolute_url }}"
+				>{{ request.profile }}</a></li>
+			<li class="{% block nav_settings_class %}{% endblock %}">
+				<a href="{% url settings %}"
+					>{% trans 'Account Settings' %}</a></li>
+			<li><a href="{% url logout %}">{% trans 'Logout' %}</a></li>
+		</ul>
+		<hr>
+		<ul>
+			<li class="{% block nav_new_post_class %}{% endblock %}">
+				<a href="{% url new_post %}">{% trans 'New Post' %}</a></li>
+			<li class="{% block nav_invite_class %}{% endblock %}">
+				<a href="{% url invite %}"
+					>{% trans 'Invite A Friend' %}</a></li>
+			<li class="{% block nav_share_class %}{% endblock %}">
+				<a href="{% url share %}">{% trans 'Share' %}</a></li>
+		{% else %}
+			<li><a href="{% url check_invitation %}">{% trans 'Join' %}</a></li>
+			<li><a href="{% url login %}?next={{ request.path }}"
+				>{% trans 'Login' %}</a></li>
+		{% endif %}
+		</ul>
+
+		<ul>
+			<li><form method="post" action="/i18n/setlang/">{% csrf_token %}
+			<select name="language" onchange="submit();">
+			{% get_language_info_list for LANGUAGES as languages %}
+			{% for language in languages %}
+				{% if language.code == request.LANGUAGE_CODE %}
+				<option value="{{ language.code }}" selected
+					>{{ language.name_local }} ({{ language.code }})</option>
+					{% else %}
+				<option value="{{ language.code }}"
+					>{{ language.name_local }} ({{ language.code }})</option>
+				{% endif %}
+			{% endfor %}
+			</select>
+			</form></li>
+		</ul>
+
+	{% endblock %}
+	</div></div>
+{% endblock %}
 </div>
 </body>
