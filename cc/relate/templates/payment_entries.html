@@ -5,11 +5,14 @@
 	<tr>
 		<th>{{ person_descriptor }}</th>
 		<th class="number_header">{% trans 'Hours' %}</th>
-	{% for entry in entries %}
-		<tr>
-			<td><a href="{% url relationship entry.account.partner.username %}"
-				   >{{ entry.account.partner }}</a></td>
-			<td class="number">{{ entry.abs_amount }}</td>
-		</tr>
-	{% endfor %}
+	</tr>
+{% for entry in entries %}
+	<tr>
+		<td>
+			<a href="{% url relationship entry.account.partner.username %}"
+				>{{ entry.account.partner }}</a>
+		</td>
+		<td class="number">{{ entry.abs_amount }}</td>
+	</tr>
+{% endfor %}
 </table>

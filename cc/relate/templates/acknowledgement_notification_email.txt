@@ -1,9 +1,12 @@
-{% load number %}You have been acknowledged with {{ acknowledgement.amount|trim_zeroes }} hour{{ acknowledgement.amount|pluralize:"s" }} on Villages.cc by {{ acknowledgement.payer }}.
+{% load number %}{% load i18n %}
+{% blocktrans count counter=acknowledgement.amount with hours=acknowledgement.amount|trim_zeroes payer=acknowledgement.payer %}
+You have been acknowledged with {{ hours }} hour on Villages.cc by {{ payer }}.
+{% plural %}
+You have been acknowledged with {{ hours }} hours on Villages.cc by {{ payer }}.
+{% endblocktrans %}
 
-{% if acknowledgement.memo %}{{ acknowledgement.payer }} added:
-
+{% if acknowledgement.memo %}{% blocktrans with payer=acknowledgement.payer %}{{ payer }} added:{% endblocktrans %}
 {{ acknowledgement.memo }}
+{% endif %}
 
-{% endif %}To view the acknowledgement, visit:
-
-http://{{ domain }}{{ acknowledgement.get_absolute_url }}
+{% blocktrans %}To view the acknowledgement, visit:{% endblocktrans %} http://{{ domain }}{{ acknowledgement.get_absolute_url }}

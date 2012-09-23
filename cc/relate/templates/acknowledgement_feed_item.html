@@ -3,8 +3,13 @@
 {% load profile number %}
 
 {% block title %}
-	{% profile_display item.payer request _("You") item.payer %}
-	{% trans 'acknowledged' %}
-	{% profile_display item.recipient request _("you") item.recipient %}
-	{% trans 'with' %} {{ item.amount|trim_zeroes }} {% trans 'hours promised' %}
+
+{% profile_display item.payer request _("You acknowledged") item.payer %}
+{% profile_display item.recipient request _("acknowledged you") item.recipient %}
+{% blocktrans count counter=item.amount with hours=item.amount|trim_zeroes %}
+	with {{ hours }} hour promised
+{% plural %}
+	with {{ hours }} hours promised
+{% endblocktrans %}
+
 {% endblock %}
