@@ -11,23 +11,23 @@
 {% block breadcrumbs %}
 <div class="breadcrumbs">
 <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-&rsaquo; Send Email Update to Users
+&rsaquo; {% trans 'Send Email Update to Users' %}
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
-	<h2>Send Email Update to Users</h2>
+	<h2>{% trans 'Send Email Update to Users' %}</h2>
 	<div class="module">
-	<form action="" method="post">
-		{% csrf_token %}
-		<table>
-			{{ form }}
-			<tr>
-				<th></th>
-				<td><input type="submit" value="Send"></td>
-			</tr>
-		</table>
-	</form>
+		<form action="" method="post">
+			{% csrf_token %}
+			<table>
+				{{ form }}
+				<tr>
+					<th></th>
+					<td><input type="submit" value="{% trans 'Send' %}"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </div>
 {% endblock %}
