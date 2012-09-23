@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from cc.general.util import render
 from cc.post.models import Post
@@ -12,7 +13,7 @@ from cc.feed.models import FeedItem
 from cc.profile.forms import ContactForm
 
 MESSAGES = {
-    'post_message_sent': "Message sent.",
+    'post_message_sent': _("Message sent."),
 }
 
 @login_required
@@ -46,8 +47,10 @@ def view_post(request, post_id):
             if contact_form.is_valid():
                 contact_form.send(
                     sender=request.profile, recipient=post.user,
-                    subject=u"Villages.cc message from %s Re: %s" % (
-                        request.profile, post.title),
+                    subject=_("Villages.cc message "
+                              "from %(from)s Re: %(title)s") % {
+				    'from': request.profile,
+				    'title': post.title},
                     template='post_contact_email.txt',
                     extra_context={'post': post})
                 messages.info(request, MESSAGES['post_message_sent'])
