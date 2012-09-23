@@ -3,13 +3,14 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from cc.general.util import render, get_remote_ip
 from cc.geo.forms import LocationForm
 from cc.geo.models import Location
 
 MESSAGES = {
-    'location_set': "Location set.",
+    'location_set': _("Location set"),
 }
 
 @render()
