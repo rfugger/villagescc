@@ -1,17 +1,18 @@
-Thanks for registering at Villages.cc!  We hope you find our system useful.
+{% load i18n %}
+{% blocktrans %}Thanks for registering at Villages.cc! We hope you find our system useful.{% endblocktrans %}
 
-Begin by making sure you've filled out your profile to include a picture and a description of your skills and things you'd like to offer to the community:
+{% blocktrans %}Begin by making sure you've filled out your profile to include a picture and a description of your skills and things you'd like to offer to the community:{% endblocktrans %}
 
 http://{{ domain }}{% url edit_profile %}
 
-Next, check your feed for interesting people and posts in your neighbourhood:
+{% blocktrans %}Next, check your feed for interesting people and posts in your neighbourhood:{% endblocktrans %}
 
 http://{{ domain }}{% url feed %}
 
-Don't forget to post anything immediate you'd like or can offer:
+{% blocktrans %}Don't forget to post anything immediate you'd like or can offer:{% endblocktrans %}
 
 http://{{ domain }}{% url new_post %}
 
-If you have received this email in error, please reply and let us know so that we can remove your email address from the system.
+{% blocktrans %}If you have received this email in error, please reply and let us know so that we can remove your email address from the system.{% endblocktrans %}
 
-Thanks!
+{% blocktrans %}Thanks!{% endblocktrans %}

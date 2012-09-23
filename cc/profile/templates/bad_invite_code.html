@@ -6,7 +6,8 @@
 {% block content %}
 <h2>{% trans 'Unknown or Expired Invitation' %}</h2>
 
-<p>{% trans 'Please contact the person who invited you to see if they can invite you again.' %}</p>
+<p>{% blocktrans %}Please contact the person who invited you
+	to see if they can invite you again.{% endblocktrans %}</p>
 
 <p><a href="{% url home %}">{% trans 'Return Home' %}</a></p>
 

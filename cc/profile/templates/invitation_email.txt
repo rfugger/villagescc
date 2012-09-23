@@ -1,15 +1,16 @@
+{% load i18n %}
 {% if invitation.message %}{{ invitation.message }}
-
 ----
+{% endif %}
 
-{% endif %}{{ invitation.from_profile }} has endorsed you as someone they value in their community.
+{% blocktrans with inviter=invitation.from_profile %}{{ inviter }} has endorsed you as someone they value in their community.{% endblocktrans %}
 
-{% if invitation.endorsement_text %}"{{ invitation.endorsement_text }}"
+{% if invitation.endorsement_text %}"{{ invitation.endorsement_text }}"{% endif %}
 
-{% endif %}Villages is a cooperative economic network, where friends can endorse each other and trade without money.
+{% blocktrans %}Villages is a cooperative economic network, where friends can endorse each other and trade without money.{% endblocktrans %}
 
-To accept the invitation, or to simply learn more, please visit the following link:
+{% blocktrans %}To accept the invitation, or to simply learn more, please visit the following link:{% endblocktrans %}
 
 http://{{ domain }}{{ invitation.get_absolute_url }}
 
-Thank you.
+{% blocktrans %}Thank you.{% endblocktrans %}

@@ -1,14 +1,18 @@
 {% extends "profile_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans 'Contact' %} {{ profile }}{% endblock %}
+{% block title %}
+	{% blocktrans %}Contact {{ profile }}{% endblocktrans %}
+{% endblock %}
 
 {% block nav_contact_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Contact {{ profile }}</h2>
-<p class="feature">{% blocktrans %}
-	Your message will be forwarded to {{ profile }} by email{% endblocktrans %}.</p>
+<h2>{% blocktrans %}Contact {{ profile }}{% endblocktrans %}</h2>
+<p class="feature">
+	{% blocktrans %}Your message will be forwarded
+	to {{ profile }} by email.{% endblocktrans %}</p>
+
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">

@@ -1,5 +1,6 @@
-This is a confirmation that your email address on Villages.cc has been updated to {{ new_email }}.
+{% load i18n %}
+{% blocktrans %}This is a confirmation that your email address on Villages.cc has been updated to {{ new_email }}.{% endblocktrans %}
 
-If you have received this email in error, please reply and let us know so that we can remove your email address from the system.
+{% blocktrans %}If you have received this email in error, please reply and let us know so that we can remove your email address from the system.{% endblocktrans %}
 
-Thanks!
+{% blocktrans %}Thanks!{% endblocktrans %}

@@ -6,7 +6,8 @@
 {% block nav_login_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
+<h2>{% trans 'Login' %}</h2>
+
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">
@@ -20,5 +21,10 @@
 		</tr>
 	</table>
 </form>
-<p><a href="{% url forgot_password %}">{% trans 'Forgot username or password?' %}</a></p>
+
+<p>
+	<a href="{% url forgot_password %}"
+		>{% trans 'Forgot username or password?' %}</a>
+</p>
+
 {% endblock %}
