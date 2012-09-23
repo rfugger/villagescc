@@ -9,23 +9,26 @@
 	<div class="unit lastUnit">
 		{% include "post_content.html" %}
 
-		{% if request.profile %}
-			<h4>{% trans 'Contact' %}</h4>
-			<p>{% blocktrans with post_user=post.user %}
-				Send a message to {{ post_user }} about this post{% endblocktrans %}</p>
-			<form action="" method="post">
-				{% csrf_token %}
-				<table class="form_table">
-					<tr>
-						<td>{{ contact_form.message.errors }}
-							{{ contact_form.message }}</td>
-					</tr>
-					<tr>
-						<td><input type="submit" value="{% trans 'Send' %}"></td>
-					</tr>
-				</table>
-			</form>
-		{% endif %}
+	{% if request.profile %}
+		<h4>{% trans 'Contact' %}</h4>
+		<p>{% blocktrans with post_user=post.user %}Send a message
+			to {{ post_user }} about this post{% endblocktrans %}</p>
+
+		<form action="" method="post">
+			{% csrf_token %}
+			<table class="form_table">
+				<tr>
+					<td>{{ contact_form.message.errors }}
+						{{ contact_form.message }}
+					</td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="{% trans 'Send' %}"></td>
+				</tr>
+			</table>
+		</form>
+	{% endif %}
+
 	</div>
 </div>
 {% endblock %}
