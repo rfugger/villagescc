@@ -11,25 +11,36 @@
 {% endblock %}
 
 {% block subnav %}
+<ul>
 	<li class="{% block nav_info_class %}{% endblock %}">
 		<a href="{{ profile.get_absolute_url }}">{% trans 'Info' %}</a></li>
+
 	<li class="{% block nav_posts_class %}{% endblock %}">
 		<a href="{% url profile_posts profile.username %}"
-		   >{% trans 'Posts' %}</a></li>
-	{% if request.profile %}
-		<li class="{% block nav_endorsements_class %}{% endblock %}">
-			<a href="{% url profile_endorsements profile.username %}"
-			   >{% trans 'Endorsements' %}</a></li>
-		<li class="{% block nav_relationship_class %}{% endblock %}">
-			<a href="{% url relationship profile.username %}"
-			   >{% trans 'Relationship' %}</a></li>
-		<hr>
-		<li class="{% block nav_endorse_class %}{% endblock %}">
-			<a href="{% url endorse_user profile.username %}">{% trans 'Endorse' %}</a></li>
-		<li class="{% block nav_acknowledge_class %}{% endblock %}">
-			<a href="{% url acknowledge_user profile.username %}"
-			   >{% trans 'Acknowledge' %}</a></li>
-		<li class="{% block nav_contact_class %}{% endblock %}">
-			<a href="{% url contact profile.username %}">{% trans 'Contact' %}</a></li>
-	{% endif %}
+			>{% trans 'Posts' %}</a></li>
+
+{% if request.profile %}
+	<li class="{% block nav_endorsements_class %}{% endblock %}">
+		<a href="{% url profile_endorsements profile.username %}"
+			>{% trans 'Endorsements' context "nav" %}</a></li>
+
+	<li class="{% block nav_relationship_class %}{% endblock %}">
+		<a href="{% url relationship profile.username %}"
+			>{% trans 'Relationship' context "nav" %}</a></li>
+</ul>
+<hr>
+<ul>
+	<li class="{% block nav_endorse_class %}{% endblock %}">
+		<a href="{% url endorse_user profile.username %}
+			">{% trans 'Endorse' context "nav" %}</a></li>
+
+	<li class="{% block nav_acknowledge_class %}{% endblock %}">
+		<a href="{% url acknowledge_user profile.username %}"
+			>{% trans 'Acknowledge' context "nav" %}</a></li>
+
+	<li class="{% block nav_contact_class %}{% endblock %}">
+		<a href="{% url contact profile.username %}
+			">{% trans 'Contact' context "nav" %}</a></li>
+{% endif %}
+</ul>
 {% endblock %}

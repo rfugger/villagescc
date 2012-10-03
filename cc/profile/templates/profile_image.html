@@ -1,8 +1,10 @@
-{% load profile media %}
+{% load i18n profile media %}
 
 {% if profile %}
-	<a href="{{ profile.get_absolute_url }}">
-		<img src="{% profile_image_url profile '100x100' %}"></a>
+<a href="{{ profile.get_absolute_url }}">
+	<img src="{% profile_image_url profile '100x100' %}"
+		alt="{% blocktrans with user=profile.name %}{{ user }} image{% endblocktrans %}"></a>
 {% else %}
-	<img src="{% media_url 'img/generic_user_100x100.png' %}">
+	<img src="{% media_url 'img/generic_user_100x100.png' %}"
+		alt="{% trans 'Generic user image' %}">
 {% endif %}

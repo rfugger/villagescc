@@ -1,9 +1,9 @@
 {% load humanize %}
 <h3>{{ post }}</h3>
-<p><strong><a href="{{ post.user.get_absolute_url }}">{{ post.user }}</a></strong><br>
+<p><strong><a href="{{ post.user.get_absolute_url }}"
+	>{{ post.user }}</a></strong><br>
 	{{ post.date|naturaltime }}<br>
-	{{ post.location }}<br>
-</p>
+	{{ post.location }}<br></p>
 <div class="feature">
 	{{ post.text|urlize|linebreaks }}
 </div>

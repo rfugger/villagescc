@@ -1,20 +1,21 @@
 {% load feed %}
 {% load i18n %}
 {% if form.continued %}
-	<p><a href="?{{ url_param_str }}">&laquo; {% trans 'Back to start' %}</a></p>
+	<p><a href="?{{ url_param_str }}">{% trans '&laquo; Back to start' %}</a></p>
 {% endif %}
 
 <div class="feed_item_list">
 	{% for feed_item in feed_items %}
-		<div class="feed_item line{% if feed_item.trusted %} trusted{% else %} untrusted{% endif %}" 
-			 href="{{ feed_item.get_absolute_url }}">
-			{% render_in_feed feed_item %}
-		</div>
+	<div class="feed_item line{% if feed_item.trusted %} trusted{% else %} untrusted{% endif %}"
+		href="{{ feed_item.get_absolute_url }}">{% render_in_feed feed_item %}
+	</div>
 	{% empty %}
-		<p><em>{{ empty_string|default:_('No activity.') }}</em></p>
+	<p><em>{{ empty_string|default:_('No activity.') }}</em></p>
 	{% endfor %}
 </div>
 
 {% if remaining_count %}
-	<p><a href="?{{ next_page_param_str }}">{{ remaining_count }} {% trans 'More' %} &raquo;</a></p>
+	<p><a href="?{{ next_page_param_str }}">
+		{% blocktrans %}{{ remaining_count }} More &raquo;{% endblocktrans %}
+	</a></p>
 {% endif %}

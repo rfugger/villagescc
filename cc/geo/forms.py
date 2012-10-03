@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from cc.geo.models import Location
 
@@ -8,7 +9,7 @@ class LocationForm(forms.ModelForm):
         fields = ('neighborhood', 'city', 'state', 'country', 'point')
 
     set_home = forms.BooleanField(
-        required=False, initial=True, label="Save as Home Location")
+        required=False, initial=True, label=_("Save as Home Location"))
         
     def __init__(self, *args, **kwargs):
         hide_set_home = kwargs.pop('hide_set_home', False)

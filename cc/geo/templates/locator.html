@@ -8,7 +8,8 @@
 {% block nav_location_class %}{% trans 'selected' %}{% endblock %}
 
 {% block extrahead %}
-	<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript"
+		src="//maps.google.com/maps/api/js?sensor=false"></script>
 	{% include_media 'geo.js' %}
 	<script type="text/javascript">
 		{% include "locator.js" %}
@@ -19,25 +20,28 @@
 <h2>{% trans 'Set Your Location' %}</h2>
 
 {% if form.errors %}
-	<p class="errorlist">{% trans 'Please correct the errors in the form below.' %}</p>
+	<p class="errorlist"
+		>{% trans 'Please correct the errors in the form below.' %}</p>
 {% endif %}
 
 <div class="feature">
-	<p>{% blocktrans %}To show you relevant posts in your neighbourhood, and 
-		to know who should see your posts, Villages 
+	<p>{% blocktrans %}To show you relevant posts in your neighbourhood, and
+		to know who should see your posts, Villages
 		needs to know your approximate location.{%endblocktrans %}</p>
-	<p>{% blocktrans %}Your coordinates won't be shown to other users, but the neighbourhood
-		and city you submit below will.{% endblocktrans %}</p>
+
+	<p>{% blocktrans %}Your coordinates won't be shown to other users, but
+		the neighbourhood and city you submit below will.{% endblocktrans %}</p>
 </div>
+
 <hr>
 
-<p><strong>{% trans '1.' %}</strong> 
-	{% blocktrans %}First, select your location on the map by typing your 
-	approximate location or dragging the map pointer.{% endblocktrans %}</p>
+<p>{% blocktrans %}<strong>1.</strong> First, select your location on
+	the map by typing your approximate location or dragging the map
+	pointer.{% endblocktrans %}</p>
 
 <form id="loc_search_form" class="loc_search_form">
-	<input id="loc_search" class="instruction_input" type="text" 
-		   help="{% trans 'Neighbourhood, Address, Intersection, or City' %}"/>
+	<input id="loc_search" class="instruction_input" type="text"
+		help="{% trans 'Neighbourhood, Address, Intersection, or City' %}"/>
 	<input type="submit" value="{% trans 'Locate on Map' %}" />
 </form>
 
@@ -46,10 +50,9 @@
 </div>
 
 <div class="feature">
-	<p><strong>{% trans '2.' %}</strong>
-		{% blocktrans %}The map above shows the location you are choosing.
-		Please check that its name is correct before submitting.{% endblocktrans %}
-	</p>
+	<p>{% blocktrans %}<strong>2.</strong> The map above shows the
+		location you are choosing. Please check that its name is
+		correct before submitting.{% endblocktrans %}</p>
 
 	<form action="" method="post">
 		{% csrf_token %}
@@ -57,20 +60,22 @@
 			{{ form }}
 			<tr>
 				<th></th>
-				<td><input type="submit" value="{% trans 'Set Location' %}" /></td>
+				<td><input type="submit"
+					value="{% trans 'Set Location' %}" /></td>
 			</tr>
-			{% if profile and request.location and request.location != profile.location %}
-				<tr>
-					<th></th>
-					<td><input type="submit" name="clear" value="{% trans 'Reset to Home' %}" /></td>
-				</tr>
-			{% endif %}
+{% if profile and request.location and request.location != profile.location %}
+			<tr>
+				<th></th>
+				<td><input type="submit"
+					name="clear" value="{% trans 'Reset to Home' %}" /></td>
+			</tr>
+{% endif %}
 		</table>
 	</form>
 
-	<p><em>{% blocktrans %}Neighbourhood, city, and state are optional fields if they're
-		not appropriate for your location.{% endblocktrans %}</em>
-	</p>
+	<p><em>{% blocktrans %}Neighbourhood, city, and state are
+		optional fields if they're not appropriate for your
+		location.{% endblocktrans %}</em></p>
 </div>
 {% endblock %}
 

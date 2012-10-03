@@ -14,12 +14,16 @@
 		{{ settings_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="change_settings" value="{% trans 'Save Settings' %}"></td>
+			<td>
+				<input type="submit" name="change_settings"
+					value="{% trans 'Save Settings' %}">
+			</td>
 		</tr>
 	</table>
 </form>
 
 <hr>
+
 <h3>{% trans 'Change Password' %}</h3>
 <form action="" method="post">
 	{% csrf_token %}
@@ -27,7 +31,10 @@
 		{{ password_form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" name="change_password" value="{% trans 'Change Password' %}"></td>
+			<td>
+				<input type="submit" name="change_password"
+					value="{% trans 'Change Password' %}">
+			</td>
 		</tr>
 	</table>
 </form>

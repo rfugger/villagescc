@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import ugettext_lazy as _
 
 import cc.ripple.api as ripple
 
@@ -43,14 +44,14 @@ class LoadUserAccountNode(template.Node):
 @register.simple_tag
 def entry_description(entry, profile):
     if entry.payment.payer == profile:
-        desc = "Sent acknowledgement to %s" % entry.payment.recipient
+        desc = _("Sent acknowledgement to %s") % entry.payment.recipient
     elif entry.payment.recipient == profile:
-        desc = "Received acknowledgement from %s" % entry.payment.payer
+        desc = _("Received acknowledgement from %s") % entry.payment.payer
     else:
 
         # TODO: Maybe "acknowledged %s in exchange for acknowledgement from %s"?
         # Something else with "exchanged"?
         
-        desc = "Helped route acknowledgement from %s to %s" % (
-            entry.payment.payer, entry.payment.recipient)
+        desc = _("Helped route acknowledgement from %(from)s to %(to)s") % {
+		'from': entry.payment.payer, 'to': entry.payment.recipient }
     return desc

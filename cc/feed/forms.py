@@ -26,7 +26,7 @@ class FeedFilterForm(forms.Form):
         label="Up to date", required=False, input_formats=[DATE_FORMAT])
     q = forms.CharField(
         label="Search", required=False, widget=forms.TextInput(
-            attrs={'class': 'instruction_input', 'help': "Search"}))
+            attrs={'class': 'instruction_input', 'help': _("Search")}))
     radius = forms.TypedChoiceField(
         required=False, choices=RADIUS_CHOICES, coerce=int, empty_value=None)
     trusted = forms.BooleanField(required=False)

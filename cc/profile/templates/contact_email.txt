@@ -1,4 +1,5 @@
+{% load i18n %}
 {{ message }}
 
 ----
-View {{ sender }}: http://{{ domain }}{{ sender.get_absolute_url }}
+{% blocktrans context "email" %}View {{ sender }}:{% endblocktrans %} http://{{ domain }}{{ sender.get_absolute_url }}

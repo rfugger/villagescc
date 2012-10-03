@@ -20,23 +20,23 @@
 				<th>{% trans 'Date Sent' %}</th>
 				<th></th>
 			</tr>
-			{% for invitation in invitations %}
-				<tr>
-					<td>{{ invitation.to_email }}</td>
-					<td>{{ invitation.endorsement_weight }}</td>
-					<td>{{ invitation.date|date }}</td>
-					<td>						
-						<input type="submit" name="resend_{{ invitation.id }}"
-							   value="{% trans 'Resend' %}">
-						<input type="submit" name="delete_{{ invitation.id }}" 
-							   value="{% trans 'Delete' %}">
-					</td>
-				</tr>
-			{% endfor %}
+		{% for invitation in invitations %}
+			<tr>
+				<td>{{ invitation.to_email }}</td>
+				<td>{{ invitation.endorsement_weight }}</td>
+				<td>{{ invitation.date|date }}</td>
+				<td>
+					<input type="submit" name="resend_{{ invitation.id }}"
+						value="{% trans 'Resend' %}">
+					<input type="submit" name="delete_{{ invitation.id }}"
+						value="{% trans 'Delete' %}">
+				</td>
+			</tr>
+		{% endfor %}
 		</table>
 	</form>
 {% else %}
-	<p>{% trans 'You have no pending sent invitations' %}.</p>
+	<p>{% trans 'You have no pending sent invitations.' %}</p>
 {% endif %}
 
 {% endblock %}

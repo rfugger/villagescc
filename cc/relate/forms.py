@@ -2,6 +2,7 @@ from decimal import Decimal as D
 
 from django import forms
 from django.core import validators
+from django.utils.translation import ugettext_lazy as _
 
 from cc.relate.models import Endorsement
 from cc.ripple import PRECISION, SCALE
@@ -13,7 +14,7 @@ DIRECT = 'direct'
 
 class EndorseForm(forms.ModelForm):
     MESSAGES = {
-        'over_weight': "Please ensure this number is below %d."
+        'over_weight': _("Please ensure this number is below %d.")
     }
     
     class Meta:
@@ -54,19 +55,22 @@ class EndorseForm(forms.ModelForm):
 
 class AcknowledgementForm(forms.Form):
     ripple = forms.ChoiceField(
-        label="Send",
-        choices=((ROUTED, "Trusted acknowledgement"),
-                 (DIRECT, "Direct acknowledgement")),
+        label=_("Send"),
+        choices=((ROUTED, _("Trusted acknowledgement")),
+                 (DIRECT, _("Direct acknowledgement"))),
         widget=forms.RadioSelect,
         initial=ROUTED)
     amount = forms.DecimalField(
-        label="Hours",
+        label=_("Hours"),
         max_digits=PRECISION, decimal_places=SCALE,
         min_value=D('0.' + '0' * (SCALE - 1) + '1'))
-    memo = forms.CharField(required=False, widget=forms.Textarea)
+    memo = forms.CharField(
+	label=_("Testimonial"),
+	required=False,
+	widget=forms.Textarea)
     
     ERRORS = {
-        'max_ripple': ("This is higher than the maximum possible routed "
+        'max_ripple': _("This is higher than the maximum possible routed "
                        "acknowledgement amount."),
     }
     

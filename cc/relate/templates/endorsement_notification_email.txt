@@ -1,9 +1,12 @@
-You have been endorsed with {{ endorsement.weight }} heart{{ endorsement.weight|pluralize:"s" }} on Villages.cc by {{ endorsement.endorser }}.
+{% load i18n %}
+{% blocktrans count hearts=endorsement.weight with endorser=endorsement.endorser %}
+You have been endorsed with {{ hearts }} heart on Villages.cc by {{ endorser }}.
+{% plural %}
+You have been endorsed with {{ hearts }} hearts on Villages.cc by {{ endorser }}.
+{% endblocktrans %}
 
-{% if endorsement.text %}{{ endorsement.endorser }} added:
-
+{% if endorsement.text %}{% blocktrans with endorser=endorsement.endorser %}{{ endorser }} added:{% endblocktrans %}
 {{ endorsement.text }}
+{% endif %}
 
-{% endif %}To view the endorsement, visit:
-
-http://{{ domain }}{{ endorsement.get_absolute_url }}
+{% blocktrans %}To view the endorsement, visit:{% endblocktrans %} http://{{ domain }}{{ endorsement.get_absolute_url }}

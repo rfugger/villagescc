@@ -1,51 +1,66 @@
 {% extends "profile_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans 'Acknowledge' %} {{ recipient }}{% endblock %}
+{% block title %}
+	{% blocktrans %}Acknowledge {{ recipient }}{% endblocktrans %}
+{% endblock %}
 
 {% block nav_acknowledge_class %}selected{% endblock %}
 
 {% block content %}
-<h2>{% trans 'Acknowledge' %} {{ recipient }}</h2>
+<h2>{% blocktrans %}Acknowledge {{ recipient }}{% endblocktrans %}</h2>
 
 <div class="feature">
-	<p>{% trans 'There are two ways to send acknowledgement' %}:
-	<ol>
-		<li><strong>{% trans 'Send a trusted acknowledgement' %}</strong>
-                        {% blocktrans %}through the trust network so the recipient receives it
-                        only from people they have endorsed, and only up to the
-                        number of hearts they have given to each.{% endblocktrans %}
-		</li>
-		<li><strong>{% trans 'Send a direct acknowledgement' %}</strong> 
-                        {% blocktrans %}of any number of hours directly to the recipient, even
-                        if they haven't endorsed you.{% endblocktrans %}
-		</li>
-	</ol>
+	<p>{% trans 'There are two ways to send acknowledgement:' %}
+		<ol>
+			<li>{% blocktrans %}<strong>Send a trusted
+				acknowledgement</strong> through the trust network so
+				the recipient receives it only from people they have
+				endorsed, and only up to the number of hearts they have
+				given to each.{% endblocktrans %}</li>
+
+			<li>{% blocktrans %}<strong>Send a direct
+				acknowledgement</strong> of any number of hours
+				directly to the recipient, even if they haven't
+				endorsed you.{% endblocktrans %}</li>
+		</ol>
+	</p>
+
 	<p><a href="{% url how_it_works %}">{% trans 'Read more' %}</a></p>
-	<p>{% blocktrans %}Acknowledgements are only visible to you, the recipient, and for
-		trusted acknowledgements, anyone on the path the acknowlegdement 
-		takes between you and the recipient.{% endblocktrans %}
-	</p>
+
+	<p>{% blocktrans %}Acknowledgements are only visible to you, the
+		recipient, and for trusted acknowledgements, anyone on the
+		path the acknowlegdement takes between you and the
+		recipient.{% endblocktrans %}</p>
 </div>
+
 {% if can_ripple %}
-	<p>{% blocktrans %}You can send a trusted acknowledgement of up to {{ max_amount }} 
-		hour{{ max_amount|pluralize:"s" }}, or a direct
-		acknowledgement of any amount.{% endblocktrans %}
-	</p>
+<p>
+	{% blocktrans count hours=max_amount %}
+		You can send a trusted acknowledgement of up to {{ hours }} hour,
+		or a direct acknowledgement of any amount.
+	{% plural %}
+		You can send a trusted acknowledgement of up to {{ hours }} hours,
+		or a direct acknowledgement of any amount.
+	{% endblocktrans %}
+</p>
 {% else %}
-	<p>{% blocktrans %}There are no available paths through the trust network to {{ recipient }},
-		so you can only send direct acknowledgement.{% endblocktrans %}
-	</p>
+<p>{% blocktrans %}There are no available paths through the trust
+	network to {{ recipient }}, so you can only send direct
+	acknowledgement.{% endblocktrans %}</p>
 {% endif %}
-		
+
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="{% trans 'Send Acknowledgement' %}"
-					   onclick="return confirm(confirm_text());"></td>
+			<td>
+				<input type="submit"
+					value="{% trans 'Send Acknowledgement' %}"
+					onclick="return confirm(confirm_text());">
+			</td>
 		</tr>
 	</table>
 </form>
@@ -58,13 +73,19 @@
 		var hours = $("#id_amount").val();
 		var ack_type = "direct";
 		if (can_ripple) {
-			var ripple = ($("input:radio[name=ripple]:checked").val() == "routed");
+			var ripple = ($("input:radio[name=ripple]:checked").val() ==
+							"routed");
 			if (ripple) {
 				ack_type = "trusted";
-			} 
+			}
 		}
-		return "{% trans 'Send a' %} " + ack_type + " {% trans 'acknowledgement of' %} " + hours + 
-			" {% trans 'hours' %}?";
+		if (!hours) hours = 0;
+		var q = "{% trans 'Send a direct acknowledgement of' %} " +
+				hours + " {% trans 'h' %}?";
+		if (ack_type=="trusted")
+			q = "{% trans 'Send a trusted acknowledgement of' %} " +
+				hours + " {% trans 'h' %}?";
+		return q;
 	}
 </script>
 {% endblock %}

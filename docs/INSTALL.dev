@@ -1,0 +1,28 @@
+===============================================================================
+=	There example installing Villages for development purposes            =
+===============================================================================
+
+Install all dependencies (look at README.md)
+
+Download and put Villages.cc to any directory, and enter into it
+cd ~/place/villagescc
+
+Copy local settings and change them (username for db)
+cp cc/settings/local.py.dev_example cc/settings/local.py
+vim cc/settings/local.py
+
+Create databases
+createdb -T template_postgis villages
+createdb ripple
+
+Create tables (and configure django)
+python manage.py syncdb
+python manage.py syncdb --database=ripple
+
+Run migration
+python manage.py migration
+
+Run server!
+python manage.py runserver
+
+Site will available at 127.0.0.1:8000

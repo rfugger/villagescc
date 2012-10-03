@@ -3,6 +3,7 @@ from django.contrib import messages
 from django import http
 from django.template import loader, Context
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from cc.general.util import render
 from cc.pages.forms import AnonymousFeedbackForm, UserFeedbackForm
@@ -10,7 +11,7 @@ from cc.profile.views import SHARED_BY_PROFILE_ID_KEY, SHARED_BY_USERNAME_KEY
 from cc.profile.models import Profile
 
 MESSAGES = {
-    'feedback_sent': "Thank you for your feedback.",
+    'feedback_sent': _("Thank you for your feedback."),
 }
 
 @render()

@@ -6,14 +6,17 @@
 {% block content %}
 {{ block.super }}
 
-<h3>Developers</h3>
+<h3>{% trans 'Developers' %}</h3>
 
-<p>{% trans 'Villages is developed by' %} <a href="{% url profile 'ryan' %}">Ryan Fugger</a>,
-	{% blocktrans %}founder of the <a href="http://ripple-project.org/">Ripple Project</a>{% endblocktrans %}.
-</p>
-<p>{% blocktrans %}If have coding, web development, or other applicable skills, 
-	believe in the concept, and would like to help out, please{% endblocktrans %}
-	<a href="{% url feedback %}">{% trans 'send a message' %}</a>.
-	{% trans 'Thanks.' %}
-</p>
+{% url profile 'ryan' as profile_ryan %}
+<p>{% blocktrans %}Villages is developed by
+	<a href="{{ profile_ryan }}">Ryan Fugger</a>, founder of the
+	<a href="http://ripple-project.org/">Ripple Project</a>.
+	{% endblocktrans %}</p>
+
+{% url feedback as url_feedback %}
+<p>{% blocktrans %}If have coding, web development, or other applicable
+	skills, believe in the concept, and would like to help out, please
+	<a href="{{ url_feedback }}">send a message</a>.
+	Thanks.{% endblocktrans %}</p>
 {% endblock %}

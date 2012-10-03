@@ -7,12 +7,15 @@
 {% endif %}
 
 {% if my_endorsement %}
-	<p>{% trans 'You have endorsed this user with' %}
-		<strong>{{ my_endorsement.weight }}</strong>
-		heart{{ my_endorsement.weight|pluralize:"s" }}.
-		<a href="{% url endorse_user profile.username %}">Edit</a>
-	</p>
-	<hr>
+<p>
+	{% blocktrans count hearts=my_endorsement.weight %}
+		You have endorsed this user with <strong>{{ hearts }}</strong> heart.
+	{% plural %}
+		You have endorsed this user with <strong>{{ hearts }}</strong> hearts.
+	{% endblocktrans %}
+	<a href="{% url endorse_user profile.username %}">{% trans 'Edit' %}</a>
+</p>
+<hr>
 {% endif %}
 
 <div class="feature line">
@@ -25,33 +28,34 @@
 			<tr>
 				<th>{% trans 'Name' %}</th>
 				<td>{{ profile.name }}</td>
-			</tr><tr>
+			</tr>
+			<tr>
 				<th>{% trans 'Username' %}</th>
 				<td>{{ profile.username }}</td>
-			</tr><tr>
+			</tr>
+			<tr>
 				<th>{% trans 'Home Location' %}</th>
 				<td>
-					{% if profile == request.profile %}
-						<a href="{% url locator %}?next={{ request.path }}">
-							{{ profile.location.full_name }}</a>
-					{% else %}
-						{{ profile.location.full_name }}
-					{% endif %}
+			{% if profile == request.profile %}
+					<a href="{% url locator %}?next={{ request.path }}"
+						>{{ profile.location.full_name }}</a>
+			{% else %}
+					{{ profile.location.full_name }}
+			{% endif %}
 				</td>
 			</tr>
-
-			{% if request.profile %}
-				<tr>
-					<th>{% trans 'Registered' %}</th>
-					<td>{{ profile.user.date_joined|naturalday }}</td>
-				</tr>
-				{% comment - TODO: last_login != last online time %}
-				<tr>
-					<th>{% trans 'Last Online' %}</th>
-					<td>{{ profile.user.last_login|naturalday }}</td>
-				</tr>
-				{% endcomment %}
-			{% endif %}
+		{% if request.profile %}
+			<tr>
+				<th>{% trans 'Registered' %}</th>
+				<td>{{ profile.user.date_joined|naturalday }}</td>
+			</tr>
+			{% comment - TODO: last_login != last online time %}
+			<tr>
+				<th>{% trans 'Last Online' %}</th>
+				<td>{{ profile.user.last_login|naturalday }}</td>
+			</tr>
+			{% endcomment %}
+		{% endif %}
 		</table>
 
 		{{ profile.description|urlize|linebreaks }}
@@ -59,33 +63,59 @@
 </div>
 
 {% if request.profile %}
-	<h3>{% trans 'Relationships Summary' %}</h3>
+<h3>{% trans 'Relationships Summary' %}</h3>
 	{% if profile == request.profile %}
 		{% include "relationships_summary.html" %}
 		<p><a href="{% url relationships %}">{% trans 'More' %}</a></p>
 	{% else %}
-		<table class="data">
-			<tr title="{% trans 'Max. trusted acknowledgements I would accept from this user' %}">
-				<th><a href="{% url profile_endorsements profile.username %}"
-					   >{% trans 'Reputation' %}</a></th>
-				<td>{% reputation profile request.profile %}</td>
-			</tr>
-			<tr title="{% trans 'Sum of all acknowledgements sent and received' %}">
-				<th>{% trans 'Overall Balance' %}</th>
-				<td>{{ profile.overall_balance }} {% trans 'hours' %}</td>
-			</tr>
-			<tr title="Sum of all acknowledgements sent and received, but only from trusted partners">
-				<th>{% trans 'Trusted Balance' %}</th>
-				<td>{{ profile.trusted_balance }} {% trans 'hours' %}</td>
-			</tr>
-			{% if account %}
-				<tr>
-					<th><a href="{% url relationship profile.username %}"
-						   >{%trans 'Balance with Me' %}</a></th>
-					<td>{{ account.balance }} {% trans 'hours' %}</td>
-				</tr>
-			{% endif %}
-		</table>
-		<p><a href="{% url profile_endorsements profile.username %}">{% trans 'More' %}</a></p>	
+	<table class="data">
+		<tr title="{% blocktrans %}Max. trusted acknowledgements I
+					would accept from this user{% endblocktrans %}">
+			<th><a href="{% url profile_endorsements profile.username %}"
+				>{% trans 'Reputation' %}</a>
+			</th>
+			<td>{% reputation profile request.profile %}</td>
+		</tr>
+		<tr title="{% blocktrans %}Sum of all acknowledgements
+					sent and received{% endblocktrans %}">
+			<th>{% trans 'Overall Balance' %}</th>
+			<td>
+				{% blocktrans count hours=profile.overall_balance %}
+					{{hours}} hour
+				{% plural %}
+					{{hours}} hours
+				{% endblocktrans %}
+			</td>
+		</tr>
+		<tr title="{% blocktrans %}Sum of all acknowledgements
+					sent and received, but only from trusted
+					partners{% endblocktrans %}">
+			<th>{% trans 'Trusted Balance' %}</th>
+			<td>
+				{% blocktrans count hours=profile.trusted_balance %}
+					{{hours}} hour
+				{% plural %}
+					{{hours}} hours
+				{% endblocktrans %}
+			</td>
+		</tr>
+		{% if account %}
+		<tr>
+			<th><a href="{% url relationship profile.username %}"
+				>{% trans 'Balance with Me' %}</a>
+			</th>
+			<td>
+				{% blocktrans count hours=account.balance %}
+					{{hours}} hour
+				{% plural %}
+					{{hours}} hours
+				{% endblocktrans %}
+			</td>
+		</tr>
+		{% endif %}
+	</table>
+
+	<p><a href="{% url profile_endorsements profile.username %}
+		">{% trans 'More' %}</a></p>
 	{% endif %}
 {% endif %}

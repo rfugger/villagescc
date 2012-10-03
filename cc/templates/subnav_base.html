@@ -2,9 +2,11 @@
 {% load media %}
 
 {% block subnav_box %}
-	{% block subnav_image %}{% endblock %}
-	<h2 class="subnav_title">&raquo; {% block subnav_title %}{% endblock %}</h2>
-	<div class="subnav">
-		{% block subnav %}{% endblock %}
-	</div>
+
+{% block subnav_image %}{% endblock %}
+<h2 class="subnav_title">&raquo; {% block subnav_title %}{% endblock %}</h2>
+<div class="subnav">
+	{% block subnav %}{% endblock %}
+</div>
+
 {% endblock %}

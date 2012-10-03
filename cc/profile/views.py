@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
 
 from cc.general.util import render, deflect_logged_in
 from cc.profile.forms import (
@@ -34,30 +36,30 @@ SHARED_BY_PROFILE_ID_KEY = 'shared_by'
 SHARED_BY_USERNAME_KEY = 'u'
 
 MESSAGES = {
-    'profile_saved': "Profile saved.",
-    'contact_sent': "Message sent.",
-    'registration_done': ("Thank you for registering.<br><br>"
+    'profile_saved': _("Profile saved."),
+    'contact_sent': _("Message sent."),
+    'registration_done': _("Thank you for registering.<br><br>"
                           "Please continue filling out your profile by "
                           "uploading a photo and describing yourself for other "
                           "users.<br><br>"
                           "We have sent a welcome email to your address. "
                           "If you do not receive it, please verify your email "
                           "address under account settings."),
-    'password_changed': "Password changed.",
-    'settings_changed': "Settings saved.",
-    'email_updated': ("Settings saved.<br><br>"
+    'password_changed': _("Password changed."),
+    'settings_changed': _("Settings saved."),
+    'email_updated': _("Settings saved.<br><br>"
                       "A confirmation email has been sent to your new address. "
                       "If you do not receive it, please verify that you have "
                       "entered the correct email."),
-    'invitation_sent': "Invitation sent to %s.",
-    'invitation_deleted': "Invitation deleted.",
-    'invitation_request_sent': "Invitation request sent.",
-    'invitation_landing': ("%s has invited you to Villages.cc.<br>"
+    'invitation_sent': _("Invitation sent to %s."),
+    'invitation_deleted': _("Invitation deleted."),
+    'invitation_request_sent': _("Invitation request sent."),
+    'invitation_landing': _("%s has invited you to Villages.cc.<br>"
                            "Please take a look around and then use the "
                            "<em>Join</em> link on the right to register."),
-    'password_link_sent': "A password reset link has been emailed to you.",
-    'password_reset': ("Your password has been reset.  You may now log in with "
-                       "your new password."),
+    'password_link_sent': _("A password reset link has been emailed to you."),
+    'password_reset': _("Your password has been reset. You may now log in "
+			"with your new password."),
 }
 
 def get_invitation(request):
@@ -99,7 +101,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            profile = form.save(request.location)
+            profile = form.save(request.location, request.LANGUAGE_CODE)
             if invitation:
                 # Turn invitation into endorsement.
                 Endorsement.objects.create(
@@ -128,13 +130,13 @@ def register(request):
     return locals()
 
 def send_registration_email(profile):
-    subject = "Welcome to Villages.cc"
+    subject = _("Welcome to Villages.cc")
     send_mail_from_system(subject, profile, 'registration_email.txt',
                           {'profile': profile})
 
 def send_invitation_accepted_email(invitation, profile):
     "Let inviter know invitation has been accepted."
-    subject = "%s accepted your invitation to Villages" % profile
+    subject = _("%s accepted your invitation to Villages") % profile
     send_mail_from_system(
         subject, invitation.from_profile, 'invitation_accepted_email.txt',
         {'profile': profile})
@@ -146,7 +148,8 @@ def send_shared_link_registration_email(request, profile):
         # Sharer_id shouldn't go into session unless it's a valid ID, so no
         # need to catch invalid ID.
         sharer = Profile.objects.get(pk=sharer_id)
-        subject = "%s registered on Villages using your shared link" % profile
+        subject = _("%s registered on Villages "
+                    "using your shared link") % profile
         send_mail_from_system(
             subject, sharer, 'shared_link_registration_email.txt',
             {'profile': profile})
@@ -200,6 +203,8 @@ def edit_settings(request):
                 request.POST, instance=request.profile.settings)
             if settings_form.is_valid():
                 settings_obj = settings_form.save()
+                translation.activate(settings_obj.language)
+                request.session['django_language'] = translation.get_language()
                 if settings_obj.email != old_email:
                     send_new_address_email(settings_obj)
                     messages.info(request, MESSAGES['email_updated'])
@@ -220,7 +225,7 @@ def edit_settings(request):
     return locals()
 
 def send_new_address_email(settings_obj):
-    subject = "Your Villages.cc email address has been updated"
+    subject = _("Your Villages.cc email address has been updated")
     send_mail_from_system(subject, settings_obj.profile, 'new_email.txt',
                           {'new_email': settings_obj.email})
 
@@ -338,7 +343,7 @@ def invitations_sent(request):
                 key = k
                 break
         if key is None:
-            raise Exception("Missing resend or delete paramter.")
+            raise Exception("Missing resend or delete parameter.")
         invitation_id = key.split('_')[1]
         invitation = get_object_or_404(
             request.profile.invitations_sent, pk=invitation_id)

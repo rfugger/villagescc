@@ -4,11 +4,19 @@
 {% block title %}{% trans 'Page Not Found' %}{% endblock %}
 
 {% block content %}
+
 <h2>{% trans 'Page Not Found' %}</h2>
-<p>{% blocktrans %}We're sorry to disrupt your browsing experience.  A programmer 
-	has been informed of the broken link and if it was on our site,
-	it will be fixed as soon as possible.{% endblocktrans %}</p>
-<p>{% trans 'Please' %} <a href="{% url home %}">{% trans 'keep using the site' %}</a>, {% trans 'or' %}
-	<a href="{% url feedback %}">{% trans 'contact us' %}</a> {% trans 'if you need further assistance' %}.</p>
+
+<p>{% blocktrans %}We're sorry to disrupt your browsing experience.
+	A programmer has been informed of the broken link and if it was on our
+	site, it will be fixed as soon as possible.{% endblocktrans %}</p>
+
+{% url home as url_home %}
+{% url feedback as url_feedback %}
+<p>{% blocktrans %}Please <a href="{{ url_home }}">keep using the site</a>,
+	or <a href="{{ url_feedback }}">contact us</a> if you need further
+	assistance.{% endblocktrans %}</p>
+
 <p>{% trans 'Thank you!' %}</p>
+
 {% endblock %}

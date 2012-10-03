@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.core import serializers
 from django.core.serializers.base import DeserializationError
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 # Import introspection rules to allow south to migrate geo fields.
 from south.introspection_plugins import geodjango
@@ -20,10 +21,10 @@ class Location(models.Model):
     # - use spheroid=False for geography queries (not needed on planar projection)
     
     point = models.PointField(geography=True)
-    country = VarCharField("Country")
-    state = VarCharField("State/Province (Abbr.)", blank=True)
-    city = VarCharField(blank=True)
-    neighborhood = VarCharField("Neighbourhood", blank=True)
+    country = VarCharField(_("Country"))
+    state = VarCharField(_("State/Province (Abbr.)"), blank=True)
+    city = VarCharField(_("City"), blank=True)
+    neighborhood = VarCharField(_("Neighbourhood"), blank=True)
     
     objects = models.GeoManager()
 
