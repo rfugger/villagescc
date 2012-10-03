@@ -1,11 +1,12 @@
-{{ profile }} has registered on Villages after clicking on a link that you shared.
+{% load i18n %}
+{% blocktrans %}{{ profile }} has registered on Villages after clicking on a link that you shared.{% endblocktrans %}
 
-To view their profile, go to:
+{% blocktrans %}To view their profile, go to:{% endblocktrans %}
 
 http://{{ domain }}{% url profile profile.username %}
 
-To endorse them:
+{% blocktrans %}To endorse them:{% endblocktrans %}
 
 http://{{ domain }}{% url endorse_user profile.username %}
 
-Thank you for sharing Villages!
+{% blocktrans %}Thank you for sharing Villages!{% endblocktrans %}

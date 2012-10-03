@@ -6,12 +6,11 @@
 {% block nav_register_class %}selected{% endblock %}
 
 {% block content %}
-<h2>Register</h2>
+<h2>{% trans 'Register' %}</h2>
 
-<p class="feature">{% blocktrans %}Please enter the name you'd like to use on the system,
-	your email address, and then the username and password you'd like to 
-	use to log in.{% endblocktrans %}
-</p>
+<p class="feature">{% blocktrans %}Please enter the name you'd like to
+	use on the system, your email address, and then the username and
+	password you'd like to use to log in.{% endblocktrans %}</p>
 
 <form action="" method="post">
 	{% csrf_token %}

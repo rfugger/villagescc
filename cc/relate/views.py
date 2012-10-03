@@ -52,7 +52,7 @@ def endorse_user(request, recipient_username):
     return locals()
 
 def send_endorsement_notification(endorsement):
-    subject = "%s has endorsed you on Villages.cc" % endorsement.endorser
+    subject = _("%s has endorsed you on Villages.cc") % endorsement.endorser
     send_notification(subject, endorsement.endorser, endorsement.recipient,
                       'endorsement_notification_email.txt',
                       {'endorsement': endorsement})
@@ -109,7 +109,7 @@ def acknowledge_user(request, recipient_username):
     return locals()
 
 def send_acknowledgement_notification(acknowledgement):
-    subject = "%s has acknowledged you on Villages.cc" % (
+    subject = _("%s has acknowledged you on Villages.cc") % (
         acknowledgement.payer)
     send_notification(subject, acknowledgement.payer, acknowledgement.recipient,
                       'acknowledgement_notification_email.txt',

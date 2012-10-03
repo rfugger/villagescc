@@ -2,9 +2,9 @@
 {% load image profile %}
 
 {% block user %}
-		{% if item.image %}<img src="{{ item.image|resize:'60x60' }}">
-		{% else %}{{ block.super }}
-		{% endif %}
+	{% if item.image %}<img src="{{ item.image|resize:'60x60' }}">
+	{% else %}{{ block.super }}
+	{% endif %}
 {% endblock %}
 
 {% block title %}{{ item|truncatechars:110 }}{% endblock %}

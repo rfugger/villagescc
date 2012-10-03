@@ -10,27 +10,27 @@ from cc.general.models import EmailField
 from cc.general.mail import send_mail, send_mail_to_admin
 
 ERRORS = {
-    'email_dup': "That email address is registered to another user.",
-    'already_invited': "You have already sent an invitation to %s.",
-    'self_invite': "You can't invite yourself.",
-    'over_weight': "Please ensure this number is below %d.",
-    'invalid_username': "That username or email isn't recognized.",
+    'email_dup': _("That email address is registered to another user."),
+    'already_invited': _("You have already sent an invitation to %s."),
+    'self_invite': _("You can't invite yourself."),
+    'over_weight': _("Please ensure this number is below %d."),
+    'invalid_username': _("That username or email isn't recognized."),
 }
 
 class RegistrationForm(UserCreationForm):
     # Parent class has username, password1, and password2.
     name = forms.CharField(
-        max_length=100, required=False, help_text=(
+        max_length=100, required=False, label=_("Name"), help_text=_(
             "Name displayed to other users. You can change this later."))
     email = forms.EmailField(
-        max_length=EmailField.MAX_EMAIL_LENGTH, help_text=(
+        max_length=EmailField.MAX_EMAIL_LENGTH, label=_("Email"), help_text=_(
             "The address to receive notifications from Villages."))
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].help_text = (
+        self.fields['username'].help_text = _(
             "Desired login name. You cannot change this.")
-        self.fields['password1'].help_text = "Desired password."
+        self.fields['password1'].help_text = _("Desired password.")
     
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -49,7 +49,7 @@ class RegistrationForm(UserCreationForm):
         raise forms.ValidationError(
             _("A user with that username already exists."))
     
-    def save(self, location):
+    def save(self, location, language):
         data = self.cleaned_data
         user = super(RegistrationForm, self).save(commit=False)
         user.save()
@@ -59,6 +59,7 @@ class RegistrationForm(UserCreationForm):
         profile.location = location
         profile.save()
         profile.settings.email = data['email']
+        profile.settings.language = language
         profile.settings.save()
         return profile
 
@@ -74,7 +75,7 @@ RegistrationForm.base_fields.keyOrder = [
     'name', 'email', 'username', 'password1', 'password2']
 
 class ForgotPasswordForm(forms.Form):
-    username_or_email = forms.CharField()
+    username_or_email = forms.CharField(label=_("Username or email"))
 
     def clean_username_or_email(self):
         """
@@ -182,7 +183,7 @@ class ContactForm(forms.Form):
     def send(self, sender, recipient, subject=None,
              template='contact_email.txt', extra_context=None):
         if not subject:
-            subject = "Villages.cc message from %s" % sender
+            subject = _("Villages.cc message from %s") % sender
         context = {'message': self.cleaned_data['message'],
                    'sender': sender}
         if extra_context:
@@ -196,7 +197,7 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Settings
         fields = ('email', 'endorsement_limited',
-                  'send_notifications', 'send_newsletter')
+                  'send_notifications', 'send_newsletter', 'language')
 
     def clean_email(self):
         email = self.cleaned_data['email']

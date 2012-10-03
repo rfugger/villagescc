@@ -7,22 +7,25 @@
 <h2>{% trans 'Feedback' %}</h2>
 
 <div class="feature">
-	<p>{% trans 'Please let us know any comments or questions you have about Villages.' %}</p>
-	<p>{% trans 'You can also email' %} <a href="mailto:info@villages.cc">info@villages.cc.</a>
-			{% trans 'Thanks!' %}</p>
+	<p>{% blocktrans %}Please let us know any comments or questions
+		you have about Villages.{% endblocktrans %}</p>
+
+	<p>{% blocktrans %}You can also email
+		<a href="mailto:info@villages.cc">info@villages.cc</a>.
+		Thanks!{% endblocktrans %}</p>
 </div>
 
 <form action="" method="post">
 	{% csrf_token %}
 	<table class="form">
-		{% if request.profile %}
-			<tr>
-				<th></th>
-				<td>{{ form.feedback.errors }}{{ form.feedback }}</td>
-			</tr>
-		{% else %}
-			{{ form }}
-		{% endif %}
+	{% if request.profile %}
+		<tr>
+			<th></th>
+			<td>{{ form.feedback.errors }}{{ form.feedback }}</td>
+		</tr>
+	{% else %}
+		{{ form }}
+	{% endif %}
 		<tr>
 			<th></th>
 			<td><input type="submit" value="{% trans 'Send Feedback' %}"></td>

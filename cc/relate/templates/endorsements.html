@@ -6,6 +6,9 @@
 {% block feed_endorsements_class %}selected{% endblock %}
 
 {% block pre_feed %}
-	<p>{% trans 'Visit' %} <a href="{% url relationships %}">Relationships</a> 
-        {% trans 'for a more structured list of endorsements' %}.</p>
+
+{% url relationships as url_relationships %}
+<p>{% blocktrans %}Visit <a href="{{ url_relationships }}">Relationships</a>
+	for a more structured list of endorsements.{% endblocktrans %}</p>
+
 {% endblock %}

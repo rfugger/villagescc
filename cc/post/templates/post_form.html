@@ -1,21 +1,31 @@
 {% extends "home_base.html" %}
 {% load i18n %}
 
-{% block title %}{% if form.instance.id %}{% trans 'Edit' %}{% else %}{% trans 'New' %}{% endif %}
-{% trans 'Post' %}{% endblock %}
+{% block title %}
+{% if form.instance.id %}
+	{% trans 'Edit Post' %}{% else %}{% trans 'New Post' %}
+{% endif %}
+{% endblock %}
 
 {% block nav_new_post_class %}
 	{% if not form.instance.id %}selected{% endif %}
 {% endblock %}
 
 {% block content %}
-<h2>{% if form.instance.id %}{% trans 'Edit' %}{% else %}{% trans 'New' %}{% endif %} {% trans 'Post' %}</h2>
+<h2>
+	{% if form.instance.id %}
+		{% trans 'Edit Post' %}{% else %}{% trans 'New Post' %}
+	{% endif %}
+</h2>
 
 <div class="feature">
-	<p>{% blocktrans %}Posts are temporary advertisements for items and services offered and
-		wanted.  For permanent advertisements, such as skills you have to offer,
-		please use your profile description.{% endblocktrans %}</p>
-	<p>{% trans 'Any information you post will be' %} <strong>{% trans 'public' %}</strong>.</p>
+	<p>{% blocktrans %}Posts are temporary advertisements for items and
+		services offered and wanted. For permanent advertisements, such
+		as skills you have to offer, please use your profile description.
+		{% endblocktrans %}</p>
+
+	<p>{% blocktrans %}Any information you post will be
+		<strong>public</strong>.{% endblocktrans %}</p>
 </div>
 
 {% if form.instance.id %}
@@ -26,23 +36,26 @@
 	{% csrf_token %}
 	<table class="form">
 		<tr>
-			<th>{% if not form.instance.id %}
-					<a href="{% url locator %}?next={{ request.path }}">
-						{% trans 'Location' %}</a>:
-				{% else %}
-					{%trans 'Location' %}:
-				{% endif %}
+			<th>
+			{% if not form.instance.id %}
+				<a href="{% url locator %}?next={{ request.path }}
+					">{% trans 'Location:' %}</a>
+			{% else %}
+					{% trans 'Location:' %}
+			{% endif %}
 			</th>
 			<td>{{ request.profile.location }}</td>
 		</tr>
 		{{ form }}
 		<tr>
 			<th></th>
-			<td><input type="submit" value="{% trans 'Save Post' %}">
-				{% if form.instance.id %}
-					<input type="submit" name="delete" value="{% trans 'Delete' %}"
-						   onclick="return confirm('{% trans "Delete post?" %}')">
-				{% endif %}
+			<td>
+				<input type="submit" value="{% trans 'Save Post' %}">
+			{% if form.instance.id %}
+				<input type="submit" name="delete"
+					value="{% trans 'Delete' %}"
+					onclick="return confirm('{% trans "Delete post?" %}')">
+			{% endif %}
 			</td>
 		</tr>
 	</table>

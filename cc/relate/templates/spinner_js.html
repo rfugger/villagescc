@@ -1,23 +1,23 @@
 {% comment %}
-	For inclusion in <head> of templates that use a spinner to 
+	For inclusion in <head> of templates that use a spinner to
 	select an endorsement weight.
 {% endcomment %}
 
 {% load media %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" 
-	  href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
 {% include_media "ui.spinner.js" %}
 {% include_media "ui.spinner.css" %}
 
 <script>
 	$(document).ready(function() {
-		{% if request.profile.endorsement_limited %}
-			var spinner_params = {min: 1, max: {{ form.max_weight }} };
-		{% else %}
-			var spinner_params = {min: 1};
-		{% endif %}
+	{% if request.profile.endorsement_limited %}
+		var spinner_params = {min: 1, max: {{ form.max_weight }} };
+	{% else %}
+		var spinner_params = {min: 1};
+	{% endif %}
 		$(".spinner").spinner(spinner_params);
 	});
 </script>

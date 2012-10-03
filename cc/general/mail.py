@@ -3,6 +3,7 @@ from django.template import loader, Context
 from django.conf import settings
 from django.core.validators import validate_email
 from django import forms
+from django.utils import translation
 
 def send_mail(subject, sender, recipient, template, context):
     """
@@ -10,6 +11,10 @@ def send_mail(subject, sender, recipient, template, context):
     profile or email, and template/context pair for the body, and sends an
     email.
     """
+    old_language = translation.get_language()
+    if not isinstance(recipient, basestring):
+	translation.activate(recipient.settings.language)
+
     context.update({'domain': settings.SITE_DOMAIN})
     body = loader.render_to_string(
         template, context, context_instance=Context(autoescape=False))
@@ -24,6 +29,8 @@ def send_mail(subject, sender, recipient, template, context):
     msg = EmailMessage(subject=subject, body=body, from_email=from_email_str,
                        to=(to_email_str,), headers=headers)
     msg.send()
+
+    translation.activate(old_language)
 
     # TODO: Queue email for sending by worker process.
     

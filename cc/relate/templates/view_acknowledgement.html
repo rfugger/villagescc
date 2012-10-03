@@ -7,47 +7,53 @@
 {% endblock %}
 
 {% block content %}
-	<h2>{% trans 'Acknowledgement' %}</h2>
-	<div class="feature">
-		<table class="data">
-				<tr>
-					<th>{% trans 'From' %}</th>
-					<td><a href="{{ payment.payer.get_absolute_url }}"
-						   >{{ payment.payer }}</a></td>
-				</tr>
-				<tr>
-					<th>{% trans 'To' %}</th>
-					<td><a href="{{ payment.recipient.get_absolute_url }}"
-						   >{{ payment.recipient }}</a></td>
-				</tr>
-				<tr>
-					<th>{% trans 'Hours' %}</th>
-					<td>{{ payment.amount|trim_zeroes }}</td>
-				</tr>
-			<tr>
-				<th>{% trans 'Time' %}</th>
-				<td>{{ payment.date }}</td>
-			</tr>
-		</table>
-		
-		{{ payment.memo|linebreaks }}
-	</div>
 
-	{% if received_entries %}
-		<h3>{% trans 'Received' %}</h3>
-		{% with received_entries as entries %}
+<h2>{% trans 'Acknowledgement' %}</h2>
+<div class="feature">
+	<table class="data">
+		<tr>
+			<th>{% trans 'From' %}</th>
+			<td>
+				<a href="{{ payment.payer.get_absolute_url }}"
+					>{{ payment.payer }}</a>
+			</td>
+		</tr>
+		<tr>
+			<th>{% trans 'To' %}</th>
+			<td>
+				<a href="{{ payment.recipient.get_absolute_url }}"
+					>{{ payment.recipient }}</a>
+			</td>
+		</tr>
+		<tr>
+			<th>{% trans 'Hours' %}</th>
+			<td>{{ payment.amount|trim_zeroes }}</td>
+		</tr>
+		<tr>
+			<th>{% trans 'Time' %}</th>
+			<td>{{ payment.date }}</td>
+		</tr>
+	</table>
+
+	{{ payment.memo|linebreaks }}
+</div>
+
+{% if received_entries %}
+	<h3>{% trans 'Received' %}</h3>
+	{% with received_entries as entries %}
 		{% with _("From") as person_descriptor %}
 			{% include "payment_entries.html" %}
 		{% endwith %}
-		{% endwith %}
-	{% endif %}
+	{% endwith %}
+{% endif %}
 
-	{% if sent_entries %}
-		<h3>Sent</h3>
-		{% with sent_entries as entries %}
+{% if sent_entries %}
+	<h3>{% trans 'Sent' %}</h3>
+	{% with sent_entries as entries %}
 		{% with _("To") as person_descriptor %}
 			{% include "payment_entries.html" %}
 		{% endwith %}
-		{% endwith %}
-	{% endif %}
+	{% endwith %}
+{% endif %}
+
 {% endblock %}

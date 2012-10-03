@@ -3,8 +3,13 @@
 {% load i18n %}
 
 {% block title %}
-	{% profile_display item.endorser request _("You") item.endorser %}
-	{% trans 'endorsed' %}
-	{% profile_display item.recipient request _("you") item.recipient %}
-	{% blocktrans %}with {{ item.weight }} heart{{ item.weight|pluralize:"s" }}{% endblocktrans %}.
+
+{% profile_display item.endorser request _("You endorsed") item.endorser %}
+{% profile_display item.recipient request _("endorsed you") item.recipient %}
+{% blocktrans count hearts=item.weight %}
+	with {{ hearts }} heart.
+{% plural %}
+	with {{ hearts }} hearts.
+{% endblocktrans %}
+
 {% endblock %}

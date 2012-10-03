@@ -179,13 +179,16 @@ textarea {
 	display: inline;
 }
 
+.nav ul {
+	margin: 0;
+}
+
 .nav li {
 	display: inline;
-	padding: 0 1em;
 }
 
 .site_nav {
-	margin-left: 1em;
+	display: inline;
 	font-size: 125%;
 }
 
@@ -194,6 +197,7 @@ textarea {
 }
 
 .right_nav {
+	margin: 0;
 	float: right;
 	clear: right;
 }
@@ -219,6 +223,7 @@ textarea {
 }
 
 .messages > li {
+	list-style-type: none;
 	margin: 0 auto;
 	width: 50%;
 }
@@ -244,7 +249,12 @@ textarea {
 	font-size: 120%;
 }
 
+.subnav ul {
+	margin: 0;
+}
+
 .subnav li {
+	list-style-type: none;
 	padding: 0.2em 20px 0.2em 1em;
 	margin: 0 -20px 0.3em -1em;
 }
@@ -281,7 +291,12 @@ textarea {
 	text-align: right;
 }
 
+.actions ul {
+	margin: 0;
+}
+
 .actions li {
+	list-style-type: none;
 	padding: 0.2em 1em 0.2em 20px;
 	margin: 0 -1em 0.3em -20px;
 }
@@ -313,6 +328,16 @@ textarea {
 	background-color: #eee;
 	border-top: solid 1px #ddd;
 	border-bottom: solid 1px #ddd;
+}
+
+.feed_filter_form ul {
+	display: table;
+	width: 100%;
+}
+
+.feed_filter_form li {
+	display: table-cell;
+	margin: 0;
 }
 
 .feed_item_list {

@@ -7,7 +7,7 @@ from django.db import models
 from cc.profile.models import Profile
 from cc.general.models import VarCharField
 from cc.geo.models import Location
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class UndeletedPostManager(models.Manager):
@@ -19,11 +19,11 @@ class Post(models.Model):
     user = models.ForeignKey(Profile, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     deleted = models.BooleanField(default=False)
-    title = VarCharField(max_length=100)
-    text = models.TextField()
-    image = models.ImageField(
+    title = VarCharField(_("Title"), max_length=100)
+    text = models.TextField(_("Text"))
+    image = models.ImageField(_("Image"),
         upload_to='post/%Y/%m', max_length=256, blank=True)
-    want = models.BooleanField(
+    want = models.BooleanField(_("Want"),
         default=False, help_text=_("Leave unchecked if your post is an offer."))
     location = models.ForeignKey(Location)
 
@@ -33,7 +33,7 @@ class Post(models.Model):
     FEED_TEMPLATE = 'post_feed_item.html'
     
     def __unicode__(self):
-        return u"%s [%s]" % (self.title, self.want and "Want" or "Offer")
+        return u"%s [%s]" % (self.title, self.want and _("Want") or _("Offer"))
 
     @models.permalink
     def get_absolute_url(self):

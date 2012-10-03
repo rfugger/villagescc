@@ -3,27 +3,31 @@ import random
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.dispatch import receiver
 
 from cc.general.models import VarCharField, EmailField
 from cc.geo.models import Location
 import cc.ripple.api as ripple
 from cc.general.util import cache_on_object
 from cc.general.mail import send_mail, email_str, send_mail_from_system
-from django.utils.translation import ugettext as _
+from django.utils import translation
+from django.utils.translation import get_language_info as lang_info
+from django.utils.translation import ugettext_lazy as _
 
 CODE_LENGTH = 20
 CODE_CHARS = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    name = VarCharField(blank=True)
+    name = VarCharField(_("Name"), blank=True)
     location = models.ForeignKey(Location, null=True, blank=True)
-    photo = models.ImageField(
+    photo = models.ImageField(_("Photo"),
         upload_to='user/%Y/%m', max_length=256, blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(_("Description"), blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
@@ -192,6 +196,10 @@ class Settings(models.Model):
     send_newsletter = models.BooleanField(
         _("Receive updates"), default=True, help_text=_(
             "Receive occasional news about the Villages community."))
+    langs = [(l[0], lang_info(l[0])['name_local']) for l in settings.LANGUAGES]
+    language = VarCharField(
+	_("Language"), default="en", max_length=8, choices=langs, help_text=_(
+	    "Villages shall use this language for interaction with you."))
     
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)
@@ -273,4 +281,11 @@ pre_save.connect(PasswordResetLink.pre_save, sender=PasswordResetLink,
     
 def generate_code():
     return ''.join((random.choice(CODE_CHARS) for i in xrange(CODE_LENGTH)))
-    
+
+@receiver(user_logged_in)
+def setlang(sender, **kwargs):
+    try:
+	translation.activate(kwargs['user'].profile.settings.language)
+	kwargs['request'].session['django_language']=translation.get_language()
+    except:
+	pass
