@@ -198,8 +198,7 @@ class Settings(models.Model):
             "Receive occasional news about the Villages community."))
     langs = [(l[0], lang_info(l[0])['name_local']) for l in settings.LANGUAGES]
     language = VarCharField(
-	_("Language"), default="en", max_length=8, choices=langs, help_text=_(
-	    "Villages shall use this language for interaction with you."))
+	_("Language"), default="en", max_length=8, choices=langs)
     
     # Sticky form settings.
     feed_radius = models.IntegerField(null=True, blank=True)
