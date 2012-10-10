@@ -14,6 +14,7 @@ def verify():
             continue
         diff = compare(cached, graph)
         if diff:
+            print "Ignore balances: %s" % ignore_balances
             pp(diff)
             return False
     return True
