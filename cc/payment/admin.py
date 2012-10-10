@@ -2,6 +2,9 @@ from django.contrib import admin
 
 from cc.payment.models import Payment, Entry
 
+class EntryInline(admin.StackedInline):
+    model = Entry
+
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
         'payer_name',
@@ -14,6 +17,8 @@ class PaymentAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     ordering = ('-submitted_at',)
 
+    inlines = [EntryInline]
+    
     def payer_name(self, payment):
         return self._node_pretty_name(payment.payer)
     
@@ -32,4 +37,3 @@ class PaymentAdmin(admin.ModelAdmin):
         return profile and unicode(profile) or unicode(node)
         
 admin.site.register(Payment, PaymentAdmin)
-admin.site.register(Entry)
