@@ -14,6 +14,8 @@ def verify():
             continue
         diff = compare(cached, graph)
         if diff:
+            # Fix problem.
+            flow.set_cached_graph(graph, ignore_balances)
             print "Ignore balances: %s" % ignore_balances
             pp(diff)
             return False
