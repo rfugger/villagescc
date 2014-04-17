@@ -196,13 +196,18 @@ class CreditLine(models.Model):
     @classmethod
     def post_delete(cls, sender, instance, **kwargs):
         # Delete partner creditline and account itself.
-        instance.account.delete()
+        try:
+            instance.account.delete()
+        except Account.DoesNotExist:
+            pass
 
         # Remove from cached flow graph.
         from cc.payment import flow
 
         # TODO: Call from single external process -- not threadsafe!
-        
+
+        # XXX: This is broken - tries to load partner creditline, which
+        #      may already be (is?) deleted.
         flow.update_creditline_in_cached_graphs(instance)
 
 post_save.connect(CreditLine.post_save, CreditLine,
