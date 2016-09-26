@@ -16,11 +16,6 @@ framework.
 import os
 import sys
 
-# XXX Hack - Need to add project dir to sys.path here, because
-# python-path option to WSGIDaemonProcess in apache conf doesn't work.
-root_dir = os.path.split(os.path.dirname(__file__))[0]
-sys.path.append(root_dir)
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cc.settings")
 
 # This application object is used by any WSGI server configured to use this

@@ -1,4 +1,4 @@
-from django.contrib.gis.utils import GeoIP
+from django.contrib.gis.geoip import GeoIP
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect

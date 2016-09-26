@@ -16,6 +16,7 @@ MANAGERS = ADMINS
 
 SITE_DOMAIN = 'villages.cc'
 DEFAULT_FROM_EMAIL = 'web@villages.cc'
+SERVER_EMAIL = 'web@villages.cc'
 HELP_EMAIL = 'info@villages.cc'
 EMAIL_SUBJECT_PREFIX = "[Villages] "
 
@@ -202,8 +203,6 @@ AUTHENTICATION_BACKENDS = (
 SESSION_COOKIE_SECURE = True
 LOCATION_COOKIE_NAME = 'location_id'
 LOCATION_COOKIE_AGE = timedelta(days=365)
-
-GEOIP_PATH = '/usr/share/GeoIP'
 
 LOCATION_SESSION_KEY = 'location_id'
 DEFAULT_LOCATION = ('49.2696243', '-123.0696036')  # East Vancouver.

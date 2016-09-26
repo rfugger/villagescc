@@ -34,6 +34,9 @@ CACHES = {
 # Testing email settings.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Location of GeoIP files.
+GEOIP_PATH = '/usr/share/GeoIP'
+
 # Don't conflict with other local django servers.
 SESSION_COOKIE_NAME = 'villages_session_id'
 

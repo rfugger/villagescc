@@ -18,6 +18,7 @@ This is a Django project.  Among other things, you'll need:
 * Django-mediagenerator (incl. Sass, Compass)
 * South
 * Networkx
+* Maxmind GeoIP database
 
 You'll need to create a file cc/settings/local.py containing the following Django settings:
 
